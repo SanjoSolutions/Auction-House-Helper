@@ -143,9 +143,11 @@ local function GetAHProfit(schematicForm)
 
       local toCraft = GetSkillReagentsTotal(schematicForm)
 
-      local count = schematicForm.recipeSchematic.quantityMin
+      local minCount = schematicForm.recipeSchematic.quantityMin
+      local maxCount = schematicForm.recipeSchematic.quantityMax
 
-      return CalculateProfitFromCosts(currentAH, toCraft, count)
+      return CalculateProfitFromCosts(currentAH, toCraft, minCount),
+        CalculateProfitFromCosts(currentAH, toCraft, maxCount)
     else
       return nil
     end
@@ -158,16 +160,22 @@ local function CraftCostString(schematicForm)
   return AUCTIONATOR_L_TO_CRAFT_COLON .. " " .. price
 end
 
-local function ProfitString(profit)
-  local price
-  if profit >= 0 then
-    price = WHITE_FONT_COLOR:WrapTextInColorCode(GetMoneyString(profit, true))
+local function PriceString(price)
+  local priceString
+  if price >= 0 then
+    priceString = WHITE_FONT_COLOR:WrapTextInColorCode(GetMoneyString(price, true))
   else
-    price = RED_FONT_COLOR:WrapTextInColorCode("-" .. GetMoneyString(-profit, true))
+    priceString = RED_FONT_COLOR:WrapTextInColorCode("-" .. GetMoneyString(-price, true))
   end
+  return priceString
+end
 
-  return AUCTIONATOR_L_PROFIT_COLON .. " " .. price
-
+local function ProfitString(minProfit, maxProfit)
+  if minProfit == maxProfit then
+    return AUCTIONATOR_L_PROFIT_COLON .. " " .. PriceString(minProfit)
+  else
+    return AUCTIONATOR_L_PROFIT_COLON .. " " .. PriceString(minProfit) .. " " .. AUCTIONATOR_L_PROFIT_TO .. " " .. PriceString(maxProfit)
+  end
 end
 
 function Auctionator.CraftingInfo.GetInfoText(schematicForm, showProfit)
@@ -182,13 +190,13 @@ function Auctionator.CraftingInfo.GetInfoText(schematicForm, showProfit)
   end
 
   if showProfit and Auctionator.Config.Get(Auctionator.Config.Options.CRAFTING_INFO_SHOW_PROFIT) then
-    local profit = GetAHProfit(schematicForm)
+    local minProfit, maxProfit = GetAHProfit(schematicForm)
 
-    if profit ~= nil then
+    if minProfit ~= nil then
       if lines > 0 then
         result = result .. "\n"
       end
-      result = result .. ProfitString(profit)
+      result = result .. ProfitString(minProfit, maxProfit)
       lines = lines + 1
     end
   end

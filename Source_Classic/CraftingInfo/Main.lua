@@ -85,7 +85,8 @@ end
 local function GetAHProfit()
   local recipeIndex = GetTradeSkillSelectionIndex()
   local recipeLink =  GetTradeSkillItemLink(recipeIndex)
-  local count = GetTradeSkillNumMade(recipeIndex)
+  local minCount, maxCount = GetTradeSkillNumMade(recipeIndex)
+  print('counts', minCount, maxCount)
 
   if recipeLink == nil or recipeLink:match("enchant:") then
     return nil
@@ -97,7 +98,8 @@ local function GetAHProfit()
   end
   local toCraft = GetSkillReagentsTotal()
 
-  return math.floor(currentAH * count * Auctionator.Constants.AfterAHCut - toCraft)
+  return math.floor(currentAH * minCount * Auctionator.Constants.AfterAHCut - toCraft),
+    math.floor(currentAH * maxCount * Auctionator.Constants.AfterAHCut - toCraft)
 end
 
 local function CraftCostString()
@@ -106,16 +108,22 @@ local function CraftCostString()
   return AUCTIONATOR_L_TO_CRAFT_COLON .. " " .. price
 end
 
-local function ProfitString(profit)
-  local price
-  if profit >= 0 then
-    price = WHITE_FONT_COLOR:WrapTextInColorCode(GetMoneyString(profit, true))
+local function PriceString(price)
+  local priceString
+  if price >= 0 then
+    priceString = WHITE_FONT_COLOR:WrapTextInColorCode(GetMoneyString(price, true))
   else
-    price = RED_FONT_COLOR:WrapTextInColorCode("-" .. GetMoneyString(-profit, true))
+    priceString = RED_FONT_COLOR:WrapTextInColorCode("-" .. GetMoneyString(-price, true))
   end
+  return priceString
+end
 
-  return AUCTIONATOR_L_PROFIT_COLON .. " " .. price
-
+local function ProfitString(minProfit, maxProfit)
+  if minProfit == maxProfit then
+    return AUCTIONATOR_L_PROFIT_COLON .. " " .. PriceString(minProfit)
+  else
+    return AUCTIONATOR_L_PROFIT_COLON .. " " .. PriceString(minProfit) .. " " .. AUCTIONATOR_L_PROFIT_TO .. " " .. PriceString(maxProfit)
+  end
 end
 
 function Auctionator.CraftingInfo.GetInfoText()
@@ -130,13 +138,13 @@ function Auctionator.CraftingInfo.GetInfoText()
   end
 
   if Auctionator.Config.Get(Auctionator.Config.Options.CRAFTING_INFO_SHOW_PROFIT) then
-    local profit = GetAHProfit()
+    local minProfit, maxProfit = GetAHProfit()
 
-    if profit ~= nil then
+    if minProfit ~= nil then
       if lines > 0 then
         result = result .. "\n"
       end
-      result = result .. ProfitString(profit)
+      result = result .. ProfitString(minProfit, maxProfit)
       lines = lines + 1
     end
   end
