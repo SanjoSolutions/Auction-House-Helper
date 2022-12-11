@@ -181,6 +181,30 @@ end
 function Auctionator.CraftingInfo.GetInfoText(schematicForm, showProfit)
   local result = ""
   local lines = 0
+
+  local craftingCost = GetSkillReagentsTotal(schematicForm)
+  local recipeInfo = schematicForm:GetRecipeInfo()
+  local recipeLink = Auctionator.CraftingInfo.GetOutputItemLink(
+      recipeInfo.recipeID,
+      schematicForm:GetCurrentRecipeLevel(),
+      schematicForm:GetTransaction():CreateCraftingReagentInfoTbl(),
+      schematicForm:GetTransaction():GetAllocationItemGUID()
+    )
+  local buyInAuctionHouseCost
+  if recipeLink ~= nil then
+    buyInAuctionHouseCost = Auctionator.API.v1.GetAuctionPriceByItemLink(AUCTIONATOR_L_REAGENT_SEARCH, recipeLink)
+  else
+    buyInAuctionHouseCost = nil
+  end
+  local recommendedWayToReceiveItem
+  if buyInAuctionHouseCost and buyInAuctionHouseCost <= craftingCost then
+    recommendedWayToReceiveItem = 'Buy from auction house'
+  else
+    recommendedWayToReceiveItem = 'Craft'
+  end
+  result = result .. 'Recommendation: ' .. WHITE_FONT_COLOR:WrapTextInColorCode(recommendedWayToReceiveItem)
+  lines = lines + 1
+
   if Auctionator.Config.Get(Auctionator.Config.Options.CRAFTING_INFO_SHOW_COST) then
     if lines > 0 then
       result = result .. "\n"
