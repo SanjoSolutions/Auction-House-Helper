@@ -147,23 +147,40 @@ local function GetAHProfit(schematicForm)
     return GetEnchantProfit(schematicForm)
 
   else
-    local recipeLink = Auctionator.CraftingInfo.GetOutputItemLink(
+    print('a', schematicForm.Details.operationInfo.quality)
+
+    local nextQuality = math.ceil(schematicForm.Details.operationInfo.quality)
+    local nextQualityChance = select(2, math.modf(schematicForm.Details.operationInfo.quality))
+
+    local recipeLinkForMinProfit = Auctionator.CraftingInfo.GetOutputItemLink(
       recipeInfo.recipeID,
       schematicForm:GetCurrentRecipeLevel(),
       schematicForm:GetTransaction():CreateCraftingReagentInfoTbl(),
       schematicForm:GetTransaction():GetAllocationItemGUID()
     )
 
-    if recipeLink ~= nil then
-      local currentAH = Auctionator.API.v1.GetAuctionPriceByItemLink(AUCTIONATOR_L_REAGENT_SEARCH, recipeLink) or 0
+    local recipeLinkForMaxProfit = Auctionator.CraftingInfo.GetOutputItemLink(
+      recipeInfo.recipeID,
+      schematicForm:GetCurrentRecipeLevel(),
+      schematicForm:GetTransaction():CreateCraftingReagentInfoTbl(),
+      schematicForm:GetTransaction():GetAllocationItemGUID()
+    )
+
+    if recipeLinkForMinProfit ~= nil then
+      local currentAHForMinProfit = Auctionator.API.v1.GetAuctionPriceByItemLink(AUCTIONATOR_L_REAGENT_SEARCH,
+        recipeLinkForMinProfit) or 0
+      local currentAHForMaxProfit = Auctionator.API.v1.GetAuctionPriceByItemLink(AUCTIONATOR_L_REAGENT_SEARCH,
+        recipeLinkForMaxProfit) or 0
 
       local toCraft = GetSkillReagentsTotal(schematicForm)
 
       local minCount = schematicForm.recipeSchematic.quantityMin
       local maxCount = schematicForm.recipeSchematic.quantityMax
 
-      return CalculateProfitFromCosts(currentAH, toCraft, minCount),
-        CalculateProfitFromCosts(currentAH, toCraft, maxCount)
+      local minProfit = CalculateProfitFromCosts(currentAHForMinProfit, toCraft, minCount)
+      local maxProfit = CalculateProfitFromCosts(currentAHForMaxProfit, toCraft, maxCount)
+
+      return minProfit, maxProfit
     else
       return nil
     end
