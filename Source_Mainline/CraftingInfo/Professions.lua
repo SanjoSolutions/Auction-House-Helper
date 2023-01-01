@@ -147,10 +147,12 @@ local function GetAHProfit(schematicForm)
     return GetEnchantProfit(schematicForm)
 
   else
-    print('a', schematicForm.Details.operationInfo.quality)
+    if schematicForm.Details.operationInfo then
+      print('a', schematicForm.Details.operationInfo.quality)
+    end
 
-    local nextQuality = math.ceil(schematicForm.Details.operationInfo.quality)
-    local nextQualityChance = select(2, math.modf(schematicForm.Details.operationInfo.quality))
+    --local nextQuality = math.ceil(schematicForm.Details.operationInfo.quality)
+    --local nextQualityChance = select(2, math.modf(schematicForm.Details.operationInfo.quality))
 
     local recipeLinkForMinProfit = Auctionator.CraftingInfo.GetOutputItemLink(
       recipeInfo.recipeID,
@@ -204,7 +206,7 @@ local function PriceString(price)
 end
 
 local function ProfitString(minProfit, maxProfit)
-  if minProfit == maxProfit then
+  if maxProfit == nil or minProfit == maxProfit then
     return AUCTIONATOR_L_PROFIT_COLON .. " " .. PriceString(minProfit)
   else
     return AUCTIONATOR_L_PROFIT_COLON .. " " .. PriceString(minProfit) .. " " .. AUCTIONATOR_L_PROFIT_TO .. " " .. PriceString(maxProfit)
