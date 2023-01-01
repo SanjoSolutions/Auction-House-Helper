@@ -425,7 +425,7 @@ function AuctionatorSaleItemMixin:ProcessCommodityResults(itemID, ...)
   if result == nil then
     -- This commodity was not found in the AH, so use the last lowest price from DB
     postingPrice = Auctionator.Database:GetFirstPrice(dbKeys)
-  elseif result ~= nil and result.containsOwnerItem and result.owners[1] == "player" then
+  elseif result ~= nil then
     -- No need to undercut myself
     postingPrice = result.unitPrice
   else
@@ -472,7 +472,7 @@ function AuctionatorSaleItemMixin:ProcessItemResults(itemKey)
     -- This item was not found in the AH, so use the lowest price from the dbKey
     postingPrice = Auctionator.Database:GetFirstPrice(dbKeys)
   elseif result ~= nil and result.containsOwnerItem then
-    -- Posting an item I have alread posted, and that is the current lowest price, so just
+    -- Posting an item I have already posted, and that is the current lowest price, so just
     -- use this price
     postingPrice = result.buyoutAmount
   else
