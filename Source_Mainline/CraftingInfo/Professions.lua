@@ -147,10 +147,6 @@ local function GetAHProfit(schematicForm)
     return GetEnchantProfit(schematicForm)
 
   else
-    if schematicForm.Details.operationInfo then
-      print('a', schematicForm.Details.operationInfo.quality)
-    end
-
     --local nextQuality = math.ceil(schematicForm.Details.operationInfo.quality)
     --local nextQualityChance = select(2, math.modf(schematicForm.Details.operationInfo.quality))
 
