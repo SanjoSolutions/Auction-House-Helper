@@ -1,6 +1,5 @@
 <!-- Tabs/AuctionHouseHelper/Frames directory manifest -->
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Include file="Translator.xml"/>
   <Include file="ScanStatus.xml"/>
 
   <Include file="Main.xml"/>
