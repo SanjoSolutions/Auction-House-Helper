@@ -10,48 +10,12 @@
       <OnLoad method="OnLoad" />
     </Scripts>
     <Frames>
-      <Frame inherits="AuctionHouseHelperConfigurationHeadingFrame" parentKey="AuthorHeading">
-        <KeyValues>
-          <KeyValue key="headingText" value="AUCTION_HOUSE_HELPER_L_AUTHOR_HEADER" type="global"/>
-        </KeyValues>
-        <Anchors>
-          <Anchor point="RIGHT" relativeKey="$parent" relativePoint="CENTER" x="-150" />
-        </Anchors>
-      </Frame>
-
-      <Frame inherits="AuctionHouseHelperConfigurationSubHeadingFrame" parentKey="Author">
-        <KeyValues>
-          <KeyValue key="subHeadingText" value="Borj(amacare)" type="string"/>
-        </KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.AuthorHeading" relativePoint="BOTTOMLEFT" y="10" />
-        </Anchors>
-      </Frame>
-
-      <Frame inherits="AuctionHouseHelperConfigurationHeadingFrame" parentKey="ContributorsHeading">
-        <KeyValues>
-          <KeyValue key="headingText" value="AUCTION_HOUSE_HELPER_L_AUTHOR_HEADER" type="global"/>
-        </KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.AuthorHeading" relativePoint="TOPRIGHT" />
-        </Anchors>
-      </Frame>
-
-      <Frame inherits="AuctionHouseHelperConfigurationSubHeadingFrame" parentKey="Contributors">
-        <KeyValues>
-          <KeyValue key="subHeadingText" value="plusmouse" type="string"/>
-        </KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.ContributorsHeading" relativePoint="BOTTOMLEFT" y="10"/>
-        </Anchors>
-      </Frame>
-
       <Frame inherits="AuctionHouseHelperConfigurationHeadingFrame" parentKey="VersionHeading">
         <KeyValues>
           <KeyValue key="headingText" value="AUCTION_HOUSE_HELPER_L_VERSION_HEADER" type="global"/>
         </KeyValues>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.ContributorsHeading" relativePoint="TOPRIGHT" x="-280"/>
+          <Anchor point="RIGHT" relativeKey="$parent" relativePoint="CENTER" x="-150" />
         </Anchors>
       </Frame>
 
@@ -69,7 +33,7 @@
           <KeyValue key="headingText" value="AUCTION_HOUSE_HELPER_L_ENGAGE_HEADER" type="global"/>
         </KeyValues>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.Author" relativePoint="BOTTOMLEFT" />
+          <Anchor point="TOPLEFT" relativeKey="$parent.Version" relativePoint="BOTTOMLEFT" />
         </Anchors>
       </Frame>
 
