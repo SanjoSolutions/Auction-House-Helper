@@ -1,4 +1,5 @@
 local AUCTIONATOR_EVENTS = {
+  "PLAYER_LOGIN",
   "PLAYER_INTERACTION_MANAGER_FRAME_SHOW",
   "TRADE_SKILL_SHOW",
 }
@@ -10,11 +11,18 @@ function AuctionatorInitializeMainlineMixin:OnLoad()
 end
 
 function AuctionatorInitializeMainlineMixin:OnEvent(event, ...)
-  if event == "PLAYER_INTERACTION_MANAGER_FRAME_SHOW" then
+  if event == "PLAYER_LOGIN" then
+    Auctionator.CraftingInfo.InitializeObjectiveTrackerFrame()
+  elseif event == "PLAYER_INTERACTION_MANAGER_FRAME_SHOW" then
     local showType = ...
     -- Cache vendor prices events
     if showType == Enum.PlayerInteractionType.Merchant then
-      Auctionator.CraftingInfo.CacheVendorPrices()
+      -- Tournament realms have vendors for stuff that is only on the AH for
+      -- other realms, breaking crafting info prices, this prevents it happening
+      -- again.
+      if not IsOnTournamentRealm() then
+        Auctionator.CraftingInfo.CacheVendorPrices()
+      end
      -- AH Window Initialization Events
     elseif showType == Enum.PlayerInteractionType.Auctioneer then
       self:AuctionHouseShown()

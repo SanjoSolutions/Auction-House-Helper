@@ -39,16 +39,11 @@ function AuctionatorSellingBagFrameMixin:OnLoad()
   end
 
   self.ScrollBox.ItemListingFrame.OnCleaned = function(listing)
-    local maxShift = math.max(0, (listing.oldHeight or listing:GetHeight()) - self.ScrollBox:GetHeight())
-    local offset = self.ScrollBox:GetScrollPercentage() * maxShift
+    local oldOffset = self.ScrollBox:GetDerivedScrollOffset()
 
     self.ScrollBox:FullUpdate(ScrollBoxConstants.UpdateImmediately);
 
-    local newMaxShift =  math.max(0, listing:GetHeight() - self.ScrollBox:GetHeight())
-    if newMaxShift == 0 then
-      return
-    end
-    self.ScrollBox:SetScrollPercentage(offset / newMaxShift)
+    self.ScrollBox:SetScrollTargetOffset(oldOffset)
   end
 
   local view = CreateScrollBoxLinearView()
@@ -134,9 +129,6 @@ function AuctionatorSellingBagFrameMixin:Update()
   Auctionator.Debug.Message("AuctionatorSellingBagFrameMixin:Update()")
   self.ScrollBox.ItemListingFrame.oldHeight = self.ScrollBox.ItemListingFrame:GetHeight()
 
-  local minHeight = 0
-  local maxHeight = 0
-  local classItems = {}
   local lastItem = nil
 
   for _, classId in ipairs(self.orderedClassIds) do
@@ -144,7 +136,7 @@ function AuctionatorSellingBagFrameMixin:Update()
     local items = self.items[classId]
     frame:Reset()
 
-    classItems = {}
+    local classItems = {}
 
     for _, item in ipairs(items) do
       if item.auctionable then
@@ -157,9 +149,6 @@ function AuctionatorSellingBagFrameMixin:Update()
     end
 
     frame:AddItems(classItems)
-
-    minHeight = minHeight + frame.SectionTitle:GetHeight()
-    maxHeight = maxHeight + frame:GetHeight()
   end
 
   self.ScrollBox.ItemListingFrame:OnSettingDirty()

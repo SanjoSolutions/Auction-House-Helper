@@ -41,13 +41,15 @@ function AuctionatorShoppingResultsRowMixin:OnClick(button, ...)
   elseif button == "RightButton" then
     Auctionator.EventBus
       :RegisterSource(self, "ShoppingResultsRowMixin")
-      :Fire(self, Auctionator.Shopping.Events.ShowHistoricalPrices, self.rowData)
+      :Fire(self, Auctionator.Shopping.Tab.Events.ShowHistoricalPrices, self.rowData)
       :UnregisterSource(self)
   else
     AuctionatorResultsRowTemplateMixin.OnClick(self, button, ...)
 
     if C_AuctionHouse.GetItemKeyInfo(self.rowData.itemKey) then
       AuctionHouseFrame:SelectBrowseResult(self.rowData)
+      -- Clear displayMode (prevents bag items breaking in some scenarios)
+      AuctionHouseFrame.displayMode = nil
 
       -- Switch state _after_ the button is shown. This is enough to check
       -- whether the user was on the "Shopping" tab or not.

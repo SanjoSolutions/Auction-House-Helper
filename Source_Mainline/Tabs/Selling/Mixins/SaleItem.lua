@@ -4,7 +4,7 @@ local SALE_ITEM_EVENTS = {
 }
 
 -- Necessary because attempting to post an auction with copper value silently
--- failes
+-- fails
 local function NormalizePrice(price)
   local normalizedPrice = price
 
@@ -22,7 +22,7 @@ local function NormalizePrice(price)
 end
 
 local function IsEquipment(itemInfo)
-  return itemInfo.classId == Enum.ItemClass.Weapon or itemInfo.classId == Enum.ItemClass.Armor or itemInfo.classId == Enum.ItemClass.Profession
+  return Auctionator.Utilities.IsEquipment(itemInfo.classId)
 end
 
 local function IsValidItem(item)
@@ -326,7 +326,7 @@ function AuctionatorSaleItemMixin:DoSearch(itemInfo, ...)
     sortingOrder = {sortOrder = 4, reverseSort = false}
   end
 
-  if IsEquipment(itemInfo) and not Auctionator.Config.Get(Auctionator.Config.Options.SELLING_GEAR_USE_ILVL) then
+  if IsEquipment(itemInfo) and Auctionator.Config.Get(Auctionator.Config.Options.SELLING_ITEM_MATCHING) ~= Auctionator.Config.ItemMatching.ITEM_NAME_AND_LEVEL then
     -- Bug with PTR C_AuctionHouse.MakeItemKey(...), it always sets the
     -- itemLevel to a non-zero value, so we have to create the key directly
     self.expectedItemKey = {itemID = itemInfo.itemKey.itemID, itemLevel = 0, itemSuffix = 0, battlePetSpeciesID = 0}
@@ -335,7 +335,7 @@ function AuctionatorSaleItemMixin:DoSearch(itemInfo, ...)
     self.expectedItemKey = itemInfo.itemKey
     Auctionator.AH.SendSearchQueryByItemKey(self.expectedItemKey, {sortingOrder}, true)
   end
-  Auctionator.EventBus:Fire(self, Auctionator.Selling.Events.SellSearchStart, self.expectedItemKey)
+  Auctionator.EventBus:Fire(self, Auctionator.Selling.Events.SellSearchStart, self.expectedItemKey, itemInfo.itemKey, itemInfo.itemLink)
 end
 
 function AuctionatorSaleItemMixin:Reset()
@@ -411,6 +411,9 @@ function AuctionatorSaleItemMixin:ProcessCommodityResults(itemID, ...)
       Auctionator.Database:SetPrice(key, result.unitPrice)
     end
   end
+  if self.itemInfo ~= nil then
+    self.itemInfo.existingValue = result and result.unitPrice
+  end
 
   self.priceThreshold = self:GetCommodityThreshold(itemID)
 
@@ -443,11 +446,14 @@ function AuctionatorSaleItemMixin:ProcessCommodityResults(itemID, ...)
 end
 
 function AuctionatorSaleItemMixin:GetItemResult(itemKey)
-  if C_AuctionHouse.GetItemSearchResultsQuantity(itemKey) > 0 then
-    return C_AuctionHouse.GetItemSearchResultInfo(itemKey, 1)
-  else
-    return nil
+  local itemInfo = self.itemInfo or self.lastItemInfo
+  for i = 1, C_AuctionHouse.GetItemSearchResultsQuantity(itemKey) do
+    local resultInfo = C_AuctionHouse.GetItemSearchResultInfo(itemKey, i)
+    if Auctionator.Selling.DoesItemMatch(itemInfo.itemKey, itemInfo.itemLink, resultInfo.itemKey, resultInfo.itemLink) then
+      return resultInfo
+    end
   end
+  return nil
 end
 
 function AuctionatorSaleItemMixin:ProcessItemResults(itemKey)
@@ -462,6 +468,9 @@ function AuctionatorSaleItemMixin:ProcessItemResults(itemKey)
     for _, key in ipairs(dbKeys) do
       Auctionator.Database:SetPrice(key, result.buyoutAmount or result.bidAmount)
     end
+  end
+  if self.itemInfo ~= nil then
+    self.itemInfo.existingValue = result and (result.buyoutAmount or result.bidAmount)
   end
 
   self.priceThreshold = nil
@@ -502,20 +511,38 @@ function AuctionatorSaleItemMixin:GetPostButtonState()
     self.Quantity:GetNumber() > 0 and
     self.Quantity:GetNumber() <= self:GetPostLimit() and
 
-    -- Positive price
-    self.Price:GetAmount() > 0 and
+    (
+      (
+      -- Normal pricing
+        -- Positive price
+        self.Price:GetAmount() > 0 and
 
-    -- Bid price is not bigger than buyout
-    self.BidPrice:GetAmount() <= self.Price:GetAmount() and
+        -- Bid price is not bigger than buyout
+        self.BidPrice:GetAmount() <= self.Price:GetAmount()
+      ) or (
+      -- Bid only with no buyout price
+        Auctionator.Config.Get(Auctionator.Config.Options.SHOW_SELLING_BID_PRICE) and
+        -- Only items can have a bid amount
+        self.itemInfo.itemType == Auctionator.Constants.ITEM_TYPES.ITEM and
+        -- Only items can have a bid amount
+        self.Price:GetAmount() == 0 and
+        self.BidPrice:GetAmount() > 0
+      )
+    ) and
 
     -- Not throttled (to avoid silent post failure)
     Auctionator.AH.IsNotThrottled()
 end
 
 function AuctionatorSaleItemMixin:GetConfirmationMessage()
+  local effectiveUnitPrice = self.Price:GetAmount()
+  if Auctionator.Config.Get(Auctionator.Config.Options.SHOW_SELLING_BID_PRICE) and effectiveUnitPrice == 0 then
+    effectiveUnitPrice = self.BidPrice:GetAmount()
+  end
+
   -- Check if the item was underpriced compared to the currently on sale items
-  if self.priceThreshold ~= nil and self.priceThreshold >= self.Price:GetAmount() then
-    return AUCTIONATOR_L_CONFIRM_POST_LOW_PRICE:format(GetMoneyString(self.Price:GetAmount(), true))
+  if self.priceThreshold ~= nil and self.priceThreshold >= effectiveUnitPrice then
+    return AUCTIONATOR_L_CONFIRM_POST_LOW_PRICE:format(GetMoneyString(effectiveUnitPrice, true))
   end
 
   -- Determine if the item is worth more to sell to a vendor than to post on the
@@ -524,7 +551,7 @@ function AuctionatorSaleItemMixin:GetConfirmationMessage()
   local vendorPrice = itemInfo[Auctionator.Constants.ITEM_INFO.SELL_PRICE]
   if Auctionator.Utilities.IsVendorable(itemInfo) and
      vendorPrice * self.Quantity:GetNumber() + self:GetDeposit()
-       > math.floor(self.Price:GetAmount() * self.Quantity:GetNumber() * Auctionator.Constants.AfterAHCut) then
+       > math.floor(effectiveUnitPrice * self.Quantity:GetNumber() * Auctionator.Constants.AfterAHCut) then
     return AUCTIONATOR_L_CONFIRM_POST_BELOW_VENDOR
   end
 end
@@ -579,7 +606,7 @@ function AuctionatorSaleItemMixin:PostItem(confirmed)
     local params = nil
     if startingBid ~= 0 then
       bidAmountReported = startingBid
-      params = {self.itemInfo.location, duration, quantity, startingBid, buyout}
+      params = {self.itemInfo.location, duration, quantity, startingBid, buyout ~= 0 and buyout or nil}
     else
       params = {self.itemInfo.location, duration, quantity, nil, buyout}
     end
@@ -614,7 +641,24 @@ function AuctionatorSaleItemMixin:PostItem(confirmed)
     postedInfo
   )
 
-  Auctionator.EventBus:Fire(self, Auctionator.Selling.Events.RefreshHistory)
+  -- If there aren't any other auctions or this item is posted lower than the
+  -- existing auctions then this item has become the new price for the item
+  local priceToSave = postedInfo.buyoutAmount
+  if postedInfo.buyoutAmount == 0 then
+    priceToSave = postedInfo.bidAmount
+  end
+  if self.itemInfo.existingValue == nil or self.itemInfo.existingValue > priceToSave then
+    Auctionator.Utilities.DBKeyFromLink(self.itemInfo.itemLink, function(dbKeys)
+      for _, key in ipairs(dbKeys) do
+        Auctionator.Database:SetPrice(key, priceToSave)
+      end
+      -- Refresh history listing after the new price is saved
+      Auctionator.EventBus:Fire(self, Auctionator.Selling.Events.RefreshHistory)
+    end)
+  else
+    -- Refresh history (posting and price history)
+    Auctionator.EventBus:Fire(self, Auctionator.Selling.Events.RefreshHistory)
+  end
 
   if Auctionator.Config.Get(Auctionator.Config.Options.SAVE_LAST_DURATION_AS_DEFAULT) then
     Auctionator.Config.Set(Auctionator.Config.Options.AUCTION_DURATION, self.Duration:GetValue())

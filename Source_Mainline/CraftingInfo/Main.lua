@@ -14,9 +14,11 @@ end
 local function GetByMinCostOption(reagents, multiplier)
   local min = 0
   for _, entry in ipairs(reagents) do
-    local newValue = GetCostByItemID(entry.itemID, multiplier)
-    if newValue ~= 0 and (min == 0 or newValue < min) then
-      min = newValue
+    if entry.itemID ~= nil then
+      local newValue = GetCostByItemID(entry.itemID, multiplier)
+      if newValue ~= 0 and (min == 0 or newValue < min) then
+        min = newValue
+      end
     end
   end
   return min
@@ -54,8 +56,8 @@ function Auctionator.CraftingInfo.CalculateCraftCost(recipeSchematic, transactio
         -- Select the value of the allocated reagents only including optional ones
         total = total + GetAllocatedCosts(reagentSlotSchematic, slotAllocations)
       end
-      -- Calculate using the lowest quality for remaining mandatatory reagents
-      -- that aren't allocated
+      -- Calculate using the lowest priced quality for remaining mandatatory
+      -- reagents that aren't allocated
       if reagentSlotSchematic.reagentType == Enum.CraftingReagentType.Basic and selected ~= reagentSlotSchematic.quantityRequired then
         total = total + GetByMinCostOption(reagentSlotSchematic.reagents, reagentSlotSchematic.quantityRequired - selected)
       end
@@ -76,7 +78,7 @@ function Auctionator.CraftingInfo.GetOutputItemLink(recipeID, recipeLevel, reage
   -- craftable reagent
   -- Check that the recipe probably has an operation
   if recipeSchematic ~= nil and recipeSchematic.hasCraftingOperationInfo then
-    local operationInfo = C_TradeSkillUI.GetCraftingOperationInfo(recipeID, reagents, allocationGUID)
+    local operationInfo = C_TradeSkillUI.GetCraftingOperationInfo(recipeID, reagents, allocations)
 
     if operationInfo ~= nil then
       outputInfo = C_TradeSkillUI.GetRecipeOutputItemData(recipeID, reagents, allocations, operationInfo.guaranteedCraftingQualityID)
