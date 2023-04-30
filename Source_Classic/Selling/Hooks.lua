@@ -15,7 +15,7 @@ local function SelectOwnItem(self)
     if currentDurability ~= maxDurability then
       UIErrorsFrame:AddMessage(ERR_AUCTION_REPAIR_ITEM, 1.0, 0.1, 0.1, 1.0)
       return
-    elseif not Auctionator.Utilities.IsAtMaxCharges(itemLocation) then
+    elseif not AuctionHouseHelper.Utilities.IsAtMaxCharges(itemLocation) then
       UIErrorsFrame:AddMessage(ERR_AUCTION_USED_CHARGES, 1.0, 0.1, 0.1, 1.0)
       return
     elseif C_Item.IsBound(itemLocation) then
@@ -24,14 +24,14 @@ local function SelectOwnItem(self)
     end
   end
 
-  AuctionatorTabs_Selling:Click()
+  AuctionHouseHelperTabs_Selling:Click()
 
-  local itemInfo = Auctionator.Utilities.ItemInfoFromLocation(itemLocation)
-  itemInfo.count = Auctionator.Selling.GetItemCount(itemLocation)
+  local itemInfo = AuctionHouseHelper.Utilities.ItemInfoFromLocation(itemLocation)
+  itemInfo.count = AuctionHouseHelper.Selling.GetItemCount(itemLocation)
 
-  Auctionator.EventBus
+  AuctionHouseHelper.EventBus
     :RegisterSource(self, "ContainerFrameItemButton_On.*Click hook")
-    :Fire(self, Auctionator.Selling.Events.BagItemClicked, itemInfo)
+    :Fire(self, AuctionHouseHelper.Selling.Events.BagItemClicked, itemInfo)
     :UnregisterSource(self)
 end
 
@@ -41,21 +41,21 @@ end
 
 hooksecurefunc(_G, "ContainerFrameItemButton_OnEnter", function(self)
   if AHShown() and
-      Auctionator.Config.Get(Auctionator.Config.Options.SELLING_BAG_SELECT_SHORTCUT) == Auctionator.Config.Shortcuts.RIGHT_CLICK then
+      AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SELLING_BAG_SELECT_SHORTCUT) == AuctionHouseHelper.Config.Shortcuts.RIGHT_CLICK then
     SetAuctionsTabShowing(true)
   end
 end)
 
 hooksecurefunc(_G, "ContainerFrameItemButton_OnClick", function(self, button)
   if AHShown() and
-      Auctionator.Utilities.IsShortcutActive(Auctionator.Config.Get(Auctionator.Config.Options.SELLING_BAG_SELECT_SHORTCUT), button) then
+      AuctionHouseHelper.Utilities.IsShortcutActive(AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SELLING_BAG_SELECT_SHORTCUT), button) then
     SelectOwnItem(self)
   end
 end)
 
 hooksecurefunc(_G, "ContainerFrameItemButton_OnModifiedClick", function(self, button)
   if AHShown() and
-      Auctionator.Utilities.IsShortcutActive(Auctionator.Config.Get(Auctionator.Config.Options.SELLING_BAG_SELECT_SHORTCUT), button) then
+      AuctionHouseHelper.Utilities.IsShortcutActive(AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SELLING_BAG_SELECT_SHORTCUT), button) then
     SelectOwnItem(self)
   end
 end)

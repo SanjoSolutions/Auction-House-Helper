@@ -1,5 +1,5 @@
 <Ui>
-  <Button name="AuctionatorShoppingMiniTabButtonTemplate" inherits="TabButtonTemplate" mixin="AuctionatorShoppingListsMiniTabButtonMixinMixin" virtual="true">
+  <Button name="AuctionHouseHelperShoppingMiniTabButtonTemplate" inherits="TabButtonTemplate" mixin="AuctionHouseHelperShoppingListsMiniTabButtonMixinMixin" virtual="true">
     <Scripts>
       <OnLoad method="OnLoad" />
       <OnShow method="OnShow" />

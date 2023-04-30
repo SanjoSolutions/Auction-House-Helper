@@ -1,6 +1,6 @@
 ---
 name: Bug report for an alpha on classic
-about: You're playing on classic and using an alpha version of Auctionator
+about: You're playing on classic and using an alpha version of Auction House Helper
 title: ''
 labels: tbc
 assignees: ''

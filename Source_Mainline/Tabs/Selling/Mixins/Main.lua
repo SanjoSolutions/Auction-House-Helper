@@ -1,6 +1,6 @@
-AuctionatorSellingTabMixin = {}
+AuctionHouseHelperSellingTabMixin = {}
 
-function AuctionatorSellingTabMixin:OnLoad()
+function AuctionHouseHelperSellingTabMixin:OnLoad()
   self:ApplyHiding()
 
   self.BagListing:Init(self.BagDataProvider)
@@ -12,8 +12,8 @@ function AuctionatorSellingTabMixin:OnLoad()
   self.CurrentPricesListing:Init(self.CurrentPricesProvider)
 end
 
-function AuctionatorSellingTabMixin:ApplyHiding()
-  if not Auctionator.Config.Get(Auctionator.Config.Options.SHOW_SELLING_BAG) then
+function AuctionHouseHelperSellingTabMixin:ApplyHiding()
+  if not AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SHOW_SELLING_BAG) then
     self.BagListing:Hide()
     self.BagInset:Hide()
     self.CurrentPricesListing:SetPoint("LEFT", self, "LEFT", 10, -5)
@@ -25,11 +25,11 @@ function AuctionatorSellingTabMixin:ApplyHiding()
     self.PricesTabsContainer.YourHistoryTab:SetPoint("TOPRIGHT", self.PricesTabsContainer.PriceHistoryTab, "TOPLEFT")
   end
 
-  if Auctionator.Config.Get(Auctionator.Config.Options.SHOW_SELLING_BID_PRICE) then
+  if AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SHOW_SELLING_BID_PRICE) then
     self.BagListing:SetPoint("TOPLEFT", 4, -187)
   end
 
-  if Auctionator.Config.Get(Auctionator.Config.Options.SELLING_SPLIT_PANELS) then
+  if AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SELLING_SPLIT_PANELS) then
     self.PricesTabsContainer.PriceHistoryTab:Click()
     self.PricesTabsContainer.CurrentPricesTab:Hide()
     self.CurrentPricesListing:SetPoint("BOTTOMLEFT", self.BagListing, "CENTER")
@@ -38,7 +38,7 @@ function AuctionatorSellingTabMixin:ApplyHiding()
     self.HistoricalPriceListing:SetPoint("TOPLEFT", self.CurrentPricesListing, "BOTTOMLEFT", 0, 10)
     self.HistoricalPriceListing:SetPoint("BOTTOMRIGHT", -20, 5)
 
-    self.CurrentPricesInset = CreateFrame("Frame", nil, self, "AuctionatorInsetDarkTemplate")
+    self.CurrentPricesInset = CreateFrame("Frame", nil, self, "AuctionHouseHelperInsetDarkTemplate")
     self.CurrentPricesInset:SetPoint("TOPLEFT", self.CurrentPricesListing, -5, -24)
     self.CurrentPricesInset:SetPoint("BOTTOMRIGHT", self.CurrentPricesListing, 0, 2)
   end

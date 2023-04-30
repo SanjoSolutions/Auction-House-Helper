@@ -1,5 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Button name="AuctionatorStackOfInputNumStacksTemplate" virtual="true">
+  <Button name="AuctionHouseHelperStackOfInputNumStacksTemplate" virtual="true">
     <Size x="50" y="15"/>
     <NormalFont style="GameFontNormalSmall"/>
     <HighlightFont style="GameFontHighlightSmall"/>
@@ -11,7 +11,7 @@
     </HighlightTexture>
   </Button>
   <!-- Template for a input for stacks and stack sizes  -->
-  <Frame name="AuctionatorStackOfInputTemplate" mixin="AuctionatorStackOfInputMixin" virtual="true">
+  <Frame name="AuctionHouseHelperStackOfInputTemplate" mixin="AuctionHouseHelperStackOfInputMixin" virtual="true">
     <!--
       <KeyValues>
         <KeyValue key="tooltipTitleText" value="" type="string"/>
@@ -29,7 +29,7 @@
       <Anchor point="RIGHT" relativeKey="$parent" relativePoint="RIGHT" />
     </Anchors>
     <Frames>
-      <EditBox autoFocus="false" inherits="AuctionatorRetailImportLargeInputBoxTemplate" numeric="true" parentKey="NumStacks" letters="10">
+      <EditBox autoFocus="false" inherits="AuctionHouseHelperRetailImportLargeInputBoxTemplate" numeric="true" parentKey="NumStacks" letters="10">
         <Size x="70" y="20" />
         <Anchors>
           <Anchor point="TOPLEFT" />
@@ -37,13 +37,13 @@
         <FontString inherits="ChatFontNormal" justifyH="CENTER" />
         <Scripts>
           <OnEscapePressed>self:ClearFocus()</OnEscapePressed>
-          <OnEnterPressed>Auctionator.Components.ReportEnterPressed()</OnEnterPressed>
+          <OnEnterPressed>AuctionHouseHelper.Components.ReportEnterPressed()</OnEnterPressed>
           <OnEnter>self:GetParent():OnEnter()</OnEnter>
           <OnLeave>self:GetParent():OnLeave()</OnLeave>
           <OnMouseWheel>self:SetNumber(math.max(0, self:GetNumber() + delta))</OnMouseWheel>
         </Scripts>
       </EditBox>
-      <Button parentKey="MaxNumStacks" inherits="AuctionatorStackOfInputNumStacksTemplate" text="AUCTIONATOR_L_MAX_COLON_X">
+      <Button parentKey="MaxNumStacks" inherits="AuctionHouseHelperStackOfInputNumStacksTemplate" text="AUCTION_HOUSE_HELPER_L_MAX_COLON_X">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeKey="$parent.NumStacks" x="10" y="-4"/>
         </Anchors>
@@ -56,7 +56,7 @@
     </Frames>
     <Layers>
       <Layer level="BACKGROUND">
-        <FontString inherits="GameFontHighlight" parentKey="Label" text="AUCTIONATOR_L_STACK_OF">
+        <FontString inherits="GameFontHighlight" parentKey="Label" text="AUCTION_HOUSE_HELPER_L_STACK_OF">
           <Anchors>
             <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.NumStacks" x="10" y="-3"/>
           </Anchors>
@@ -64,7 +64,7 @@
       </Layer>
     </Layers>
     <Frames>
-      <EditBox autoFocus="false" inherits="AuctionatorRetailImportLargeInputBoxTemplate" numeric="true" parentKey="StackSize" letters="10">
+      <EditBox autoFocus="false" inherits="AuctionHouseHelperRetailImportLargeInputBoxTemplate" numeric="true" parentKey="StackSize" letters="10">
         <Size x="70" y="20" />
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.Label" x="10" y="3" />
@@ -72,13 +72,13 @@
         <FontString inherits="ChatFontNormal" justifyH="CENTER" />
         <Scripts>
           <OnEscapePressed>self:ClearFocus()</OnEscapePressed>
-          <OnEnterPressed>Auctionator.Components.ReportEnterPressed()</OnEnterPressed>
+          <OnEnterPressed>AuctionHouseHelper.Components.ReportEnterPressed()</OnEnterPressed>
           <OnEnter>self:GetParent():OnEnter()</OnEnter>
           <OnLeave>self:GetParent():OnLeave()</OnLeave>
           <OnMouseWheel>self:SetNumber(math.max(0, self:GetNumber() + delta))</OnMouseWheel>
         </Scripts>
       </EditBox>
-      <Button parentKey="MaxStackSize" inherits="AuctionatorStackOfInputNumStacksTemplate" text="AUCTIONATOR_L_MAX_COLON_X">
+      <Button parentKey="MaxStackSize" inherits="AuctionHouseHelperStackOfInputNumStacksTemplate" text="AUCTION_HOUSE_HELPER_L_MAX_COLON_X">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeKey="$parent.StackSize" x="10" y="-4"/>
         </Anchors>

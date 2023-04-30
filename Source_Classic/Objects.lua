@@ -1,1 +1,1 @@
-Auctionator.Buying = {}
+AuctionHouseHelper.Buying = {}

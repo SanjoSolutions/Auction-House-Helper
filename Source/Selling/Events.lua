@@ -1,4 +1,4 @@
-Auctionator.Selling.Events = {
+AuctionHouseHelper.Selling.Events = {
   BagItemClicked = "bag_item_clicked",
   BagRefresh = "bag_refresh",
   RequestPost = "selling_request_post",

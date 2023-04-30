@@ -20,7 +20,7 @@ function ALL_FILTERS.craftedLevel(resultWithKey, limits)
     return true
   end
 
-  local level = resultWithKey.entries[1].info[Auctionator.Constants.AuctionItemInfo.Level]
+  local level = resultWithKey.entries[1].info[AuctionHouseHelper.Constants.AuctionItemInfo.Level]
   return SatisfiesLimit(level, limits)
 end
 
@@ -29,10 +29,10 @@ function ALL_FILTERS.price(resultWithKey, limits)
 end
 
 function ALL_FILTERS.quality(resultWithKey, quality)
-  return (select(Auctionator.Constants.ITEM_INFO.RARITY, GetItemInfo(resultWithKey.entries[1].itemLink))) == quality
+  return (select(AuctionHouseHelper.Constants.ITEM_INFO.RARITY, GetItemInfo(resultWithKey.entries[1].itemLink))) == quality
 end
 
-function Auctionator.Search.CheckFilters(resultWithKey, filters)
+function AuctionHouseHelper.Search.CheckFilters(resultWithKey, filters)
   for filterName, limits in pairs(filters) do
     if not ALL_FILTERS[filterName](resultWithKey, limits) then
       return false

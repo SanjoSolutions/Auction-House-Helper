@@ -1,7 +1,7 @@
 local function Atr_GetDEitemName( itemID )
   local itemName = GetItemInfo( itemID )
 
-  return itemName or Auctionator.Constants.DisenchantingItemName[ itemID ]
+  return itemName or AuctionHouseHelper.Constants.DisenchantingItemName[ itemID ]
 end
 
 -----------------------------------------
@@ -9,11 +9,11 @@ end
 -- same as Atr_GetAuctionPrice but understands that some "lesser" essences are
 -- convertible with "greater"
 local function Atr_GetAuctionPriceDE( itemID )
-  local mapping = Auctionator.Constants.DisenchantingMatMapping[ itemID ]
+  local mapping = AuctionHouseHelper.Constants.DisenchantingMatMapping[ itemID ]
 
   if mapping then
-    local lesserPrice = Auctionator.API.v1.GetAuctionPriceByItemID("Auctionator", itemID)
-    local greaterPrice = Auctionator.API.v1.GetAuctionPriceByItemID("Auctionator", mapping )
+    local lesserPrice = AuctionHouseHelper.API.v1.GetAuctionPriceByItemID("AuctionHouseHelper", itemID)
+    local greaterPrice = AuctionHouseHelper.API.v1.GetAuctionPriceByItemID("AuctionHouseHelper", mapping )
 
     if lesserPrice and greaterPrice and lesserPrice * 3 > greaterPrice then
       return math.floor( greaterPrice / 3 )
@@ -21,19 +21,19 @@ local function Atr_GetAuctionPriceDE( itemID )
       return lesserPrice
     end
   else
-    return Auctionator.API.v1.GetAuctionPriceByItemID("Auctionator", itemID)
+    return AuctionHouseHelper.API.v1.GetAuctionPriceByItemID("AuctionHouseHelper", itemID)
   end
 end
 
 -----------------------------------------
 
 local function ItemLevelMatches( entry, itemLevel )
-  return itemLevel >= entry[ Auctionator.Constants.DisenchantingProbabilityKeys.LOW ] and
-    itemLevel <= entry[ Auctionator.Constants.DisenchantingProbabilityKeys.HIGH ]
+  return itemLevel >= entry[ AuctionHouseHelper.Constants.DisenchantingProbabilityKeys.LOW ] and
+    itemLevel <= entry[ AuctionHouseHelper.Constants.DisenchantingProbabilityKeys.HIGH ]
 end
 
 local function Atr_FindDEentry (classID, itemRarity, itemLevel)
-  local itemClassTable = Auctionator.Constants.DisenchantingProbability[ classID ]
+  local itemClassTable = AuctionHouseHelper.Constants.DisenchantingProbability[ classID ]
   local entries = ( itemClassTable and itemClassTable[ itemRarity ] ) or {}
 
   for index, entry in pairs( entries ) do
@@ -76,14 +76,14 @@ local function Atr_CalcDisenchantPrice(classID, itemRarity, itemLevel)
   return nil
 end
 
-function Auctionator.Enchant.DisenchantStatus(itemInfo)
+function AuctionHouseHelper.Enchant.DisenchantStatus(itemInfo)
   return {
     isDisenchantable = IsDisenchantableItemType(itemInfo[12]),
     supportedXpac = true,
   }
 end
 
-function Auctionator.Enchant.GetDisenchantBreakdown(itemLink, itemInfo)
+function AuctionHouseHelper.Enchant.GetDisenchantBreakdown(itemLink, itemInfo)
   local entry = Atr_FindDEentry( itemInfo[12], itemInfo[3], (GetDetailedItemLevelInfo(itemLink)) )
 
   local results = {}
@@ -102,7 +102,7 @@ function Auctionator.Enchant.GetDisenchantBreakdown(itemLink, itemInfo)
   return results
 end
 
-function Auctionator.Enchant.GetDisenchantAuctionPrice(itemLink, itemInfo)
+function AuctionHouseHelper.Enchant.GetDisenchantAuctionPrice(itemLink, itemInfo)
   local itemID = GetItemInfoInstant(itemLink)
   local itemLevel = GetDetailedItemLevelInfo(itemLink)
   return Atr_CalcDisenchantPrice(itemInfo[12], itemInfo[3], itemLevel)

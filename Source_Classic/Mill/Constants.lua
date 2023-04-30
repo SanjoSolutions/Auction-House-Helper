@@ -69,7 +69,7 @@ local MILL_ITEMS = {
 
 -- Common pigments come in 2/3/4 count unless noted otherwise.
 -- Uncommon pigments all come in a 1/2/3 count.
-Auctionator.Mill.MILL_TABLE = {
+AuctionHouseHelper.Mill.MILL_TABLE = {
   -- VANILLA TIER 1
   -- Only common pigments from these.
   [MILL_ITEMS.PEACEBLOOM] = {

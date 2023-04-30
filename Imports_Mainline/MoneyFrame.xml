@@ -1,4 +1,4 @@
 <Ui>
-  <Frame name="AuctionatorRetailImportMoneyDenominationDisplayTemplate" inherits="MoneyDenominationDisplayTemplate" virtual="true" />
-  <Frame name="AuctionatorRetailImportMoneyDisplayFrameTemplate" inherits="MoneyDisplayFrameTemplate" virtual="true" />
+  <Frame name="AuctionHouseHelperRetailImportMoneyDenominationDisplayTemplate" inherits="MoneyDenominationDisplayTemplate" virtual="true" />
+  <Frame name="AuctionHouseHelperRetailImportMoneyDisplayFrameTemplate" inherits="MoneyDisplayFrameTemplate" virtual="true" />
 </Ui>

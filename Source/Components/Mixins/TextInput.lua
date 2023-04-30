@@ -1,22 +1,22 @@
-AuctionatorConfigTextInputMixin = {}
+AuctionHouseHelperConfigTextInputMixin = {}
 
-function AuctionatorConfigTextInputMixin:OnLoad()
-  Auctionator.Debug.Message("HERE HERE HERE HERE HERE HERE HERE")
+function AuctionHouseHelperConfigTextInputMixin:OnLoad()
+  AuctionHouseHelper.Debug.Message("HERE HERE HERE HERE HERE HERE HERE")
 end
 
-function AuctionatorConfigTextInputMixin:OnMouseUp()
+function AuctionHouseHelperConfigTextInputMixin:OnMouseUp()
   self.InputBox:SetFocus()
 end
 
-function AuctionatorConfigTextInputMixin:SetFocus()
+function AuctionHouseHelperConfigTextInputMixin:SetFocus()
   self.InputBox:SetFocus()
 end
 
-function AuctionatorConfigTextInputMixin:SetText(value)
+function AuctionHouseHelperConfigTextInputMixin:SetText(value)
   self.InputBox:SetText(value)
   self.InputBox:SetCursorPosition(0)
 end
 
-function AuctionatorConfigTextInputMixin:GetText()
+function AuctionHouseHelperConfigTextInputMixin:GetText()
   return self.InputBox:GetText()
 end

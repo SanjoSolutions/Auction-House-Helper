@@ -1,46 +1,46 @@
-AuctionatorFullScanFrameMixin = {}
+AuctionHouseHelperFullScanFrameMixin = {}
 
 local FULL_SCAN_EVENTS = {
   "REPLICATE_ITEM_LIST_UPDATE",
   "AUCTION_HOUSE_CLOSED"
 }
 
-function AuctionatorFullScanFrameMixin:OnLoad()
-  Auctionator.Debug.Message("AuctionatorFullScanFrameMixin:OnLoad")
-  Auctionator.EventBus:RegisterSource(self, "AuctionatorFullScanFrameMixin")
-  self.state = Auctionator.SavedState
+function AuctionHouseHelperFullScanFrameMixin:OnLoad()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperFullScanFrameMixin:OnLoad")
+  AuctionHouseHelper.EventBus:RegisterSource(self, "AuctionHouseHelperFullScanFrameMixin")
+  self.state = AuctionHouseHelper.SavedState
 end
 
-function AuctionatorFullScanFrameMixin:ResetData()
+function AuctionHouseHelperFullScanFrameMixin:ResetData()
   self.scanData = {}
   self.dbKeysMapping = {}
 end
 
-function AuctionatorFullScanFrameMixin:InitiateScan()
+function AuctionHouseHelperFullScanFrameMixin:InitiateScan()
   if self:CanInitiate() then
-    Auctionator.EventBus:Fire(self, Auctionator.FullScan.Events.ScanStart)
+    AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.FullScan.Events.ScanStart)
 
     self.state.TimeOfLastReplicateScan = time()
 
     self.inProgress = true
 
     self:RegisterForEvents()
-    Auctionator.Utilities.Message(AUCTIONATOR_L_STARTING_FULL_SCAN_REPLICATE)
+    AuctionHouseHelper.Utilities.Message(AUCTION_HOUSE_HELPER_L_STARTING_FULL_SCAN_REPLICATE)
     C_AuctionHouse.ReplicateItems()
     -- 10% complete after making the replicate request
-    Auctionator.EventBus:Fire(self, Auctionator.FullScan.Events.ScanProgress, 0.1)
+    AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.FullScan.Events.ScanProgress, 0.1)
   else
-    Auctionator.Utilities.Message(self:NextScanMessage())
+    AuctionHouseHelper.Utilities.Message(self:NextScanMessage())
   end
 end
 
-function AuctionatorFullScanFrameMixin:IsAutoscanReady()
+function AuctionHouseHelperFullScanFrameMixin:IsAutoscanReady()
   local timeSinceLastScan = time() - (self.state.TimeOfLastReplicateScan or 0)
 
-  return timeSinceLastScan >= (Auctionator.Config.Get(Auctionator.Config.Options.AUTOSCAN_INTERVAL) * 60) and self:CanInitiate()
+  return timeSinceLastScan >= (AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.AUTOSCAN_INTERVAL) * 60) and self:CanInitiate()
 end
 
-function AuctionatorFullScanFrameMixin:CanInitiate()
+function AuctionHouseHelperFullScanFrameMixin:CanInitiate()
   return
    ( self.state.TimeOfLastReplicateScan ~= nil and
      time() - self.state.TimeOfLastReplicateScan > 60 * 15 and
@@ -48,29 +48,29 @@ function AuctionatorFullScanFrameMixin:CanInitiate()
    ) or self.state.TimeOfLastReplicateScan == nil
 end
 
-function AuctionatorFullScanFrameMixin:NextScanMessage()
+function AuctionHouseHelperFullScanFrameMixin:NextScanMessage()
   local timeSinceLastScan = time() - self.state.TimeOfLastReplicateScan
   local minutesUntilNextScan = 15 - math.ceil(timeSinceLastScan / 60)
   local secondsUntilNextScan = (15 * 60 - timeSinceLastScan) % 60
 
-  return AUCTIONATOR_L_NEXT_SCAN_MESSAGE:format(minutesUntilNextScan, secondsUntilNextScan)
+  return AUCTION_HOUSE_HELPER_L_NEXT_SCAN_MESSAGE:format(minutesUntilNextScan, secondsUntilNextScan)
 end
 
-function AuctionatorFullScanFrameMixin:RegisterForEvents()
-  Auctionator.Debug.Message("AuctionatorFullScanFrameMixin:RegisterForEvents()")
+function AuctionHouseHelperFullScanFrameMixin:RegisterForEvents()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperFullScanFrameMixin:RegisterForEvents()")
 
   FrameUtil.RegisterFrameForEvents(self, FULL_SCAN_EVENTS)
 end
 
-function AuctionatorFullScanFrameMixin:UnregisterForEvents()
-  Auctionator.Debug.Message("AuctionatorFullScanFrameMixin:UnregisterForEvents()")
+function AuctionHouseHelperFullScanFrameMixin:UnregisterForEvents()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperFullScanFrameMixin:UnregisterForEvents()")
 
   FrameUtil.UnregisterFrameForEvents(self, FULL_SCAN_EVENTS)
 end
 
-function AuctionatorFullScanFrameMixin:CacheScanData()
+function AuctionHouseHelperFullScanFrameMixin:CacheScanData()
   -- 20% complete after server response
-  Auctionator.EventBus:Fire(self, Auctionator.FullScan.Events.ScanProgress, 0.2)
+  AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.FullScan.Events.ScanProgress, 0.2)
 
   self:ResetData()
   self.waitingForData = C_AuctionHouse.GetNumReplicateItems()
@@ -82,7 +82,7 @@ function AuctionatorFullScanFrameMixin:CacheScanData()
   )
 end
 
-function AuctionatorFullScanFrameMixin:ProcessBatch(startIndex, stepSize, limit)
+function AuctionHouseHelperFullScanFrameMixin:ProcessBatch(startIndex, stepSize, limit)
   if startIndex >= limit then
     C_Timer.After(2, function()
       if self.waitingForData > 0 then
@@ -94,12 +94,12 @@ function AuctionatorFullScanFrameMixin:ProcessBatch(startIndex, stepSize, limit)
   end
 
   -- 20-100% complete when 0-100% through caching the scan
-  Auctionator.EventBus:Fire(self,
-    Auctionator.FullScan.Events.ScanProgress,
+  AuctionHouseHelper.EventBus:Fire(self,
+    AuctionHouseHelper.FullScan.Events.ScanProgress,
     0.2 + startIndex/limit*0.8
   )
 
-  Auctionator.Debug.Message("AuctionatorFullScanFrameMixin:ProcessBatch (links)", startIndex, stepSize, limit)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperFullScanFrameMixin:ProcessBatch (links)", startIndex, stepSize, limit)
 
   local i = startIndex
   while i < startIndex+stepSize and i < limit do
@@ -120,7 +120,7 @@ function AuctionatorFullScanFrameMixin:ProcessBatch(startIndex, stepSize, limit)
       ItemEventListener:AddCallback(info[17], function()
         local link = C_AuctionHouse.GetReplicateItemLink(index)
 
-        Auctionator.Utilities.DBKeyFromLink(link, function(dbKeys)
+        AuctionHouseHelper.Utilities.DBKeyFromLink(link, function(dbKeys)
           self.waitingForData = self.waitingForData - 1
 
           self.scanData[index + 1] = {
@@ -136,7 +136,7 @@ function AuctionatorFullScanFrameMixin:ProcessBatch(startIndex, stepSize, limit)
         end)
       end)
     else
-      Auctionator.Utilities.DBKeyFromLink(link, function(dbKeys)
+      AuctionHouseHelper.Utilities.DBKeyFromLink(link, function(dbKeys)
         self.waitingForData = self.waitingForData - 1
         self.scanData[index + 1] = {
           replicateInfo = info,
@@ -159,9 +159,9 @@ function AuctionatorFullScanFrameMixin:ProcessBatch(startIndex, stepSize, limit)
   end)
 end
 
-function AuctionatorFullScanFrameMixin:OnEvent(event, ...)
+function AuctionHouseHelperFullScanFrameMixin:OnEvent(event, ...)
   if event == "REPLICATE_ITEM_LIST_UPDATE" then
-    Auctionator.Debug.Message("REPLICATE_ITEM_LIST_UPDATE")
+    AuctionHouseHelper.Debug.Message("REPLICATE_ITEM_LIST_UPDATE")
 
     FrameUtil.UnregisterFrameForEvents(self, { "REPLICATE_ITEM_LIST_UPDATE" })
     self:CacheScanData()
@@ -172,10 +172,10 @@ function AuctionatorFullScanFrameMixin:OnEvent(event, ...)
       self.inProgress = false
       self:ResetData()
 
-      Auctionator.Utilities.Message(
-        AUCTIONATOR_L_FULL_SCAN_FAILED_REPLICATE .. " " .. self:NextScanMessage()
+      AuctionHouseHelper.Utilities.Message(
+        AUCTION_HOUSE_HELPER_L_FULL_SCAN_FAILED_REPLICATE .. " " .. self:NextScanMessage()
       )
-      Auctionator.EventBus:Fire(self, Auctionator.FullScan.Events.ScanFailed)
+      AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.FullScan.Events.ScanFailed)
     end
   end
 end
@@ -214,7 +214,7 @@ local function MergeInfo(scanData, dbKeysMapping)
   return allInfo
 end
 
-function AuctionatorFullScanFrameMixin:EndProcessing()
+function AuctionHouseHelperFullScanFrameMixin:EndProcessing()
   local fixedScanData = {}
   local fixedDbKeysMapping = {}
 
@@ -226,13 +226,13 @@ function AuctionatorFullScanFrameMixin:EndProcessing()
     end
   end
 
-  local count = Auctionator.Database:ProcessScan(MergeInfo(fixedScanData, fixedDbKeysMapping))
-  Auctionator.Utilities.Message(AUCTIONATOR_L_FINISHED_PROCESSING:format(count))
+  local count = AuctionHouseHelper.Database:ProcessScan(MergeInfo(fixedScanData, fixedDbKeysMapping))
+  AuctionHouseHelper.Utilities.Message(AUCTION_HOUSE_HELPER_L_FINISHED_PROCESSING:format(count))
 
   self.inProgress = false
   self:ResetData()
 
   self:UnregisterForEvents()
 
-  Auctionator.EventBus:Fire(self, Auctionator.FullScan.Events.ScanComplete, fixedScanData)
+  AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.FullScan.Events.ScanComplete, fixedScanData)
 end

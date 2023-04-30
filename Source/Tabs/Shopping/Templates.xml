@@ -1,5 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Button name="AuctionatorScrollListLineNoButtonsTemplate" mixin="AuctionatorScrollListLineMixin" virtual="true">
+  <Button name="AuctionHouseHelperScrollListLineNoButtonsTemplate" mixin="AuctionHouseHelperScrollListLineMixin" virtual="true">
     <Size x="0" y="20"/>
 
     <Anchors>
@@ -32,7 +32,7 @@
     </Scripts>
   </Button>
 
-  <Button name="AuctionatorScrollListLineButtonTemplate" virtual="true" mixin="AuctionatorScrollListLineButtonMixin">
+  <Button name="AuctionHouseHelperScrollListLineButtonTemplate" virtual="true" mixin="AuctionHouseHelperScrollListLineButtonMixin">
     <Scripts>
       <OnShow method="OnShow"/>
       <OnEnter method="OnEnter"/>
@@ -40,13 +40,13 @@
     </Scripts>
   </Button>
 
-  <Button name="AuctionatorScrollListLineShoppingListTemplate" inherits="AuctionatorScrollListLineNoButtonsTemplate" mixin="AuctionatorScrollListLineShoppingListMixin" virtual="true">
+  <Button name="AuctionHouseHelperScrollListLineShoppingListTemplate" inherits="AuctionHouseHelperScrollListLineNoButtonsTemplate" mixin="AuctionHouseHelperScrollListLineShoppingListMixin" virtual="true">
     <Scripts>
       <OnMouseUp method="OnMouseUp"/>
       <OnMouseDown method="OnMouseDown"/>
     </Scripts>
     <Frames>
-      <Button parentKey="EditButton" inherits="AuctionatorScrollListLineButtonTemplate">
+      <Button parentKey="EditButton" inherits="AuctionHouseHelperScrollListLineButtonTemplate">
         <Size>
           <AbsDimension x="15" y="15"/>
         </Size>
@@ -54,12 +54,12 @@
           <Anchor point="TOPRIGHT" x="-30" y="-2"/>
         </Anchors>
         <KeyValues>
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_EDIT_ITEM" type="global"/>
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_EDIT_ITEM" type="global"/>
         </KeyValues>
         <Layers>
           <Layer level="ARTWORK">
-            <Texture file="Interface\AddOns\Auctionator\Images\Pen_Icon" parentKey="texture"/>
-            <Texture file="Interface\AddOns\Auctionator\Images\Pen_Icon_Grey" parentKey="hoverTexture"/>
+            <Texture file="Interface\AddOns\AuctionHouseHelper\Images\Pen_Icon" parentKey="texture"/>
+            <Texture file="Interface\AddOns\AuctionHouseHelper\Images\Pen_Icon_Grey" parentKey="hoverTexture"/>
           </Layer>
         </Layers>
 
@@ -67,20 +67,20 @@
           <OnClick>self:GetParent():EditItem()</OnClick>
         </Scripts>
       </Button>
-      <Button parentKey="DeleteButton" inherits="AuctionatorScrollListLineButtonTemplate">
+      <Button parentKey="DeleteButton" inherits="AuctionHouseHelperScrollListLineButtonTemplate">
         <Size>
           <AbsDimension x="15" y="15"/>
         </Size>
         <KeyValues>
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_DELETE" type="global"/>
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_DELETE" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="TOPRIGHT" x="-10" y="-2"/>
         </Anchors>
         <Layers>
           <Layer level="ARTWORK">
-            <Texture file="Interface\AddOns\Auctionator\Images\Trash_Icon" parentKey="texture"/>
-            <Texture file="Interface\AddOns\Auctionator\Images\Trash_Icon_Grey" parentKey="hoverTexture"/>
+            <Texture file="Interface\AddOns\AuctionHouseHelper\Images\Trash_Icon" parentKey="texture"/>
+            <Texture file="Interface\AddOns\AuctionHouseHelper\Images\Trash_Icon_Grey" parentKey="hoverTexture"/>
           </Layer>
         </Layers>
 
@@ -90,9 +90,9 @@
       </Button>
     </Frames>
   </Button>
-  <Button name="AuctionatorScrollListLineRecentsTemplate" inherits="AuctionatorScrollListLineNoButtonsTemplate" mixin="AuctionatorScrollListLineRecentsMixin" virtual="true">
+  <Button name="AuctionHouseHelperScrollListLineRecentsTemplate" inherits="AuctionHouseHelperScrollListLineNoButtonsTemplate" mixin="AuctionHouseHelperScrollListLineRecentsMixin" virtual="true">
     <Frames>
-      <Button parentKey="CopyButton" inherits="AuctionatorScrollListLineButtonTemplate">
+      <Button parentKey="CopyButton" inherits="AuctionHouseHelperScrollListLineButtonTemplate">
         <Size>
           <AbsDimension x="15" y="15"/>
         </Size>
@@ -100,12 +100,12 @@
           <Anchor point="TOPRIGHT" x="-30" y="-2"/>
         </Anchors>
         <KeyValues>
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_COPY_TO_LIST" type="global"/>
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_COPY_TO_LIST" type="global"/>
         </KeyValues>
         <Layers>
           <Layer level="ARTWORK">
-            <Texture file="Interface\AddOns\Auctionator\Images\Copy_Icon" parentKey="texture"/>
-            <Texture file="Interface\AddOns\Auctionator\Images\Copy_Icon_Grey" parentKey="hoverTexture"/>
+            <Texture file="Interface\AddOns\AuctionHouseHelper\Images\Copy_Icon" parentKey="texture"/>
+            <Texture file="Interface\AddOns\AuctionHouseHelper\Images\Copy_Icon_Grey" parentKey="hoverTexture"/>
           </Layer>
         </Layers>
 
@@ -113,20 +113,20 @@
           <OnClick>self:GetParent():CopyItem()</OnClick>
         </Scripts>
       </Button>
-      <Button parentKey="DeleteButton" inherits="AuctionatorScrollListLineButtonTemplate">
+      <Button parentKey="DeleteButton" inherits="AuctionHouseHelperScrollListLineButtonTemplate">
         <Size>
           <AbsDimension x="15" y="15"/>
         </Size>
         <KeyValues>
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_DELETE" type="global"/>
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_DELETE" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="TOPRIGHT" x="-10" y="-2"/>
         </Anchors>
         <Layers>
           <Layer level="ARTWORK">
-            <Texture file="Interface\AddOns\Auctionator\Images\Trash_Icon" parentKey="texture"/>
-            <Texture file="Interface\AddOns\Auctionator\Images\Trash_Icon_Grey" parentKey="hoverTexture"/>
+            <Texture file="Interface\AddOns\AuctionHouseHelper\Images\Trash_Icon" parentKey="texture"/>
+            <Texture file="Interface\AddOns\AuctionHouseHelper\Images\Trash_Icon_Grey" parentKey="hoverTexture"/>
           </Layer>
         </Layers>
 

@@ -18,7 +18,7 @@ local ENCHANT_REAGENTS = {
   FRACTURED_TEMPORAL_CRYSTAL = "115504",
 }
 
-Auctionator.Enchant.DE_TABLE = {
+AuctionHouseHelper.Enchant.DE_TABLE = {
   [LE_EXPANSION_SHADOWLANDS or LE_EXPANSION_9_0] = {
     [Enum.ItemQuality.Uncommon] = {
       -- This example has 33.3% drop chance of 1, 33.3% drop chance of 2 and a

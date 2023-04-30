@@ -1,29 +1,29 @@
-AuctionatorBagItemContainerMixin = {}
+AuctionHouseHelperBagItemContainerMixin = {}
 
-function AuctionatorBagItemContainerMixin:OnLoad()
-  self.iconSize = Auctionator.Config.Get(Auctionator.Config.Options.SELLING_ICON_SIZE)
+function AuctionHouseHelperBagItemContainerMixin:OnLoad()
+  self.iconSize = AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SELLING_ICON_SIZE)
 
   self.buttons = {}
-  self.buttonPool = CreateFramePool("Button", self, "AuctionatorBagItem", FramePool_HideAndClearAnchors, false, function(button)
+  self.buttonPool = CreateFramePool("Button", self, "AuctionHouseHelperBagItem", FramePool_HideAndClearAnchors, false, function(button)
     button:SetSize(self.iconSize, self.iconSize)
   end)
 end
 
-function AuctionatorBagItemContainerMixin:Reset()
+function AuctionHouseHelperBagItemContainerMixin:Reset()
   self.buttons = {}
 
   self.buttonPool:ReleaseAll()
 end
 
-function AuctionatorBagItemContainerMixin:GetRowLength()
+function AuctionHouseHelperBagItemContainerMixin:GetRowLength()
   return math.floor(250/self.iconSize)
 end
 
-function AuctionatorBagItemContainerMixin:GetRowWidth()
+function AuctionHouseHelperBagItemContainerMixin:GetRowWidth()
   return self:GetRowLength() * self.iconSize
 end
 
-function AuctionatorBagItemContainerMixin:AddItems(itemList)
+function AuctionHouseHelperBagItemContainerMixin:AddItems(itemList)
   for _, item in ipairs(itemList) do
     self:AddItem(item)
   end
@@ -31,7 +31,7 @@ function AuctionatorBagItemContainerMixin:AddItems(itemList)
   self:DrawButtons()
 end
 
-function AuctionatorBagItemContainerMixin:AddItem(item)
+function AuctionHouseHelperBagItemContainerMixin:AddItem(item)
   local button = self.buttonPool:Acquire()
 
   button:Show()
@@ -41,7 +41,7 @@ function AuctionatorBagItemContainerMixin:AddItem(item)
   table.insert(self.buttons, button)
 end
 
-function AuctionatorBagItemContainerMixin:DrawButtons()
+function AuctionHouseHelperBagItemContainerMixin:DrawButtons()
   local rows = 1
 
   for index, button in ipairs(self.buttons) do
@@ -64,6 +64,6 @@ function AuctionatorBagItemContainerMixin:DrawButtons()
   self:SetSize(self.iconSize * self:GetRowLength(), self:GetHeight())
 end
 
-function AuctionatorBagItemContainerMixin:GetNumItems()
+function AuctionHouseHelperBagItemContainerMixin:GetNumItems()
   return #self.buttons
 end

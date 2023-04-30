@@ -1,5 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
- <Frame name="AuctionatorStatusDialogTemplate" virtual="true" frameStrata="Dialog">
+ <Frame name="AuctionHouseHelperStatusDialogTemplate" virtual="true" frameStrata="Dialog">
   <KeyValues>
     <KeyValue key="layoutType" value="Dialog" type="string"/>
   </KeyValues>
@@ -35,6 +35,6 @@
   </Frames>
 </Frame>
 
-<Frame name="AuctionatorPageStatusDialogTemplate" mixin="AuctionatorPageStatusDialogMixin" inherits="AuctionatorStatusDialogTemplate" virtual="true"/>
-<Frame name="AuctionatorThrottlingTimeoutDialogTemplate" mixin="AuctionatorThrottlingTimeoutDialogMixin" inherits="AuctionatorStatusDialogTemplate" virtual="true" frameLevel="500" />
+<Frame name="AuctionHouseHelperPageStatusDialogTemplate" mixin="AuctionHouseHelperPageStatusDialogMixin" inherits="AuctionHouseHelperStatusDialogTemplate" virtual="true"/>
+<Frame name="AuctionHouseHelperThrottlingTimeoutDialogTemplate" mixin="AuctionHouseHelperThrottlingTimeoutDialogMixin" inherits="AuctionHouseHelperStatusDialogTemplate" virtual="true" frameLevel="500" />
 </Ui>

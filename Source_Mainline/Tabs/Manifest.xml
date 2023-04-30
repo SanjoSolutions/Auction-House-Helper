@@ -2,7 +2,7 @@
   <Include file="ResultsListing\Manifest.xml" />
   <Include file="DataProviders\Manifest.xml" />
 
-  <Include file="Auctionator\Manifest.xml" />
+  <Include file="AuctionHouseHelper\Manifest.xml" />
   <Include file="Selling\Manifest.xml" />
   <Include file="Shopping\Manifest.xml" />
   <Include file="Cancelling\Manifest.xml" />

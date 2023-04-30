@@ -1,4 +1,4 @@
-function Auctionator.Utilities.StringJoin(array, delimiter)
+function AuctionHouseHelper.Utilities.StringJoin(array, delimiter)
   local result = ""
 
   for index, item in ipairs(array) do

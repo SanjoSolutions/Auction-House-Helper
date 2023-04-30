@@ -1,19 +1,19 @@
-AuctionatorShoppingClassicLoadAllButtonMixin = {}
+AuctionHouseHelperShoppingClassicLoadAllButtonMixin = {}
 
-function AuctionatorShoppingClassicLoadAllButtonMixin:OnLoad()
-  Auctionator.EventBus:Register(self, {
-    Auctionator.Shopping.Tab.Events.SearchForTerms,
-    Auctionator.Shopping.Tab.Events.ListSearchStarted,
-    Auctionator.Shopping.Tab.Events.ListSearchEnded,
+function AuctionHouseHelperShoppingClassicLoadAllButtonMixin:OnLoad()
+  AuctionHouseHelper.EventBus:Register(self, {
+    AuctionHouseHelper.Shopping.Tab.Events.SearchForTerms,
+    AuctionHouseHelper.Shopping.Tab.Events.ListSearchStarted,
+    AuctionHouseHelper.Shopping.Tab.Events.ListSearchEnded,
   })
 end
 
-function AuctionatorShoppingClassicLoadAllButtonMixin:ReceiveEvent(eventName, eventData)
-  if eventName == Auctionator.Shopping.Tab.Events.SearchForTerms then
+function AuctionHouseHelperShoppingClassicLoadAllButtonMixin:ReceiveEvent(eventName, eventData)
+  if eventName == AuctionHouseHelper.Shopping.Tab.Events.SearchForTerms then
     self.lastTerms = eventData
-  elseif eventName == Auctionator.Shopping.Tab.Events.ListSearchStarted then
+  elseif eventName == AuctionHouseHelper.Shopping.Tab.Events.ListSearchStarted then
     self:Hide()
-  elseif eventName == Auctionator.Shopping.Tab.Events.ListSearchEnded then
+  elseif eventName == AuctionHouseHelper.Shopping.Tab.Events.ListSearchEnded then
     if eventData and #eventData > 0 then
       local anyIncomplete = false
       for _, entry in ipairs(eventData) do
@@ -27,8 +27,8 @@ function AuctionatorShoppingClassicLoadAllButtonMixin:ReceiveEvent(eventName, ev
    end
 end
 
-function AuctionatorShoppingClassicLoadAllButtonMixin:OnClick()
+function AuctionHouseHelperShoppingClassicLoadAllButtonMixin:OnClick()
   if self.lastTerms ~= nil then
-    Auctionator.EventBus:Fire(self:GetParent(), Auctionator.Shopping.Tab.Events.SearchForTerms, self.lastTerms, { searchAllPages = true })
+    AuctionHouseHelper.EventBus:Fire(self:GetParent(), AuctionHouseHelper.Shopping.Tab.Events.SearchForTerms, self.lastTerms, { searchAllPages = true })
   end
 end

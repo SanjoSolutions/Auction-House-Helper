@@ -1,7 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="AuctionatorConfigSellingShortcutsFrameTemplate"
-    mixin="AuctionatorConfigSellingShortcutsFrameMixin"
+    name="AuctionHouseHelperConfigSellingShortcutsFrameTemplate"
+    mixin="AuctionHouseHelperConfigSellingShortcutsFrameMixin"
     virtual="true">
 
     <Scripts>
@@ -11,15 +11,15 @@
     </Scripts>
 
     <Frames>
-      <Frame inherits="AuctionatorConfigurationTitleFrame" parentKey="TitleArea">
+      <Frame inherits="AuctionHouseHelperConfigurationTitleFrame" parentKey="TitleArea">
         <KeyValues>
-          <KeyValue key="titleText" value="AUCTIONATOR_L_CONFIG_SELLING_SHORTCUTS_CATEGORY" type="global" />
-          <KeyValue key="subTitleText" value="AUCTIONATOR_L_CONFIG_SELLING_SHORTCUTS_TEXT" type="global"/>
+          <KeyValue key="titleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_SHORTCUTS_CATEGORY" type="global" />
+          <KeyValue key="subTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_SHORTCUTS_TEXT" type="global"/>
         </KeyValues>
       </Frame>
-      <Frame inherits="AuctionatorDropDown" parentKey="BagSelectShortcut">
+      <Frame inherits="AuctionHouseHelperDropDown" parentKey="BagSelectShortcut">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SELLING_BAG_SELECT_SHORTCUT" type="global" />
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_BAG_SELECT_SHORTCUT" type="global" />
           <KeyValue key="textString" value="RIGHT_CLICK;ALT_LEFT_CLICK;ALT_RIGHT_CLICK;SHIFT_LEFT_CLICK;SHIFT_RIGHT_CLICK;DISABLED" type="string"/>
           <KeyValue key="valuesString" value="right click;alt left click;alt right click;shift left click;shift right click;none" type="string"/>
         </KeyValues>
@@ -27,9 +27,9 @@
           <Anchor point="TOPLEFT" relativeKey="$parent.TitleArea" relativePoint="BOTTOMLEFT"/>
         </Anchors>
       </Frame>
-      <Frame inherits="AuctionatorDropDown" parentKey="CancelShortcut">
+      <Frame inherits="AuctionHouseHelperDropDown" parentKey="CancelShortcut">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SELLING_CANCEL_SHORTCUT" type="global" />
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_CANCEL_SHORTCUT" type="global" />
           <KeyValue key="textString" value="LEFT_CLICK;RIGHT_CLICK;ALT_LEFT_CLICK;ALT_RIGHT_CLICK;SHIFT_LEFT_CLICK;SHIFT_RIGHT_CLICK;DISABLED" type="string"/>
           <KeyValue key="valuesString" value="left click;right click;alt left click;alt right click;shift left click;shift right click;none" type="string"/>
         </KeyValues>
@@ -37,9 +37,9 @@
           <Anchor point="TOPLEFT" relativeKey="$parent.BagSelectShortcut" relativePoint="BOTTOMLEFT"/>
         </Anchors>
       </Frame>
-      <Frame inherits="AuctionatorDropDown" parentKey="BuyShortcut">
+      <Frame inherits="AuctionHouseHelperDropDown" parentKey="BuyShortcut">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SELLING_BUY_SHORTCUT" type="global" />
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_BUY_SHORTCUT" type="global" />
           <KeyValue key="textString" value="LEFT_CLICK;RIGHT_CLICK;ALT_LEFT_CLICK;ALT_RIGHT_CLICK;SHIFT_LEFT_CLICK;SHIFT_RIGHT_CLICK;DISABLED" type="string"/>
           <KeyValue key="valuesString" value="left click;right click;alt left click;alt right click;shift left click;shift right click;none" type="string"/>
         </KeyValues>
@@ -47,24 +47,24 @@
           <Anchor point="TOPLEFT" relativeKey="$parent.CancelShortcut" relativePoint="BOTTOMLEFT"/>
         </Anchors>
       </Frame>
-      <Frame parentKey="PostShortcut" inherits="AuctionatorKeyBindingConfigTemplate">
+      <Frame parentKey="PostShortcut" inherits="AuctionHouseHelperKeyBindingConfigTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeKey="$parent.BuyShortcut"/>
         </Anchors>
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SELLING_POST_SHORTCUT" type="global"/>
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_SELLING_POST_SHORTCUT_TOOLTIP_TEXT" type="global"/>
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CUSTOM_KEYBOARD_SHORTCUTS" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_POST_SHORTCUT" type="global"/>
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_POST_SHORTCUT_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CUSTOM_KEYBOARD_SHORTCUTS" type="global"/>
         </KeyValues>
       </Frame>
-      <Frame parentKey="SkipShortcut" inherits="AuctionatorKeyBindingConfigTemplate">
+      <Frame parentKey="SkipShortcut" inherits="AuctionHouseHelperKeyBindingConfigTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeKey="$parent.PostShortcut"/>
         </Anchors>
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SELLING_SKIP_SHORTCUT" type="global"/>
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_SELLING_POST_SHORTCUT_TOOLTIP_TEXT" type="global"/>
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CUSTOM_KEYBOARD_SHORTCUTS" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_SKIP_SHORTCUT" type="global"/>
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_POST_SHORTCUT_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CUSTOM_KEYBOARD_SHORTCUTS" type="global"/>
         </KeyValues>
       </Frame>
     </Frames>

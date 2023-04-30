@@ -1,19 +1,19 @@
-AuctionatorBuyingPostingHistoryProviderMixin = CreateFromMixins(AuctionatorPostingHistoryProviderMixin)
+AuctionHouseHelperBuyingPostingHistoryProviderMixin = CreateFromMixins(AuctionHouseHelperPostingHistoryProviderMixin)
 
-function AuctionatorBuyingPostingHistoryProviderMixin:OnLoad()
-  AuctionatorPostingHistoryProviderMixin.OnLoad(self)
+function AuctionHouseHelperBuyingPostingHistoryProviderMixin:OnLoad()
+  AuctionHouseHelperPostingHistoryProviderMixin.OnLoad(self)
 end
 
-function AuctionatorBuyingPostingHistoryProviderMixin:SetItemLink(itemLink)
-  Auctionator.Utilities.DBKeyFromLink(itemLink, function(dbKeys)
+function AuctionHouseHelperBuyingPostingHistoryProviderMixin:SetItemLink(itemLink)
+  AuctionHouseHelper.Utilities.DBKeyFromLink(itemLink, function(dbKeys)
     self:SetItem(dbKeys[1])
   end)
 end
 
-function AuctionatorBuyingPostingHistoryProviderMixin:GetColumnHideStates()
-  return Auctionator.Config.Get(Auctionator.Config.Options.COLUMNS_POSTING_HISTORY)
+function AuctionHouseHelperBuyingPostingHistoryProviderMixin:GetColumnHideStates()
+  return AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.COLUMNS_POSTING_HISTORY)
 end
 
-function AuctionatorBuyingPostingHistoryProviderMixin:GetRowTemplate()
-  return "AuctionatorBuyingPostingHistoryRowTemplate"
+function AuctionHouseHelperBuyingPostingHistoryProviderMixin:GetRowTemplate()
+  return "AuctionHouseHelperBuyingPostingHistoryRowTemplate"
 end

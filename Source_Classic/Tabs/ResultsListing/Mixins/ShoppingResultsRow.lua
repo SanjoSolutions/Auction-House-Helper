@@ -1,23 +1,23 @@
-AuctionatorShoppingResultsRowMixin = CreateFromMixins(AuctionatorResultsRowTemplateMixin)
+AuctionHouseHelperShoppingResultsRowMixin = CreateFromMixins(AuctionHouseHelperResultsRowTemplateMixin)
 
-function AuctionatorShoppingResultsRowMixin:OnClick(button, ...)
-  Auctionator.Debug.Message("AuctionatorShoppingResultsRowMixin:OnClick()")
-  AuctionatorResultsRowTemplateMixin.OnClick(self, button, ...)
+function AuctionHouseHelperShoppingResultsRowMixin:OnClick(button, ...)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperShoppingResultsRowMixin:OnClick()")
+  AuctionHouseHelperResultsRowTemplateMixin.OnClick(self, button, ...)
 
   if self.rowData.itemLink == nil then
     return
   end
 
   if button == "RightButton" then
-    Auctionator.EventBus
+    AuctionHouseHelper.EventBus
       :RegisterSource(self, "ShoppingResultsRowMixin")
-      :Fire(self, Auctionator.Shopping.Tab.Events.ShowHistoricalPrices, self.rowData)
+      :Fire(self, AuctionHouseHelper.Shopping.Tab.Events.ShowHistoricalPrices, self.rowData)
       :UnregisterSource(self)
   else
 
-    Auctionator.EventBus
+    AuctionHouseHelper.EventBus
       :RegisterSource(self, "ShoppingResultsRowMixin")
-      :Fire(self, Auctionator.Buying.Events.ShowForShopping, self.rowData)
+      :Fire(self, AuctionHouseHelper.Buying.Events.ShowForShopping, self.rowData)
       :UnregisterSource(self)
   end
 end

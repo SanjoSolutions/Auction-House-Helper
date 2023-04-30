@@ -1,46 +1,46 @@
-AuctionatorExportTextFrameMixin = {}
+AuctionHouseHelperExportTextFrameMixin = {}
 
-function AuctionatorExportTextFrameMixin:OnLoad()
+function AuctionHouseHelperExportTextFrameMixin:OnLoad()
   ScrollUtil.RegisterScrollBoxWithScrollBar(self.EditBoxContainer:GetScrollBox(), self.ScrollBar)
   self.EditBoxContainer:GetScrollBox():GetView():SetPanExtent(50)
 end
 
-function AuctionatorExportTextFrameMixin:SetOpeningEvents(open, close)
+function AuctionHouseHelperExportTextFrameMixin:SetOpeningEvents(open, close)
   self.openEvent = open
   self.closeEvent = close
 end
 
-function AuctionatorExportTextFrameMixin:OnShow()
-  Auctionator.Debug.Message("AuctionatorExportTextFrameMixin:OnShow()")
+function AuctionHouseHelperExportTextFrameMixin:OnShow()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperExportTextFrameMixin:OnShow()")
 
   self.EditBoxContainer:GetEditBox():SetFocus()
   self.EditBoxContainer:GetEditBox():HighlightText()
 
   if self.openEvent then
-    Auctionator.EventBus
+    AuctionHouseHelper.EventBus
       :RegisterSource(self, "lists export text dialog 2")
       :Fire(self, self.openEvent)
       :UnregisterSource(self)
   end
 end
 
-function AuctionatorExportTextFrameMixin:OnHide()
+function AuctionHouseHelperExportTextFrameMixin:OnHide()
   self:Hide()
 
   if self.closeEvent then
-    Auctionator.EventBus
+    AuctionHouseHelper.EventBus
       :RegisterSource(self, "lists export text dialog 2")
       :Fire(self, self.closeEvent)
       :UnregisterSource(self)
   end
 end
 
-function AuctionatorExportTextFrameMixin:SetExportString(exportString)
+function AuctionHouseHelperExportTextFrameMixin:SetExportString(exportString)
   self.EditBoxContainer:GetEditBox():SetText(exportString)
   self.EditBoxContainer:GetEditBox():HighlightText()
 end
 
-function AuctionatorExportTextFrameMixin:OnCloseClicked()
+function AuctionHouseHelperExportTextFrameMixin:OnCloseClicked()
   self.EditBoxContainer:GetEditBox():SetText("")
   self:Hide()
 end

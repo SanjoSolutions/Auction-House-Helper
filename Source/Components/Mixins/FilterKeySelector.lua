@@ -1,8 +1,8 @@
-AuctionatorFilterKeySelectorMixin = {}
+AuctionHouseHelperFilterKeySelectorMixin = {}
 
 local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
 
-function AuctionatorFilterKeySelectorMixin:OnLoad()
+function AuctionHouseHelperFilterKeySelectorMixin:OnLoad()
   self.displayText = ""
   self.onEntrySelected = function() end
   self.ResetButton:SetClickCallback(function()
@@ -21,11 +21,11 @@ function AuctionatorFilterKeySelectorMixin:OnLoad()
   end)
 end
 
-function AuctionatorFilterKeySelectorMixin:GetValue()
+function AuctionHouseHelperFilterKeySelectorMixin:GetValue()
   return self.displayText
 end
 
-function AuctionatorFilterKeySelectorMixin:SetValue(value)
+function AuctionHouseHelperFilterKeySelectorMixin:SetValue(value)
   if value == nil then
     value = ""
   end
@@ -36,22 +36,22 @@ function AuctionatorFilterKeySelectorMixin:SetValue(value)
   LibDD:UIDropDownMenu_SetText(self, value)
 end
 
-function AuctionatorFilterKeySelectorMixin:Reset()
+function AuctionHouseHelperFilterKeySelectorMixin:Reset()
   self.displayText = ""
   self.selectedCategory = {}
   LibDD:UIDropDownMenu_SetText(self, "")
 end
 
-function AuctionatorFilterKeySelectorMixin:SetOnEntrySelected(callback)
+function AuctionHouseHelperFilterKeySelectorMixin:SetOnEntrySelected(callback)
   self.onEntrySelected = callback
 end
 
-function AuctionatorFilterKeySelectorMixin:EntrySelected(displayText)
+function AuctionHouseHelperFilterKeySelectorMixin:EntrySelected(displayText)
   self:SetValue(displayText)
   LibDD:CloseDropDownMenus()
 end
 
-function AuctionatorFilterKeySelectorMixin:InitializeLevels(level, allCategories, rootChecked, prefix)
+function AuctionHouseHelperFilterKeySelectorMixin:InitializeLevels(level, allCategories, rootChecked, prefix)
   if allCategories == nil then
     return
   end

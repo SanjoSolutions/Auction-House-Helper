@@ -1,10 +1,10 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="AuctionatorSaleItemFrameTemplate"
+    name="AuctionHouseHelperSaleItemFrameTemplate"
     virtual="true"
 
-    parentKey="AuctionatorSaleItem"
-    mixin="AuctionatorSaleItemMixin"
+    parentKey="AuctionHouseHelperSaleItem"
+    mixin="AuctionHouseHelperSaleItemMixin"
   >
     <Size x="600" y="100" />
 
@@ -33,7 +33,7 @@
           </Layer>
         </Layers>
       </Frame>
-      <Frame parentKey="PostWatch" mixin="AuctionatorPostWatchMixin">
+      <Frame parentKey="PostWatch" mixin="AuctionHouseHelperPostWatchMixin">
         <Scripts>
           <OnShow method="OnShow" />
           <OnHide method="OnHide" />
@@ -41,7 +41,7 @@
         </Scripts>
       </Frame>
 
-      <Button parentKey="Icon" inherits="AuctionatorBagItem" mixin="AuctionatorBagItemSelectedMixin">
+      <Button parentKey="Icon" inherits="AuctionHouseHelperBagItem" mixin="AuctionHouseHelperBagItemSelectedMixin">
         <Size x="60" y="60" />
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.TitleArea" relativePoint="BOTTOMLEFT" y="-5" x="-20"/>
@@ -51,43 +51,43 @@
         </Scripts>
       </Button>
 
-      <Frame parentKey="UnitPrice" inherits="AuctionatorConfigurationMoneyInputAlternate">
+      <Frame parentKey="UnitPrice" inherits="AuctionHouseHelperConfigurationMoneyInputAlternate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.Icon" relativePoint="TOPRIGHT" y="5"/>
           <Anchor point="RIGHT" relativeKey="$parent.Icon" relativePoint="RIGHT" x="330"/>
         </Anchors>
 
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_UNIT_PRICE" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_UNIT_PRICE" type="global"/>
         </KeyValues>
       </Frame>
 
-      <Frame parentKey="StackPrice" inherits="AuctionatorConfigurationMoneyInputAlternate">
+      <Frame parentKey="StackPrice" inherits="AuctionHouseHelperConfigurationMoneyInputAlternate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.UnitPrice" relativePoint="BOTTOMLEFT" y="-25"/>
           <Anchor point="RIGHT" relativeKey="$parent.UnitPrice"/>
         </Anchors>
 
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_STACK_PRICE" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_STACK_PRICE" type="global"/>
         </KeyValues>
       </Frame>
 
-      <Frame parentKey="Stacks" inherits="AuctionatorStackOfInputTemplate">
+      <Frame parentKey="Stacks" inherits="AuctionHouseHelperStackOfInputTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.StackPrice" relativePoint="BOTTOMLEFT" y="-30" x="112"/>
           <Anchor point="RIGHT" relativeKey="$parent.UnitPrice"/>
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorDurationHorizontalRadioControls" parentKey="Duration">
+      <Frame inherits="AuctionHouseHelperDurationHorizontalRadioControls" parentKey="Duration">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.UnitPrice" relativePoint="TOPRIGHT" />
           <Anchor point="RIGHT" relativeKey="$parent.UnitPrice" relativePoint="RIGHT" x="200"/>
         </Anchors>
       </Frame>
 
-      <Button parentKey="PostButton" name="AuctionatorPostButton" inherits="UIPanelButtonTemplate" text="AUCTIONATOR_L_POST">
+      <Button parentKey="PostButton" name="AuctionHouseHelperPostButton" inherits="UIPanelButtonTemplate" text="AUCTION_HOUSE_HELPER_L_POST">
         <Size x="184" y="22"/>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.Duration" relativePoint="BOTTOMLEFT" y="-19" x="20"/>
@@ -96,7 +96,7 @@
           <OnClick>self:GetParent():PostItem()</OnClick>
         </Scripts>
       </Button>
-      <Button parentKey="SkipButton" name="AuctionatorSkipPostingButton" inherits="UIPanelButtonTemplate" text="AUCTIONATOR_L_SKIP" hidden="true">
+      <Button parentKey="SkipButton" name="AuctionHouseHelperSkipPostingButton" inherits="UIPanelButtonTemplate" text="AUCTION_HOUSE_HELPER_L_SKIP" hidden="true">
         <Size x="80" y="22"/>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.PostButton" relativePoint="TOPRIGHT"/>
@@ -106,20 +106,20 @@
         </Scripts>
       </Button>
 
-      <Frame parentKey="BidPrice" inherits="AuctionatorConfigurationMoneyInputAlternate" hidden="true">
+      <Frame parentKey="BidPrice" inherits="AuctionHouseHelperConfigurationMoneyInputAlternate" hidden="true">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.PostButton" relativePoint="BOTTOMLEFT"/>
         </Anchors>
 
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_STACK_BID_PRICE" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_STACK_BID_PRICE" type="global"/>
         </KeyValues>
       </Frame>
     </Frames>
 
     <Layers>
       <Layer level="BACKGROUND">
-        <FontString inherits="GameFontNormal" parentKey="Deposit" Text="AUCTIONATOR_L_DEPOSIT">
+        <FontString inherits="GameFontNormal" parentKey="Deposit" Text="AUCTION_HOUSE_HELPER_L_DEPOSIT">
           <Anchors>
             <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.Duration" x="20"/>
           </Anchors>
@@ -137,7 +137,7 @@
 
         <!-- Total price (money display [non editable]) -->
       <Layer level="BACKGROUND">
-        <FontString inherits="GameFontNormal" parentKey="Total" Text="AUCTIONATOR_L_TOTAL_PRICE">
+        <FontString inherits="GameFontNormal" parentKey="Total" Text="AUCTION_HOUSE_HELPER_L_TOTAL_PRICE">
           <Anchors>
             <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeKey="$parent.DepositPrice"/>
           </Anchors>

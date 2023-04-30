@@ -1,8 +1,8 @@
-Auctionator.Constants.ShoppingSorts = {
+AuctionHouseHelper.Constants.ShoppingSorts = {
   {sortOrder = Enum.AuctionHouseSortOrder.Name, reverseSort = false},
   {sortOrder = Enum.AuctionHouseSortOrder.Price, reverseSort = true}
 }
-Auctionator.Constants.ValidItemClassIDs = {
+AuctionHouseHelper.Constants.ValidItemClassIDs = {
   Enum.ItemClass.Weapon,
   Enum.ItemClass.Armor,
   Enum.ItemClass.Container,
@@ -17,8 +17,8 @@ Auctionator.Constants.ValidItemClassIDs = {
   Enum.ItemClass.Questitem,
   Enum.ItemClass.Miscellaneous,
 }
-Auctionator.Constants.BagIDs = {0, 1, 2, 3, 4, 5}
-Auctionator.Constants.QualityIDs = {
+AuctionHouseHelper.Constants.BagIDs = {0, 1, 2, 3, 4, 5}
+AuctionHouseHelper.Constants.QualityIDs = {
   Enum.ItemQuality.Poor,
   Enum.ItemQuality.Common,
   Enum.ItemQuality.Uncommon,
@@ -27,5 +27,5 @@ Auctionator.Constants.QualityIDs = {
   Enum.ItemQuality.Legendary,
   Enum.ItemQuality.Artifact,
 }
-Auctionator.Constants.SummaryBatchSize = 500
-Auctionator.Constants.EnchantingVellumID = 38682
+AuctionHouseHelper.Constants.SummaryBatchSize = 500
+AuctionHouseHelper.Constants.EnchantingVellumID = 38682

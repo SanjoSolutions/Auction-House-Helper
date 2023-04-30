@@ -1,6 +1,6 @@
-Auctionator.Search.Filters.ExpansionMixin = {}
+AuctionHouseHelper.Search.Filters.ExpansionMixin = {}
 
-function Auctionator.Search.Filters.ExpansionMixin:Init(filterTracker, browseResult, expansion)
+function AuctionHouseHelper.Search.Filters.ExpansionMixin:Init(filterTracker, browseResult, expansion)
   self.expansion = expansion
   self.completed = false
 
@@ -14,10 +14,10 @@ function Auctionator.Search.Filters.ExpansionMixin:Init(filterTracker, browseRes
   end
 end
 
-function Auctionator.Search.Filters.ExpansionMixin:FilterCheck(itemKey)
+function AuctionHouseHelper.Search.Filters.ExpansionMixin:FilterCheck(itemKey)
   return self:ExpansionCheck(itemKey)
 end
 
-function Auctionator.Search.Filters.ExpansionMixin:ExpansionCheck(itemKey)
-  return (select(Auctionator.Constants.ITEM_INFO.XPAC, GetItemInfo(itemKey.itemID))) == self.expansion
+function AuctionHouseHelper.Search.Filters.ExpansionMixin:ExpansionCheck(itemKey)
+  return (select(AuctionHouseHelper.Constants.ITEM_INFO.XPAC, GetItemInfo(itemKey.itemID))) == self.expansion
 end

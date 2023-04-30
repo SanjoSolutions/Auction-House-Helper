@@ -1,4 +1,4 @@
-AuctionatorMultisellProgress = {}
+AuctionHouseHelperMultisellProgress = {}
 
 local MULTISELL_EVENTS = {
   "AUCTION_MULTISELL_START",
@@ -6,24 +6,24 @@ local MULTISELL_EVENTS = {
   "AUCTION_MULTISELL_FAILURE",
 }
 
-function AuctionatorMultisellProgress:SetDetails(icon, quantity)
+function AuctionHouseHelperMultisellProgress:SetDetails(icon, quantity)
   self.icon = icon
   self.quantity = quantity
 end
 
-function AuctionatorMultisellProgress:OnShow()
+function AuctionHouseHelperMultisellProgress:OnShow()
   FrameUtil.RegisterFrameForEvents(self, MULTISELL_EVENTS)
 end
 
-function AuctionatorMultisellProgress:OnHide()
+function AuctionHouseHelperMultisellProgress:OnHide()
   FrameUtil.UnregisterFrameForEvents(self, MULTISELL_EVENTS)
   C_AuctionHouse.CancelSell()
   AuctionHouseMultisellProgressFrame:Hide()
 end
 
-function AuctionatorMultisellProgress:OnEvent(event, ...)
+function AuctionHouseHelperMultisellProgress:OnEvent(event, ...)
   if self.icon == nil or self.quantity == nil then
-    Auctionator.Debug.Message("Missing multisell item info")
+    AuctionHouseHelper.Debug.Message("Missing multisell item info")
     return
   end
 

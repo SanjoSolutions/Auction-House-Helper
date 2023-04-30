@@ -1,14 +1,14 @@
-Auctionator.Mill = {}
+AuctionHouseHelper.Mill = {}
 
-function Auctionator.Mill.IsMillable(itemID)
-  return Auctionator.Mill.MILL_TABLE[tostring(itemID)] ~= nil
+function AuctionHouseHelper.Mill.IsMillable(itemID)
+  return AuctionHouseHelper.Mill.MILL_TABLE[tostring(itemID)] ~= nil
 end
 
 local function GetMillResults(itemID)
-  return Auctionator.Mill.MILL_TABLE[tostring(itemID)]
+  return AuctionHouseHelper.Mill.MILL_TABLE[tostring(itemID)]
 end
 
-function Auctionator.Mill.GetMillAuctionPrice(itemID)
+function AuctionHouseHelper.Mill.GetMillAuctionPrice(itemID)
   local millResults = GetMillResults(itemID)
 
   if millResults == nil then
@@ -18,7 +18,7 @@ function Auctionator.Mill.GetMillAuctionPrice(itemID)
   local price = 0
 
   for reagentKey, allDrops in pairs(millResults) do
-    local reagentPrice = Auctionator.Database:GetPrice(reagentKey)
+    local reagentPrice = AuctionHouseHelper.Database:GetPrice(reagentKey)
 
     if reagentPrice == nil then
       return nil

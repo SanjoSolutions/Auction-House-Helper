@@ -1,7 +1,7 @@
-AuctionatorShoppingOneItemSearchMixin = {}
+AuctionHouseHelperShoppingOneItemSearchMixin = {}
 
 local function GetAppropriateText(searchTerm)
-  local search = Auctionator.Search.SplitAdvancedSearch(searchTerm)
+  local search = AuctionHouseHelper.Search.SplitAdvancedSearch(searchTerm)
   local newSearch = search.searchString
   for key, value in pairs(search) do
     if key == "isExact" then
@@ -10,75 +10,75 @@ local function GetAppropriateText(searchTerm)
       end
     elseif key == "categoryKey" then
       if value ~= "" then
-        return AUCTIONATOR_L_EXTENDED_SEARCH_ACTIVE_TEXT
+        return AUCTION_HOUSE_HELPER_L_EXTENDED_SEARCH_ACTIVE_TEXT
       end
     elseif key ~= "searchString" then
-      return AUCTIONATOR_L_EXTENDED_SEARCH_ACTIVE_TEXT
+      return AUCTION_HOUSE_HELPER_L_EXTENDED_SEARCH_ACTIVE_TEXT
     end
   end
   return newSearch
 end
 
-function AuctionatorShoppingOneItemSearchMixin:OnLoad()
-  Auctionator.EventBus:RegisterSource(self, "Shopping One Item Search")
+function AuctionHouseHelperShoppingOneItemSearchMixin:OnLoad()
+  AuctionHouseHelper.EventBus:RegisterSource(self, "Shopping One Item Search")
 
   self.searchRunning = false
   DynamicResizeButton_Resize(self.SearchButton)
 
-  Auctionator.EventBus:Register(self, {
-    Auctionator.Shopping.Tab.Events.OneItemSearch,
-    Auctionator.Shopping.Tab.Events.ListItemSelected,
-    Auctionator.Shopping.Tab.Events.ListSearchStarted,
-    Auctionator.Shopping.Tab.Events.ListSearchEnded,
-    Auctionator.Shopping.Tab.Events.DialogOpened,
-    Auctionator.Shopping.Tab.Events.DialogClosed,
+  AuctionHouseHelper.EventBus:Register(self, {
+    AuctionHouseHelper.Shopping.Tab.Events.OneItemSearch,
+    AuctionHouseHelper.Shopping.Tab.Events.ListItemSelected,
+    AuctionHouseHelper.Shopping.Tab.Events.ListSearchStarted,
+    AuctionHouseHelper.Shopping.Tab.Events.ListSearchEnded,
+    AuctionHouseHelper.Shopping.Tab.Events.DialogOpened,
+    AuctionHouseHelper.Shopping.Tab.Events.DialogClosed,
   })
 end
 
-function AuctionatorShoppingOneItemSearchMixin:OnShow()
+function AuctionHouseHelperShoppingOneItemSearchMixin:OnShow()
   self.SearchBox:SetFocus()
 end
 
-function AuctionatorShoppingOneItemSearchMixin:ReceiveEvent(eventName, ...)
-  Auctionator.Debug.Message("AuctionatorShoppingOneItemSearchButtonMixin:ReceiveEvent " .. eventName, ...)
+function AuctionHouseHelperShoppingOneItemSearchMixin:ReceiveEvent(eventName, ...)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperShoppingOneItemSearchButtonMixin:ReceiveEvent " .. eventName, ...)
 
-  if eventName == Auctionator.Shopping.Tab.Events.OneItemSearch or
-     eventName == Auctionator.Shopping.Tab.Events.ListItemSelected then
+  if eventName == AuctionHouseHelper.Shopping.Tab.Events.OneItemSearch or
+     eventName == AuctionHouseHelper.Shopping.Tab.Events.ListItemSelected then
     self.lastSearch = ...
     if self.lastSearch ~= self.SearchBox:GetText() then
       self.SearchBox:SetText(GetAppropriateText(self.lastSearch))
     end
-  elseif eventName == Auctionator.Shopping.Tab.Events.ListSearchStarted then
+  elseif eventName == AuctionHouseHelper.Shopping.Tab.Events.ListSearchStarted then
     self.searchRunning = true
 
-    self.SearchButton:SetText(AUCTIONATOR_L_CANCEL)
+    self.SearchButton:SetText(AUCTION_HOUSE_HELPER_L_CANCEL)
     self.SearchButton:SetWidth(0)
     DynamicResizeButton_Resize(self.SearchButton)
-  elseif eventName == Auctionator.Shopping.Tab.Events.ListSearchEnded then
+  elseif eventName == AuctionHouseHelper.Shopping.Tab.Events.ListSearchEnded then
     self.searchRunning = false
 
-    self.SearchButton:SetText(AUCTIONATOR_L_SEARCH)
+    self.SearchButton:SetText(AUCTION_HOUSE_HELPER_L_SEARCH)
     self.SearchButton:SetWidth(0)
     DynamicResizeButton_Resize(self.SearchButton)
 
-  elseif eventName == Auctionator.Shopping.Tab.Events.DialogOpened then
+  elseif eventName == AuctionHouseHelper.Shopping.Tab.Events.DialogOpened then
     self.ExtendedButton:Disable()
 
-  elseif eventName == Auctionator.Shopping.Tab.Events.DialogClosed then
+  elseif eventName == AuctionHouseHelper.Shopping.Tab.Events.DialogClosed then
     self.ExtendedButton:Enable()
   end
 end
 
-function AuctionatorShoppingOneItemSearchMixin:DoSearch(searchTerm)
-  Auctionator.Shopping.Recents.Save(searchTerm)
+function AuctionHouseHelperShoppingOneItemSearchMixin:DoSearch(searchTerm)
+  AuctionHouseHelper.Shopping.Recents.Save(searchTerm)
 
-  Auctionator.EventBus:Fire(self, Auctionator.Shopping.Tab.Events.OneItemSearch, searchTerm)
+  AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.Shopping.Tab.Events.OneItemSearch, searchTerm)
 end
 
-function AuctionatorShoppingOneItemSearchMixin:SearchButtonClicked()
+function AuctionHouseHelperShoppingOneItemSearchMixin:SearchButtonClicked()
   if not self.searchRunning then
     local searchTerm = self.SearchBox:GetText()
-    if searchTerm == AUCTIONATOR_L_EXTENDED_SEARCH_ACTIVE_TEXT then
+    if searchTerm == AUCTION_HOUSE_HELPER_L_EXTENDED_SEARCH_ACTIVE_TEXT then
       searchTerm = self.lastSearch
       if searchTerm == nil then
         searchTerm = ""
@@ -89,28 +89,28 @@ function AuctionatorShoppingOneItemSearchMixin:SearchButtonClicked()
     self.SearchBox:ClearFocus()
     self:DoSearch(searchTerm)
   else
-    Auctionator.EventBus:Fire(self, Auctionator.Shopping.Tab.Events.CancelSearch)
+    AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.Shopping.Tab.Events.CancelSearch)
   end
 end
 
-function AuctionatorShoppingOneItemSearchMixin:OpenExtendedOptions()
+function AuctionHouseHelperShoppingOneItemSearchMixin:OpenExtendedOptions()
   local itemDialog = self:GetParent().itemDialog
 
-  itemDialog:Init(AUCTIONATOR_L_LIST_EXTENDED_SEARCH_HEADER, AUCTIONATOR_L_SEARCH)
+  itemDialog:Init(AUCTION_HOUSE_HELPER_L_LIST_EXTENDED_SEARCH_HEADER, AUCTION_HOUSE_HELPER_L_SEARCH)
   itemDialog:SetOnFinishedClicked(function(newItemString)
-    self.SearchBox:SetText(AUCTIONATOR_L_EXTENDED_SEARCH_ACTIVE_TEXT)
+    self.SearchBox:SetText(AUCTION_HOUSE_HELPER_L_EXTENDED_SEARCH_ACTIVE_TEXT)
     self:DoSearch(newItemString)
   end)
 
   itemDialog:Show()
 
   local searchTerm = self.SearchBox:GetText()
-  if searchTerm == AUCTIONATOR_L_EXTENDED_SEARCH_ACTIVE_TEXT then
+  if searchTerm == AUCTION_HOUSE_HELPER_L_EXTENDED_SEARCH_ACTIVE_TEXT then
     searchTerm = self.lastSearch
   end
   itemDialog:SetItemString(searchTerm)
 end
 
-function AuctionatorShoppingOneItemSearchMixin:GetLastSearch()
+function AuctionHouseHelperShoppingOneItemSearchMixin:GetLastSearch()
   return self.lastSearch
 end

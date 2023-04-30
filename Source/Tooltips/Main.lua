@@ -1,40 +1,40 @@
-local L = Auctionator.Locales.Apply
+local L = AuctionHouseHelper.Locales.Apply
 
 local waitingForPricing = false
--- Auctionator.Config.Options.VENDOR_TOOLTIPS: true if should show vendor tips
--- Auctionator.Config.Options.SHIFT_STACK_TOOLTIPS: true to show stack price when [shift] is down
--- Auctionator.Config.Options.AUCTION_TOOLTIPS: true if should show auction tips
-function Auctionator.Tooltip.ShowTipWithPricing(tooltipFrame, itemLink, itemCount)
-  if waitingForPricing or Auctionator.Database == nil then
+-- AuctionHouseHelper.Config.Options.VENDOR_TOOLTIPS: true if should show vendor tips
+-- AuctionHouseHelper.Config.Options.SHIFT_STACK_TOOLTIPS: true to show stack price when [shift] is down
+-- AuctionHouseHelper.Config.Options.AUCTION_TOOLTIPS: true if should show auction tips
+function AuctionHouseHelper.Tooltip.ShowTipWithPricing(tooltipFrame, itemLink, itemCount)
+  if waitingForPricing or AuctionHouseHelper.Database == nil then
     return
   end
   -- Keep this commented out unless testing please.
-  -- Auctionator.Debug.Message("Auctionator.Tooltip.ShowTipWithPricing", itemLink, itemCount)
+  -- AuctionHouseHelper.Debug.Message("AuctionHouseHelper.Tooltip.ShowTipWithPricing", itemLink, itemCount)
 
   waitingForPricing = true
-  Auctionator.Utilities.DBKeyFromLink(itemLink, function(dbKeys)
+  AuctionHouseHelper.Utilities.DBKeyFromLink(itemLink, function(dbKeys)
     waitingForPricing = false
-    Auctionator.Tooltip.ShowTipWithPricingDBKey(tooltipFrame, dbKeys, itemLink, itemCount)
+    AuctionHouseHelper.Tooltip.ShowTipWithPricingDBKey(tooltipFrame, dbKeys, itemLink, itemCount)
   end)
 end
 
-function Auctionator.Tooltip.ShowTipWithPricingDBKey(tooltipFrame, dbKeys, itemLink, itemCount)
-  if #dbKeys == 0 or Auctionator.Utilities.IsPetDBKey(dbKeys[1]) then
+function AuctionHouseHelper.Tooltip.ShowTipWithPricingDBKey(tooltipFrame, dbKeys, itemLink, itemCount)
+  if #dbKeys == 0 or AuctionHouseHelper.Utilities.IsPetDBKey(dbKeys[1]) then
     return
   end
 
   local showStackPrices = IsShiftKeyDown();
 
-  if not Auctionator.Config.Get(Auctionator.Config.Options.SHIFT_STACK_TOOLTIPS) then
+  if not AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SHIFT_STACK_TOOLTIPS) then
     showStackPrices = not IsShiftKeyDown();
   end
 
   local countString = ""
   if itemCount and showStackPrices then
-    countString = Auctionator.Utilities.CreateCountString(itemCount)
+    countString = AuctionHouseHelper.Utilities.CreateCountString(itemCount)
   end
 
-  local auctionPrice = Auctionator.Database:GetFirstPrice(dbKeys)
+  local auctionPrice = AuctionHouseHelper.Database:GetFirstPrice(dbKeys)
   if auctionPrice ~= nil then
     auctionPrice = auctionPrice * (showStackPrices and itemCount or 1)
   end
@@ -44,15 +44,15 @@ function Auctionator.Tooltip.ShowTipWithPricingDBKey(tooltipFrame, dbKeys, itemL
 
   local itemInfo = { GetItemInfo(itemLink) };
   if (#itemInfo) ~= 0 then
-    cannotAuction = Auctionator.Utilities.IsBound(itemInfo)
-    local sellPrice = itemInfo[Auctionator.Constants.ITEM_INFO.SELL_PRICE]
+    cannotAuction = AuctionHouseHelper.Utilities.IsBound(itemInfo)
+    local sellPrice = itemInfo[AuctionHouseHelper.Constants.ITEM_INFO.SELL_PRICE]
 
-    if Auctionator.Utilities.IsVendorable(itemInfo) then
+    if AuctionHouseHelper.Utilities.IsVendorable(itemInfo) then
       vendorPrice = sellPrice * (showStackPrices and itemCount or 1);
     end
 
-    disenchantStatus = Auctionator.Enchant.DisenchantStatus(itemInfo)
-    local disenchantPriceForOne = Auctionator.Enchant.GetDisenchantAuctionPrice(itemLink, itemInfo)
+    disenchantStatus = AuctionHouseHelper.Enchant.DisenchantStatus(itemInfo)
+    local disenchantPriceForOne = AuctionHouseHelper.Enchant.GetDisenchantAuctionPrice(itemLink, itemInfo)
     if disenchantPriceForOne ~= nil then
       disenchantPrice = disenchantPriceForOne * (showStackPrices and itemCount or 1)
     end
@@ -60,10 +60,10 @@ function Auctionator.Tooltip.ShowTipWithPricingDBKey(tooltipFrame, dbKeys, itemL
 
   local prospectStatus = false
   local prospectValue
-  if Auctionator.Prospect then
+  if AuctionHouseHelper.Prospect then
     local itemID = GetItemInfoInstant(itemLink)
-    prospectStatus = Auctionator.Prospect.IsProspectable(itemID)
-    local prospectForOne = Auctionator.Prospect.GetProspectAuctionPrice(itemID)
+    prospectStatus = AuctionHouseHelper.Prospect.IsProspectable(itemID)
+    local prospectForOne = AuctionHouseHelper.Prospect.GetProspectAuctionPrice(itemID)
     if prospectForOne ~= nil then
       prospectValue = math.floor(prospectForOne * (showStackPrices and itemCount or 1))
     end
@@ -71,39 +71,39 @@ function Auctionator.Tooltip.ShowTipWithPricingDBKey(tooltipFrame, dbKeys, itemL
 
   local millStatus = false
   local millValue
-  if Auctionator.Mill then
+  if AuctionHouseHelper.Mill then
     local itemID = GetItemInfoInstant(itemLink)
-    millStatus = Auctionator.Mill.IsMillable(itemID)
-    local millForOne = Auctionator.Mill.GetMillAuctionPrice(itemID)
+    millStatus = AuctionHouseHelper.Mill.IsMillable(itemID)
+    local millForOne = AuctionHouseHelper.Mill.GetMillAuctionPrice(itemID)
     if millForOne ~= nil then
       millValue = math.floor(millForOne * (showStackPrices and itemCount or 1))
     end
   end
 
-  if Auctionator.Debug.IsOn() then
+  if AuctionHouseHelper.Debug.IsOn() then
     tooltipFrame:AddDoubleLine("DBKey", dbKeys[1])
   end
 
   if vendorPrice ~= nil then
-    Auctionator.Tooltip.AddVendorTip(tooltipFrame, vendorPrice, countString)
+    AuctionHouseHelper.Tooltip.AddVendorTip(tooltipFrame, vendorPrice, countString)
   end
-  Auctionator.Tooltip.AddAuctionTip(tooltipFrame, auctionPrice, countString, cannotAuction)
+  AuctionHouseHelper.Tooltip.AddAuctionTip(tooltipFrame, auctionPrice, countString, cannotAuction)
   if disenchantStatus ~= nil then
-    Auctionator.Tooltip.AddDisenchantTip(tooltipFrame, disenchantPrice, countString, disenchantStatus)
+    AuctionHouseHelper.Tooltip.AddDisenchantTip(tooltipFrame, disenchantPrice, countString, disenchantStatus)
 
-    if Auctionator.Constants.IsClassic and IsShiftKeyDown() and Auctionator.Config.Get(Auctionator.Config.Options.ENCHANT_TOOLTIPS) then
-      for _, line in ipairs(Auctionator.Enchant.GetDisenchantBreakdown(itemLink, itemInfo)) do
+    if AuctionHouseHelper.Constants.IsClassic and IsShiftKeyDown() and AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.ENCHANT_TOOLTIPS) then
+      for _, line in ipairs(AuctionHouseHelper.Enchant.GetDisenchantBreakdown(itemLink, itemInfo)) do
         tooltipFrame:AddLine(line)
       end
     end
   end
 
   if prospectStatus then
-    Auctionator.Tooltip.AddProspectTip(tooltipFrame, prospectValue, countString)
+    AuctionHouseHelper.Tooltip.AddProspectTip(tooltipFrame, prospectValue, countString)
   end
 
   if millStatus then
-    Auctionator.Tooltip.AddMillTip(tooltipFrame, millValue, countString)
+    AuctionHouseHelper.Tooltip.AddMillTip(tooltipFrame, millValue, countString)
   end
 
   tooltipFrame:Show()
@@ -113,8 +113,8 @@ end
 -- link
 -- count
 local isMultiplePricesPending = false
-function Auctionator.Tooltip.ShowTipWithMultiplePricing(tooltipFrame, itemEntries)
-  if isMultiplePricesPending or Auctionator.Database == nil then
+function AuctionHouseHelper.Tooltip.ShowTipWithMultiplePricing(tooltipFrame, itemEntries)
+  if isMultiplePricesPending or AuctionHouseHelper.Database == nil then
     return
   end
   isMultiplePricesPending = true
@@ -126,14 +126,14 @@ function Auctionator.Tooltip.ShowTipWithMultiplePricing(tooltipFrame, itemEntrie
     table.insert(itemLinks, itemEntry.link)
   end
 
-  Auctionator.Utilities.DBKeysFromMultipleLinks(itemLinks, function(allKeys)
+  AuctionHouseHelper.Utilities.DBKeysFromMultipleLinks(itemLinks, function(allKeys)
     isMultiplePricesPending = false
     for index, dbKeys in ipairs(allKeys) do
       local itemEntry = itemEntries[index]
 
       tooltipFrame:AddLine(itemEntry.link)
-      Auctionator.Tooltip.ShowTipWithPricingDBKey(tooltipFrame, dbKeys, itemEntry.link, itemEntry.count)
-      local auctionPrice = Auctionator.Database:GetFirstPrice(dbKeys)
+      AuctionHouseHelper.Tooltip.ShowTipWithPricingDBKey(tooltipFrame, dbKeys, itemEntry.link, itemEntry.count)
+      local auctionPrice = AuctionHouseHelper.Database:GetFirstPrice(dbKeys)
       if auctionPrice ~= nil then
         total = total + (auctionPrice * itemEntry.count)
       end
@@ -143,9 +143,9 @@ function Auctionator.Tooltip.ShowTipWithMultiplePricing(tooltipFrame, itemEntrie
     tooltipFrame:AddLine("  ")
 
     tooltipFrame:AddDoubleLine(
-      Auctionator.Locales.Apply("TOTAL_ITEMS_COLORED", itemCount),
+      AuctionHouseHelper.Locales.Apply("TOTAL_ITEMS_COLORED", itemCount),
       WHITE_FONT_COLOR:WrapTextInColorCode(
-        Auctionator.Utilities.CreatePaddedMoneyString(total)
+        AuctionHouseHelper.Utilities.CreatePaddedMoneyString(total)
       )
     )
 
@@ -153,23 +153,23 @@ function Auctionator.Tooltip.ShowTipWithMultiplePricing(tooltipFrame, itemEntrie
   end)
 end
 
-function Auctionator.Tooltip.AddVendorTip(tooltipFrame, vendorPrice, countString)
-  if Auctionator.Config.Get(Auctionator.Config.Options.VENDOR_TOOLTIPS) and vendorPrice > 0 then
-    if Auctionator.Constants.IsClassic then
+function AuctionHouseHelper.Tooltip.AddVendorTip(tooltipFrame, vendorPrice, countString)
+  if AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.VENDOR_TOOLTIPS) and vendorPrice > 0 then
+    if AuctionHouseHelper.Constants.IsClassic then
       GameTooltip_ClearMoney(tooltipFrame) -- Remove default price
     end
 
     tooltipFrame:AddDoubleLine(
       L("VENDOR") .. countString,
       WHITE_FONT_COLOR:WrapTextInColorCode(
-        Auctionator.Utilities.CreatePaddedMoneyString(vendorPrice)
+        AuctionHouseHelper.Utilities.CreatePaddedMoneyString(vendorPrice)
       )
     )
   end
 end
 
-function Auctionator.Tooltip.AddAuctionTip (tooltipFrame, auctionPrice, countString, cannotAuction)
-  if Auctionator.Config.Get(Auctionator.Config.Options.AUCTION_TOOLTIPS) then
+function AuctionHouseHelper.Tooltip.AddAuctionTip (tooltipFrame, auctionPrice, countString, cannotAuction)
+  if AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.AUCTION_TOOLTIPS) then
 
     if cannotAuction then
       tooltipFrame:AddDoubleLine(
@@ -182,7 +182,7 @@ function Auctionator.Tooltip.AddAuctionTip (tooltipFrame, auctionPrice, countStr
       tooltipFrame:AddDoubleLine(
         L("AUCTION") .. countString,
         WHITE_FONT_COLOR:WrapTextInColorCode(
-          Auctionator.Utilities.CreatePaddedMoneyString(auctionPrice)
+          AuctionHouseHelper.Utilities.CreatePaddedMoneyString(auctionPrice)
         )
       )
     else
@@ -196,10 +196,10 @@ function Auctionator.Tooltip.AddAuctionTip (tooltipFrame, auctionPrice, countStr
   end
 end
 
-function Auctionator.Tooltip.AddDisenchantTip (
+function AuctionHouseHelper.Tooltip.AddDisenchantTip (
   tooltipFrame, disenchantPrice, countString, disenchantStatus
 )
-  if not Auctionator.Config.Get(Auctionator.Config.Options.ENCHANT_TOOLTIPS) then
+  if not AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.ENCHANT_TOOLTIPS) then
     return
   end
 
@@ -207,7 +207,7 @@ function Auctionator.Tooltip.AddDisenchantTip (
     tooltipFrame:AddDoubleLine(
       L("DISENCHANT") .. countString,
       WHITE_FONT_COLOR:WrapTextInColorCode(
-        Auctionator.Utilities.CreatePaddedMoneyString(disenchantPrice)
+        AuctionHouseHelper.Utilities.CreatePaddedMoneyString(disenchantPrice)
       )
     )
   elseif disenchantStatus.isDisenchantable and
@@ -221,10 +221,10 @@ function Auctionator.Tooltip.AddDisenchantTip (
   end
 end
 
-function Auctionator.Tooltip.AddProspectTip (
+function AuctionHouseHelper.Tooltip.AddProspectTip (
   tooltipFrame, prospectValue, countString
 )
-  if not Auctionator.Config.Get(Auctionator.Config.Options.PROSPECT_TOOLTIPS) then
+  if not AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.PROSPECT_TOOLTIPS) then
     return
   end
 
@@ -232,7 +232,7 @@ function Auctionator.Tooltip.AddProspectTip (
     tooltipFrame:AddDoubleLine(
       L("PROSPECT") .. countString,
       WHITE_FONT_COLOR:WrapTextInColorCode(
-        Auctionator.Utilities.CreatePaddedMoneyString(prospectValue)
+        AuctionHouseHelper.Utilities.CreatePaddedMoneyString(prospectValue)
       )
     )
   else
@@ -245,10 +245,10 @@ function Auctionator.Tooltip.AddProspectTip (
   end
 end
 
-function Auctionator.Tooltip.AddMillTip (
+function AuctionHouseHelper.Tooltip.AddMillTip (
   tooltipFrame, millValue, countString
 )
-  if not Auctionator.Config.Get(Auctionator.Config.Options.MILL_TOOLTIPS) then
+  if not AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.MILL_TOOLTIPS) then
     return
   end
 
@@ -256,7 +256,7 @@ function Auctionator.Tooltip.AddMillTip (
     tooltipFrame:AddDoubleLine(
       L("MILL") .. countString,
       WHITE_FONT_COLOR:WrapTextInColorCode(
-        Auctionator.Utilities.CreatePaddedMoneyString(millValue)
+        AuctionHouseHelper.Utilities.CreatePaddedMoneyString(millValue)
       )
     )
   else
@@ -270,23 +270,23 @@ function Auctionator.Tooltip.AddMillTip (
 end
 
 local PET_TOOLTIP_SPACING = " "
-function Auctionator.Tooltip.AddPetTip(
+function AuctionHouseHelper.Tooltip.AddPetTip(
   speciesID
 )
-  Auctionator.Debug.Message("Auctionator.Tooltip.AddPetTip", speciesID)
-  if not Auctionator.Config.Get(Auctionator.Config.Options.AUCTION_TOOLTIPS) or
-     not Auctionator.Config.Get(Auctionator.Config.Options.PET_TOOLTIPS) then
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelper.Tooltip.AddPetTip", speciesID)
+  if not AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.AUCTION_TOOLTIPS) or
+     not AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.PET_TOOLTIPS) then
     return
   end
 
   local key = "p:" .. tostring(speciesID)
-  local price = Auctionator.Database:GetPrice(key)
+  local price = AuctionHouseHelper.Database:GetPrice(key)
   BattlePetTooltip:AddLine(" ")
   if price ~= nil then
     BattlePetTooltip:AddLine(
       L("AUCTION") .. PET_TOOLTIP_SPACING ..
       WHITE_FONT_COLOR:WrapTextInColorCode(
-        Auctionator.Utilities.CreatePaddedMoneyString(price)
+        AuctionHouseHelper.Utilities.CreatePaddedMoneyString(price)
       )
     )
   else

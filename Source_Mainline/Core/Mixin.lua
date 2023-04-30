@@ -1,22 +1,22 @@
-AuctionatorAHFrameMixin = {}
+AuctionHouseHelperAHFrameMixin = {}
 
 local function InitializeIncrementalScanFrame()
   local frame
-  if Auctionator.State.IncrementalScanFrameRef == nil then
+  if AuctionHouseHelper.State.IncrementalScanFrameRef == nil then
     frame = CreateFrame(
       "FRAME",
-      "AuctionatorIncrementalScanFrame",
+      "AuctionHouseHelperIncrementalScanFrame",
       AuctionHouseFrame,
-      "AuctionatorIncrementalScanFrameTemplate"
+      "AuctionHouseHelperIncrementalScanFrameTemplate"
     )
 
-    Auctionator.State.IncrementalScanFrameRef = frame
+    AuctionHouseHelper.State.IncrementalScanFrameRef = frame
   else
-    frame = Auctionator.State.IncrementalScanFrameRef
+    frame = AuctionHouseHelper.State.IncrementalScanFrameRef
   end
 
-  if not Auctionator.Config.Get(Auctionator.Config.Options.REPLICATE_SCAN) and
-     Auctionator.Config.Get(Auctionator.Config.Options.AUTOSCAN) and
+  if not AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.REPLICATE_SCAN) and
+     AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.AUTOSCAN) and
      frame:IsAutoscanReady() then
     frame:InitiateScan()
   end
@@ -24,44 +24,44 @@ end
 
 local function InitializeFullScanFrame()
   local frame
-  if Auctionator.State.FullScanFrameRef == nil then
+  if AuctionHouseHelper.State.FullScanFrameRef == nil then
     frame = CreateFrame(
       "FRAME",
-      "AuctionatorFullScanFrame",
+      "AuctionHouseHelperFullScanFrame",
       AuctionHouseFrame,
-      "AuctionatorFullScanFrameTemplate"
+      "AuctionHouseHelperFullScanFrameTemplate"
     )
 
-    Auctionator.State.FullScanFrameRef = frame
+    AuctionHouseHelper.State.FullScanFrameRef = frame
   else
-    frame = Auctionator.State.FullScanFrameRef
+    frame = AuctionHouseHelper.State.FullScanFrameRef
   end
 
-  if Auctionator.Config.Get(Auctionator.Config.Options.REPLICATE_SCAN) and
-     Auctionator.Config.Get(Auctionator.Config.Options.AUTOSCAN) and
+  if AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.REPLICATE_SCAN) and
+     AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.AUTOSCAN) and
      frame:IsAutoscanReady() then
     frame:InitiateScan()
   end
 end
 
 local function InitializeAuctionHouseTabs()
-  if Auctionator.State.TabFrameRef == nil then
-    Auctionator.State.TabFrameRef = CreateFrame(
+  if AuctionHouseHelper.State.TabFrameRef == nil then
+    AuctionHouseHelper.State.TabFrameRef = CreateFrame(
       "Frame",
-      "AuctionatorAHTabsContainer",
+      "AuctionHouseHelperAHTabsContainer",
       AuctionHouseFrame,
-      "AuctionatorAHTabsContainerTemplate"
+      "AuctionHouseHelperAHTabsContainerTemplate"
     )
   end
 end
 
 local function InitializeSplashScreen()
-  if Auctionator.State.SplashScreenRef == nil then
-    Auctionator.State.SplashScreenRef = CreateFrame(
+  if AuctionHouseHelper.State.SplashScreenRef == nil then
+    AuctionHouseHelper.State.SplashScreenRef = CreateFrame(
       "Frame",
-      "AuctionatorSplashScreen",
+      "AuctionHouseHelperSplashScreen",
       UIParent,
-      "AuctionatorSplashScreenTemplate"
+      "AuctionHouseHelperSplashScreenTemplate"
     )
   end
 end
@@ -72,30 +72,30 @@ local function InitializeSearchCategories()
     return
   end
 
-  Auctionator.Search.InitializeCategories()
+  AuctionHouseHelper.Search.InitializeCategories()
 
   setupSearchCategories = true
 end
 
 local function ShowDefaultTab()
-  local tabs = AuctionatorAHTabsContainer.Tabs
+  local tabs = AuctionHouseHelperAHTabsContainer.Tabs
 
-  local chosenTab = tabs[Auctionator.Config.Get(Auctionator.Config.Options.DEFAULT_TAB)]
+  local chosenTab = tabs[AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.DEFAULT_TAB)]
 
   if chosenTab then
     chosenTab:Click()
   end
 end
 
-function AuctionatorAHFrameMixin:OnLoad()
+function AuctionHouseHelperAHFrameMixin:OnLoad()
   FrameUtil.RegisterFrameForEvents(self, {
     "PLAYER_INTERACTION_MANAGER_FRAME_SHOW",
     "PLAYER_INTERACTION_MANAGER_FRAME_HIDE",
   })
 end
 
-function AuctionatorAHFrameMixin:OnShow()
-  Auctionator.Debug.Message("AuctionatorAHFrameMixin:OnShow()")
+function AuctionHouseHelperAHFrameMixin:OnShow()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperAHFrameMixin:OnShow()")
 
   InitializeIncrementalScanFrame()
   InitializeFullScanFrame()
@@ -107,7 +107,7 @@ function AuctionatorAHFrameMixin:OnShow()
   ShowDefaultTab()
 end
 
-function AuctionatorAHFrameMixin:OnEvent(eventName, ...)
+function AuctionHouseHelperAHFrameMixin:OnEvent(eventName, ...)
   local paneType = ...
   if eventName == "PLAYER_INTERACTION_MANAGER_FRAME_SHOW" and paneType == Enum.PlayerInteractionType.Auctioneer then
     self:Show()

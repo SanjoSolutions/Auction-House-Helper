@@ -1,5 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Frame name="AuctionatorAHSearchScanFrameTemplate" mixin="AuctionatorAHSearchScanFrameMixin" virtual="true">
+  <Frame name="AuctionHouseHelperAHSearchScanFrameTemplate" mixin="AuctionHouseHelperAHSearchScanFrameMixin" virtual="true">
     <Scripts>
       <OnLoad method="OnLoad"/>
       <OnHide method="OnHide"/>

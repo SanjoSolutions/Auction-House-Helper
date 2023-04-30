@@ -1,26 +1,26 @@
-AuctionatorConfigFrameMixin = CreateFromMixins(AuctionatorPanelConfigMixin)
+AuctionHouseHelperConfigFrameMixin = CreateFromMixins(AuctionHouseHelperPanelConfigMixin)
 
-function AuctionatorConfigFrameMixin:OnLoad()
-  Auctionator.Debug.Message("AuctionatorConfigFrameMixin:OnLoad()")
+function AuctionHouseHelperConfigFrameMixin:OnLoad()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperConfigFrameMixin:OnLoad()")
 
-  self.name = "Auctionator"
+  self.name = "Auction House Helper"
   self:SetParent(SettingsPanel or InterfaceOptionsFrame)
 
   self:SetupPanel()
 end
 
-function AuctionatorConfigFrameMixin:Show()
+function AuctionHouseHelperConfigFrameMixin:Show()
   if InterfaceOptionsFrame then
-    InterfaceOptionsFrame_OpenToCategory(AuctionatorConfigBasicOptionsFrame)
+    InterfaceOptionsFrame_OpenToCategory(AuctionHouseHelperConfigBasicOptionsFrame)
   end
   -- For some reason OnShow doesn't fire?
-  AuctionatorConfigBasicOptionsFrame:OnShow()
+  AuctionHouseHelperConfigBasicOptionsFrame:OnShow()
 end
 
-function AuctionatorConfigFrameMixin:Save()
-  Auctionator.Debug.Message("AuctionatorConfigFrameMixin:Save()")
+function AuctionHouseHelperConfigFrameMixin:Save()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperConfigFrameMixin:Save()")
 end
 
-function AuctionatorConfigFrameMixin:Cancel()
-  Auctionator.Debug.Message("AuctionatorConfigFrameMixin:Cancel()")
+function AuctionHouseHelperConfigFrameMixin:Cancel()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperConfigFrameMixin:Cancel()")
 end

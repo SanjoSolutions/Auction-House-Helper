@@ -1,12 +1,12 @@
-AuctionatorBuyingPostingHistoryRowMixin = CreateFromMixins(AuctionatorResultsRowTemplateMixin)
+AuctionHouseHelperBuyingPostingHistoryRowMixin = CreateFromMixins(AuctionHouseHelperResultsRowTemplateMixin)
 
-function AuctionatorBuyingPostingHistoryRowMixin:OnClick(button, ...)
-  Auctionator.Debug.Message("AuctionatorBuyingPostingHistoryRowMixin:OnClick()")
+function AuctionHouseHelperBuyingPostingHistoryRowMixin:OnClick(button, ...)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperBuyingPostingHistoryRowMixin:OnClick()")
 
   if button == "LeftButton" then
-    Auctionator.EventBus
+    AuctionHouseHelper.EventBus
       :RegisterSource(self, "BuyingPostingHistoryRow")
-      :Fire(self, Auctionator.Buying.Events.HistoricalPrice, self.rowData.price)
+      :Fire(self, AuctionHouseHelper.Buying.Events.HistoricalPrice, self.rowData.price)
       :UnregisterSource(self)
   end
 end

@@ -1,7 +1,7 @@
 -- All "realms" that are connected together use the same AH database, this
 -- determines which database is in use.
 -- Call this AFTER event PLAYER_LOGIN fires.
-function Auctionator.Variables.GetConnectedRealmRoot()
+function AuctionHouseHelper.Variables.GetConnectedRealmRoot()
   -- We use GetRealmName() because GetNormalizedRealmName() isn't available on
   -- first load.
   local currentRealm = GetNormalizedRealmName()

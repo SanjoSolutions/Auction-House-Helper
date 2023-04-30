@@ -1,4 +1,4 @@
-function Auctionator.Utilities.BasicDBKeyFromLink(itemLink)
+function AuctionHouseHelper.Utilities.BasicDBKeyFromLink(itemLink)
   if itemLink ~= nil then
     local _, _, itemString = string.find(itemLink, "^|c%x+|H(.+)|h%[.*%]")
     if itemString == nil and string.find(itemLink, "^item") then
@@ -18,11 +18,11 @@ end
 
 local function IsGear(itemLink)
   local classType = select(6, GetItemInfoInstant(itemLink))
-  return classType ~= nil and Auctionator.Utilities.IsEquipment(classType)
+  return classType ~= nil and AuctionHouseHelper.Utilities.IsEquipment(classType)
 end
 
-function Auctionator.Utilities.DBKeyFromLink(itemLink, callback)
-  local basicKey = Auctionator.Utilities.BasicDBKeyFromLink(itemLink)
+function AuctionHouseHelper.Utilities.DBKeyFromLink(itemLink, callback)
+  local basicKey = AuctionHouseHelper.Utilities.BasicDBKeyFromLink(itemLink)
 
   if basicKey == nil then
     callback({})
@@ -39,7 +39,7 @@ function Auctionator.Utilities.DBKeyFromLink(itemLink, callback)
     item:ContinueOnItemLoad(function()
       local itemLevel = GetDetailedItemLevelInfo(itemLink) or 0
 
-      if itemLevel >= Auctionator.Constants.ITEM_LEVEL_THRESHOLD then
+      if itemLevel >= AuctionHouseHelper.Constants.ITEM_LEVEL_THRESHOLD then
         callback({"g:" .. basicKey .. ":" .. itemLevel, basicKey})
       else
         callback({basicKey})
@@ -50,11 +50,11 @@ function Auctionator.Utilities.DBKeyFromLink(itemLink, callback)
   end
 end
 
-function Auctionator.Utilities.DBKeysFromMultipleLinks(itemLinks, callback)
+function AuctionHouseHelper.Utilities.DBKeysFromMultipleLinks(itemLinks, callback)
   local result = {}
 
   for index, link in ipairs(itemLinks) do
-    Auctionator.Utilities.DBKeyFromLink(link, function(dbKeys)
+    AuctionHouseHelper.Utilities.DBKeyFromLink(link, function(dbKeys)
       result[index] = dbKeys
 
       for i = 1, #itemLinks do

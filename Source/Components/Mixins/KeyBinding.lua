@@ -1,12 +1,12 @@
-AuctionatorKeyBindingConfigMixin = CreateFromMixins(AuctionatorConfigTooltipMixin)
+AuctionHouseHelperKeyBindingConfigMixin = CreateFromMixins(AuctionHouseHelperConfigTooltipMixin)
 
-function AuctionatorKeyBindingConfigMixin:OnLoad()
+function AuctionHouseHelperKeyBindingConfigMixin:OnLoad()
   self.isListening = false
   self.Description:SetText(self.labelText)
   self.shortcut = ""
 end
 
-function AuctionatorKeyBindingConfigMixin:SetShortcut(shortcut)
+function AuctionHouseHelperKeyBindingConfigMixin:SetShortcut(shortcut)
   self.shortcut = shortcut
   if self.shortcut == "" then
     self.Button:SetText(GRAY_FONT_COLOR:WrapTextInColorCode(NOT_BOUND))
@@ -15,15 +15,15 @@ function AuctionatorKeyBindingConfigMixin:SetShortcut(shortcut)
   end
 end
 
-function AuctionatorKeyBindingConfigMixin:GetShortcut(shortcut)
+function AuctionHouseHelperKeyBindingConfigMixin:GetShortcut(shortcut)
   return self.shortcut
 end
 
-function AuctionatorKeyBindingConfigMixin:OnHide()
+function AuctionHouseHelperKeyBindingConfigMixin:OnHide()
   self:StopListening()
 end
 
-function AuctionatorKeyBindingConfigMixin:StartListening()
+function AuctionHouseHelperKeyBindingConfigMixin:StartListening()
   self.isListening = true
   self:SetScript("OnMouseWheel", self.OnMouseWheel)
   self:SetScript("OnKeyDown", self.OnKeyDown)
@@ -32,7 +32,7 @@ function AuctionatorKeyBindingConfigMixin:StartListening()
   end)
   self.Button.selectedHighlight:Show()
 end
-function AuctionatorKeyBindingConfigMixin:StopListening()
+function AuctionHouseHelperKeyBindingConfigMixin:StopListening()
   self.isListening = false
   self:SetScript("OnMouseWheel", nil)
   self:SetScript("OnKeyDown", nil)
@@ -40,7 +40,7 @@ function AuctionatorKeyBindingConfigMixin:StopListening()
   self.Button.selectedHighlight:Hide()
 end
 
-function AuctionatorKeyBindingConfigMixin:OnClick(button)
+function AuctionHouseHelperKeyBindingConfigMixin:OnClick(button)
   if button == "LeftButton" or button == "RightButton" then
     if self.isListening then
       self:StopListening()
@@ -52,16 +52,16 @@ function AuctionatorKeyBindingConfigMixin:OnClick(button)
   end
 end
 
-function AuctionatorKeyBindingConfigMixin:OnEnter()
-  AuctionatorConfigTooltipMixin.OnEnter(self)
+function AuctionHouseHelperKeyBindingConfigMixin:OnEnter()
+  AuctionHouseHelperConfigTooltipMixin.OnEnter(self)
   self.Button:LockHighlight()
 end
-function AuctionatorKeyBindingConfigMixin:OnLeave()
-  AuctionatorConfigTooltipMixin.OnLeave(self)
+function AuctionHouseHelperKeyBindingConfigMixin:OnLeave()
+  AuctionHouseHelperConfigTooltipMixin.OnLeave(self)
   self.Button:UnlockHighlight()
 end
 
-function AuctionatorKeyBindingConfigMixin:OnMouseWheel(delta)
+function AuctionHouseHelperKeyBindingConfigMixin:OnMouseWheel(delta)
   if delta > 0 then
     self:OnKeyDown("MOUSEWHEELUP")
   else
@@ -69,7 +69,7 @@ function AuctionatorKeyBindingConfigMixin:OnMouseWheel(delta)
   end
 end
 
-function AuctionatorKeyBindingConfigMixin:OnKeyDown(keyOrButton)
+function AuctionHouseHelperKeyBindingConfigMixin:OnKeyDown(keyOrButton)
   if GetBindingFromClick(keyOrButton) == "SCREENSHOT" then
     self:SetPropagateKeyboardInput(true)
     return
@@ -84,7 +84,7 @@ function AuctionatorKeyBindingConfigMixin:OnKeyDown(keyOrButton)
   if not IsKeyPressIgnoredForBinding(keyPressed) then
     if CreateKeyChordStringUsingMetaKeyState then
       keyPressed = CreateKeyChordStringUsingMetaKeyState(keyPressed)
-    else --if Auctionator.Constants.IsClassic
+    else --if AuctionHouseHelper.Constants.IsClassic
       keyPressed = CreateKeyChordString(keyPressed)
     end
     self:SetShortcut(keyPressed)

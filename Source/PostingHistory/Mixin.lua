@@ -1,14 +1,14 @@
-Auctionator.PostingHistoryMixin = {}
+AuctionHouseHelper.PostingHistoryMixin = {}
 
-function Auctionator.PostingHistoryMixin:Init(db)
+function AuctionHouseHelper.PostingHistoryMixin:Init(db)
   self.db = db
-  Auctionator.EventBus:Register(self, {
-    Auctionator.Selling.Events.AuctionCreated
+  AuctionHouseHelper.EventBus:Register(self, {
+    AuctionHouseHelper.Selling.Events.AuctionCreated
   })
 end
 
-function Auctionator.PostingHistoryMixin:AddEntry(key, price, quantity)
-  Auctionator.Debug.Message("Auctionator.PostingHistoryMixin:AddEntry", key, price, quantity)
+function AuctionHouseHelper.PostingHistoryMixin:AddEntry(key, price, quantity)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelper.PostingHistoryMixin:AddEntry", key, price, quantity)
   if not self.db[key] then
     self.db[key] = {}
   end
@@ -24,7 +24,7 @@ local function IsSameDay(time1, time2)
   return time1.day == time2.day and time1.month == time2.month and time1.year == time2.year
 end
 
-function Auctionator.PostingHistoryMixin:PruneKey(key)
+function AuctionHouseHelper.PostingHistoryMixin:PruneKey(key)
   local itemInfo = self.db[key]
 
   local currentTime = date("*t", itemInfo[#itemInfo].time)
@@ -43,14 +43,14 @@ function Auctionator.PostingHistoryMixin:PruneKey(key)
     index = index - 1
   end
 
-  while #itemInfo > Auctionator.Config.Get(Auctionator.Config.Options.POSTING_HISTORY_LENGTH) do
+  while #itemInfo > AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.POSTING_HISTORY_LENGTH) do
     table.remove(itemInfo, 1)
   end
 end
 
-function Auctionator.PostingHistoryMixin:ReceiveEvent(eventName, eventData)
-  if eventName == Auctionator.Selling.Events.AuctionCreated then
-    Auctionator.Utilities.DBKeyFromLink(eventData.itemLink, function(keys)
+function AuctionHouseHelper.PostingHistoryMixin:ReceiveEvent(eventName, eventData)
+  if eventName == AuctionHouseHelper.Selling.Events.AuctionCreated then
+    AuctionHouseHelper.Utilities.DBKeyFromLink(eventData.itemLink, function(keys)
       for _, key in ipairs(keys) do
         self:AddEntry(key, eventData.buyoutAmount, eventData.quantity)
       end
@@ -58,7 +58,7 @@ function Auctionator.PostingHistoryMixin:ReceiveEvent(eventName, eventData)
   end
 end
 
-function Auctionator.PostingHistoryMixin:GetPriceHistory(dbKey)
+function AuctionHouseHelper.PostingHistoryMixin:GetPriceHistory(dbKey)
   if self.db[dbKey] == nil then
     return {}
   end
@@ -67,7 +67,7 @@ function Auctionator.PostingHistoryMixin:GetPriceHistory(dbKey)
 
   for _, entry in ipairs(self.db[dbKey]) do
     table.insert(results, {
-     date = Auctionator.Utilities.PrettyDate(entry.time),
+     date = AuctionHouseHelper.Utilities.PrettyDate(entry.time),
      rawDay = entry.time,
      price = entry.price,
      quantity = entry.quantity

@@ -1,6 +1,6 @@
-AuctionatorTranslatorMixin = {}
+AuctionHouseHelperTranslatorMixin = {}
 
-function AuctionatorTranslatorMixin:OnLoad()
+function AuctionHouseHelperTranslatorMixin:OnLoad()
   self.FlagTexture:SetTexture(self.textureLocation)
   self.TranslatorsText:SetText(self.translators)
 end

@@ -1,5 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Button name="AuctionatorBagItem" registerForClicks="LeftButtonUp, RightButtonUp" mixin="AuctionatorBagItemMixin" virtual="true">
+  <Button name="AuctionHouseHelperBagItem" registerForClicks="LeftButtonUp, RightButtonUp" mixin="AuctionHouseHelperBagItemMixin" virtual="true">
     <Size x="42" y="42"/>
 
     <Scripts>

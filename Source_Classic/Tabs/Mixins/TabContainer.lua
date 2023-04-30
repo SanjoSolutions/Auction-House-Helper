@@ -2,16 +2,16 @@ local tabPadding = 0
 local tabAbsoluteSize = nil
 local minTabWidth = 36
 
-AuctionatorTabContainerMixin = {}
+AuctionHouseHelperTabContainerMixin = {}
 
 local function InitializeFromDetails(details)
   local frame = CreateFrame(
     "BUTTON",
     "AuctionFrameTab" .. (AuctionFrame.numTabs + 1),
     AuctionFrame,
-    "AuctionatorTabButtonTemplate"
+    "AuctionHouseHelperTabButtonTemplate"
   )
-  local frameName = "AuctionatorTabs_" .. details.name
+  local frameName = "AuctionHouseHelperTabs_" .. details.name
   _G[frameName] = frame
 
   frame:SetText(details.textLabel)
@@ -22,13 +22,13 @@ local function InitializeFromDetails(details)
   return frame
 end
 
-function AuctionatorTabContainerMixin:OnLoad()
-  Auctionator.Debug.Message("AuctionatorTabContainerMixin:OnLoad()")
+function AuctionHouseHelperTabContainerMixin:OnLoad()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperTabContainerMixin:OnLoad()")
 
   -- Tabs are sorted to avoid inconsistent ordering based on the addon loading
   -- order
   table.sort(
-    Auctionator.Tabs.State.knownTabs,
+    AuctionHouseHelper.Tabs.State.knownTabs,
     function(left, right)
       return left.tabOrder < right.tabOrder
     end
@@ -36,23 +36,23 @@ function AuctionatorTabContainerMixin:OnLoad()
 
   self.Tabs = {}
 
-  for _, details in ipairs(Auctionator.Tabs.State.knownTabs) do
+  for _, details in ipairs(AuctionHouseHelper.Tabs.State.knownTabs) do
     table.insert(self.Tabs, InitializeFromDetails(details))
   end
 
   self:HookTabs()
 end
 
-function AuctionatorTabContainerMixin:OnShow()
+function AuctionHouseHelperTabContainerMixin:OnShow()
 end
 
-function AuctionatorTabContainerMixin:OnHide()
-  for _, auctionatorTab in pairs(self.Tabs) do
-    auctionatorTab:DeselectTab()
+function AuctionHouseHelperTabContainerMixin:OnHide()
+  for _, auctionHouseHelperTab in pairs(self.Tabs) do
+    auctionHouseHelperTab:DeselectTab()
   end
 end
 
-function AuctionatorTabContainerMixin:IsAuctionatorFrame(tab)
+function AuctionHouseHelperTabContainerMixin:IsAuctionHouseHelperFrame(tab)
   for _, frame in pairs(self.Tabs) do
     if frame == tab then
       return true
@@ -62,14 +62,14 @@ function AuctionatorTabContainerMixin:IsAuctionatorFrame(tab)
   return false
 end
 
-function AuctionatorTabContainerMixin:HookTabs()
+function AuctionHouseHelperTabContainerMixin:HookTabs()
   hooksecurefunc(_G, "AuctionFrameTab_OnClick", function(tabButton, ...)
     for _, tab in ipairs(self.Tabs) do
       tab:DeselectTab()
     end
 
-    local isAuctionatorFrame = self:IsAuctionatorFrame(tabButton)
-    if isAuctionatorFrame then
+    local isAuctionHouseHelperFrame = self:IsAuctionHouseHelperFrame(tabButton)
+    if isAuctionHouseHelperFrame then
       tabButton:Selected()
     end
   end)

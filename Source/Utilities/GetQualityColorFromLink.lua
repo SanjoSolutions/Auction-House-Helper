@@ -1,3 +1,3 @@
-function Auctionator.Utilities.GetQualityColorFromLink(itemLink)
+function AuctionHouseHelper.Utilities.GetQualityColorFromLink(itemLink)
   return string.match(itemLink, "|c(........)|")
 end

@@ -2,8 +2,8 @@ local CURRENT_VIEW = 1
 local REALM_VIEW = 2
 local YOUR_VIEW = 3
 
-AuctionatorSellingTabPricesContainerMixin = {}
-function AuctionatorSellingTabPricesContainerMixin:OnLoad()
+AuctionHouseHelperSellingTabPricesContainerMixin = {}
+function AuctionHouseHelperSellingTabPricesContainerMixin:OnLoad()
   PanelTemplates_SetNumTabs(self, #self.Tabs)
 
   for _, tab in ipairs(self.Tabs) do
@@ -15,10 +15,10 @@ function AuctionatorSellingTabPricesContainerMixin:OnLoad()
   self:SetView(1)
 end
 
-function AuctionatorSellingTabPricesContainerMixin:SetView(viewIndex)
+function AuctionHouseHelperSellingTabPricesContainerMixin:SetView(viewIndex)
   PanelTemplates_SetTab(self, viewIndex)
 
-  if not Auctionator.Config.Get(Auctionator.Config.Options.SELLING_SPLIT_PANELS) then
+  if not AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SELLING_SPLIT_PANELS) then
     self:GetParent().CurrentPricesListing:Hide()
   end
 

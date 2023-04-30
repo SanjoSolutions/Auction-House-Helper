@@ -1,5 +1,5 @@
-function Auctionator.Shopping.Lists.GetBatchExportString(listName)
-  local items = Auctionator.Shopping.ListManager:GetByName(listName):GetAllItems()
+function AuctionHouseHelper.Shopping.Lists.GetBatchExportString(listName)
+  local items = AuctionHouseHelper.Shopping.ListManager:GetByName(listName):GetAllItems()
 
   local result = listName
   for _, item in ipairs(items) do
@@ -11,7 +11,7 @@ end
 
 --Import multiple instance of lists in the format
 --  list name^item 1^item 2\n
-function Auctionator.Shopping.Lists.BatchImportFromString(importString)
+function AuctionHouseHelper.Shopping.Lists.BatchImportFromString(importString)
   -- Remove blank lines
   importString = gsub(importString, "%s+\n", "\n")
   importString = gsub(importString, "\n+", "\n")
@@ -21,30 +21,30 @@ function Auctionator.Shopping.Lists.BatchImportFromString(importString)
   for index, list in ipairs(lists) do
     local name, items = strsplit("^", list, 2)
 
-    if Auctionator.Shopping.ListManager:GetIndexForName(name) == nil and name ~= nil and name:len() > 0 then
-      Auctionator.Shopping.ListManager:Create(name)
+    if AuctionHouseHelper.Shopping.ListManager:GetIndexForName(name) == nil and name ~= nil and name:len() > 0 then
+      AuctionHouseHelper.Shopping.ListManager:Create(name)
     end
 
-    Auctionator.Shopping.Lists.OneImportFromString(name, items)
+    AuctionHouseHelper.Shopping.Lists.OneImportFromString(name, items)
 
     if name ~= nil and name:len() > 0 then
-      Auctionator.EventBus
-        :RegisterSource(Auctionator.Shopping.Lists.BatchImportFromString, "BatchImportFromString")
-        :Fire(Auctionator.Shopping.Lists.BatchImportFromString, Auctionator.Shopping.Events.ListImportFinished, name)
-        :UnregisterSource(Auctionator.Shopping.Lists.BatchImportFromString)
+      AuctionHouseHelper.EventBus
+        :RegisterSource(AuctionHouseHelper.Shopping.Lists.BatchImportFromString, "BatchImportFromString")
+        :Fire(AuctionHouseHelper.Shopping.Lists.BatchImportFromString, AuctionHouseHelper.Shopping.Events.ListImportFinished, name)
+        :UnregisterSource(AuctionHouseHelper.Shopping.Lists.BatchImportFromString)
     end
   end
 end
 
-function Auctionator.Shopping.Lists.OneImportFromString(listName, importString)
-  Auctionator.Debug.Message("Auctionator.Shopping.Lists.OneImportFromString()", listName, importString)
+function AuctionHouseHelper.Shopping.Lists.OneImportFromString(listName, importString)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelper.Shopping.Lists.OneImportFromString()", listName, importString)
 
   if importString == nil then
     -- Otherwise import throws when there are not items in a list
     return
   end
 
-  local list = Auctionator.Shopping.ListManager:GetByName(listName)
+  local list = AuctionHouseHelper.Shopping.ListManager:GetByName(listName)
 
   for _, item in ipairs({strsplit("^", importString)}) do
     list:InsertItem(item)
@@ -55,7 +55,7 @@ end
 -- **List Name\n
 -- Item 1\n
 -- Item 2\n
-function Auctionator.Shopping.Lists.OldBatchImportFromString(importString)
+function AuctionHouseHelper.Shopping.Lists.OldBatchImportFromString(importString)
   -- Remove trailing and leading spaces
   importString = gsub(importString, "%s+\n", "\n")
   importString = gsub(importString, "\n%s+", "\n")
@@ -72,21 +72,21 @@ function Auctionator.Shopping.Lists.OldBatchImportFromString(importString)
   for index, list in ipairs(lists) do
     local name, items = strsplit("\n", list, 2)
 
-    if Auctionator.Shopping.Lists.ListIndex(name) == nil then
-      Auctionator.Shopping.Lists.Create(name)
+    if AuctionHouseHelper.Shopping.Lists.ListIndex(name) == nil then
+      AuctionHouseHelper.Shopping.Lists.Create(name)
     end
 
-    Auctionator.Shopping.Lists.OldOneImportFromString(name, items)
+    AuctionHouseHelper.Shopping.Lists.OldOneImportFromString(name, items)
 
-    Auctionator.EventBus
-      :RegisterSource(Auctionator.Shopping.Lists.OldBatchImportFromString, "OldBatchImportFromString")
-      :Fire(Auctionator.Shopping.Lists.OldBatchImportFromString, Auctionator.Shopping.Events.ListImportFinished, name)
-      :UnregisterSource(Auctionator.Shopping.Lists.OldBatchImportFromString)
+    AuctionHouseHelper.EventBus
+      :RegisterSource(AuctionHouseHelper.Shopping.Lists.OldBatchImportFromString, "OldBatchImportFromString")
+      :Fire(AuctionHouseHelper.Shopping.Lists.OldBatchImportFromString, AuctionHouseHelper.Shopping.Events.ListImportFinished, name)
+      :UnregisterSource(AuctionHouseHelper.Shopping.Lists.OldBatchImportFromString)
   end
 end
 
-function Auctionator.Shopping.Lists.OldOneImportFromString(listName, importString)
-  local list = Auctionator.Shopping.ListManager:GetByName(listName)
+function AuctionHouseHelper.Shopping.Lists.OldOneImportFromString(listName, importString)
+  local list = AuctionHouseHelper.Shopping.ListManager:GetByName(listName)
 
   importString = gsub(importString, "\n$", "")
 
@@ -95,7 +95,7 @@ function Auctionator.Shopping.Lists.OldOneImportFromString(listName, importStrin
   end
 end
 
-local TSMImportName = AUCTIONATOR_L_IMPORTED .. " (" .. AUCTIONATOR_L_TEMPORARY_LOWER_CASE .. ")"
+local TSMImportName = AUCTION_HOUSE_HELPER_L_IMPORTED .. " (" .. AUCTION_HOUSE_HELPER_L_TEMPORARY_LOWER_CASE .. ")"
 local IMPORT_ERROR = "IMPORT ERROR"
 
 --Import a TSM group in the format
@@ -103,7 +103,7 @@ local IMPORT_ERROR = "IMPORT ERROR"
 --  itemID 1,itemID 2
 --
 --Saves the result in a temporary list and fires a list creation event.
-function Auctionator.Shopping.Lists.TSMImportFromString(importString)
+function AuctionHouseHelper.Shopping.Lists.TSMImportFromString(importString)
   -- Remove line breaks
   importString = gsub(importString, "\n", "")
 
@@ -112,22 +112,22 @@ function Auctionator.Shopping.Lists.TSMImportFromString(importString)
   local items = {}
 
   local function OnFinish()
-    if Auctionator.Shopping.ListManager:GetIndexForName(TSMImportName) ~= nil then
-      Auctionator.Shopping.ListManager:Delete(TSMImportName)
+    if AuctionHouseHelper.Shopping.ListManager:GetIndexForName(TSMImportName) ~= nil then
+      AuctionHouseHelper.Shopping.ListManager:Delete(TSMImportName)
     end
 
-    Auctionator.Shopping.ListManager:Create(TSMImportName, true)
+    AuctionHouseHelper.Shopping.ListManager:Create(TSMImportName, true)
 
-    local list = Auctionator.Shopping.ListManager:GetByName(TSMImportName)
+    local list = AuctionHouseHelper.Shopping.ListManager:GetByName(TSMImportName)
 
     for _, i in ipairs(items) do
       list:InsertItem(i)
     end
 
-    Auctionator.EventBus
-      :RegisterSource(Auctionator.Shopping.Lists.TSMImportFromString, "TSMImportFromString")
-      :Fire(Auctionator.Shopping.Lists.TSMImportFromString, Auctionator.Shopping.Events.ListImportFinished, list:GetName())
-      :UnregisterSource(Auctionator.Shopping.Lists.TSMImportFromString)
+    AuctionHouseHelper.EventBus
+      :RegisterSource(AuctionHouseHelper.Shopping.Lists.TSMImportFromString, "TSMImportFromString")
+      :Fire(AuctionHouseHelper.Shopping.Lists.TSMImportFromString, AuctionHouseHelper.Shopping.Events.ListImportFinished, list:GetName())
+      :UnregisterSource(AuctionHouseHelper.Shopping.Lists.TSMImportFromString)
   end
 
   for index, itemString in ipairs(itemStrings) do
@@ -140,7 +140,7 @@ function Auctionator.Shopping.Lists.TSMImportFromString(importString)
     local item = Item:CreateFromItemID(id)
 
     if itemType == "p" or item:IsItemEmpty() then
-      item = Item:CreateFromItemID(Auctionator.Constants.PET_CAGE_ID)
+      item = Item:CreateFromItemID(AuctionHouseHelper.Constants.PET_CAGE_ID)
     end
     if item:IsItemEmpty() then
       items[index] = IMPORT_ERROR

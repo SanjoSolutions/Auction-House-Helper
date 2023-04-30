@@ -1,63 +1,63 @@
-AuctionatorSearchProviderMixin = {}
+AuctionHouseHelperSearchProviderMixin = {}
 
 -- Derive
-function AuctionatorSearchProviderMixin:OnSearchEventReceived(eventName, ...)
+function AuctionHouseHelperSearchProviderMixin:OnSearchEventReceived(eventName, ...)
 end
 
 -- Derive
-function AuctionatorSearchProviderMixin:CreateSearchTerm(term)
+function AuctionHouseHelperSearchProviderMixin:CreateSearchTerm(term)
 end
 
 -- Derive
-function AuctionatorSearchProviderMixin:GetSearchProvider()
+function AuctionHouseHelperSearchProviderMixin:GetSearchProvider()
 end
 
 -- Derive
-function AuctionatorSearchProviderMixin:RegisterProviderEvents()
+function AuctionHouseHelperSearchProviderMixin:RegisterProviderEvents()
 end
 
 -- Derive
-function AuctionatorSearchProviderMixin:UnregisterProviderEvents()
+function AuctionHouseHelperSearchProviderMixin:UnregisterProviderEvents()
 end
 
 -- Derive
-function AuctionatorSearchProviderMixin:HasCompleteTermResults()
+function AuctionHouseHelperSearchProviderMixin:HasCompleteTermResults()
 end
 
 -- Derive
-function AuctionatorSearchProviderMixin:GetCurrentEmptyResult()
+function AuctionHouseHelperSearchProviderMixin:GetCurrentEmptyResult()
 end
 
-function AuctionatorSearchProviderMixin:RegisterEvents(events)
-  Auctionator.Debug.Message("AuctionatorSearchProviderMixin:RegisterEvents()", events)
+function AuctionHouseHelperSearchProviderMixin:RegisterEvents(events)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperSearchProviderMixin:RegisterEvents()", events)
 
   FrameUtil.RegisterFrameForEvents(self, events)
 end
 
-function AuctionatorSearchProviderMixin:UnregisterEvents(events)
-  Auctionator.Debug.Message("AuctionatorSearchProviderMixin:UnregisterEvents()", events)
+function AuctionHouseHelperSearchProviderMixin:UnregisterEvents(events)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperSearchProviderMixin:UnregisterEvents()", events)
 
   FrameUtil.UnregisterFrameForEvents(self, events)
 end
 
-function AuctionatorSearchProviderMixin:SetTerms(terms, config)
-  Auctionator.Debug.Message("AuctionatorSearchProviderMixin:SetTerms()", terms, config)
+function AuctionHouseHelperSearchProviderMixin:SetTerms(terms, config)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperSearchProviderMixin:SetTerms()", terms, config)
 
   self.terms = terms
   self.config = config or {}
   self.index = 1
 end
 
-function AuctionatorSearchProviderMixin:GetCurrentSearchIndex()
+function AuctionHouseHelperSearchProviderMixin:GetCurrentSearchIndex()
   return self.index
 end
 
-function AuctionatorSearchProviderMixin:GetSearchTermCount()
+function AuctionHouseHelperSearchProviderMixin:GetSearchTermCount()
   return #self.terms
 end
 
-function AuctionatorSearchProviderMixin:HasMoreTerms()
-  Auctionator.Debug.Message("AuctionatorSearchProviderMixin:HasMoreTerms()")
+function AuctionHouseHelperSearchProviderMixin:HasMoreTerms()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperSearchProviderMixin:HasMoreTerms()")
 
   return
     self.terms ~= nil and
@@ -66,8 +66,8 @@ function AuctionatorSearchProviderMixin:HasMoreTerms()
     self.index <= #self.terms
 end
 
-function AuctionatorSearchProviderMixin:GetNextSearchParameter()
-  Auctionator.Debug.Message("AuctionatorSearchProviderMixin:GetNextSearchParameter()")
+function AuctionHouseHelperSearchProviderMixin:GetNextSearchParameter()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperSearchProviderMixin:GetNextSearchParameter()")
 
   if self:HasMoreTerms() then
     self.index = self.index + 1
@@ -78,6 +78,6 @@ function AuctionatorSearchProviderMixin:GetNextSearchParameter()
   end
 end
 
-function AuctionatorSearchProviderMixin:GetCurrentSearchParameter()
+function AuctionHouseHelperSearchProviderMixin:GetCurrentSearchParameter()
   return self.terms[self.index - 1]
 end

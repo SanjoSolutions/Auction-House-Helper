@@ -1,7 +1,7 @@
 -- Call the appropriate method before doing the action to ensure the throttle
 -- state is set correctly
 -- :SearchQueried()
-AuctionatorAHThrottlingFrameMixin = {}
+AuctionHouseHelperAHThrottlingFrameMixin = {}
 
 local THROTTLING_EVENTS = {
   "AUCTION_HOUSE_THROTTLED_MESSAGE_DROPPED",
@@ -12,42 +12,42 @@ local THROTTLING_EVENTS = {
   "AUCTION_HOUSE_BROWSE_FAILURE"
 }
 
-function AuctionatorAHThrottlingFrameMixin:OnLoad()
-  Auctionator.Debug.Message("AuctionatorAHThrottlingFrameMixin:OnLoad")
+function AuctionHouseHelperAHThrottlingFrameMixin:OnLoad()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperAHThrottlingFrameMixin:OnLoad")
   self.oldReady = false
 
   FrameUtil.RegisterFrameForEvents(self, THROTTLING_EVENTS)
 
-  Auctionator.EventBus:RegisterSource(self, "AuctionatorAHThrottlingFrameMixin")
+  AuctionHouseHelper.EventBus:RegisterSource(self, "AuctionHouseHelperAHThrottlingFrameMixin")
 end
 
-function AuctionatorAHThrottlingFrameMixin:OnEvent(eventName, ...)
+function AuctionHouseHelperAHThrottlingFrameMixin:OnEvent(eventName, ...)
   if eventName == "AUCTION_HOUSE_THROTTLED_SYSTEM_READY" then
-    Auctionator.Debug.Message("normal ready")
+    AuctionHouseHelper.Debug.Message("normal ready")
 
   elseif eventName == "AUCTION_HOUSE_BROWSE_FAILURE" or
          eventName == "AUCTION_HOUSE_THROTTLED_MESSAGE_DROPPED" then
-    Auctionator.Debug.Message("fail", eventName)
+    AuctionHouseHelper.Debug.Message("fail", eventName)
 
   else
-    Auctionator.Debug.Message("not ready", eventName)
+    AuctionHouseHelper.Debug.Message("not ready", eventName)
   end
 
   local ready = self:IsReady()
 
   if self.oldReady ~= ready then
     if ready then
-      Auctionator.EventBus:Fire(self, Auctionator.AH.Events.Ready)
+      AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.AH.Events.Ready)
     end
-    Auctionator.EventBus:Fire(self, Auctionator.AH.Events.ThrottleUpdate, ready)
+    AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.AH.Events.ThrottleUpdate, ready)
   end
 
   self.oldReady = ready
 end
 
-function AuctionatorAHThrottlingFrameMixin:SearchQueried()
+function AuctionHouseHelperAHThrottlingFrameMixin:SearchQueried()
 end
 
-function AuctionatorAHThrottlingFrameMixin:IsReady()
+function AuctionHouseHelperAHThrottlingFrameMixin:IsReady()
   return C_AuctionHouse.IsThrottledMessageSystemReady()
 end

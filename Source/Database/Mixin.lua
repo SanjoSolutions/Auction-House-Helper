@@ -1,10 +1,10 @@
-Auctionator.DatabaseMixin = {}
-function Auctionator.DatabaseMixin:Init(db)
+AuctionHouseHelper.DatabaseMixin = {}
+function AuctionHouseHelper.DatabaseMixin:Init(db)
   self.db = db
 end
 
-function Auctionator.DatabaseMixin:SetPrice(dbKey, newMinPrice, available)
-  if Auctionator.Config.Get(Auctionator.Config.Options.NO_PRICE_DATABASE) then
+function AuctionHouseHelper.DatabaseMixin:SetPrice(dbKey, newMinPrice, available)
+  if AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.NO_PRICE_DATABASE) then
     return
   end
 
@@ -22,7 +22,7 @@ function Auctionator.DatabaseMixin:SetPrice(dbKey, newMinPrice, available)
   self:InternalUpdateHistory(dbKey, newMinPrice, available)
 end
 
-function Auctionator.DatabaseMixin:GetPrice(dbKey)
+function AuctionHouseHelper.DatabaseMixin:GetPrice(dbKey)
   if self.db[dbKey] ~= nil then
     return self.db[dbKey].m
   else
@@ -30,7 +30,7 @@ function Auctionator.DatabaseMixin:GetPrice(dbKey)
   end
 end
 
-function Auctionator.DatabaseMixin:GetFirstPrice(dbKeys)
+function AuctionHouseHelper.DatabaseMixin:GetFirstPrice(dbKeys)
   for _, dbKey in ipairs(dbKeys) do
     local price = self:GetPrice(dbKey)
     if price then
@@ -42,8 +42,8 @@ end
 
 --Takes all the items with a list of their prices, and determines the minimum
 --price.
-function Auctionator.DatabaseMixin:ProcessScan(itemIndexes)
-  Auctionator.Debug.Message("Auctionator.DatabaseMixin.ProcessScan")
+function AuctionHouseHelper.DatabaseMixin:ProcessScan(itemIndexes)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelper.DatabaseMixin.ProcessScan")
   local startTime = debugprofilestop()
 
   local count = 0
@@ -64,15 +64,15 @@ function Auctionator.DatabaseMixin:ProcessScan(itemIndexes)
     self:SetPrice(dbKey, minPrice, available)
   end
 
-  Auctionator.Debug.Message("Processing time: " .. tostring(debugprofilestop() - startTime))
+  AuctionHouseHelper.Debug.Message("Processing time: " .. tostring(debugprofilestop() - startTime))
   return count
 end
 
 local function GetScanDay()
-  return (math.floor ((time() - Auctionator.Constants.SCAN_DAY_0) / (86400)));
+  return (math.floor ((time() - AuctionHouseHelper.Constants.SCAN_DAY_0) / (86400)));
 end
 
-function Auctionator.DatabaseMixin:InternalUpdateHistory(dbKey, buyoutPrice, available)
+function AuctionHouseHelper.DatabaseMixin:InternalUpdateHistory(dbKey, buyoutPrice, available)
   local daysSinceZero = GetScanDay()
 
   local lowestLow  = self.db[dbKey].l[daysSinceZero]
@@ -106,7 +106,7 @@ function Auctionator.DatabaseMixin:InternalUpdateHistory(dbKey, buyoutPrice, ava
   end
 end
 
-function Auctionator.DatabaseMixin:GetItemCount()
+function AuctionHouseHelper.DatabaseMixin:GetItemCount()
   local count = 0
   for _, _ in pairs(self.db) do
     count = count + 1
@@ -115,8 +115,8 @@ function Auctionator.DatabaseMixin:GetItemCount()
   return count
 end
 
-function Auctionator.DatabaseMixin:Prune()
-  local cutoffDay = GetScanDay() - Auctionator.Config.Get(Auctionator.Config.Options.PRICE_HISTORY_DAYS)
+function AuctionHouseHelper.DatabaseMixin:Prune()
+  local cutoffDay = GetScanDay() - AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.PRICE_HISTORY_DAYS)
 
   local entriesPruned = 0
 
@@ -149,10 +149,10 @@ function Auctionator.DatabaseMixin:Prune()
     end
   end
 
-  Auctionator.Debug.Message("Auctionator.DatabaseMixin:Prune Pruned " .. tostring(entriesPruned) .. " entries")
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelper.DatabaseMixin:Prune Pruned " .. tostring(entriesPruned) .. " entries")
 end
 
-function Auctionator.DatabaseMixin:GetPriceHistory(dbKey)
+function AuctionHouseHelper.DatabaseMixin:GetPriceHistory(dbKey)
   if self.db[dbKey] == nil then
     return {}
   end
@@ -161,13 +161,13 @@ function Auctionator.DatabaseMixin:GetPriceHistory(dbKey)
 
   local results = {}
 
-  local sortedDays = Auctionator.Utilities.TableKeys(itemData.h)
+  local sortedDays = AuctionHouseHelper.Utilities.TableKeys(itemData.h)
   table.sort(sortedDays, function(a, b) return b < a end)
 
   for _, day in ipairs(sortedDays) do
     table.insert(results, {
-     date = Auctionator.Utilities.PrettyDate(
-        day * 86400 + Auctionator.Constants.SCAN_DAY_0
+     date = AuctionHouseHelper.Utilities.PrettyDate(
+        day * 86400 + AuctionHouseHelper.Constants.SCAN_DAY_0
      ),
      rawDay = day,
      minSeen = itemData.l[day] or itemData.h[day],

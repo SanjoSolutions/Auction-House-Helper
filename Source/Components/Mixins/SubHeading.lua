@@ -1,14 +1,14 @@
-AuctionatorConfigurationSubHeadingMixin = {}
+AuctionHouseHelperConfigurationSubHeadingMixin = {}
 
-function AuctionatorConfigurationSubHeadingMixin:InitializeSubHeading()
-  Auctionator.Debug.Message("AuctionatorConfigurationSubHeadingMixin:InitializeSubHeading()")
+function AuctionHouseHelperConfigurationSubHeadingMixin:InitializeSubHeading()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperConfigurationSubHeadingMixin:InitializeSubHeading()")
 
   if self.subHeadingText ~= nil then
     self.HeadingText:SetText(self.subHeadingText)
   end
 end
 
-function AuctionatorConfigurationSubHeadingMixin:SetText(newHeading)
+function AuctionHouseHelperConfigurationSubHeadingMixin:SetText(newHeading)
   self.subHeadingText = newHeading
   self:OnLoad()
 end

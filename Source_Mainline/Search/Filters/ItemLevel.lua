@@ -3,19 +3,19 @@ local function HasItemLevel(itemKey)
   return itemKey.itemLevel ~= nil and itemKey.itemLevel ~= 0
 end
 
-Auctionator.Search.Filters.ItemLevelMixin = {}
+AuctionHouseHelper.Search.Filters.ItemLevelMixin = {}
 
-function Auctionator.Search.Filters.ItemLevelMixin:Init(filterTracker, browseResult, limits)
+function AuctionHouseHelper.Search.Filters.ItemLevelMixin:Init(filterTracker, browseResult, limits)
   self.limits = limits
 
   filterTracker:ReportFilterComplete(self:FilterCheck(browseResult.itemKey))
 end
 
-function Auctionator.Search.Filters.ItemLevelMixin:FilterCheck(itemKey)
+function AuctionHouseHelper.Search.Filters.ItemLevelMixin:FilterCheck(itemKey)
   return (not HasItemLevel(itemKey)) or self:ItemLevelCheck(itemKey)
 end
 
-function Auctionator.Search.Filters.ItemLevelMixin:ItemLevelCheck(itemKey)
+function AuctionHouseHelper.Search.Filters.ItemLevelMixin:ItemLevelCheck(itemKey)
   return
     (
       --Minimum item level check

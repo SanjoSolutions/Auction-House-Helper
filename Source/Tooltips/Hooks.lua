@@ -1,7 +1,7 @@
-if BattlePetToolTip_Show ~= nil then -- not Auctionator.Constants.IsClassic
+if BattlePetToolTip_Show ~= nil then -- not AuctionHouseHelper.Constants.IsClassic
   hooksecurefunc (_G, "BattlePetToolTip_Show",
     function(speciesID, ...)
-      Auctionator.Tooltip.AddPetTip(speciesID)
+      AuctionHouseHelper.Tooltip.AddPetTip(speciesID)
     end
   )
 end
@@ -16,7 +16,7 @@ TooltipHandlers["SetBagItem"] = function(tip, bag, slot)
     local itemLink = C_Item.GetItemLink(itemLocation);
     local itemCount = C_Item.GetStackCount(itemLocation)
 
-    Auctionator.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
+    AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
   end
 end
 
@@ -25,7 +25,7 @@ TooltipHandlers["SetBuybackItem"] = function(tip, slotIndex)
   local itemLink = GetBuybackItemLink(slotIndex)
   local _, _, _, itemCount = GetBuybackItemInfo(slotIndex);
 
-  Auctionator.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
+  AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
 end
 
 -- This is called when mousing over an item in a merchant window (Merchant Pane)
@@ -33,7 +33,7 @@ TooltipHandlers["SetMerchantItem"] = function(tip, index)
   local itemLink = GetMerchantItemLink(index)
   local _, _, _, itemCount = GetMerchantItemInfo(index);
 
-  Auctionator.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
+  AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
 end
 
 -- This is called when mousing over an item in your bank, or a bag in your bag list
@@ -41,7 +41,7 @@ TooltipHandlers["SetInventoryItem"] = function(tip, unit, slot)
   local itemLink = GetInventoryItemLink(unit, slot)
   local itemCount = GetInventoryItemCount(unit, slot)
 
-  Auctionator.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount ~= 0 and itemCount or 1)
+  AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount ~= 0 and itemCount or 1)
 end
 
 -- This is called when mousing over an item in your guild bank
@@ -51,7 +51,7 @@ TooltipHandlers["SetGuildBankItem"] = function(tip, tab, slot)
   local itemLink = GetGuildBankItemLink(tab, slot)
   local _, itemCount = GetGuildBankItemInfo(tab, slot)
 
-  Auctionator.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
+  AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
 end
 
 if GameTooltip.SetRecipeReagentItem then -- Dragonflight
@@ -65,7 +65,7 @@ if GameTooltip.SetRecipeReagentItem then -- Dragonflight
     for _, reagentSlotSchematic in ipairs(schematic.reagentSlotSchematics) do
       if reagentSlotSchematic.dataSlotIndex == slotID then
         local itemCount = reagentSlotSchematic.quantityRequired
-        Auctionator.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
+        AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
         break
       end
     end
@@ -74,12 +74,12 @@ end
 
 if GameTooltip.SetRecipeResultItem then -- Dragonflight
   TooltipHandlers["SetRecipeResultItem"] = function(tip, recipeID, reagents, allocations, recipeLevel, qualityID)
-    local outputLink = Auctionator.CraftingInfo.GetOutputItemLink(recipeID, recipeLevel, reagents or {}, allocations)
+    local outputLink = AuctionHouseHelper.CraftingInfo.GetOutputItemLink(recipeID, recipeLevel, reagents or {}, allocations)
 
     if outputLink then
       local recipeSchematic = C_TradeSkillUI.GetRecipeSchematic(recipeID, false, recipeLevel)
 
-      Auctionator.Tooltip.ShowTipWithPricing(GameTooltip, outputLink, recipeSchematic.quantityMin)
+      AuctionHouseHelper.Tooltip.ShowTipWithPricing(GameTooltip, outputLink, recipeSchematic.quantityMin)
     end
   end
 end
@@ -94,7 +94,7 @@ if GameTooltip.SetTradeSkillItem then -- Classic
       itemLink = GetTradeSkillItemLink(recipeIndex);
       itemCount  = GetTradeSkillNumMade(recipeIndex);
     end
-    Auctionator.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
+    AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
   end
 end
 
@@ -108,7 +108,7 @@ if GameTooltip.SetCraftItem then -- TBC classic and earlier
       itemLink = GetCraftItemLink(recipeIndex);
       itemCount  = GetCraftNumMade(recipeIndex);
     end
-    Auctionator.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
+    AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
   end
 end
 
@@ -117,7 +117,7 @@ TooltipHandlers["SetLootItem"] = function (tip, slot)
   if LootSlotHasItem(slot) then
     local itemLink, _, itemCount = GetLootSlotLink(slot);
 
-    Auctionator.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
+    AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
   end
 end
 
@@ -128,7 +128,7 @@ TooltipHandlers["SetLootRollItem"] = function (tip, slot)
 
   local _, _, itemCount = GetLootRollItemInfo(slot)
 
-  Auctionator.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
+  AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
 end
 
 -- This is called when mousing over an item in a quest window
@@ -137,7 +137,7 @@ TooltipHandlers["SetQuestItem"] = function (tip, type, index)
 
   local _, _, itemCount = GetQuestItemInfo(type, index);
 
-  Auctionator.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
+  AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
 end
 
 -- This is called when mousing over an item in a quest description in your quest log
@@ -151,7 +151,7 @@ TooltipHandlers["SetQuestLogItem"] = function (tip, type, index)
     _, _, itemCount = GetQuestLogRewardInfo(index)
   end
 
-  Auctionator.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
+  AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
 end
 
 -- This is called when mousing over an item in the send mail window
@@ -159,21 +159,21 @@ TooltipHandlers["SetSendMailItem"] = function (tip, id)
   local _, _, _, itemCount = GetSendMailItem(id)
   local itemLink = GetSendMailItemLink(id);
 
-  Auctionator.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
+  AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
 end
 
 -- This occurs when:
 -- 1. mousing over an item in the Open Mail frame
 -- 2. mousing over an item in the Inbox frame
 TooltipHandlers["SetInboxItem"] = function(tip, index, attachIndex)
-  if Auctionator.Config.Get(Auctionator.Config.Options.MAILBOX_TOOLTIPS) then
+  if AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.MAILBOX_TOOLTIPS) then
     local attachmentIndex = attachIndex or 1
 
     local itemLink = GetInboxItemLink(index, attachmentIndex)
 
     local _, _, _, itemCount = GetInboxItem(index, attachmentIndex);
 
-    Auctionator.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
+    AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
   end
 end
 
@@ -182,10 +182,10 @@ hooksecurefunc("InboxFrameItem_OnEnter",
   function(self)
     local itemCount = select(8, GetInboxHeaderInfo(self.index))
     local tooltipEnabled =
-      Auctionator.Config.Get(Auctionator.Config.Options.MAILBOX_TOOLTIPS) and  (
-      Auctionator.Config.Get(Auctionator.Config.Options.VENDOR_TOOLTIPS) or
-      Auctionator.Config.Get(Auctionator.Config.Options.AUCTION_TOOLTIPS) or
-      Auctionator.Config.Get(Auctionator.Config.Options.ENCHANT_TOOLTIPS)
+      AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.MAILBOX_TOOLTIPS) and  (
+      AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.VENDOR_TOOLTIPS) or
+      AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.AUCTION_TOOLTIPS) or
+      AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.ENCHANT_TOOLTIPS)
     )
 
     if tooltipEnabled and itemCount and itemCount > 1 then
@@ -206,7 +206,7 @@ hooksecurefunc("InboxFrameItem_OnEnter",
         end
       end
 
-      Auctionator.Tooltip.ShowTipWithMultiplePricing(GameTooltip, itemEntries)
+      AuctionHouseHelper.Tooltip.ShowTipWithMultiplePricing(GameTooltip, itemEntries)
     end
   end
 );
@@ -217,7 +217,7 @@ TooltipHandlers["SetTradePlayerItem"] = function (tip, id)
   if itemLink ~= nil then
     local _, _, itemCount = GetTradePlayerItemInfo(id);
 
-    Auctionator.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
+    AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
   end
 end
 
@@ -227,7 +227,7 @@ TooltipHandlers["SetTradeTargetItem"] = function (tip, id)
   if itemLink ~= nil then
     local _, _, itemCount = GetTradeTargetItemInfo(id)
 
-    Auctionator.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
+    AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
   end
 end
 
@@ -236,7 +236,7 @@ if GameTooltip.SetAuctionItem then
     local itemCount = select(3, GetAuctionItemInfo(viewType, index))
     local itemLink = GetAuctionItemLink(viewType, index)
 
-    Auctionator.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
+    AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, itemLink, itemCount)
   end
 end
 
@@ -254,7 +254,7 @@ if GameTooltip.SetItemKey then
       if GetItemInfoInstant(info.hyperlink) ~= itemID then
         hyperlink = select(2, GetItemInfo(itemID))
       end
-      Auctionator.Tooltip.ShowTipWithPricing(tip, hyperlink, 1)
+      AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, hyperlink, 1)
     end
   end
 end
@@ -267,12 +267,12 @@ TooltipHandlers["SetItemByID"] = function (tip, itemID)
 
   local itemLink = select(2, GetItemInfo(itemID))
 
-  Auctionator.Tooltip.ShowTipWithPricing(tip, itemLink, 1)
+  AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, itemLink, 1)
 end
 
 -- Occurs mainly with addons (Blizzard and otherwise)
 TooltipHandlers["SetHyperlink"] = function (tip, itemLink)
-  Auctionator.Tooltip.ShowTipWithPricing(tip, itemLink, 1)
+  AuctionHouseHelper.Tooltip.ShowTipWithPricing(tip, itemLink, 1)
 end
 
 -- Magic to update the tooltip with the prices when it is cleared and still

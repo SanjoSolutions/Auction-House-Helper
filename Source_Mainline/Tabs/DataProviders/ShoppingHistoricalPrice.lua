@@ -1,17 +1,17 @@
-AuctionatorShoppingHistoricalPriceProviderMixin = CreateFromMixins(AuctionatorHistoricalPriceProviderMixin)
+AuctionHouseHelperShoppingHistoricalPriceProviderMixin = CreateFromMixins(AuctionHouseHelperHistoricalPriceProviderMixin)
 
-function AuctionatorShoppingHistoricalPriceProviderMixin:OnLoad()
-  AuctionatorHistoricalPriceProviderMixin.OnLoad(self)
+function AuctionHouseHelperShoppingHistoricalPriceProviderMixin:OnLoad()
+  AuctionHouseHelperHistoricalPriceProviderMixin.OnLoad(self)
 
-  Auctionator.EventBus:Register( self, { Auctionator.Shopping.Tab.Events.ShowHistoricalPrices })
+  AuctionHouseHelper.EventBus:Register( self, { AuctionHouseHelper.Shopping.Tab.Events.ShowHistoricalPrices })
 end
 
-function AuctionatorShoppingHistoricalPriceProviderMixin:ReceiveEvent(event, itemInfo)
-  if event == Auctionator.Shopping.Tab.Events.ShowHistoricalPrices then
-    self:SetItem(Auctionator.Utilities.DBKeyFromBrowseResult({ itemKey = itemInfo.itemKey })[1])
+function AuctionHouseHelperShoppingHistoricalPriceProviderMixin:ReceiveEvent(event, itemInfo)
+  if event == AuctionHouseHelper.Shopping.Tab.Events.ShowHistoricalPrices then
+    self:SetItem(AuctionHouseHelper.Utilities.DBKeyFromBrowseResult({ itemKey = itemInfo.itemKey })[1])
   end
 end
 
-function AuctionatorShoppingHistoricalPriceProviderMixin:GetColumnHideStates()
-  return Auctionator.Config.Get(Auctionator.Config.Options.COLUMNS_SHOPPING_HISTORICAL_PRICES)
+function AuctionHouseHelperShoppingHistoricalPriceProviderMixin:GetColumnHideStates()
+  return AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.COLUMNS_SHOPPING_HISTORICAL_PRICES)
 end

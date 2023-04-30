@@ -1,4 +1,4 @@
-function Auctionator.Selling.ComposeAuctionPostedMessage(auctionInfo)
+function AuctionHouseHelper.Selling.ComposeAuctionPostedMessage(auctionInfo)
   local result = auctionInfo.itemLink
   -- Stacks display, total and individual price
   if auctionInfo.quantity > 1 then
@@ -6,9 +6,9 @@ function Auctionator.Selling.ComposeAuctionPostedMessage(auctionInfo)
     if auctionInfo.bidAmount ~= nil and effectiveUnitPrice == 0 then
       effectiveUnitPrice = auctionInfo.bidAmount
     end
-    result = Auctionator.Locales.Apply(
+    result = AuctionHouseHelper.Locales.Apply(
       "STACK_AUCTION_INFO",
-      result .. Auctionator.Utilities.CreateCountString(auctionInfo.quantity),
+      result .. AuctionHouseHelper.Utilities.CreateCountString(auctionInfo.quantity),
       GetMoneyString(auctionInfo.quantity * effectiveUnitPrice, true),
       GetMoneyString(effectiveUnitPrice, true)
     )
@@ -16,7 +16,7 @@ function Auctionator.Selling.ComposeAuctionPostedMessage(auctionInfo)
   -- Single item sales
   else
     if auctionInfo.bidAmount ~= nil then
-      result = Auctionator.Locales.Apply(
+      result = AuctionHouseHelper.Locales.Apply(
         "BIDDING_AUCTION_INFO",
         result,
         GetMoneyString(auctionInfo.bidAmount, true)
@@ -24,7 +24,7 @@ function Auctionator.Selling.ComposeAuctionPostedMessage(auctionInfo)
     end
 
     if auctionInfo.buyoutAmount ~= nil then
-      result = Auctionator.Locales.Apply(
+      result = AuctionHouseHelper.Locales.Apply(
         "BUYOUT_AUCTION_INFO",
         result,
         GetMoneyString(auctionInfo.buyoutAmount, true)

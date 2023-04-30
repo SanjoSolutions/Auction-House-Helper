@@ -1,4 +1,4 @@
-Auctionator.CraftingInfo.EnchantSpellsToItems = {
+AuctionHouseHelper.CraftingInfo.EnchantSpellsToItems = {
   [2831] = {2304},
   [2832] = {2313},
   [2833] = {4265},

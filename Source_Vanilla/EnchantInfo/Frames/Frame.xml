@@ -1,5 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Frame name="AuctionatorEnchantInfoFrameTemplate" mixin="AuctionatorEnchantInfoFrameMixin" frameLevel="3" virtual="true">
+  <Frame name="AuctionHouseHelperEnchantInfoFrameTemplate" mixin="AuctionHouseHelperEnchantInfoFrameMixin" frameLevel="3" virtual="true">
     <Size x="200" y="22"/>
     <Scripts>
       <OnLoad method="OnLoad"/>
@@ -15,7 +15,7 @@
       </Layer>
     </Layers>
     <Frames>
-      <Button parentKey="SearchButton" inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_SEARCH">
+      <Button parentKey="SearchButton" inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTION_HOUSE_HELPER_L_SEARCH">
         <Scripts>
           <OnClick>
             self:GetParent():SearchButtonClicked()

@@ -1,6 +1,6 @@
 ---
 name: Bug report for the latest retail release (not classic)
-about: You're using the latest normal release of Auctionator on retail
+about: You're using the latest normal release of Auction House Helper on retail
 title: ''
 labels: retail
 assignees: ''

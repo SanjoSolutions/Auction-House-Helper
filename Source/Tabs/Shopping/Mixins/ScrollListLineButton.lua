@@ -1,9 +1,9 @@
-AuctionatorScrollListLineButtonMixin = {}
+AuctionHouseHelperScrollListLineButtonMixin = {}
 
-function AuctionatorScrollListLineButtonMixin:OnShow()
+function AuctionHouseHelperScrollListLineButtonMixin:OnShow()
   self.hoverTexture:Hide()
 end
-function AuctionatorScrollListLineButtonMixin:OnEnter()
+function AuctionHouseHelperScrollListLineButtonMixin:OnEnter()
   if self:GetParent():IsEnabled() then
     self.hoverTexture:Show()
 
@@ -14,7 +14,7 @@ function AuctionatorScrollListLineButtonMixin:OnEnter()
     end
   end
 end
-function AuctionatorScrollListLineButtonMixin:OnLeave()
+function AuctionHouseHelperScrollListLineButtonMixin:OnLeave()
   self.hoverTexture:Hide()
 
   if self.tooltipTitleText ~= nil then

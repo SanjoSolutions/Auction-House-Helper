@@ -1,13 +1,13 @@
-AuctionatorConfigShoppingAltFrameMixin = CreateFromMixins(AuctionatorConfigShoppingFrameMixin)
+AuctionHouseHelperConfigShoppingAltFrameMixin = CreateFromMixins(AuctionHouseHelperConfigShoppingFrameMixin)
 
-function AuctionatorConfigShoppingAltFrameMixin:OnShow()
-  AuctionatorConfigShoppingFrameMixin.OnShow(self)
+function AuctionHouseHelperConfigShoppingAltFrameMixin:OnShow()
+  AuctionHouseHelperConfigShoppingFrameMixin.OnShow(self)
 
-  self.AlwaysLoadMore:SetChecked(Auctionator.Config.Get(Auctionator.Config.Options.SHOPPING_ALWAYS_LOAD_MORE))
+  self.AlwaysLoadMore:SetChecked(AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SHOPPING_ALWAYS_LOAD_MORE))
 end
 
-function AuctionatorConfigShoppingAltFrameMixin:Save()
-  AuctionatorConfigShoppingFrameMixin.Save(self)
+function AuctionHouseHelperConfigShoppingAltFrameMixin:Save()
+  AuctionHouseHelperConfigShoppingFrameMixin.Save(self)
 
-  Auctionator.Config.Set(Auctionator.Config.Options.SHOPPING_ALWAYS_LOAD_MORE, self.AlwaysLoadMore:GetChecked())
+  AuctionHouseHelper.Config.Set(AuctionHouseHelper.Config.Options.SHOPPING_ALWAYS_LOAD_MORE, self.AlwaysLoadMore:GetChecked())
 end

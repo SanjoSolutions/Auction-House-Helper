@@ -1,6 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
-	<Frame name="AuctionatorRetailImportMoneyDenominationDisplayTemplate" mixin="AuctionatorRetailImportMoneyDenominationDisplayMixin" virtual="true">
+	<Frame name="AuctionHouseHelperRetailImportMoneyDenominationDisplayTemplate" mixin="AuctionHouseHelperRetailImportMoneyDenominationDisplayMixin" virtual="true">
 		<Size x="32" y="13"/>
 		<!-- This key value is required and determines the denomination to display.
 		<KeyValues>
@@ -30,7 +30,7 @@
 		</Scripts>
 	</Frame>
 
-	<Frame name="AuctionatorRetailImportMoneyDisplayFrameTemplate" mixin="AuctionatorRetailImportMoneyDisplayFrameMixin" virtual="true">
+	<Frame name="AuctionHouseHelperRetailImportMoneyDisplayFrameTemplate" mixin="AuctionHouseHelperRetailImportMoneyDisplayFrameMixin" virtual="true">
 		<Size x="128" y="13"/>
 		<!--
 			hideCopper: Hides the copper amount.
@@ -45,19 +45,19 @@
 		</KeyValues>
 		-->
 		<Frames>
-			<Frame parentKey="CopperDisplay" inherits="AuctionatorRetailImportMoneyDenominationDisplayTemplate">
+			<Frame parentKey="CopperDisplay" inherits="AuctionHouseHelperRetailImportMoneyDenominationDisplayTemplate">
 				<KeyValues>
-					<KeyValue key="displayType" value="AuctionatorRetailImportMoneyDenominationDisplayType.Copper" type="global"/>
+					<KeyValue key="displayType" value="AuctionHouseHelperRetailImportMoneyDenominationDisplayType.Copper" type="global"/>
 				</KeyValues>
 			</Frame>
-			<Frame parentKey="SilverDisplay" inherits="AuctionatorRetailImportMoneyDenominationDisplayTemplate">
+			<Frame parentKey="SilverDisplay" inherits="AuctionHouseHelperRetailImportMoneyDenominationDisplayTemplate">
 				<KeyValues>
-					<KeyValue key="displayType" value="AuctionatorRetailImportMoneyDenominationDisplayType.Silver" type="global"/>
+					<KeyValue key="displayType" value="AuctionHouseHelperRetailImportMoneyDenominationDisplayType.Silver" type="global"/>
 				</KeyValues>
 			</Frame>
-			<Frame parentKey="GoldDisplay" inherits="AuctionatorRetailImportMoneyDenominationDisplayTemplate">
+			<Frame parentKey="GoldDisplay" inherits="AuctionHouseHelperRetailImportMoneyDenominationDisplayTemplate">
 				<KeyValues>
-					<KeyValue key="displayType" value="AuctionatorRetailImportMoneyDenominationDisplayType.Gold" type="global"/>
+					<KeyValue key="displayType" value="AuctionHouseHelperRetailImportMoneyDenominationDisplayType.Gold" type="global"/>
 				</KeyValues>
 			</Frame>
 		</Frames>

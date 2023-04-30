@@ -4,12 +4,12 @@
 -- This is the original mapping of category strings to a class id, subclass id,
 -- and optionally inventory id.
 --
---  Auctionator.Search.OldCategories is an empty table on load, need to populate
+--  AuctionHouseHelper.Search.OldCategories is an empty table on load, need to populate
 --  with the possible categories
 --
 --  Here's what one entry looks like:
 --  {
---    classID    = integer (corresponding to Auctionator.Constants.ValidItemClassIDs )
+--    classID    = integer (corresponding to AuctionHouseHelper.Constants.ValidItemClassIDs )
 --    name       = string  (resolved by GetItemClassInfo( classID ))
 --    category     = table   (new QueryAuctionItems categoryData format, { classID, subClassID (nil), inventoryType (nil) } )
 --    subClasses = {
@@ -19,21 +19,21 @@
 --    }
 --  }
 
-local INVENTORY_TYPE_IDS = Auctionator.Constants.INVENTORY_TYPE_IDS
+local INVENTORY_TYPE_IDS = AuctionHouseHelper.Constants.INVENTORY_TYPE_IDS
 
 local OldCategories = {}
 local OldCategoryLookup = {}
 
-Auctionator.Search.OldCategory = {
+AuctionHouseHelper.Search.OldCategory = {
   classID = 0,
-  name = Auctionator.Constants.CategoryDefault,
+  name = AuctionHouseHelper.Constants.CategoryDefault,
   key = 0,
   parentKey = nil,
   category = {},
   subClasses = {}
 }
 
-function Auctionator.Search.OldCategory:new( options )
+function AuctionHouseHelper.Search.OldCategory:new( options )
   options = options or {}
   setmetatable( options, self )
   self.__index = self
@@ -54,7 +54,7 @@ local function GenerateArmorInventorySlots(parentKey, parentCategory)
       subClassID = parentCategory.subClassID,
       inventoryType = INVENTORY_TYPE_IDS[index],
     }
-    local subSubClass = Auctionator.Search.OldCategory:new({
+    local subSubClass = AuctionHouseHelper.Search.OldCategory:new({
       classID = INVENTORY_TYPE_IDS[index],
       name = name,
       key = parentKey .. [[/]] .. name,
@@ -68,7 +68,7 @@ local function GenerateArmorInventorySlots(parentKey, parentCategory)
 end
 
 local function GenerateSubClasses( classID, parentKey )
-  local subClassesTable = Auctionator.AH.GetAuctionItemSubClasses( classID )
+  local subClassesTable = AuctionHouseHelper.AH.GetAuctionItemSubClasses( classID )
   local subClasses = {}
 
   for index = 1, #subClassesTable do
@@ -76,7 +76,7 @@ local function GenerateSubClasses( classID, parentKey )
     local name = GetItemSubClassInfo( classID, subClassID )
 
     local category = { classID = classID, subClassID = subClassID }
-    local subClass = Auctionator.Search.OldCategory:new({
+    local subClass = AuctionHouseHelper.Search.OldCategory:new({
       classID = subClassID,
       name = name,
       key = parentKey .. [[/]] .. name,
@@ -98,13 +98,13 @@ local function GenerateSubClasses( classID, parentKey )
   return subClasses
 end
 
-function Auctionator.Search.InitializeOldCategories()
-  for _, classID in ipairs( Auctionator.Constants.ValidItemClassIDs ) do
+function AuctionHouseHelper.Search.InitializeOldCategories()
+  for _, classID in ipairs( AuctionHouseHelper.Constants.ValidItemClassIDs ) do
     local key = GetItemClassInfo( classID )
     local subClasses = GenerateSubClasses( classID, key )
     local category = {classID = classID}
 
-    local categoryCategory = Auctionator.Search.OldCategory:new({
+    local categoryCategory = AuctionHouseHelper.Search.OldCategory:new({
       classID = classID,
       name = name,
       key = key,
@@ -126,7 +126,7 @@ function Auctionator.Search.InitializeOldCategories()
   end
 end
 
-function Auctionator.Search.GetItemClassOldCategories(categoryKey)
+function AuctionHouseHelper.Search.GetItemClassOldCategories(categoryKey)
   local lookup = OldCategoryLookup[categoryKey]
   if lookup ~= nil then
     return lookup.category

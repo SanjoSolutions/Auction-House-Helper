@@ -1,21 +1,21 @@
-local AUCTIONATOR_EVENTS = {
+local AUCTION_HOUSE_HELPER_EVENTS = {
   -- Addon Initialization Events
   "PLAYER_LOGIN",
   -- Import list events
   -- "CHAT_MSG_ADDON"
 }
 
-AuctionatorInitializeMixin = {}
+AuctionHouseHelperInitializeMixin = {}
 
-function AuctionatorInitializeMixin:OnLoad()
-  Auctionator.Debug.Message("Auctionator.Events.CoreFrameLoaded")
-  C_ChatInfo.RegisterAddonMessagePrefix("Auctionator")
+function AuctionHouseHelperInitializeMixin:OnLoad()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelper.Events.CoreFrameLoaded")
+  C_ChatInfo.RegisterAddonMessagePrefix("AuctionHouseHelper")
 
-  FrameUtil.RegisterFrameForEvents(self, AUCTIONATOR_EVENTS)
+  FrameUtil.RegisterFrameForEvents(self, AUCTION_HOUSE_HELPER_EVENTS)
 end
 
-function AuctionatorInitializeMixin:OnEvent(event, ...)
-  -- Auctionator.Debug.Message("AuctionatorInitializeMixin", event, ...)
+function AuctionHouseHelperInitializeMixin:OnEvent(event, ...)
+  -- AuctionHouseHelper.Debug.Message("AuctionHouseHelperInitializeMixin", event, ...)
   if event == "PLAYER_LOGIN" then
     self:AddonDataLoaded()
   elseif event == "CHAT_MSG_ADDON" then
@@ -25,9 +25,9 @@ function AuctionatorInitializeMixin:OnEvent(event, ...)
   end
 end
 
-function AuctionatorInitializeMixin:AddonDataLoaded(event, ...)
-  Auctionator.Debug.Message("AuctionatorInitializeMixin:VariablesLoaded")
-  Auctionator.Variables.Initialize()
+function AuctionHouseHelperInitializeMixin:AddonDataLoaded(event, ...)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperInitializeMixin:VariablesLoaded")
+  AuctionHouseHelper.Variables.Initialize()
 
-  Auctionator.SlashCmd.Initialize()
+  AuctionHouseHelper.SlashCmd.Initialize()
 end

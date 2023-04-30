@@ -6,16 +6,16 @@ local function GetNumSlots(bag)
   end
 end
 
-function Auctionator.Selling.GetItemCount(itemLocation)
-  local locationKey = Auctionator.Selling.UniqueBagKey(Auctionator.Utilities.ItemInfoFromLocation(itemLocation))
+function AuctionHouseHelper.Selling.GetItemCount(itemLocation)
+  local locationKey = AuctionHouseHelper.Selling.UniqueBagKey(AuctionHouseHelper.Utilities.ItemInfoFromLocation(itemLocation))
 
   local count = 0
-  for _, bagId in ipairs(Auctionator.Constants.BagIDs) do
+  for _, bagId in ipairs(AuctionHouseHelper.Constants.BagIDs) do
     for slot = 1, GetNumSlots(bagId) do
       local location = ItemLocation:CreateFromBagAndSlot(bagId, slot)
       if C_Item.DoesItemExist(location) then
-        local itemInfo = Auctionator.Utilities.ItemInfoFromLocation(location)
-        local tempId = Auctionator.Selling.UniqueBagKey(itemInfo)
+        local itemInfo = AuctionHouseHelper.Utilities.ItemInfoFromLocation(location)
+        local tempId = AuctionHouseHelper.Selling.UniqueBagKey(itemInfo)
         if tempId == locationKey then
           count = count + itemInfo.count
         end

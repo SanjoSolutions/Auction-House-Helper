@@ -1,4 +1,4 @@
-AuctionatorConfirmDropDownMixin = {}
+AuctionHouseHelperConfirmDropDownMixin = {}
 
 local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
 
@@ -11,18 +11,18 @@ local function DropDown_Initialize(self)
   local confirmInfo = LibDD:UIDropDownMenu_CreateInfo()
   confirmInfo.notCheckable = 1
   if self.totalPrice ~= nil then
-    confirmInfo.text = AUCTIONATOR_L_CONFIRM_X_TOTAL_PRICE_X:format(
+    confirmInfo.text = AUCTION_HOUSE_HELPER_L_CONFIRM_X_TOTAL_PRICE_X:format(
       GetMoneyString(self.unitPrice, true),
       GetMoneyString(self.totalPrice, true)
       )
     confirmInfo.disabled = false
   else
-    confirmInfo.text = AUCTIONATOR_L_NO_LONGER_AVAILABLE
+    confirmInfo.text = AUCTION_HOUSE_HELPER_L_NO_LONGER_AVAILABLE
     confirmInfo.disabled = true
   end
 
   confirmInfo.func = function()
-    if self.data.itemType == Auctionator.Constants.ITEM_TYPES.ITEM then
+    if self.data.itemType == AuctionHouseHelper.Constants.ITEM_TYPES.ITEM then
       C_AuctionHouse.PlaceBid(self.data.auctionID, self.totalPrice)
     else
       self.commoditiesPurchaseOngoing = false
@@ -33,7 +33,7 @@ local function DropDown_Initialize(self)
 
   local cancelInfo = LibDD:UIDropDownMenu_CreateInfo()
   cancelInfo.notCheckable = 1
-  cancelInfo.text = AUCTIONATOR_L_CANCEL
+  cancelInfo.text = AUCTION_HOUSE_HELPER_L_CANCEL
 
   cancelInfo.disabled = false
   cancelInfo.func = function()
@@ -43,23 +43,23 @@ local function DropDown_Initialize(self)
   LibDD:UIDropDownMenu_AddButton(cancelInfo)
 end
 
-function AuctionatorConfirmDropDownMixin:OnLoad()
+function AuctionHouseHelperConfirmDropDownMixin:OnLoad()
   self.dropDown = CreateFrame("Frame", nil, self)
   LibDD:Create_UIDropDownMenu(self.dropDown)
 
   LibDD:UIDropDownMenu_SetInitializeFunction(self.dropDown, DropDown_Initialize)
   LibDD:UIDropDownMenu_SetDisplayMode(self.dropDown, "MENU")
-  Auctionator.EventBus:Register(self, {
-    Auctionator.Selling.Events.ShowConfirmPurchase,
-    Auctionator.AH.Events.Ready,
+  AuctionHouseHelper.EventBus:Register(self, {
+    AuctionHouseHelper.Selling.Events.ShowConfirmPurchase,
+    AuctionHouseHelper.AH.Events.Ready,
   })
 end
 
-function AuctionatorConfirmDropDownMixin:OnHide()
+function AuctionHouseHelperConfirmDropDownMixin:OnHide()
   self:CancelCommoditiesPurchase()
 end
 
-function AuctionatorConfirmDropDownMixin:CancelCommoditiesPurchase()
+function AuctionHouseHelperConfirmDropDownMixin:CancelCommoditiesPurchase()
   if self.commoditiesPurchaseOngoing then
     self.commoditiesPurchaseOngoing = false
     FrameUtil.UnregisterFrameForEvents(self, COMMODITY_PURCHASE_EVENTS)
@@ -67,7 +67,7 @@ function AuctionatorConfirmDropDownMixin:CancelCommoditiesPurchase()
   end
 end
 
-function AuctionatorConfirmDropDownMixin:OnEvent(eventName, ...)
+function AuctionHouseHelperConfirmDropDownMixin:OnEvent(eventName, ...)
   if eventName == "COMMODITY_PRICE_UPDATED" then
     FrameUtil.UnregisterFrameForEvents(self, COMMODITY_PURCHASE_EVENTS)
 
@@ -83,20 +83,20 @@ function AuctionatorConfirmDropDownMixin:OnEvent(eventName, ...)
   end
 end
 
-function AuctionatorConfirmDropDownMixin:ReceiveEvent(event, ...)
-  if event == Auctionator.Selling.Events.ShowConfirmPurchase then
+function AuctionHouseHelperConfirmDropDownMixin:ReceiveEvent(event, ...)
+  if event == AuctionHouseHelper.Selling.Events.ShowConfirmPurchase then
     self:CancelCommoditiesPurchase()
 
     self.dropDown.data = ...
     self.dropDown.totalPrice = nil
 
-    if self.dropDown.data.itemType == Auctionator.Constants.ITEM_TYPES.COMMODITY then
+    if self.dropDown.data.itemType == AuctionHouseHelper.Constants.ITEM_TYPES.COMMODITY then
       self.commoditiesPurchaseOngoing = true
 
       C_AuctionHouse.StartCommoditiesPurchase(self.dropDown.data.itemID, self.dropDown.data.quantity)
       FrameUtil.RegisterFrameForEvents(self, COMMODITY_PURCHASE_EVENTS)
 
-    else --Auctionator.Constants.ITEM_TYPES.ITEM
+    else --AuctionHouseHelper.Constants.ITEM_TYPES.ITEM
       self.dropDown.totalPrice = self.dropDown.data.price
       self.dropDown.unitPrice = self.dropDown.data.price
       self:Toggle()
@@ -104,6 +104,6 @@ function AuctionatorConfirmDropDownMixin:ReceiveEvent(event, ...)
   end
 end
 
-function AuctionatorConfirmDropDownMixin:Toggle()
+function AuctionHouseHelperConfirmDropDownMixin:Toggle()
   LibDD:ToggleDropDownMenu(1, nil, self.dropDown, "cursor", -15, 20)
 end

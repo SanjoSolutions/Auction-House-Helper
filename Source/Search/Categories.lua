@@ -13,18 +13,18 @@ local function SaveCategory(categories, prefix)
   end
 end
 
-function Auctionator.Search.InitializeCategories()
-  Auctionator.Search.InitializeOldCategories()
+function AuctionHouseHelper.Search.InitializeCategories()
+  AuctionHouseHelper.Search.InitializeOldCategories()
 
   SaveCategory(AuctionCategories)
 end
 
-function Auctionator.Search.GetItemClassCategories(categoryKey)
+function AuctionHouseHelper.Search.GetItemClassCategories(categoryKey)
   local lookup = CategoryLookup[categoryKey]
   if lookup ~= nil then
     return lookup
   elseif categoryKey ~= "" then
     -- Compatibility with old category format
-    return Auctionator.Search.GetItemClassOldCategories(categoryKey)
+    return AuctionHouseHelper.Search.GetItemClassOldCategories(categoryKey)
   end
 end

@@ -1,9 +1,9 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="AuctionatorSellingTabFrameTemplate"
+    name="AuctionHouseHelperSellingTabFrameTemplate"
     virtual="true"
-    parentKey="AuctionatorSellingFrame"
-    mixin="AuctionatorSellingTabMixin"
+    parentKey="AuctionHouseHelperSellingFrame"
+    mixin="AuctionHouseHelperSellingTabMixin"
     hidden="true"
   >
     <Scripts>
@@ -17,7 +17,7 @@
     </Anchors>
 
     <Frames>
-      <Frame parentKey="BagDataProvider" mixin="AuctionatorBagDataProviderMixin">
+      <Frame parentKey="BagDataProvider" mixin="AuctionHouseHelperBagDataProviderMixin">
         <Scripts>
           <OnLoad method="OnLoad"/>
           <OnEvent method="OnEvent"/>
@@ -27,28 +27,28 @@
         </Scripts>
       </Frame>
 
-      <Frame parentKey="SaleItemFrame" inherits="AuctionatorSaleItemFrameTemplate">
+      <Frame parentKey="SaleItemFrame" inherits="AuctionHouseHelperSaleItemFrameTemplate">
         <Anchors>
           <Anchor point="TOP" relativePoint="TOP" y="-38" />
           <Anchor point="LEFT" relativePoint="LEFT" x="70" />
         </Anchors>
       </Frame>
 
-      <Frame parentKey="BagListing" inherits="AuctionatorSellingBagFrame">
+      <Frame parentKey="BagListing" inherits="AuctionHouseHelperSellingBagFrame">
         <Anchors>
           <Anchor point="TOPLEFT" x="4" y="-148" />
           <Anchor point="BOTTOM" y="3" />
         </Anchors>
       </Frame>
 
-      <Frame parentKey="BagInset" inherits="AuctionatorInsetLeaveScrollSpaceTemplate">
+      <Frame parentKey="BagInset" inherits="AuctionHouseHelperInsetLeaveScrollSpaceTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.BagListing" x="-5" y="5"/>
           <Anchor point="BOTTOMRIGHT" relativeKey="$parent.BagListing" x="30"/>
         </Anchors>
       </Frame>
 
-      <Frame parentKey="CurrentPricesListing" inherits="AuctionatorResultsListingTemplate">
+      <Frame parentKey="CurrentPricesListing" inherits="AuctionHouseHelperResultsListingTemplate">
         <Anchors>
           <Anchor point="TOP" relativeKey="$parent.BagListing" y="10"/>
           <Anchor point="LEFT" relativeKey="$parent.BagListing" relativePoint="RIGHT" x="35" />
@@ -56,28 +56,28 @@
         </Anchors>
       </Frame>
 
-      <Frame parentKey="HistoricalPriceListing" inherits="AuctionatorResultsListingTemplate">
+      <Frame parentKey="HistoricalPriceListing" inherits="AuctionHouseHelperResultsListingTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.CurrentPricesListing"/>
           <Anchor point="BOTTOMRIGHT" relativeKey="$parent.CurrentPricesListing"/>
         </Anchors>
       </Frame>
 
-      <Frame parentKey="PostingHistoryListing" inherits="AuctionatorResultsListingTemplate">
+      <Frame parentKey="PostingHistoryListing" inherits="AuctionHouseHelperResultsListingTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.CurrentPricesListing"/>
           <Anchor point="BOTTOMRIGHT" relativeKey="$parent.CurrentPricesListing"/>
         </Anchors>
       </Frame>
 
-      <Frame parentKey="HistoricalPriceInset" inherits="AuctionatorInsetDarkTemplate">
+      <Frame parentKey="HistoricalPriceInset" inherits="AuctionHouseHelperInsetDarkTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.HistoricalPriceListing" x="-5" y="-24"/>
           <Anchor point="BOTTOMRIGHT" relativeKey="$parent.HistoricalPriceListing" y="2"/>
         </Anchors>
       </Frame>
 
-      <Frame parentKey="CurrentPricesProvider" mixin="AuctionatorSearchDataProviderMixin">
+      <Frame parentKey="CurrentPricesProvider" mixin="AuctionHouseHelperSearchDataProviderMixin">
         <Scripts>
           <OnLoad method="OnLoad"/>
           <OnShow method="OnShow"/>
@@ -87,7 +87,7 @@
         </Scripts>
       </Frame>
 
-      <Frame parentKey="HistoricalPriceProvider" mixin="AuctionatorSellingHistoricalPriceProviderMixin">
+      <Frame parentKey="HistoricalPriceProvider" mixin="AuctionHouseHelperSellingHistoricalPriceProviderMixin">
         <Scripts>
           <OnLoad method="OnLoad"/>
           <OnShow method="OnShow"/>
@@ -95,7 +95,7 @@
         </Scripts>
       </Frame>
 
-      <Frame parentKey="PostingHistoryProvider" mixin="AuctionatorSellingPostingHistoryProviderMixin">
+      <Frame parentKey="PostingHistoryProvider" mixin="AuctionHouseHelperSellingPostingHistoryProviderMixin">
         <Scripts>
           <OnLoad method="OnLoad"/>
           <OnShow method="OnShow"/>
@@ -103,9 +103,9 @@
         </Scripts>
       </Frame>
 
-      <Frame parentKey="ConfirmDropDown" inherits="AuctionatorConfirmDropDownTemplate"/>
+      <Frame parentKey="ConfirmDropDown" inherits="AuctionHouseHelperConfirmDropDownTemplate"/>
 
-      <Frame parentKey="PricesTabsContainer" mixin="AuctionatorSellingTabPricesContainerMixin">
+      <Frame parentKey="PricesTabsContainer" mixin="AuctionHouseHelperSellingTabPricesContainerMixin">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeKey="$parent.HistoricalPriceInset" x="2"/>
           <Anchor point="RIGHT" relativePoint="BOTTOMRIGHT" y="-20" relativeKey="$parent.HistoricalPriceInset"/>
@@ -114,17 +114,17 @@
           <OnLoad method="OnLoad"/>
         </Scripts>
         <Frames>
-          <Button parentKey="CurrentPricesTab" id="1" inherits="AuctionatorSellingMiniTabButtonTemplate" text="AUCTIONATOR_L_CURRENT_PRICES">
+          <Button parentKey="CurrentPricesTab" id="1" inherits="AuctionHouseHelperSellingMiniTabButtonTemplate" text="AUCTION_HOUSE_HELPER_L_CURRENT_PRICES">
             <Anchors>
               <Anchor point="TOPLEFT" />
             </Anchors>
           </Button>
-          <Button parentKey="PriceHistoryTab" id="2" inherits="AuctionatorSellingMiniTabButtonTemplate" text="AUCTIONATOR_L_PRICE_HISTORY">
+          <Button parentKey="PriceHistoryTab" id="2" inherits="AuctionHouseHelperSellingMiniTabButtonTemplate" text="AUCTION_HOUSE_HELPER_L_PRICE_HISTORY">
             <Anchors>
               <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.CurrentPricesTab"/>
             </Anchors>
           </Button>
-          <Button parentKey="YourHistoryTab" id="3" inherits="AuctionatorSellingMiniTabButtonTemplate" text="AUCTIONATOR_L_YOUR_HISTORY">
+          <Button parentKey="YourHistoryTab" id="3" inherits="AuctionHouseHelperSellingMiniTabButtonTemplate" text="AUCTION_HOUSE_HELPER_L_YOUR_HISTORY">
             <Anchors>
               <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.PriceHistoryTab"/>
             </Anchors>

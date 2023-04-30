@@ -1,9 +1,9 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="AuctionatorCancellingTabFrameNoRefreshTemplate"
+    name="AuctionHouseHelperCancellingTabFrameNoRefreshTemplate"
     virtual="true"
-    parentKey="AuctionatorCancellingFrame"
-    mixin="AuctionatorCancellingFrameMixin"
+    parentKey="AuctionHouseHelperCancellingFrame"
+    mixin="AuctionHouseHelperCancellingFrameMixin"
     hidden="true"
   >
     <Scripts>
@@ -24,7 +24,7 @@
         </Anchors>
       </EditBox>
 
-      <Frame parentKey="DataProvider" mixin="AuctionatorCancellingDataProviderMixin">
+      <Frame parentKey="DataProvider" mixin="AuctionHouseHelperCancellingDataProviderMixin">
         <Scripts>
           <OnLoad method="OnLoad"/>
           <OnShow method="OnShow"/>
@@ -34,21 +34,21 @@
         </Scripts>
       </Frame>
 
-      <Frame parentKey="ResultsListing" inherits="AuctionatorResultsListingTemplate">
+      <Frame parentKey="ResultsListing" inherits="AuctionHouseHelperResultsListingTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="4" y="-79"/>
           <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" />
         </Anchors>
       </Frame>
 
-      <Frame parentKey="HistoricalPriceInset" inherits="AuctionatorInsetTemplate">
+      <Frame parentKey="HistoricalPriceInset" inherits="AuctionHouseHelperInsetTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.ResultsListing" relativePoint="TOPLEFT" x="-5" y="-25"/>
           <Anchor point="BOTTOMRIGHT" relativeKey="$parent.ResultsListing" relativePoint="BOTTOMRIGHT" y="2"/>
         </Anchors>
       </Frame>
 
-      <Frame mixin="AuctionatorUndercutScanMixin">
+      <Frame mixin="AuctionHouseHelperUndercutScanMixin">
         <Scripts>
           <OnLoad method="OnLoad"/>
           <OnShow method="OnShow" />
@@ -62,7 +62,7 @@
         </Anchors>
 
         <Frames>
-          <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_CANCEL_UNDERCUT" parentKey="CancelNextButton" name="AuctionatorCancelUndercutButton">
+          <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTION_HOUSE_HELPER_L_CANCEL_UNDERCUT" parentKey="CancelNextButton" name="AuctionHouseHelperCancelUndercutButton">
             <Anchors>
               <Anchor point="TOPRIGHT" x="3" />
             </Anchors>
@@ -71,7 +71,7 @@
             </Scripts>
           </Button>
 
-          <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_UNDERCUT_SCAN" parentKey="StartScanButton">
+          <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTION_HOUSE_HELPER_L_UNDERCUT_SCAN" parentKey="StartScanButton">
             <Anchors>
               <Anchor point="TOPRIGHT" relativeKey="$parent.CancelNextButton" relativePoint="TOPLEFT" x="3"/>
             </Anchors>

@@ -1,11 +1,11 @@
-Auctionator.Search.Filters.PriceMixin = {}
+AuctionHouseHelper.Search.Filters.PriceMixin = {}
 
-function Auctionator.Search.Filters.PriceMixin:Init(filterTracker, browseResult, limits)
+function AuctionHouseHelper.Search.Filters.PriceMixin:Init(filterTracker, browseResult, limits)
   self.limits = limits
   filterTracker:ReportFilterComplete(self:PriceCheck(browseResult.minPrice))
 end
 
-function Auctionator.Search.Filters.PriceMixin:PriceCheck(price)
+function AuctionHouseHelper.Search.Filters.PriceMixin:PriceCheck(price)
   return
     (
       --Minimum price check

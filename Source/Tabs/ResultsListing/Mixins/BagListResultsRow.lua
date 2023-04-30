@@ -1,7 +1,7 @@
-AuctionatorBagListResultsRowMixin = CreateFromMixins(AuctionatorResultsRowTemplateMixin)
+AuctionHouseHelperBagListResultsRowMixin = CreateFromMixins(AuctionHouseHelperResultsRowTemplateMixin)
 
-function AuctionatorBagListResultsRowMixin:OnClick(...)
-  Auctionator.Debug.Message("AuctionatorBagListResultsRowMixin:OnClick()")
-  Auctionator.Utilities.TablePrint(self.rowData)
+function AuctionHouseHelperBagListResultsRowMixin:OnClick(...)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperBagListResultsRowMixin:OnClick()")
+  AuctionHouseHelper.Utilities.TablePrint(self.rowData)
 
 end

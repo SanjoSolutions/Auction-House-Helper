@@ -1,7 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Button
-    name="AuctionatorCell"
-    mixin="AuctionatorCellMixin"
+    name="AuctionHouseHelperCell"
+    mixin="AuctionHouseHelperCellMixin"
     parentKey="cell"
     enableMouse="true"
     virtual="true"

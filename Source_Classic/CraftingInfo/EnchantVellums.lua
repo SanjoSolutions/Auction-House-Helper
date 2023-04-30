@@ -1,4 +1,4 @@
-Auctionator.CraftingInfo.EnchantVellums = {
+AuctionHouseHelper.CraftingInfo.EnchantVellums = {
   [Enum.ItemClass.Armor] = {
     [38682] = 0, -- Armor Vellum I
     [37602] = 35, -- Armor Vellum II

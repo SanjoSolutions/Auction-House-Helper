@@ -1,20 +1,20 @@
-AuctionatorConfigNumericInputMixin = {}
+AuctionHouseHelperConfigNumericInputMixin = {}
 
-function AuctionatorConfigNumericInputMixin:OnLoad()
+function AuctionHouseHelperConfigNumericInputMixin:OnLoad()
   if self.labelText ~= nil then
     self.InputBox.Label:SetText(self.labelText)
   end
 end
 
-function AuctionatorConfigNumericInputMixin:OnMouseUp()
+function AuctionHouseHelperConfigNumericInputMixin:OnMouseUp()
   self.InputBox:SetFocus()
 end
 
-function AuctionatorConfigNumericInputMixin:SetNumber(value)
+function AuctionHouseHelperConfigNumericInputMixin:SetNumber(value)
   self.InputBox:SetNumber(value)
   self.InputBox:SetCursorPosition(0)
 end
 
-function AuctionatorConfigNumericInputMixin:GetNumber(value)
+function AuctionHouseHelperConfigNumericInputMixin:GetNumber(value)
   return self.InputBox:GetNumber(value)
 end

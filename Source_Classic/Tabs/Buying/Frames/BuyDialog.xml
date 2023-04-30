@@ -1,5 +1,5 @@
 <Ui>
-  <Frame name="AuctionatorBuyWarningDialogTemplate" frameLevel="500" virtual="true" enableMouse="true">
+  <Frame name="AuctionHouseHelperBuyWarningDialogTemplate" frameLevel="500" virtual="true" enableMouse="true">
     <KeyValues>
       <KeyValue key="layoutType" value="Dialog" type="string"/>
     </KeyValues>
@@ -9,7 +9,7 @@
     <Size x="400" y="140"/>
     <Layers>
       <Layer>
-          <FontString parentKey="Text" inherits="GameFontRedLarge" text="AUCTIONATOR_L_PRICE_INCREASE_WARNING_2">
+          <FontString parentKey="Text" inherits="GameFontRedLarge" text="AUCTION_HOUSE_HELPER_L_PRICE_INCREASE_WARNING_2">
           <Anchors>
             <Anchor point="LEFT" x="20" y="10"/>
             <Anchor point="RIGHT" x="-20" y="-10"/>
@@ -28,7 +28,7 @@
     </Layers>
     <Frames>
       <Frame parentKey="NineSlice" inherits="NineSlicePanelTemplate" useParentLevel="true" />
-      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_STOP" parentKey="Stop">
+      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTION_HOUSE_HELPER_L_STOP" parentKey="Stop">
         <Anchors>
           <Anchor point="BOTTOM" y="20" />
           <Anchor point="RIGHT" x="-20" />
@@ -39,7 +39,7 @@
           </OnClick>
         </Scripts>
       </Button>
-      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_CONTINUE" parentKey="BuyStack">
+      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTION_HOUSE_HELPER_L_CONTINUE" parentKey="BuyStack">
         <Anchors>
           <Anchor point="TOPRIGHT" relativeKey="$parent.Stop" relativePoint="TOPLEFT" />
         </Anchors>
@@ -51,7 +51,7 @@
       </Button>
     </Frames>
   </Frame>
-  <Frame name="AuctionatorBuyDialogTemplate" frameStrata="Dialog" mixin="AuctionatorBuyDialogMixin" virtual="true" enableMouse="true" movable="true" clampedToScreen="true">
+  <Frame name="AuctionHouseHelperBuyDialogTemplate" frameStrata="Dialog" mixin="AuctionHouseHelperBuyDialogMixin" virtual="true" enableMouse="true" movable="true" clampedToScreen="true">
     <Scripts>
       <OnLoad method="OnLoad"/>
       <OnEvent method="OnEvent"/>
@@ -81,17 +81,17 @@
     </Frames>
     <Layers>
       <Layer>
-        <FontString parentKey="PurchaseDetails" inherits="GameFontHighlightLarge" text="AUCTIONATOR_L_BUYING_X_FOR_X">
+        <FontString parentKey="PurchaseDetails" inherits="GameFontHighlightLarge" text="AUCTION_HOUSE_HELPER_L_BUYING_X_FOR_X">
           <Anchors>
             <Anchor point="CENTER" y="30"/>
           </Anchors>
         </FontString>
-        <FontString parentKey="UnitPrice" inherits="GameFontHighlight" text="AUCTIONATOR_L_BRACKETS_X_EACH">
+        <FontString parentKey="UnitPrice" inherits="GameFontHighlight" text="AUCTION_HOUSE_HELPER_L_BRACKETS_X_EACH">
           <Anchors>
             <Anchor point="TOP" relativeKey="$parent.PurchaseDetails" relativePoint="BOTTOM" y="-6"/>
           </Anchors>
         </FontString>
-        <FontString parentKey="NumberPurchased" inherits="GameFontNormal" text="AUCTIONATOR_L_ALREADY_PURCHASED_X">
+        <FontString parentKey="NumberPurchased" inherits="GameFontNormal" text="AUCTION_HOUSE_HELPER_L_ALREADY_PURCHASED_X">
           <Anchors>
             <Anchor point="TOP" relativeKey="$parent.UnitPrice" relativePoint="BOTTOM" y="-8"/>
           </Anchors>
@@ -109,7 +109,7 @@
     </Layers>
     <Frames>
       <Frame parentKey="NineSlice" inherits="NineSlicePanelTemplate" useParentLevel="true" />
-      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_CLOSE" parentKey="Cancel">
+      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTION_HOUSE_HELPER_L_CLOSE" parentKey="Cancel">
         <Anchors>
           <Anchor point="BOTTOM" y="20" />
           <Anchor point="RIGHT" x="-20" />
@@ -120,7 +120,7 @@
           </OnClick>
         </Scripts>
       </Button>
-      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_BUY_STACK" parentKey="BuyStack">
+      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTION_HOUSE_HELPER_L_BUY_STACK" parentKey="BuyStack">
         <Anchors>
           <Anchor point="TOPRIGHT" relativeKey="$parent.Cancel" relativePoint="TOPLEFT" />
         </Anchors>
@@ -131,11 +131,11 @@
         </Scripts>
       </Button>
 
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="ChainBuy">
+      <Frame inherits="AuctionHouseHelperConfigurationCheckbox" parentKey="ChainBuy">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CHAIN_BUY" type="global"/>
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CHAIN_BUY_TOOLTIP_HEADER" type="global"/>
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CHAIN_BUY_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CHAIN_BUY" type="global"/>
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CHAIN_BUY_TOOLTIP_HEADER" type="global"/>
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CHAIN_BUY_TOOLTIP_TEXT" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="BOTTOM" y="5" />
@@ -144,7 +144,7 @@
         </Anchors>
       </Frame>
 
-      <Frame parentKey="WarningDialog" inherits="AuctionatorBuyWarningDialogTemplate" hidden="true"/>
+      <Frame parentKey="WarningDialog" inherits="AuctionHouseHelperBuyWarningDialogTemplate" hidden="true"/>
     </Frames>
   </Frame>
 </Ui>

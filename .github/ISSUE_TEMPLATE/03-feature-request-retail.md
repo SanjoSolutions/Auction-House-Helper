@@ -1,6 +1,6 @@
 ---
 name: Feature request for the latest release (not classic)
-about: Auctionator can always be better
+about: Auction House Helper can always be better
 title: ''
 labels: [retail, enhancement]
 assignees: ''

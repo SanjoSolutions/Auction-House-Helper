@@ -1,9 +1,9 @@
-AuctionatorSellingBagFrameMixin = {}
+AuctionHouseHelperSellingBagFrameMixin = {}
 
 local FAVOURITE = -1
 
-function AuctionatorSellingBagFrameMixin:OnLoad()
-  Auctionator.Debug.Message("AuctionatorSellingBagFrameMixin:OnLoad()")
+function AuctionHouseHelperSellingBagFrameMixin:OnLoad()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperSellingBagFrameMixin:OnLoad()")
   self.allShowing = true
 
   self.orderedClassIds = {
@@ -17,11 +17,11 @@ function AuctionatorSellingBagFrameMixin:OnLoad()
 
   local prevFrame = self.frameMap[FAVOURITE]
 
-  for _, classID in ipairs(Auctionator.Constants.ValidItemClassIDs) do
+  for _, classID in ipairs(AuctionHouseHelper.Constants.ValidItemClassIDs) do
     table.insert(self.orderedClassIds, classID)
 
     local frame = CreateFrame(
-      "FRAME", nil, self.ScrollBox.ItemListingFrame, "AuctionatorBagClassListing"
+      "FRAME", nil, self.ScrollBox.ItemListingFrame, "AuctionHouseHelperBagClassListing"
     )
     frame:Init(classID)
     frame:SetPoint("TOPLEFT", prevFrame, "BOTTOMLEFT")
@@ -51,7 +51,7 @@ function AuctionatorSellingBagFrameMixin:OnLoad()
   ScrollUtil.InitScrollBoxWithScrollBar(self.ScrollBox, self.ScrollBar, view);
 end
 
-function AuctionatorSellingBagFrameMixin:Init(dataProvider)
+function AuctionHouseHelperSellingBagFrameMixin:Init(dataProvider)
   self.dataProvider = dataProvider
 
   self.dataProvider:SetOnUpdateCallback(function()
@@ -64,18 +64,18 @@ function AuctionatorSellingBagFrameMixin:Init(dataProvider)
   self:Refresh()
 end
 
-function AuctionatorSellingBagFrameMixin:Refresh()
-  Auctionator.Debug.Message("AuctionatorSellingBagFrameMixin:Refresh()")
+function AuctionHouseHelperSellingBagFrameMixin:Refresh()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperSellingBagFrameMixin:Refresh()")
 
   self:AggregateItemsByClass()
   self:SetupFavourites()
   self:Update()
 end
 
-function AuctionatorSellingBagFrameMixin:AggregateItemsByClass()
+function AuctionHouseHelperSellingBagFrameMixin:AggregateItemsByClass()
   self.items = {}
 
-  for _, classID in ipairs(Auctionator.Constants.ValidItemClassIDs) do
+  for _, classID in ipairs(AuctionHouseHelper.Constants.ValidItemClassIDs) do
     self.items[classID] = {}
   end
 
@@ -88,12 +88,12 @@ function AuctionatorSellingBagFrameMixin:AggregateItemsByClass()
     if self.items[entry.classId] ~= nil then
       table.insert(self.items[entry.classId], entry)
     else
-      Auctionator.Debug.Message("AuctionatorSellingBagFrameMixin:AggregateItemsByClass Missing item class table", entry.classId)
+      AuctionHouseHelper.Debug.Message("AuctionHouseHelperSellingBagFrameMixin:AggregateItemsByClass Missing item class table", entry.classId)
     end
   end
 end
 
-function AuctionatorSellingBagFrameMixin:SetupFavourites()
+function AuctionHouseHelperSellingBagFrameMixin:SetupFavourites()
   local bagItemCount = self.dataProvider:GetCount()
   local entry
 
@@ -102,31 +102,31 @@ function AuctionatorSellingBagFrameMixin:SetupFavourites()
 
   for index = 1, bagItemCount do
     entry = self.dataProvider:GetEntryAt(index)
-    if Auctionator.Selling.IsFavourite(entry) then
-      seenKeys[Auctionator.Selling.UniqueBagKey(entry)] = true
+    if AuctionHouseHelper.Selling.IsFavourite(entry) then
+      seenKeys[AuctionHouseHelper.Selling.UniqueBagKey(entry)] = true
       table.insert(self.items[FAVOURITE], CopyTable(entry))
     end
   end
 
-  if Auctionator.Config.Get(Auctionator.Config.Options.SELLING_MISSING_FAVOURITES) then
-    local moreFavourites = Auctionator.Selling.GetAllFavourites()
+  if AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SELLING_MISSING_FAVOURITES) then
+    local moreFavourites = AuctionHouseHelper.Selling.GetAllFavourites()
 
     --Make favourite order independent of the order that the favourites were
     --added.
     table.sort(moreFavourites, function(left, right)
-      return Auctionator.Selling.UniqueBagKey(left) < Auctionator.Selling.UniqueBagKey(right)
+      return AuctionHouseHelper.Selling.UniqueBagKey(left) < AuctionHouseHelper.Selling.UniqueBagKey(right)
     end)
 
     for _, fav in ipairs(moreFavourites) do
-      if seenKeys[Auctionator.Selling.UniqueBagKey(fav)] == nil then
+      if seenKeys[AuctionHouseHelper.Selling.UniqueBagKey(fav)] == nil then
         table.insert(self.items[FAVOURITE], CopyTable(fav))
       end
     end
   end
 end
 
-function AuctionatorSellingBagFrameMixin:Update()
-  Auctionator.Debug.Message("AuctionatorSellingBagFrameMixin:Update()")
+function AuctionHouseHelperSellingBagFrameMixin:Update()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperSellingBagFrameMixin:Update()")
   self.ScrollBox.ItemListingFrame.oldHeight = self.ScrollBox.ItemListingFrame:GetHeight()
 
   local lastItem = nil

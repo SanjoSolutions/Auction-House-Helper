@@ -1,17 +1,17 @@
-AuctionatorHistoricalPriceRowMixin = CreateFromMixins(AuctionatorResultsRowTemplateMixin)
+AuctionHouseHelperHistoricalPriceRowMixin = CreateFromMixins(AuctionHouseHelperResultsRowTemplateMixin)
 
-function AuctionatorHistoricalPriceRowMixin:OnClick(button, ...)
-  Auctionator.Debug.Message("AuctionatorHistoricalPriceRowMixin:OnClick()")
+function AuctionHouseHelperHistoricalPriceRowMixin:OnClick(button, ...)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperHistoricalPriceRowMixin:OnClick()")
 
   if button == "LeftButton" then
-    Auctionator.EventBus
+    AuctionHouseHelper.EventBus
       :RegisterSource(self, "HistoricalPriceRow")
-      :Fire(self, Auctionator.Selling.Events.PriceSelected, self.rowData.minSeen)
+      :Fire(self, AuctionHouseHelper.Selling.Events.PriceSelected, self.rowData.minSeen)
       :UnregisterSource(self)
   elseif button == "RightButton" then
-    Auctionator.EventBus
+    AuctionHouseHelper.EventBus
       :RegisterSource(self, "HistoricalPriceRow")
-      :Fire(self, Auctionator.Selling.Events.PriceSelected, self.rowData.maxSeen)
+      :Fire(self, AuctionHouseHelper.Selling.Events.PriceSelected, self.rowData.maxSeen)
       :UnregisterSource(self)
   end
 end

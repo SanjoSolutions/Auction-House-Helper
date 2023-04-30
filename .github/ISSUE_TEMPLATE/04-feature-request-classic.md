@@ -1,6 +1,6 @@
 ---
 name: Feature request (for classic)
-about: " Auctionator can always be better"
+about: " Auction House Helper can always be better"
 title: ''
 labels: classic, enhancement
 assignees: ''

@@ -1,6 +1,6 @@
-AuctionatorCraftingInfoProfessionsFrameMixin = {}
+AuctionHouseHelperCraftingInfoProfessionsFrameMixin = {}
 
-function AuctionatorCraftingInfoProfessionsFrameMixin:OnLoad()
+function AuctionHouseHelperCraftingInfoProfessionsFrameMixin:OnLoad()
   FrameUtil.RegisterFrameForEvents(self, {
     "PLAYER_INTERACTION_MANAGER_FRAME_SHOW",
     "PLAYER_INTERACTION_MANAGER_FRAME_HIDE",
@@ -21,19 +21,19 @@ function AuctionatorCraftingInfoProfessionsFrameMixin:OnLoad()
   self:GetParent():RegisterCallback(ProfessionsRecipeSchematicFormMixin.Event.AllocationsModified, Update)
   self:GetParent():RegisterCallback(ProfessionsRecipeSchematicFormMixin.Event.UseBestQualityModified, Update)
 
-  Auctionator.API.v1.RegisterForDBUpdate(AUCTIONATOR_L_REAGENT_SEARCH, function()
+  AuctionHouseHelper.API.v1.RegisterForDBUpdate(AUCTION_HOUSE_HELPER_L_REAGENT_SEARCH, function()
     if self:IsVisible() then
       self:UpdateTotal()
     end
   end)
 end
 
-function AuctionatorCraftingInfoProfessionsFrameMixin:SetDoNotShowProfit()
+function AuctionHouseHelperCraftingInfoProfessionsFrameMixin:SetDoNotShowProfit()
   self.doNotShowProfit = true
 end
 
-function AuctionatorCraftingInfoProfessionsFrameMixin:ShowIfRelevant()
-  self:SetShown(Auctionator.Config.Get(Auctionator.Config.Options.CRAFTING_INFO_SHOW) and self:GetParent():GetRecipeInfo() ~= nil and self:IsAnyReagents())
+function AuctionHouseHelperCraftingInfoProfessionsFrameMixin:ShowIfRelevant()
+  self:SetShown(AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.CRAFTING_INFO_SHOW) and self:GetParent():GetRecipeInfo() ~= nil and self:IsAnyReagents())
 
   if self:IsVisible() then
     self:ClearAllPoints()
@@ -60,13 +60,13 @@ function AuctionatorCraftingInfoProfessionsFrameMixin:ShowIfRelevant()
   end
 end
 
-function AuctionatorCraftingInfoProfessionsFrameMixin:UpdateSearchButton()
+function AuctionHouseHelperCraftingInfoProfessionsFrameMixin:UpdateSearchButton()
   self.SearchButton:SetShown(AuctionHouseFrame and AuctionHouseFrame:IsShown())
 end
 
 -- Checks for case when there are no regeants, for example a DK Runeforging
 -- crafting view.
-function AuctionatorCraftingInfoProfessionsFrameMixin:IsAnyReagents()
+function AuctionHouseHelperCraftingInfoProfessionsFrameMixin:IsAnyReagents()
   local schematicForm = self:GetParent()
   local recipeInfo = schematicForm:GetRecipeInfo()
   local recipeID = recipeInfo.recipeID
@@ -75,21 +75,21 @@ function AuctionatorCraftingInfoProfessionsFrameMixin:IsAnyReagents()
   return #recipeSchematic.reagentSlotSchematics > 0
 end
 
-function AuctionatorCraftingInfoProfessionsFrameMixin:UpdateTotal()
-  local text, lines = Auctionator.CraftingInfo.GetInfoText(self:GetParent(), not self.doNotShowProfit)
+function AuctionHouseHelperCraftingInfoProfessionsFrameMixin:UpdateTotal()
+  local text, lines = AuctionHouseHelper.CraftingInfo.GetInfoText(self:GetParent(), not self.doNotShowProfit)
   self.Total:SetText(text)
   self:SetHeight(16 * lines)
 end
 
-function AuctionatorCraftingInfoProfessionsFrameMixin:SearchButtonClicked()
+function AuctionHouseHelperCraftingInfoProfessionsFrameMixin:SearchButtonClicked()
   if AuctionHouseFrame and AuctionHouseFrame:IsShown() then
-    Auctionator.CraftingInfo.DoTradeSkillReagentsSearch(self:GetParent())
+    AuctionHouseHelper.CraftingInfo.DoTradeSkillReagentsSearch(self:GetParent())
   else
     print("I would queue a search")
   end
 end
 
-function AuctionatorCraftingInfoProfessionsFrameMixin:OnEvent(...)
+function AuctionHouseHelperCraftingInfoProfessionsFrameMixin:OnEvent(...)
   local eventName, paneType = ...
   if paneType == Enum.PlayerInteractionType.Auctioneer then
     self:UpdateSearchButton()

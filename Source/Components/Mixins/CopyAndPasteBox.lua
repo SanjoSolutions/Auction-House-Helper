@@ -1,6 +1,6 @@
-AuctionatorConfigurationCopyAndPasteMixin = {}
+AuctionHouseHelperConfigurationCopyAndPasteMixin = {}
 
-function AuctionatorConfigurationCopyAndPasteMixin:OnLoad()
+function AuctionHouseHelperConfigurationCopyAndPasteMixin:OnLoad()
   if self.labelText ~= nil then
     self.Label:SetText(self.labelText)
   end

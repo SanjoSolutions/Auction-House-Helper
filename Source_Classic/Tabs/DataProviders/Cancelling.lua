@@ -1,65 +1,65 @@
 local CANCELLING_TABLE_LAYOUT = {
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
     headerParameters = { "name" },
-    headerText = AUCTIONATOR_L_NAME,
-    cellTemplate = "AuctionatorItemKeyCellTemplate",
+    headerText = AUCTION_HOUSE_HELPER_L_NAME,
+    cellTemplate = "AuctionHouseHelperItemKeyCellTemplate",
   },
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = AUCTIONATOR_L_QUANTITY,
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
+    headerText = AUCTION_HOUSE_HELPER_L_QUANTITY,
     headerParameters = { "stackSize" },
-    cellTemplate = "AuctionatorStringCellTemplate",
+    cellTemplate = "AuctionHouseHelperStringCellTemplate",
     cellParameters = { "availablePretty" },
     width = 110,
   },
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = AUCTIONATOR_L_UNIT_PRICE,
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
+    headerText = AUCTION_HOUSE_HELPER_L_UNIT_PRICE,
     headerParameters = { "unitPrice" },
-    cellTemplate = "AuctionatorPriceCellTemplate",
+    cellTemplate = "AuctionHouseHelperPriceCellTemplate",
     cellParameters = { "unitPrice" },
     width = 150,
   },
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = AUCTIONATOR_L_STACK_PRICE,
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
+    headerText = AUCTION_HOUSE_HELPER_L_STACK_PRICE,
     headerParameters = { "stackPrice" },
-    cellTemplate = "AuctionatorPriceCellTemplate",
+    cellTemplate = "AuctionHouseHelperPriceCellTemplate",
     cellParameters = { "stackPrice" },
     defaultHide = true,
     width = 150,
   },
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = AUCTIONATOR_L_BID_PRICE,
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
+    headerText = AUCTION_HOUSE_HELPER_L_BID_PRICE,
     headerParameters = { "minBid" },
-    cellTemplate = "AuctionatorPriceCellTemplate",
+    cellTemplate = "AuctionHouseHelperPriceCellTemplate",
     cellParameters = { "minBid" },
     defaultHide = true,
     width = 150,
   },
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = AUCTIONATOR_L_BIDDER,
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
+    headerText = AUCTION_HOUSE_HELPER_L_BIDDER,
     headerParameters = { "bidder" },
-    cellTemplate = "AuctionatorStringCellTemplate",
+    cellTemplate = "AuctionHouseHelperStringCellTemplate",
     cellParameters = { "bidder" },
     defaultHide = true,
   },
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = AUCTIONATOR_L_TIME_LEFT,
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
+    headerText = AUCTION_HOUSE_HELPER_L_TIME_LEFT,
     headerParameters = { "timeLeft" },
-    cellTemplate = "AuctionatorStringCellTemplate",
+    cellTemplate = "AuctionHouseHelperStringCellTemplate",
     cellParameters = { "timeLeftPretty" },
     width = 90,
   },
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = AUCTIONATOR_L_IS_UNDERCUT,
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
+    headerText = AUCTION_HOUSE_HELPER_L_IS_UNDERCUT,
     headerParameters = { "undercut" },
-    cellTemplate = "AuctionatorStringCellTemplate",
+    cellTemplate = "AuctionHouseHelperStringCellTemplate",
     cellParameters = { "undercut" },
     width = 90,
   },
@@ -70,51 +70,51 @@ local DATA_EVENTS = {
 }
 
 local EVENT_BUS_EVENTS = {
-  Auctionator.Cancelling.Events.UndercutStatus,
-  Auctionator.Cancelling.Events.UndercutScanStart,
-  Auctionator.AH.Events.ThrottleUpdate,
+  AuctionHouseHelper.Cancelling.Events.UndercutStatus,
+  AuctionHouseHelper.Cancelling.Events.UndercutScanStart,
+  AuctionHouseHelper.AH.Events.ThrottleUpdate,
 }
 
-AuctionatorCancellingDataProviderMixin = CreateFromMixins(AuctionatorDataProviderMixin, AuctionatorItemStringLoadingMixin)
+AuctionHouseHelperCancellingDataProviderMixin = CreateFromMixins(AuctionHouseHelperDataProviderMixin, AuctionHouseHelperItemStringLoadingMixin)
 
-function AuctionatorCancellingDataProviderMixin:OnLoad()
-  AuctionatorDataProviderMixin.OnLoad(self)
-  AuctionatorItemStringLoadingMixin.OnLoad(self)
+function AuctionHouseHelperCancellingDataProviderMixin:OnLoad()
+  AuctionHouseHelperDataProviderMixin.OnLoad(self)
+  AuctionHouseHelperItemStringLoadingMixin.OnLoad(self)
 
   self.undercutCutoff = {}
 end
 
-function AuctionatorCancellingDataProviderMixin:OnShow()
-  Auctionator.EventBus:Register(self, EVENT_BUS_EVENTS)
+function AuctionHouseHelperCancellingDataProviderMixin:OnShow()
+  AuctionHouseHelper.EventBus:Register(self, EVENT_BUS_EVENTS)
 
   self:NoQueryRefresh()
 
   FrameUtil.RegisterFrameForEvents(self, DATA_EVENTS)
 end
 
-function AuctionatorCancellingDataProviderMixin:OnHide()
-  Auctionator.EventBus:Unregister(self, EVENT_BUS_EVENTS)
+function AuctionHouseHelperCancellingDataProviderMixin:OnHide()
+  AuctionHouseHelper.EventBus:Unregister(self, EVENT_BUS_EVENTS)
 
   FrameUtil.UnregisterFrameForEvents(self, DATA_EVENTS)
 end
 
-function AuctionatorCancellingDataProviderMixin:NoQueryRefresh()
+function AuctionHouseHelperCancellingDataProviderMixin:NoQueryRefresh()
   self.onPreserveScroll()
   self:PopulateAuctions()
 end
 
 local COMPARATORS = {
-  unitPrice = Auctionator.Utilities.NumberComparator,
-  stackPrice = Auctionator.Utilities.NumberComparator,
-  bidAmount = Auctionator.Utilities.NumberComparator,
-  name = Auctionator.Utilities.StringComparator,
-  bidder = Auctionator.Utilities.StringComparator,
-  quantity = Auctionator.Utilities.NumberComparator,
-  timeLeft = Auctionator.Utilities.NumberComparator,
-  undercut = Auctionator.Utilities.StringComparator,
+  unitPrice = AuctionHouseHelper.Utilities.NumberComparator,
+  stackPrice = AuctionHouseHelper.Utilities.NumberComparator,
+  bidAmount = AuctionHouseHelper.Utilities.NumberComparator,
+  name = AuctionHouseHelper.Utilities.StringComparator,
+  bidder = AuctionHouseHelper.Utilities.StringComparator,
+  quantity = AuctionHouseHelper.Utilities.NumberComparator,
+  timeLeft = AuctionHouseHelper.Utilities.NumberComparator,
+  undercut = AuctionHouseHelper.Utilities.StringComparator,
 }
 
-function AuctionatorCancellingDataProviderMixin:Sort(fieldName, sortDirection)
+function AuctionHouseHelperCancellingDataProviderMixin:Sort(fieldName, sortDirection)
   local comparator = COMPARATORS[fieldName](sortDirection, fieldName)
 
   table.sort(self.results, function(left, right)
@@ -124,42 +124,42 @@ function AuctionatorCancellingDataProviderMixin:Sort(fieldName, sortDirection)
   self:SetDirty()
 end
 
-function AuctionatorCancellingDataProviderMixin:OnEvent(eventName, auctionID, ...)
+function AuctionHouseHelperCancellingDataProviderMixin:OnEvent(eventName, auctionID, ...)
   if eventName == "AUCTION_OWNED_LIST_UPDATE" then
     self:NoQueryRefresh()
   end
 end
 
-function AuctionatorCancellingDataProviderMixin:ReceiveEvent(eventName, eventData, ...)
-  if eventName == Auctionator.Cancelling.Events.UndercutScanStart then
+function AuctionHouseHelperCancellingDataProviderMixin:ReceiveEvent(eventName, eventData, ...)
+  if eventName == AuctionHouseHelper.Cancelling.Events.UndercutScanStart then
     self.undercutCutoff = {}
 
     self:NoQueryRefresh()
 
-  elseif eventName == Auctionator.Cancelling.Events.UndercutStatus then
+  elseif eventName == AuctionHouseHelper.Cancelling.Events.UndercutStatus then
     self.undercutCutoff[eventData] = ...
 
     self:NoQueryRefresh()
-  elseif eventName == Auctionator.AH.Events.ThrottleUpdate then
+  elseif eventName == AuctionHouseHelper.AH.Events.ThrottleUpdate then
     if eventData then
       self:NoQueryRefresh()
     end
   end
 end
 
-function AuctionatorCancellingDataProviderMixin:IsValidAuction(auctionInfo)
+function AuctionHouseHelperCancellingDataProviderMixin:IsValidAuction(auctionInfo)
   return not auctionInfo.isSold and (auctionInfo.stackPrice ~= 0 or auctionInfo.minBid ~= 0)
 end
 
-function AuctionatorCancellingDataProviderMixin:IsSoldAuction(auctionInfo)
+function AuctionHouseHelperCancellingDataProviderMixin:IsSoldAuction(auctionInfo)
   return auctionInfo.isSold and auctionInfo.stackPrice ~= 0
 end
 
 
-function AuctionatorCancellingDataProviderMixin:FilterAuction(auctionInfo)
+function AuctionHouseHelperCancellingDataProviderMixin:FilterAuction(auctionInfo)
   local searchString = self:GetParent().SearchFilter:GetText()
   if searchString ~= "" then
-    local name = Auctionator.Utilities.GetNameFromLink(auctionInfo.itemLink)
+    local name = AuctionHouseHelper.Utilities.GetNameFromLink(auctionInfo.itemLink)
     return string.find(string.lower(name), string.lower(searchString), 1, true)
   else
     return true
@@ -167,7 +167,7 @@ function AuctionatorCancellingDataProviderMixin:FilterAuction(auctionInfo)
 end
 
 local function ToUniqueKey(entry)
-  return Auctionator.Search.GetCleanItemLink(entry.itemLink) .. " " .. entry.stackPrice .. " " .. entry.stackSize .. " " .. tostring(entry.isSold) .. " " .. tostring(entry.bidAmount) .. " " .. tostring(entry.minBid) .. " " .. tostring(entry.bidder) .. " " .. entry.timeLeft
+  return AuctionHouseHelper.Search.GetCleanItemLink(entry.itemLink) .. " " .. entry.stackPrice .. " " .. entry.stackSize .. " " .. tostring(entry.isSold) .. " " .. tostring(entry.bidAmount) .. " " .. tostring(entry.minBid) .. " " .. tostring(entry.bidder) .. " " .. entry.timeLeft
 end
 
 local function GroupAuctions(allAuctions)
@@ -177,15 +177,15 @@ local function GroupAuctions(allAuctions)
   for _, auction in ipairs(allAuctions) do
     local newEntry = {
       itemLink = auction.itemLink,
-      unitPrice = Auctionator.Utilities.ToUnitPrice(auction),
-      stackPrice = auction.info[Auctionator.Constants.AuctionItemInfo.Buyout],
-      stackSize = auction.info[Auctionator.Constants.AuctionItemInfo.Quantity],
-      isSold = auction.info[Auctionator.Constants.AuctionItemInfo.SaleStatus] == 1,
+      unitPrice = AuctionHouseHelper.Utilities.ToUnitPrice(auction),
+      stackPrice = auction.info[AuctionHouseHelper.Constants.AuctionItemInfo.Buyout],
+      stackSize = auction.info[AuctionHouseHelper.Constants.AuctionItemInfo.Quantity],
+      isSold = auction.info[AuctionHouseHelper.Constants.AuctionItemInfo.SaleStatus] == 1,
       numStacks = 1,
       isOwned = true,
-      bidAmount = auction.info[Auctionator.Constants.AuctionItemInfo.BidAmount],
-      minBid = auction.info[Auctionator.Constants.AuctionItemInfo.MinBid],
-      bidder = auction.info[Auctionator.Constants.AuctionItemInfo.Bidder],
+      bidAmount = auction.info[AuctionHouseHelper.Constants.AuctionItemInfo.BidAmount],
+      minBid = auction.info[AuctionHouseHelper.Constants.AuctionItemInfo.MinBid],
+      bidder = auction.info[AuctionHouseHelper.Constants.AuctionItemInfo.Bidder],
       timeLeft = auction.timeLeft,
     }
     if newEntry.itemLink ~= nil then
@@ -202,9 +202,9 @@ local function GroupAuctions(allAuctions)
   return results
 end
 
-function AuctionatorCancellingDataProviderMixin:PopulateAuctions()
+function AuctionHouseHelperCancellingDataProviderMixin:PopulateAuctions()
   self:Reset()
-  local allAuctions = GroupAuctions(Auctionator.AH.DumpAuctions("owner"))
+  local allAuctions = GroupAuctions(AuctionHouseHelper.AH.DumpAuctions("owner"))
   local totalOnSale = 0
   local totalPending = 0
 
@@ -216,16 +216,16 @@ function AuctionatorCancellingDataProviderMixin:PopulateAuctions()
       if self:FilterAuction(auction) then
         totalOnSale = totalOnSale + auction.stackPrice * auction.numStacks
 
-        local cleanLink = Auctionator.Search.GetCleanItemLink(auction.itemLink)
+        local cleanLink = AuctionHouseHelper.Search.GetCleanItemLink(auction.itemLink)
         local undercutStatus
         if auction.bidAmount ~= 0 then
-          undercutStatus = AUCTIONATOR_L_UNDERCUT_BID
+          undercutStatus = AUCTION_HOUSE_HELPER_L_UNDERCUT_BID
         elseif self.undercutCutoff[cleanLink] == nil then
-          undercutStatus = AUCTIONATOR_L_UNDERCUT_UNKNOWN
+          undercutStatus = AUCTION_HOUSE_HELPER_L_UNDERCUT_UNKNOWN
         elseif self.undercutCutoff[cleanLink] < auction.unitPrice then
-          undercutStatus = AUCTIONATOR_L_UNDERCUT_YES
+          undercutStatus = AUCTION_HOUSE_HELPER_L_UNDERCUT_YES
         else
-          undercutStatus = AUCTIONATOR_L_UNDERCUT_NO
+          undercutStatus = AUCTION_HOUSE_HELPER_L_UNDERCUT_NO
         end
         table.insert(results, {
           numStacks = auction.numStacks,
@@ -238,10 +238,10 @@ function AuctionatorCancellingDataProviderMixin:PopulateAuctions()
           bidAmount = auction.bidAmount,
           itemLink = auction.itemLink, -- Used for tooltips
           timeLeft = auction.timeLeft,
-          timeLeftPretty = Auctionator.Utilities.FormatTimeLeftBand(auction.timeLeft),
+          timeLeftPretty = AuctionHouseHelper.Utilities.FormatTimeLeftBand(auction.timeLeft),
           undercut = undercutStatus,
         })
-        Auctionator.Utilities.SetStacksText(results[#results])
+        AuctionHouseHelper.Utilities.SetStacksText(results[#results])
       end
     elseif self:IsSoldAuction(auction) then
       totalPending = totalPending + auction.stackPrice * auction.numStacks
@@ -249,23 +249,23 @@ function AuctionatorCancellingDataProviderMixin:PopulateAuctions()
   end
   self:AppendEntries(results, true)
 
-  Auctionator.EventBus:RegisterSource(self, "CancellingDataProvider")
-    :Fire(self, Auctionator.Cancelling.Events.TotalUpdated, totalOnSale, totalPending)
+  AuctionHouseHelper.EventBus:RegisterSource(self, "CancellingDataProvider")
+    :Fire(self, AuctionHouseHelper.Cancelling.Events.TotalUpdated, totalOnSale, totalPending)
     :UnregisterSource(self)
 end
 
-function AuctionatorCancellingDataProviderMixin:UniqueKey(entry)
+function AuctionHouseHelperCancellingDataProviderMixin:UniqueKey(entry)
   return tostring(entry)
 end
 
-function AuctionatorCancellingDataProviderMixin:GetTableLayout()
+function AuctionHouseHelperCancellingDataProviderMixin:GetTableLayout()
   return CANCELLING_TABLE_LAYOUT
 end
 
-function AuctionatorCancellingDataProviderMixin:GetColumnHideStates()
-  return Auctionator.Config.Get(Auctionator.Config.Options.COLUMNS_CANCELLING)
+function AuctionHouseHelperCancellingDataProviderMixin:GetColumnHideStates()
+  return AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.COLUMNS_CANCELLING)
 end
 
-function AuctionatorCancellingDataProviderMixin:GetRowTemplate()
-  return "AuctionatorCancellingListResultsRowTemplate"
+function AuctionHouseHelperCancellingDataProviderMixin:GetRowTemplate()
+  return "AuctionHouseHelperCancellingListResultsRowTemplate"
 end

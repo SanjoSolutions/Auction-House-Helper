@@ -1,5 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Frame name="AuctionatorConfigurationHeadingFrame" mixin="AuctionatorConfigurationHeadingMixin" virtual="true">
+  <Frame name="AuctionHouseHelperConfigurationHeadingFrame" mixin="AuctionHouseHelperConfigurationHeadingMixin" virtual="true">
     <!--
       <KeyValues>
         <KeyValue key="headingText" value="" type="string" />

@@ -2,21 +2,21 @@
 -- The button will be hidden when the AH is closed.
 -- The total price is shown in a FontString next to the button
 local addedFunctionality = false
-function Auctionator.CraftingInfo.Initialize()
+function AuctionHouseHelper.CraftingInfo.Initialize()
   if addedFunctionality then
     return
   end
 
   if TradeSkillFrame then
     addedFunctionality = true
-    CreateFrame("Frame", "AuctionatorCraftingInfo", TradeSkillFrame, "AuctionatorCraftingInfoFrameTemplate");
+    CreateFrame("Frame", "AuctionHouseHelperCraftingInfo", TradeSkillFrame, "AuctionHouseHelperCraftingInfoFrameTemplate");
   end
 end
 
 -- Get the associated item, spell level and spell equipped item class for an
 -- enchant
 local function EnchantLinkToData(enchantLink)
-  return Auctionator.CraftingInfo.EnchantSpellsToItemData[tonumber(enchantLink:match("enchant:(%d+)"))]
+  return AuctionHouseHelper.CraftingInfo.EnchantSpellsToItemData[tonumber(enchantLink:match("enchant:(%d+)"))]
 end
 
 local function GetOutputName(callback)
@@ -50,7 +50,7 @@ local function GetOutputName(callback)
   end
 end
 
-function Auctionator.CraftingInfo.DoTradeSkillReagentsSearch()
+function AuctionHouseHelper.CraftingInfo.DoTradeSkillReagentsSearch()
   GetOutputName(function(outputName)
     local items = {}
     if outputName then
@@ -63,7 +63,7 @@ function Auctionator.CraftingInfo.DoTradeSkillReagentsSearch()
       table.insert(items, reagentName)
     end
 
-    Auctionator.API.v1.MultiSearchExact(AUCTIONATOR_L_REAGENT_SEARCH, items)
+    AuctionHouseHelper.API.v1.MultiSearchExact(AUCTION_HOUSE_HELPER_L_REAGENT_SEARCH, items)
   end)
 end
 
@@ -76,8 +76,8 @@ local function GetSkillReagentsTotal()
     local multiplier = select(3, GetTradeSkillReagentInfo(recipeIndex, reagentIndex))
     local link = GetTradeSkillReagentItemLink(recipeIndex, reagentIndex)
     if link ~= nil then
-      local vendorPrice = Auctionator.API.v1.GetVendorPriceByItemLink(AUCTIONATOR_L_REAGENT_SEARCH, link)
-      local auctionPrice = Auctionator.API.v1.GetAuctionPriceByItemLink(AUCTIONATOR_L_REAGENT_SEARCH, link)
+      local vendorPrice = AuctionHouseHelper.API.v1.GetVendorPriceByItemLink(AUCTION_HOUSE_HELPER_L_REAGENT_SEARCH, link)
+      local auctionPrice = AuctionHouseHelper.API.v1.GetAuctionPriceByItemLink(AUCTION_HOUSE_HELPER_L_REAGENT_SEARCH, link)
 
       local unitPrice = vendorPrice or auctionPrice
 
@@ -100,7 +100,7 @@ local function GetEnchantProfit()
   end
 
   -- Determine which vellum for the item class of the enchanted item
-  local vellumForClass = Auctionator.CraftingInfo.EnchantVellums[data.itemClass]
+  local vellumForClass = AuctionHouseHelper.CraftingInfo.EnchantVellums[data.itemClass]
   if vellumForClass == nil then
     return nil
   end
@@ -111,9 +111,9 @@ local function GetEnchantProfit()
   for vellumItemID, vellumLevel in pairs(vellumForClass) do
     if data.level <= vellumLevel then
       anyMatch = true
-      local optionOnAH = Auctionator.API.v1.GetAuctionPriceByItemID(AUCTIONATOR_L_REAGENT_SEARCH, vellumItemID)
+      local optionOnAH = AuctionHouseHelper.API.v1.GetAuctionPriceByItemID(AUCTION_HOUSE_HELPER_L_REAGENT_SEARCH, vellumItemID)
       if vellumCost == nil or (optionOnAH ~= nil and optionOnAH <= vellumCost) then
-        Auctionator.Debug.Message("CraftingInfo: Selecting vellum for enchant", vellumItemID)
+        AuctionHouseHelper.Debug.Message("CraftingInfo: Selecting vellum for enchant", vellumItemID)
         vellumCost = optionOnAH
       end
     end
@@ -126,12 +126,12 @@ local function GetEnchantProfit()
 
   vellumCost = vellumCost or 0
 
-  local currentAH = Auctionator.API.v1.GetAuctionPriceByItemID(AUCTIONATOR_L_REAGENT_SEARCH, data.itemID)
+  local currentAH = AuctionHouseHelper.API.v1.GetAuctionPriceByItemID(AUCTION_HOUSE_HELPER_L_REAGENT_SEARCH, data.itemID)
   if currentAH == nil then
     currentAH = 0
   end
 
-  return math.floor(currentAH * Auctionator.Constants.AfterAHCut - vellumCost - toCraft)
+  return math.floor(currentAH * AuctionHouseHelper.Constants.AfterAHCut - vellumCost - toCraft)
 end
 
 local function GetAHProfit()
@@ -149,20 +149,20 @@ local function GetAHProfit()
     return nil
   end
 
-  local currentAH = Auctionator.API.v1.GetAuctionPriceByItemLink(AUCTIONATOR_L_REAGENT_SEARCH, recipeLink)
+  local currentAH = AuctionHouseHelper.API.v1.GetAuctionPriceByItemLink(AUCTION_HOUSE_HELPER_L_REAGENT_SEARCH, recipeLink)
   if currentAH == nil then
     currentAH = 0
   end
   local toCraft = GetSkillReagentsTotal()
 
-  return math.floor(currentAH * minCount * Auctionator.Constants.AfterAHCut - toCraft),
-    math.floor(currentAH * maxCount * Auctionator.Constants.AfterAHCut - toCraft)
+  return math.floor(currentAH * minCount * AuctionHouseHelper.Constants.AfterAHCut - toCraft),
+    math.floor(currentAH * maxCount * AuctionHouseHelper.Constants.AfterAHCut - toCraft)
 end
 
 local function CraftCostString()
   local price = WHITE_FONT_COLOR:WrapTextInColorCode(GetMoneyString(GetSkillReagentsTotal(), true))
 
-  return AUCTIONATOR_L_TO_CRAFT_COLON .. " " .. price
+  return AUCTION_HOUSE_HELPER_L_TO_CRAFT_COLON .. " " .. price
 end
 
 local function PriceString(price)
@@ -177,16 +177,16 @@ end
 
 local function ProfitString(minProfit, maxProfit)
   if minProfit == maxProfit then
-    return AUCTIONATOR_L_PROFIT_COLON .. " " .. PriceString(minProfit)
+    return AUCTION_HOUSE_HELPER_L_PROFIT_COLON .. " " .. PriceString(minProfit)
   else
-    return AUCTIONATOR_L_PROFIT_COLON .. " " .. PriceString(minProfit) .. " " .. AUCTIONATOR_L_PROFIT_TO .. " " .. PriceString(maxProfit)
+    return AUCTION_HOUSE_HELPER_L_PROFIT_COLON .. " " .. PriceString(minProfit) .. " " .. AUCTION_HOUSE_HELPER_L_PROFIT_TO .. " " .. PriceString(maxProfit)
   end
 end
 
-function Auctionator.CraftingInfo.GetInfoText()
+function AuctionHouseHelper.CraftingInfo.GetInfoText()
   local result = ""
   local lines = 0
-  if Auctionator.Config.Get(Auctionator.Config.Options.CRAFTING_INFO_SHOW_COST) then
+  if AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.CRAFTING_INFO_SHOW_COST) then
     if lines > 0 then
       result = result .. "\n"
     end
@@ -194,7 +194,7 @@ function Auctionator.CraftingInfo.GetInfoText()
     lines = lines + 1
   end
 
-  if Auctionator.Config.Get(Auctionator.Config.Options.CRAFTING_INFO_SHOW_PROFIT) then
+  if AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.CRAFTING_INFO_SHOW_PROFIT) then
     local minProfit, maxProfit = GetAHProfit()
 
     if minProfit ~= nil then

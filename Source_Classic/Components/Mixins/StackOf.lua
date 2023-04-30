@@ -1,40 +1,40 @@
-AuctionatorStackOfInputMixin = CreateFromMixins(AuctionatorConfigTooltipMixin)
+AuctionHouseHelperStackOfInputMixin = CreateFromMixins(AuctionHouseHelperConfigTooltipMixin)
 
-function AuctionatorStackOfInputMixin:OnLoad()
+function AuctionHouseHelperStackOfInputMixin:OnLoad()
   self.maxStackSize = 0
   self.maxNumStacks = 0
 end
 
-function AuctionatorStackOfInputMixin:SetMaxNumStacks(max)
+function AuctionHouseHelperStackOfInputMixin:SetMaxNumStacks(max)
   self.maxNumStacks = max
 end
 
-function AuctionatorStackOfInputMixin:GetConfig()
+function AuctionHouseHelperStackOfInputMixin:GetConfig()
   return {
     numStacks = self.NumStacks:GetNumber(),
     stackSize = self.StackSize:GetNumber(),
   }
 end
 
-function AuctionatorStackOfInputMixin:SetConfig(config)
+function AuctionHouseHelperStackOfInputMixin:SetConfig(config)
   self.NumStacks:SetNumber(config.numStacks)
   self.StackSize:SetNumber(config.stackSize)
 end
 
-function AuctionatorStackOfInputMixin:SetMaxStackSize(max)
+function AuctionHouseHelperStackOfInputMixin:SetMaxStackSize(max)
   self.maxStackSize = max
-  self.MaxStackSize:SetText(AUCTIONATOR_L_MAX_COLON_X:format(max))
+  self.MaxStackSize:SetText(AUCTION_HOUSE_HELPER_L_MAX_COLON_X:format(max))
 end
 
-function AuctionatorStackOfInputMixin:SetMaxNumStacks(max)
+function AuctionHouseHelperStackOfInputMixin:SetMaxNumStacks(max)
   self.maxNumStacks = max
-  self.MaxNumStacks:SetText(AUCTIONATOR_L_MAX_COLON_X:format(max))
+  self.MaxNumStacks:SetText(AUCTION_HOUSE_HELPER_L_MAX_COLON_X:format(max))
 end
 
-function AuctionatorStackOfInputMixin:MaxNumStacksClicked()
+function AuctionHouseHelperStackOfInputMixin:MaxNumStacksClicked()
   self.NumStacks:SetNumber(self.maxNumStacks)
 end
 
-function AuctionatorStackOfInputMixin:MaxStackSizeClicked()
+function AuctionHouseHelperStackOfInputMixin:MaxStackSizeClicked()
   self.StackSize:SetNumber(self.maxStackSize)
 end

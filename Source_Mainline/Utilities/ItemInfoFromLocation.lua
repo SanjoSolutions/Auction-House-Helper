@@ -1,6 +1,6 @@
 -- Returns just enough information that the BagItem mixin can display the item
 -- and the SaleItemMixin can post it.
-function Auctionator.Utilities.ItemInfoFromLocation(location)
+function AuctionHouseHelper.Utilities.ItemInfoFromLocation(location)
   local itemKey = C_AuctionHouse.GetItemKeyFromItem(location)
   local itemType = C_AuctionHouse.GetItemCommodityStatus(location)
 
@@ -22,7 +22,7 @@ function Auctionator.Utilities.ItemInfoFromLocation(location)
   -- The first time the AH is loaded sometimes when a full scan is running the
   -- quality info may not be available. This just gives a sensible fail value.
   if quality == nil then
-    Auctionator.Debug.Message("Missing quality", itemKey.itemID)
+    AuctionHouseHelper.Debug.Message("Missing quality", itemKey.itemID)
     quality = 1
   end
 
@@ -36,6 +36,6 @@ function Auctionator.Utilities.ItemInfoFromLocation(location)
     quality = quality,
     classId = classID,
     auctionable = C_AuctionHouse.IsSellItemValid(location, false),
-    bagListing = quality ~= Enum.ItemQuality.Poor or Auctionator.Utilities.IsEquipment(classID),
+    bagListing = quality ~= Enum.ItemQuality.Poor or AuctionHouseHelper.Utilities.IsEquipment(classID),
   }
 end

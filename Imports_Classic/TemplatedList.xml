@@ -1,7 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 	<!-- Elements are required to be buttons for now -->
-	<Button name="AuctionatorRetailImportTemplatedListElementTemplate" mixin="AuctionatorRetailImportTemplatedListElementMixin" virtual="true">
+	<Button name="AuctionHouseHelperRetailImportTemplatedListElementTemplate" mixin="AuctionHouseHelperRetailImportTemplatedListElementMixin" virtual="true">
 		<Scripts>
 			<OnClick method="OnClick"/>
 			<OnEnter method="OnEnter"/>
@@ -10,7 +10,7 @@
 	</Button>
 
 
-	<Frame name="AuctionatorRetailImportTemplatedListTemplate" mixin="AuctionatorRetailImportTemplatedListMixin" virtual="true">
+	<Frame name="AuctionHouseHelperRetailImportTemplatedListTemplate" mixin="AuctionHouseHelperRetailImportTemplatedListMixin" virtual="true">
 		<Frames>
 			<Frame parentKey="ArtOverlay" setAllPoints="true" frameStrata="HIGH" clipChildren="true">
 				<Layers>

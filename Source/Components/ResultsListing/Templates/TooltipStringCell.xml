@@ -1,8 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Button
-    name="AuctionatorTooltipStringCellTemplate"
-    mixin="AuctionatorTooltipStringCellTemplateMixin"
-    inherits="AuctionatorStringCellTemplate"
+    name="AuctionHouseHelperTooltipStringCellTemplate"
+    mixin="AuctionHouseHelperTooltipStringCellTemplateMixin"
+    inherits="AuctionHouseHelperStringCellTemplate"
     virtual="true"
   >
   </Button>

@@ -1,6 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <!-- Template for money input with label -->
-  <Frame name="AuctionatorConfigurationMoneyInput" mixin="AuctionatorConfigMoneyInputMixin" inherits="AuctionatorConfigurationTooltip" virtual="true">
+  <Frame name="AuctionHouseHelperConfigurationMoneyInput" mixin="AuctionHouseHelperConfigMoneyInputMixin" inherits="AuctionHouseHelperConfigurationTooltip" virtual="true">
     <!--
       <KeyValues>
         <KeyValue key="value" value="0" type="number"/>
@@ -19,7 +19,7 @@
       <Anchor point="RIGHT" relativeKey="$parent" relativePoint="RIGHT"/>
     </Anchors>
     <Frames>
-      <Frame inherits="AuctionatorRetailImportLargeMoneyInputFrameTemplate" parentKey="MoneyInput">
+      <Frame inherits="AuctionHouseHelperRetailImportLargeMoneyInputFrameTemplate" parentKey="MoneyInput">
         <Size x="200" y="20"/>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="BOTTOMLEFT" x="25"/>

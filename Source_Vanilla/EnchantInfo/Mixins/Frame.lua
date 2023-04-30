@@ -1,6 +1,6 @@
-AuctionatorEnchantInfoFrameMixin = {}
+AuctionHouseHelperEnchantInfoFrameMixin = {}
 
-function AuctionatorEnchantInfoFrameMixin:OnLoad()
+function AuctionHouseHelperEnchantInfoFrameMixin:OnLoad()
   FrameUtil.RegisterFrameForEvents(self, {
     "AUCTION_HOUSE_SHOW",
     "AUCTION_HOUSE_CLOSED",
@@ -15,7 +15,7 @@ function AuctionatorEnchantInfoFrameMixin:OnLoad()
       self:UpdateTotal()
     end
   end)
-  Auctionator.API.v1.RegisterForDBUpdate(AUCTIONATOR_L_REAGENT_SEARCH, function()
+  AuctionHouseHelper.API.v1.RegisterForDBUpdate(AUCTION_HOUSE_HELPER_L_REAGENT_SEARCH, function()
     if self:IsVisible() then
       self:UpdateTotal()
     end
@@ -26,8 +26,8 @@ function AuctionatorEnchantInfoFrameMixin:OnLoad()
   end
 end
 
-function AuctionatorEnchantInfoFrameMixin:ShowIfRelevant()
-  self:SetShown(Auctionator.Config.Get(Auctionator.Config.Options.CRAFTING_INFO_SHOW) and GetCraftSelectionIndex() ~= 0)
+function AuctionHouseHelperEnchantInfoFrameMixin:ShowIfRelevant()
+  self:SetShown(AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.CRAFTING_INFO_SHOW) and GetCraftSelectionIndex() ~= 0)
   if self:IsVisible() then
     self.SearchButton:SetShown(AuctionFrame ~= nil and AuctionFrame:IsShown())
 
@@ -38,17 +38,17 @@ function AuctionatorEnchantInfoFrameMixin:ShowIfRelevant()
   end
 end
 
-function AuctionatorEnchantInfoFrameMixin:UpdateTotal()
-  self.Total:SetText(Auctionator.EnchantInfo.GetInfoText())
+function AuctionHouseHelperEnchantInfoFrameMixin:UpdateTotal()
+  self.Total:SetText(AuctionHouseHelper.EnchantInfo.GetInfoText())
 end
 
-function AuctionatorEnchantInfoFrameMixin:SearchButtonClicked()
+function AuctionHouseHelperEnchantInfoFrameMixin:SearchButtonClicked()
   if AuctionFrame and AuctionFrame:IsShown() then
-    Auctionator.EnchantInfo.DoCraftReagentsSearch()
+    AuctionHouseHelper.EnchantInfo.DoCraftReagentsSearch()
   end
 end
 
-function AuctionatorEnchantInfoFrameMixin:OnEvent(...)
+function AuctionHouseHelperEnchantInfoFrameMixin:OnEvent(...)
   if self:IsVisible() then
     self:UpdateTotal()
   end

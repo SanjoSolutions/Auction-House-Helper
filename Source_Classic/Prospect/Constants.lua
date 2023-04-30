@@ -59,7 +59,7 @@ local PROSPECT_ITEMS = {
   MAJESTIC_ZIRCON = "36925",
 }
 
-Auctionator.Prospect.PROSPECT_TABLE = {
+AuctionHouseHelper.Prospect.PROSPECT_TABLE = {
   [PROSPECT_ITEMS.COPPER_ORE] = {
     [PROSPECT_ITEMS.TIGERSEYE] = {0.5},
     [PROSPECT_ITEMS.MALACHITE] = {0.5},

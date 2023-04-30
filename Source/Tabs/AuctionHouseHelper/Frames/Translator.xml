@@ -1,8 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="AuctionatorTranslatorTemplate"
-    mixin="AuctionatorTranslatorMixin"
-    inherits="AuctionatorConfigurationTooltip"
+    name="AuctionHouseHelperTranslatorTemplate"
+    mixin="AuctionHouseHelperTranslatorMixin"
+    inherits="AuctionHouseHelperConfigurationTooltip"
     virtual="true"
   >
   <!--
@@ -19,7 +19,7 @@
     <Size x="200" y="21"/>
     <Layers>
       <Layer level="ARTWORK">
-        <Texture file="Interface\AddOns\Auctionator\Images\deDE" parentKey="FlagTexture">
+        <Texture file="Interface\AddOns\AuctionHouseHelper\Images\deDE" parentKey="FlagTexture">
           <Size x="16" y="16"/>
           <Anchors>
             <Anchor point="TOPLEFT" relativePoint="TOPLEFT"/>

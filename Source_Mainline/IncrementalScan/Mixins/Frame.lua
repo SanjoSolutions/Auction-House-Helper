@@ -1,4 +1,4 @@
-AuctionatorIncrementalScanFrameMixin = {}
+AuctionHouseHelperIncrementalScanFrameMixin = {}
 
 local INCREMENTAL_SCAN_EVENTS = {
   "AUCTION_HOUSE_BROWSE_RESULTS_ADDED",
@@ -6,29 +6,29 @@ local INCREMENTAL_SCAN_EVENTS = {
   "AUCTION_HOUSE_CLOSED"
 }
 
-function AuctionatorIncrementalScanFrameMixin:OnLoad()
-  Auctionator.Debug.Message("AuctionatorIncrementalScanFrameMixin:OnLoad")
-  Auctionator.EventBus:RegisterSource(self, "AuctionatorIncrementalScanFrameMixin")
+function AuctionHouseHelperIncrementalScanFrameMixin:OnLoad()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperIncrementalScanFrameMixin:OnLoad")
+  AuctionHouseHelper.EventBus:RegisterSource(self, "AuctionHouseHelperIncrementalScanFrameMixin")
 
   self.doingFullScan = false
-  self.state = Auctionator.SavedState
+  self.state = AuctionHouseHelper.SavedState
 
   self:RegisterForEvents()
 end
 
-function AuctionatorIncrementalScanFrameMixin:RegisterForEvents()
-  Auctionator.Debug.Message("AuctionatorIncrementalScanFrameMixin:RegisterForEvents()")
+function AuctionHouseHelperIncrementalScanFrameMixin:RegisterForEvents()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperIncrementalScanFrameMixin:RegisterForEvents()")
 
   FrameUtil.RegisterFrameForEvents(self, INCREMENTAL_SCAN_EVENTS)
 end
 
-function AuctionatorIncrementalScanFrameMixin:UnregisterForEvents()
-  Auctionator.Debug.Message("AuctionatorIncrementalScanFrameMixin:UnregisterForEvents()")
+function AuctionHouseHelperIncrementalScanFrameMixin:UnregisterForEvents()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperIncrementalScanFrameMixin:UnregisterForEvents()")
 
   FrameUtil.UnregisterFrameForEvents(self, INCREMENTAL_SCAN_EVENTS)
 end
 
-function AuctionatorIncrementalScanFrameMixin:OnEvent(event, ...)
+function AuctionHouseHelperIncrementalScanFrameMixin:OnEvent(event, ...)
   if event == "AUCTION_HOUSE_BROWSE_RESULTS_UPDATED" then
     self.info = {} -- New search results so reset info
     self.rawScan = {}
@@ -37,7 +37,7 @@ function AuctionatorIncrementalScanFrameMixin:OnEvent(event, ...)
     -- Check this is probably the start of a new batch, as the UPDATED event
     -- will fire when doing other specific items searches (to update the price
     -- and quantity) on any size search results.
-    if #browseResults <= Auctionator.Constants.SummaryBatchSize then
+    if #browseResults <= AuctionHouseHelper.Constants.SummaryBatchSize then
       self:AddPrices(browseResults)
       self:NextStep()
     end
@@ -47,32 +47,32 @@ function AuctionatorIncrementalScanFrameMixin:OnEvent(event, ...)
 
   elseif event == "AUCTION_HOUSE_CLOSED" and self.doingFullScan then
     self.doingFullScan = false
-    Auctionator.Utilities.Message(AUCTIONATOR_L_FULL_SCAN_FAILED_SUMMARY)
-    Auctionator.EventBus:Fire(self, Auctionator.IncrementalScan.Events.ScanFailed)
+    AuctionHouseHelper.Utilities.Message(AUCTION_HOUSE_HELPER_L_FULL_SCAN_FAILED_SUMMARY)
+    AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.IncrementalScan.Events.ScanFailed)
   end
 end
 
-function AuctionatorIncrementalScanFrameMixin:IsAutoscanReady()
+function AuctionHouseHelperIncrementalScanFrameMixin:IsAutoscanReady()
   local timeSinceLastScan = time() - (self.state.TimeOfLastBrowseScan or 0)
 
-  return timeSinceLastScan >= (Auctionator.Config.Get(Auctionator.Config.Options.AUTOSCAN_INTERVAL) * 60)
+  return timeSinceLastScan >= (AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.AUTOSCAN_INTERVAL) * 60)
 end
 
-function AuctionatorIncrementalScanFrameMixin:InitiateScan()
+function AuctionHouseHelperIncrementalScanFrameMixin:InitiateScan()
   if not self.doingFullScan then
-    Auctionator.Utilities.Message(AUCTIONATOR_L_STARTING_FULL_SCAN_SUMMARY)
-    Auctionator.AH.SendBrowseQuery({searchString = "", sorts = {}, filters = {}, itemClassFilters = {}})
-    self.previousDatabaseCount = Auctionator.Database:GetItemCount()
+    AuctionHouseHelper.Utilities.Message(AUCTION_HOUSE_HELPER_L_STARTING_FULL_SCAN_SUMMARY)
+    AuctionHouseHelper.AH.SendBrowseQuery({searchString = "", sorts = {}, filters = {}, itemClassFilters = {}})
+    self.previousDatabaseCount = AuctionHouseHelper.Database:GetItemCount()
     self.doingFullScan = true
 
-    Auctionator.EventBus:Fire(self, Auctionator.IncrementalScan.Events.ScanStart)
+    AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.IncrementalScan.Events.ScanStart)
     self:FireProgressEvent()
   else
-    Auctionator.Utilities.Message(AUCTIONATOR_L_FULL_SCAN_IN_PROGRESS)
+    AuctionHouseHelper.Utilities.Message(AUCTION_HOUSE_HELPER_L_FULL_SCAN_IN_PROGRESS)
   end
 end
 
-function AuctionatorIncrementalScanFrameMixin:FireProgressEvent()
+function AuctionHouseHelperIncrementalScanFrameMixin:FireProgressEvent()
   local infoCount = 0
 
   if self.info ~= nil then
@@ -81,7 +81,7 @@ function AuctionatorIncrementalScanFrameMixin:FireProgressEvent()
     end
   end
 
-  local dbCount = Auctionator.Database:GetItemCount()
+  local dbCount = AuctionHouseHelper.Database:GetItemCount()
 
   -- 10% complete after making the browse request
   local progress = 0.1
@@ -97,15 +97,15 @@ function AuctionatorIncrementalScanFrameMixin:FireProgressEvent()
     progress = 0.9
   end
 
-  Auctionator.EventBus:Fire(self, Auctionator.IncrementalScan.Events.ScanProgress, progress)
+  AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.IncrementalScan.Events.ScanProgress, progress)
 end
 
-function AuctionatorIncrementalScanFrameMixin:AddPrices(results)
-  Auctionator.Debug.Message("AuctionatorIncrementalScanFrameMixin:AddPrices()", results)
+function AuctionHouseHelperIncrementalScanFrameMixin:AddPrices(results)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperIncrementalScanFrameMixin:AddPrices()", results)
 
   for _, resultInfo in ipairs(results) do
     if resultInfo.totalQuantity ~= 0 then
-      local allDBKeys = Auctionator.Utilities.DBKeyFromBrowseResult(resultInfo)
+      local allDBKeys = AuctionHouseHelper.Utilities.DBKeyFromBrowseResult(resultInfo)
 
       for index, dbKey in ipairs(allDBKeys) do
         if self.info[dbKey] == nil then
@@ -127,23 +127,23 @@ function AuctionatorIncrementalScanFrameMixin:AddPrices(results)
   end
 end
 
-function AuctionatorIncrementalScanFrameMixin:NextStep()
-  if self.doingFullScan and not Auctionator.AH.HasFullBrowseResults() then
-    Auctionator.AH.RequestMoreBrowseResults()
+function AuctionHouseHelperIncrementalScanFrameMixin:NextStep()
+  if self.doingFullScan and not AuctionHouseHelper.AH.HasFullBrowseResults() then
+    AuctionHouseHelper.AH.RequestMoreBrowseResults()
   else
-    local count = Auctionator.Database:ProcessScan(self.info)
+    local count = AuctionHouseHelper.Database:ProcessScan(self.info)
     local rawScan = self.rawScan
 
     self.info = {} --Already processed, so clear
     self.rawScan = {}
 
     if self.doingFullScan then
-      Auctionator.Utilities.Message(AUCTIONATOR_L_FINISHED_PROCESSING:format(count))
+      AuctionHouseHelper.Utilities.Message(AUCTION_HOUSE_HELPER_L_FINISHED_PROCESSING:format(count))
       self.doingFullScan = false
 
       self.state.TimeOfLastBrowseScan = time()
-      Auctionator.EventBus:Fire(self, Auctionator.IncrementalScan.Events.ScanComplete, rawScan)
+      AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.IncrementalScan.Events.ScanComplete, rawScan)
     end
-    Auctionator.EventBus:Fire(self, Auctionator.IncrementalScan.Events.PricesProcessed)
+    AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.IncrementalScan.Events.PricesProcessed)
   end
 end

@@ -1,6 +1,6 @@
-Auctionator.Search.Filters.FilterTrackerMixin = {}
+AuctionHouseHelper.Search.Filters.FilterTrackerMixin = {}
 
-function Auctionator.Search.Filters.FilterTrackerMixin:Init(browseResult)
+function AuctionHouseHelper.Search.Filters.FilterTrackerMixin:Init(browseResult)
   self.result = true
   self.browseResult = browseResult
   -- Used to avoid giving a final result before all the filters have run
@@ -10,7 +10,7 @@ function Auctionator.Search.Filters.FilterTrackerMixin:Init(browseResult)
   self.waiting = 0
 end
 
-function Auctionator.Search.Filters.FilterTrackerMixin:SetWaiting(numNeededFilters)
+function AuctionHouseHelper.Search.Filters.FilterTrackerMixin:SetWaiting(numNeededFilters)
   if self.waitingSet then
     error("waiting state already set")
   end
@@ -19,20 +19,20 @@ function Auctionator.Search.Filters.FilterTrackerMixin:SetWaiting(numNeededFilte
   self:CompleteCheck()
 end
 
-function Auctionator.Search.Filters.FilterTrackerMixin:CompleteCheck()
+function AuctionHouseHelper.Search.Filters.FilterTrackerMixin:CompleteCheck()
   if self.waitingSet and self.waiting <= 0 then
-    Auctionator.EventBus:RegisterSource(self, "Search Filter Tracker")
+    AuctionHouseHelper.EventBus:RegisterSource(self, "Search Filter Tracker")
     if self.result then
-      Auctionator.EventBus:Fire(self, Auctionator.Search.Events.SearchResultsReady, {self.browseResult})
+      AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.Search.Events.SearchResultsReady, {self.browseResult})
     else
-      Auctionator.EventBus:Fire(self, Auctionator.Search.Events.SearchResultsReady, {})
+      AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.Search.Events.SearchResultsReady, {})
     end
-    Auctionator.EventBus:UnregisterSource(self)
+    AuctionHouseHelper.EventBus:UnregisterSource(self)
   end
 end
 
 
-function Auctionator.Search.Filters.FilterTrackerMixin:ReportFilterComplete(
+function AuctionHouseHelper.Search.Filters.FilterTrackerMixin:ReportFilterComplete(
   result
 )
   self.waiting = self.waiting - 1

@@ -1,7 +1,7 @@
-AuctionatorTooltipStringCellTemplateMixin = CreateFromMixins(AuctionatorStringCellTemplateMixin)
+AuctionHouseHelperTooltipStringCellTemplateMixin = CreateFromMixins(AuctionHouseHelperStringCellTemplateMixin)
 
-function AuctionatorTooltipStringCellTemplateMixin:OnEnter()
-  AuctionatorCellMixin.OnEnter(self)
+function AuctionHouseHelperTooltipStringCellTemplateMixin:OnEnter()
+  AuctionHouseHelperCellMixin.OnEnter(self)
 
   if self.text:IsTruncated() and not GameTooltip:IsShown() then
     self.tooltipShown = true
@@ -11,8 +11,8 @@ function AuctionatorTooltipStringCellTemplateMixin:OnEnter()
   end
 end
 
-function AuctionatorTooltipStringCellTemplateMixin:OnLeave()
-  AuctionatorCellMixin.OnLeave(self)
+function AuctionHouseHelperTooltipStringCellTemplateMixin:OnLeave()
+  AuctionHouseHelperCellMixin.OnLeave(self)
 
   if self.tooltipShown then
     self.tooltipShown = false

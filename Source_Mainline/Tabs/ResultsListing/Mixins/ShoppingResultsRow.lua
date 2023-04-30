@@ -1,4 +1,4 @@
-AuctionatorShoppingResultsRowMixin = CreateFromMixins(AuctionatorResultsRowTemplateMixin)
+AuctionHouseHelperShoppingResultsRowMixin = CreateFromMixins(AuctionHouseHelperResultsRowTemplateMixin)
 
 local hasModifiedBackButton = false
 local wasOnShoppingTab = false
@@ -8,7 +8,7 @@ local function ModifyBuyBackButton()
   hooksecurefunc(AuctionHouseCommoditiesBackButtonMixin, "OnClick",
     function()
       if wasOnShoppingTab then
-        AuctionatorTabs_Shopping:Click()
+        AuctionHouseHelperTabs_Shopping:Click()
       end
     end
   )
@@ -24,8 +24,8 @@ local function ModifyBuyBackButton()
   AuctionHouseFrame.ItemBuyFrame.BackButton:SetScript("OnShow", OnShow)
 end
 
-function AuctionatorShoppingResultsRowMixin:OnClick(button, ...)
-  Auctionator.Debug.Message("AuctionatorShoppingResultsRowMixin:OnClick()")
+function AuctionHouseHelperShoppingResultsRowMixin:OnClick(button, ...)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperShoppingResultsRowMixin:OnClick()")
 
   -- Modify the buy screen back button so that it returns to the "Shopping" tab
   -- when clicked; checks as to whether the user was on the "Shopping" tab and
@@ -39,12 +39,12 @@ function AuctionatorShoppingResultsRowMixin:OnClick(button, ...)
     AuctionHouseBrowseResultsFrameMixin.OnBrowseResultSelected({}, self.rowData)
 
   elseif button == "RightButton" then
-    Auctionator.EventBus
+    AuctionHouseHelper.EventBus
       :RegisterSource(self, "ShoppingResultsRowMixin")
-      :Fire(self, Auctionator.Shopping.Tab.Events.ShowHistoricalPrices, self.rowData)
+      :Fire(self, AuctionHouseHelper.Shopping.Tab.Events.ShowHistoricalPrices, self.rowData)
       :UnregisterSource(self)
   else
-    AuctionatorResultsRowTemplateMixin.OnClick(self, button, ...)
+    AuctionHouseHelperResultsRowTemplateMixin.OnClick(self, button, ...)
 
     if C_AuctionHouse.GetItemKeyInfo(self.rowData.itemKey) then
       AuctionHouseFrame:SelectBrowseResult(self.rowData)

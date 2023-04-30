@@ -1,7 +1,7 @@
-AuctionatorListSearchButtonMixin = {}
+AuctionHouseHelperListSearchButtonMixin = {}
 
-function AuctionatorListSearchButtonMixin:OnLoad()
-  Auctionator.Debug.Message("AuctionatorListSearchButtonMixin:OnLoad()")
+function AuctionHouseHelperListSearchButtonMixin:OnLoad()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperListSearchButtonMixin:OnLoad()")
 
   DynamicResizeButton_Resize(self)
   self.listSelected = false
@@ -11,47 +11,47 @@ function AuctionatorListSearchButtonMixin:OnLoad()
   self:SetUpEvents()
 end
 
-function AuctionatorListSearchButtonMixin:SetUpEvents()
-  -- Auctionator Events
-  Auctionator.EventBus:RegisterSource(self, "List Search Button")
+function AuctionHouseHelperListSearchButtonMixin:SetUpEvents()
+  -- AuctionHouseHelper Events
+  AuctionHouseHelper.EventBus:RegisterSource(self, "List Search Button")
 
-  Auctionator.EventBus:Register(self, {
-    Auctionator.Shopping.Tab.Events.ListSelected,
-    Auctionator.Shopping.Tab.Events.ListCreated,
-    Auctionator.Shopping.Tab.Events.ListSearchStarted,
-    Auctionator.Shopping.Tab.Events.ListSearchEnded
+  AuctionHouseHelper.EventBus:Register(self, {
+    AuctionHouseHelper.Shopping.Tab.Events.ListSelected,
+    AuctionHouseHelper.Shopping.Tab.Events.ListCreated,
+    AuctionHouseHelper.Shopping.Tab.Events.ListSearchStarted,
+    AuctionHouseHelper.Shopping.Tab.Events.ListSearchEnded
   })
 end
 
-function AuctionatorListSearchButtonMixin:OnClick()
+function AuctionHouseHelperListSearchButtonMixin:OnClick()
   if not self.searchRunning then
-    Auctionator.EventBus:Fire(self, Auctionator.Shopping.Tab.Events.ListSearchRequested)
+    AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.Shopping.Tab.Events.ListSearchRequested)
   else
-    Auctionator.EventBus:Fire(self, Auctionator.Shopping.Tab.Events.CancelSearch)
+    AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.Shopping.Tab.Events.CancelSearch)
   end
 end
 
-function AuctionatorListSearchButtonMixin:ReceiveEvent(eventName, eventData)
-  Auctionator.Debug.Message("AuctionatorListSearchButtonMixin:ReceiveEvent " .. eventName, eventData)
+function AuctionHouseHelperListSearchButtonMixin:ReceiveEvent(eventName, eventData)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperListSearchButtonMixin:ReceiveEvent " .. eventName, eventData)
 
-  if eventName == Auctionator.Shopping.Tab.Events.ListSelected then
+  if eventName == AuctionHouseHelper.Shopping.Tab.Events.ListSelected then
     self.listSelected = true
     self:Enable()
 
-  elseif eventName == Auctionator.Shopping.Tab.Events.ListCreated then
+  elseif eventName == AuctionHouseHelper.Shopping.Tab.Events.ListCreated then
     self:Enable()
 
-  elseif eventName == Auctionator.Shopping.Tab.Events.ListSearchStarted then
+  elseif eventName == AuctionHouseHelper.Shopping.Tab.Events.ListSearchStarted then
     self.searchRunning = true
 
-    self:SetText(AUCTIONATOR_L_CANCEL_SEARCH)
+    self:SetText(AUCTION_HOUSE_HELPER_L_CANCEL_SEARCH)
     self:SetWidth(0)
     DynamicResizeButton_Resize(self)
 
-  elseif eventName == Auctionator.Shopping.Tab.Events.ListSearchEnded then
+  elseif eventName == AuctionHouseHelper.Shopping.Tab.Events.ListSearchEnded then
     self.searchRunning = false
 
-    self:SetText(AUCTIONATOR_L_SEARCH_ALL)
+    self:SetText(AUCTION_HOUSE_HELPER_L_SEARCH_ALL)
     self:SetWidth(0)
     DynamicResizeButton_Resize(self)
 

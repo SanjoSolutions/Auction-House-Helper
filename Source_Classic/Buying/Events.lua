@@ -1,4 +1,4 @@
-Auctionator.Buying.Events = {
+AuctionHouseHelper.Buying.Events = {
   ShowForShopping = "buying_show_for_shopping",
   ViewSetup = "buying_view_setup",
   AuctionFocussed = "buying_auction_focussed",

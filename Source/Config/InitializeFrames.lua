@@ -1,9 +1,9 @@
-function Auctionator.Config.InternalInitializeFrames(templateNames)
+function AuctionHouseHelper.Config.InternalInitializeFrames(templateNames)
   for _, name in ipairs(templateNames) do
     CreateFrame(
       "FRAME",
-      "AuctionatorConfig" .. name .. "Frame",
+      "AuctionHouseHelperConfig" .. name .. "Frame",
       SettingsPanel or InterfaceOptionsFrame,
-      "AuctionatorConfig" .. name .. "FrameTemplate")
+      "AuctionHouseHelperConfig" .. name .. "FrameTemplate")
   end
 end

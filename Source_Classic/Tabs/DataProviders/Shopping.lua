@@ -1,94 +1,94 @@
 local SHOPPING_LIST_TABLE_LAYOUT = {
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
     headerParameters = { "minPrice" },
-    headerText = AUCTIONATOR_L_RESULTS_PRICE_COLUMN,
-    cellTemplate = "AuctionatorPriceCellTemplate",
+    headerText = AUCTION_HOUSE_HELPER_L_RESULTS_PRICE_COLUMN,
+    cellTemplate = "AuctionHouseHelperPriceCellTemplate",
     cellParameters = { "minPrice" },
     width = 140
   },
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
     headerParameters = { "name" },
-    headerText = AUCTIONATOR_L_RESULTS_NAME_COLUMN,
-    cellTemplate = "AuctionatorItemKeyCellTemplate"
+    headerText = AUCTION_HOUSE_HELPER_L_RESULTS_NAME_COLUMN,
+    cellTemplate = "AuctionHouseHelperItemKeyCellTemplate"
   },
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
     headerParameters = { "isOwned" },
-    headerText = AUCTIONATOR_L_OWNED_COLUMN,
-    cellTemplate = "AuctionatorStringCellTemplate",
+    headerText = AUCTION_HOUSE_HELPER_L_OWNED_COLUMN,
+    cellTemplate = "AuctionHouseHelperStringCellTemplate",
     cellParameters = { "isOwned" },
     defaultHide = true,
     width = 70,
   },
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
     headerParameters = { "isTop" },
-    headerText = AUCTIONATOR_L_IS_TOP_COLUMN,
-    cellTemplate = "AuctionatorStringCellTemplate",
+    headerText = AUCTION_HOUSE_HELPER_L_IS_TOP_COLUMN,
+    cellTemplate = "AuctionHouseHelperStringCellTemplate",
     cellParameters = { "isTop" },
     defaultHide = true,
     width = 70,
   },
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = AUCTIONATOR_L_RESULTS_AVAILABLE_COLUMN,
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
+    headerText = AUCTION_HOUSE_HELPER_L_RESULTS_AVAILABLE_COLUMN,
     headerParameters = { "totalQuantity" },
-    cellTemplate = "AuctionatorStringCellTemplate",
+    cellTemplate = "AuctionHouseHelperStringCellTemplate",
     cellParameters = { "totalQuantityString" },
     width = 70
   }
 }
 
-AuctionatorShoppingDataProviderMixin = CreateFromMixins(AuctionatorDataProviderMixin, AuctionatorItemStringLoadingMixin)
+AuctionHouseHelperShoppingDataProviderMixin = CreateFromMixins(AuctionHouseHelperDataProviderMixin, AuctionHouseHelperItemStringLoadingMixin)
 
-function AuctionatorShoppingDataProviderMixin:OnLoad()
-  Auctionator.Debug.Message("AuctionatorShoppingDataProviderMixin:OnLoad()")
+function AuctionHouseHelperShoppingDataProviderMixin:OnLoad()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperShoppingDataProviderMixin:OnLoad()")
 
   self:SetUpEvents()
 
-  AuctionatorDataProviderMixin.OnLoad(self)
-  AuctionatorItemStringLoadingMixin.OnLoad(self)
+  AuctionHouseHelperDataProviderMixin.OnLoad(self)
+  AuctionHouseHelperItemStringLoadingMixin.OnLoad(self)
 end
 
-function AuctionatorShoppingDataProviderMixin:SetUpEvents()
-  Auctionator.EventBus:RegisterSource(self, "Shopping List Data Provider")
+function AuctionHouseHelperShoppingDataProviderMixin:SetUpEvents()
+  AuctionHouseHelper.EventBus:RegisterSource(self, "Shopping List Data Provider")
 
-  Auctionator.EventBus:Register( self, {
-    Auctionator.Shopping.Tab.Events.ListSearchStarted,
-    Auctionator.Shopping.Tab.Events.ListSearchEnded,
-    Auctionator.Shopping.Tab.Events.ListSearchIncrementalUpdate
+  AuctionHouseHelper.EventBus:Register( self, {
+    AuctionHouseHelper.Shopping.Tab.Events.ListSearchStarted,
+    AuctionHouseHelper.Shopping.Tab.Events.ListSearchEnded,
+    AuctionHouseHelper.Shopping.Tab.Events.ListSearchIncrementalUpdate
   })
 end
 
-function AuctionatorShoppingDataProviderMixin:ReceiveEvent(eventName, eventData, ...)
-  if eventName == Auctionator.Shopping.Tab.Events.ListSearchStarted then
+function AuctionHouseHelperShoppingDataProviderMixin:ReceiveEvent(eventName, eventData, ...)
+  if eventName == AuctionHouseHelper.Shopping.Tab.Events.ListSearchStarted then
     self:Reset()
     self.onSearchStarted()
-  elseif eventName == Auctionator.Shopping.Tab.Events.ListSearchEnded then
+  elseif eventName == AuctionHouseHelper.Shopping.Tab.Events.ListSearchEnded then
     self:AppendEntries(self:AddDetails(eventData), true)
-  elseif eventName == Auctionator.Shopping.Tab.Events.ListSearchIncrementalUpdate then
+  elseif eventName == AuctionHouseHelper.Shopping.Tab.Events.ListSearchIncrementalUpdate then
     self:AppendEntries(self:AddDetails(eventData))
   end
 end
 
-function AuctionatorShoppingDataProviderMixin:AddDetails(entries)
+function AuctionHouseHelperShoppingDataProviderMixin:AddDetails(entries)
   for _, entry in ipairs(entries) do
     if entry.containsOwnerItem then
-      entry.isOwned = AUCTIONATOR_L_UNDERCUT_YES
+      entry.isOwned = AUCTION_HOUSE_HELPER_L_UNDERCUT_YES
     else
       entry.isOwned = ""
     end
 
     if entry.isTopItem then
-      entry.isTop = GREEN_FONT_COLOR:WrapTextInColorCode(AUCTIONATOR_L_UNDERCUT_YES)
+      entry.isTop = GREEN_FONT_COLOR:WrapTextInColorCode(AUCTION_HOUSE_HELPER_L_UNDERCUT_YES)
     else
-      entry.isTop = RED_FONT_COLOR:WrapTextInColorCode(AUCTIONATOR_L_UNDERCUT_NO)
+      entry.isTop = RED_FONT_COLOR:WrapTextInColorCode(AUCTION_HOUSE_HELPER_L_UNDERCUT_NO)
     end
 
     if not entry.complete then
-      entry.totalQuantityString = AUCTIONATOR_L_UNDERCUT_UNKNOWN
+      entry.totalQuantityString = AUCTION_HOUSE_HELPER_L_UNDERCUT_UNKNOWN
     else
       entry.totalQuantityString = tostring(entry.totalQuantity)
     end
@@ -97,18 +97,18 @@ function AuctionatorShoppingDataProviderMixin:AddDetails(entries)
   return entries
 end
 
-function AuctionatorShoppingDataProviderMixin:UniqueKey(entry)
+function AuctionHouseHelperShoppingDataProviderMixin:UniqueKey(entry)
   return entry.itemString
 end
 
 local COMPARATORS = {
-  minPrice = Auctionator.Utilities.NumberComparator,
-  name = Auctionator.Utilities.StringComparator,
-  isOwned = Auctionator.Utilities.StringComparator,
-  totalQuantity = Auctionator.Utilities.NumberComparator
+  minPrice = AuctionHouseHelper.Utilities.NumberComparator,
+  name = AuctionHouseHelper.Utilities.StringComparator,
+  isOwned = AuctionHouseHelper.Utilities.StringComparator,
+  totalQuantity = AuctionHouseHelper.Utilities.NumberComparator
 }
 
-function AuctionatorShoppingDataProviderMixin:Sort(fieldName, sortDirection)
+function AuctionHouseHelperShoppingDataProviderMixin:Sort(fieldName, sortDirection)
   local comparator = COMPARATORS[fieldName](sortDirection, fieldName)
 
   table.sort(self.results, function(left, right)
@@ -118,14 +118,14 @@ function AuctionatorShoppingDataProviderMixin:Sort(fieldName, sortDirection)
   self:SetDirty()
 end
 
-function AuctionatorShoppingDataProviderMixin:GetTableLayout()
+function AuctionHouseHelperShoppingDataProviderMixin:GetTableLayout()
   return SHOPPING_LIST_TABLE_LAYOUT
 end
 
-function AuctionatorShoppingDataProviderMixin:GetColumnHideStates()
-  return Auctionator.Config.Get(Auctionator.Config.Options.COLUMNS_SHOPPING)
+function AuctionHouseHelperShoppingDataProviderMixin:GetColumnHideStates()
+  return AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.COLUMNS_SHOPPING)
 end
 
-function AuctionatorShoppingDataProviderMixin:GetRowTemplate()
-  return "AuctionatorShoppingResultsRowTemplate"
+function AuctionHouseHelperShoppingDataProviderMixin:GetRowTemplate()
+  return "AuctionHouseHelperShoppingResultsRowTemplate"
 end

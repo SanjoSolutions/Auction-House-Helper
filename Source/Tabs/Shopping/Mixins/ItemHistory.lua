@@ -1,37 +1,37 @@
-AuctionatorItemHistoryFrameMixin = CreateFromMixins(AuctionatorEscapeToCloseMixin)
+AuctionHouseHelperItemHistoryFrameMixin = CreateFromMixins(AuctionHouseHelperEscapeToCloseMixin)
 
-function AuctionatorItemHistoryFrameMixin:Init()
+function AuctionHouseHelperItemHistoryFrameMixin:Init()
   self.ResultsListing:Init(self.DataProvider)
 
-  Auctionator.EventBus:Register(self, { Auctionator.Shopping.Tab.Events.ShowHistoricalPrices })
+  AuctionHouseHelper.EventBus:Register(self, { AuctionHouseHelper.Shopping.Tab.Events.ShowHistoricalPrices })
   self.isDocked = false
 end
 
-function AuctionatorItemHistoryFrameMixin:OnShow()
-  Auctionator.Debug.Message("AuctionatorItemHistoryFrameMixin:OnShow()")
+function AuctionHouseHelperItemHistoryFrameMixin:OnShow()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperItemHistoryFrameMixin:OnShow()")
 
-  Auctionator.EventBus
+  AuctionHouseHelper.EventBus
     :RegisterSource(self, "lists item history dialog")
-    :Fire(self, Auctionator.Shopping.Tab.Events.DialogOpened)
+    :Fire(self, AuctionHouseHelper.Shopping.Tab.Events.DialogOpened)
     :UnregisterSource(self)
 end
 
-function AuctionatorItemHistoryFrameMixin:OnHide()
+function AuctionHouseHelperItemHistoryFrameMixin:OnHide()
   self:Hide()
 
-  Auctionator.EventBus
+  AuctionHouseHelper.EventBus
     :RegisterSource(self, "lists item history 1")
-    :Fire(self, Auctionator.Shopping.Tab.Events.DialogClosed)
+    :Fire(self, AuctionHouseHelper.Shopping.Tab.Events.DialogClosed)
     :UnregisterSource(self)
 end
 
-function AuctionatorItemHistoryFrameMixin:ReceiveEvent(event, itemInfo)
-  if event == Auctionator.Shopping.Tab.Events.ShowHistoricalPrices then
-    self.Title:SetText(AUCTIONATOR_L_X_PRICE_HISTORY:format(itemInfo.name))
+function AuctionHouseHelperItemHistoryFrameMixin:ReceiveEvent(event, itemInfo)
+  if event == AuctionHouseHelper.Shopping.Tab.Events.ShowHistoricalPrices then
+    self.Title:SetText(AUCTION_HOUSE_HELPER_L_X_PRICE_HISTORY:format(itemInfo.name))
   end
 end
 
-function AuctionatorItemHistoryFrameMixin:OnDockDialogClicked()
+function AuctionHouseHelperItemHistoryFrameMixin:OnDockDialogClicked()
   self:ClearAllPoints()
   if self.isDocked then
     self:SetPoint("CENTER", self:GetParent(), "CENTER")
@@ -46,6 +46,6 @@ function AuctionatorItemHistoryFrameMixin:OnDockDialogClicked()
   self.isDocked = not self.isDocked
 end
 
-function AuctionatorItemHistoryFrameMixin:OnCloseDialogClicked()
+function AuctionHouseHelperItemHistoryFrameMixin:OnCloseDialogClicked()
   self:Hide()
 end

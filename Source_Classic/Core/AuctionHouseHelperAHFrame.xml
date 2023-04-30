@@ -1,5 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Frame name="AuctionatorAHFrameTemplate" mixin="AuctionatorAHFrameMixin" virtual="true">
+  <Frame name="AuctionHouseHelperAHFrameTemplate" mixin="AuctionHouseHelperAHFrameMixin" virtual="true">
     <Scripts>
       <OnShow method="OnShow" />
       <OnEvent method="OnEvent" />

@@ -1,46 +1,46 @@
-function Auctionator.SlashCmd.Initialize()
-  SlashCmdList["Auctionator"] = Auctionator.SlashCmd.Handler
-  SLASH_Auctionator1 = "/auctionator"
-  SLASH_Auctionator2 = "/atr"
+function AuctionHouseHelper.SlashCmd.Initialize()
+  SlashCmdList["AuctionHouseHelper"] = AuctionHouseHelper.SlashCmd.Handler
+  SLASH_AuctionHouseHelper1 = "/auctionhousehelper"
+  SLASH_AuctionHouseHelper2 = "/ahh"
 end
 
 --Update SLASH_COMMAND_DESCRIPTIONS in Commands.lua for new commands
 local SLASH_COMMANDS = {
-  ["p"] = Auctionator.SlashCmd.Post,
-  ["post"] = Auctionator.SlashCmd.Post,
-  ["cu"] = Auctionator.SlashCmd.CancelUndercut,
-  ["cancelundercut"] = Auctionator.SlashCmd.CancelUndercut,
-  ["ra"] = Auctionator.SlashCmd.CleanReset,
-  ["resetall"] = Auctionator.SlashCmd.CleanReset,
-  ["rt"] = Auctionator.SlashCmd.ResetTimer,
-  ["resettimer"] = Auctionator.SlashCmd.ResetTimer,
-  ["rdb"] = Auctionator.SlashCmd.ResetDatabase,
-  ["resetdatabase"] = Auctionator.SlashCmd.ResetDatabase,
-  ["rc"] = Auctionator.SlashCmd.ResetConfig,
-  ["resetconfig"] = Auctionator.SlashCmd.ResetConfig,
-  ["d"] = Auctionator.SlashCmd.ToggleDebug,
-  ["debug"] = Auctionator.SlashCmd.ToggleDebug,
-  ["config"] = Auctionator.SlashCmd.Config,
-  ["c"] = Auctionator.SlashCmd.Config,
-  ["v"] = Auctionator.SlashCmd.Version,
-  ["version"] = Auctionator.SlashCmd.Version,
-  ["nopricedb"] = Auctionator.SlashCmd.NoPriceDB,
-  ["npd"] = Auctionator.SlashCmd.NoPriceDB,
-  ["h"] = Auctionator.SlashCmd.Help,
-  ["help"] = Auctionator.SlashCmd.Help,
+  ["p"] = AuctionHouseHelper.SlashCmd.Post,
+  ["post"] = AuctionHouseHelper.SlashCmd.Post,
+  ["cu"] = AuctionHouseHelper.SlashCmd.CancelUndercut,
+  ["cancelundercut"] = AuctionHouseHelper.SlashCmd.CancelUndercut,
+  ["ra"] = AuctionHouseHelper.SlashCmd.CleanReset,
+  ["resetall"] = AuctionHouseHelper.SlashCmd.CleanReset,
+  ["rt"] = AuctionHouseHelper.SlashCmd.ResetTimer,
+  ["resettimer"] = AuctionHouseHelper.SlashCmd.ResetTimer,
+  ["rdb"] = AuctionHouseHelper.SlashCmd.ResetDatabase,
+  ["resetdatabase"] = AuctionHouseHelper.SlashCmd.ResetDatabase,
+  ["rc"] = AuctionHouseHelper.SlashCmd.ResetConfig,
+  ["resetconfig"] = AuctionHouseHelper.SlashCmd.ResetConfig,
+  ["d"] = AuctionHouseHelper.SlashCmd.ToggleDebug,
+  ["debug"] = AuctionHouseHelper.SlashCmd.ToggleDebug,
+  ["config"] = AuctionHouseHelper.SlashCmd.Config,
+  ["c"] = AuctionHouseHelper.SlashCmd.Config,
+  ["v"] = AuctionHouseHelper.SlashCmd.Version,
+  ["version"] = AuctionHouseHelper.SlashCmd.Version,
+  ["nopricedb"] = AuctionHouseHelper.SlashCmd.NoPriceDB,
+  ["npd"] = AuctionHouseHelper.SlashCmd.NoPriceDB,
+  ["h"] = AuctionHouseHelper.SlashCmd.Help,
+  ["help"] = AuctionHouseHelper.SlashCmd.Help,
 }
 
-function Auctionator.SlashCmd.Handler(input)
-  Auctionator.Debug.Message( 'Auctionator.SlashCmd.Handler', input )
+function AuctionHouseHelper.SlashCmd.Handler(input)
+  AuctionHouseHelper.Debug.Message( 'AuctionHouseHelper.SlashCmd.Handler', input )
 
   if #input == 0 then
-    Auctionator.SlashCmd.Help()
+    AuctionHouseHelper.SlashCmd.Help()
   else
-    local command = Auctionator.Utilities.SplitCommand(input);
+    local command = AuctionHouseHelper.Utilities.SplitCommand(input);
     local handler = SLASH_COMMANDS[command[1]]
     if handler == nil then
-      Auctionator.Utilities.Message("Unrecognized command '" .. command[1] .. "'")
-      Auctionator.SlashCmd.Help()
+      AuctionHouseHelper.Utilities.Message("Unrecognized command '" .. command[1] .. "'")
+      AuctionHouseHelper.SlashCmd.Help()
     else
       handler(command[2], command[3])
     end

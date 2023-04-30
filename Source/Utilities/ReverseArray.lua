@@ -1,4 +1,4 @@
-function Auctionator.Utilities.ReverseArray(array)
+function AuctionHouseHelper.Utilities.ReverseArray(array)
   local result = {}
 
   for index = #array, 1, -1 do

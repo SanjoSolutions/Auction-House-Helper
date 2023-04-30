@@ -1,14 +1,14 @@
-AuctionatorCustomiseColumnsDropDownMixin = {}
+AuctionHouseHelperCustomiseColumnsDropDownMixin = {}
 
 local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
 
-function AuctionatorCustomiseColumnsDropDownMixin:OnLoad()
+function AuctionHouseHelperCustomiseColumnsDropDownMixin:OnLoad()
   LibDD:Create_UIDropDownMenu(self)
-  LibDD:UIDropDownMenu_SetInitializeFunction(self, AuctionatorCustomiseColumnsDropDownMixin.Initialize)
+  LibDD:UIDropDownMenu_SetInitializeFunction(self, AuctionHouseHelperCustomiseColumnsDropDownMixin.Initialize)
   LibDD:UIDropDownMenu_SetDisplayMode(self, "MENU")
 end
 
-function AuctionatorCustomiseColumnsDropDownMixin:Callback(columns, hideStates, applyChanges)
+function AuctionHouseHelperCustomiseColumnsDropDownMixin:Callback(columns, hideStates, applyChanges)
   self.columns = columns
   self.hideStates = hideStates
   self.applyChanges = applyChanges
@@ -16,7 +16,7 @@ function AuctionatorCustomiseColumnsDropDownMixin:Callback(columns, hideStates, 
   self:Toggle()
 end
 
-function AuctionatorCustomiseColumnsDropDownMixin:MoreThanOneVisible()
+function AuctionHouseHelperCustomiseColumnsDropDownMixin:MoreThanOneVisible()
   local count = 0
   for _, column in ipairs(self.columns) do
     if not self.hideStates[column.headerText] then
@@ -27,7 +27,7 @@ function AuctionatorCustomiseColumnsDropDownMixin:MoreThanOneVisible()
   return count >= 2
 end
 
-function AuctionatorCustomiseColumnsDropDownMixin:Initialize()
+function AuctionHouseHelperCustomiseColumnsDropDownMixin:Initialize()
   if not self.columns then
     LibDD:HideDropDownMenu(1)
     return
@@ -49,6 +49,6 @@ function AuctionatorCustomiseColumnsDropDownMixin:Initialize()
   end
 end
 
-function AuctionatorCustomiseColumnsDropDownMixin:Toggle()
+function AuctionHouseHelperCustomiseColumnsDropDownMixin:Toggle()
   LibDD:ToggleDropDownMenu(1, nil, self, "cursor", 0, 0)
 end

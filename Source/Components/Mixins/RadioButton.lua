@@ -1,9 +1,9 @@
-AuctionatorConfigRadioButtonMixin = {}
+AuctionHouseHelperConfigRadioButtonMixin = {}
 
-function AuctionatorConfigRadioButtonMixin:OnLoad()
+function AuctionHouseHelperConfigRadioButtonMixin:OnLoad()
   -- This field is used by the RadioButtonGroup to ensure that the UI child it is positioning
-  -- is an auctionator radio button
-  self.isAuctionatorRadio = true
+  -- is an Auction House Helper radio button
+  self.isAuctionHouseHelperRadio = true
 
   if self.value == nil then
     error("A value is required for the radio button.")
@@ -14,31 +14,31 @@ function AuctionatorConfigRadioButtonMixin:OnLoad()
   end
 end
 
-function AuctionatorConfigRadioButtonMixin:OnMouseUp()
+function AuctionHouseHelperConfigRadioButtonMixin:OnMouseUp()
   self.RadioButton:Click()
 end
 
-function AuctionatorConfigRadioButtonMixin:OnEnter()
+function AuctionHouseHelperConfigRadioButtonMixin:OnEnter()
   self.RadioButton:LockHighlight()
 end
 
-function AuctionatorConfigRadioButtonMixin:OnLeave()
+function AuctionHouseHelperConfigRadioButtonMixin:OnLeave()
   self.RadioButton:UnlockHighlight()
 end
 
-function AuctionatorConfigRadioButtonMixin:SetChecked(value)
+function AuctionHouseHelperConfigRadioButtonMixin:SetChecked(value)
   self.RadioButton:SetChecked(value)
 end
 
-function AuctionatorConfigRadioButtonMixin:GetChecked()
+function AuctionHouseHelperConfigRadioButtonMixin:GetChecked()
   return self.RadioButton:GetChecked()
 end
 
-function AuctionatorConfigRadioButtonMixin:GetValue()
+function AuctionHouseHelperConfigRadioButtonMixin:GetValue()
   return self.value
 end
 
-function AuctionatorConfigRadioButtonMixin:OnClick()
+function AuctionHouseHelperConfigRadioButtonMixin:OnClick()
   if self.onSelectedCallback ~= nil then
     self.onSelectedCallback()
   end

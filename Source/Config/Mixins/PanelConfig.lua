@@ -1,6 +1,6 @@
-AuctionatorPanelConfigMixin = {}
+AuctionHouseHelperPanelConfigMixin = {}
 
-function AuctionatorPanelConfigMixin:SetupPanel()
+function AuctionHouseHelperPanelConfigMixin:SetupPanel()
   self.cancel = function()
     self:Cancel()
   end
@@ -9,15 +9,15 @@ function AuctionatorPanelConfigMixin:SetupPanel()
     self:Save()
   end
 
-  InterfaceOptions_AddCategory(self, "Auctionator")
+  InterfaceOptions_AddCategory(self, "AuctionHouseHelper")
 end
 
 -- Derive
-function AuctionatorPanelConfigMixin:Cancel()
-  Auctionator.Debug.Message("AuctionatorPanelConfigMixin:Cancel() Unimplemented")
+function AuctionHouseHelperPanelConfigMixin:Cancel()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperPanelConfigMixin:Cancel() Unimplemented")
 end
 
 -- Derive
-function AuctionatorPanelConfigMixin:Save()
-  Auctionator.Debug.Message("AuctionatorPanelConfigMixin:Save() Unimplemented")
+function AuctionHouseHelperPanelConfigMixin:Save()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperPanelConfigMixin:Save() Unimplemented")
 end

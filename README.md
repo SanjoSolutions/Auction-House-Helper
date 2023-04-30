@@ -1,10 +1,6 @@
-# Auctionator
-[![Auctionator Discord](https://img.shields.io/badge/discord-auctionator-blue.svg)](https://discord.gg/xgz75Pp)
-[![Donate to Auctionator](https://shields.io/badge/patreon-donate-red?logo=patreon&ia=software)](https://patreon.com/auctionator)
-[![On Curseforge](https://img.shields.io/badge/download-Curseforge-orange)](https://www.curseforge.com/wow/addons/auctionator)
-[![On Wago](https://img.shields.io/badge/download-Wago-3a3a3a)](https://addons.wago.io/addons/auctionator/)
+# Auction House Helper
 
-Auctionator is designed for casual everyday auction house users, to make interactions easier and faster, and to provide quick access to auction prices.
+Auction House Helper is designed for casual everyday auction house users, to make interactions easier and faster, and to provide quick access to auction prices.
 ## Key Features
 * Auction prices in item tooltips (with an AH full scan function to update the prices)
 * Straightforward UI
@@ -14,14 +10,14 @@ Auctionator is designed for casual everyday auction house users, to make interac
 * Undercut scan and one-click cancelling for owned auctions
 
 For a description of and usage guide for more features please see the
-[Curseforge page](https://www.curseforge.com/wow/addons/auctionator).
+[Curseforge page](https://www.curseforge.com/wow/addons/auction-house-helper).
 
-## Contributing to Auctionator
+## Contributing to Auction House Helper
 
 ### Bugs
 
 Please report bugs on the
-[issues page](https://github.com/Auctionator/Auctionator/issues/new).
+[issues page](https://github.com/SanjoSolutions/Auction-House-Helper/issues/new).
 The use of 
 [BugGrabber](https://www.curseforge.com/wow/addons/bug-grabber) and 
 [BugSack](https://www.curseforge.com/wow/addons/bugsack) will help tremendously
@@ -29,10 +25,6 @@ with the debugging process.
 
 ### Feature requests
 
-Ask for features either on the [Discord](https://discord.gg/xgz75Pp) or by
+Ask for features by
 creating a new issue on the
-[issues page](https://github.com/Auctionator/Auctionator/issues/new).
-
-### Donations
-
-You can also contribute to the addon by donating on [our Patreon](https://patreon.com/auctionator).
+[issues page](https://github.com/SanjoSolutions/Auction-House-Helper/issues/new).

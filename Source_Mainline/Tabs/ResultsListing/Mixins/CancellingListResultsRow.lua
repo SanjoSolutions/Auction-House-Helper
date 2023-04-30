@@ -1,7 +1,7 @@
-AuctionatorCancellingListResultsRowMixin = CreateFromMixins(AuctionatorResultsRowTemplateMixin)
+AuctionHouseHelperCancellingListResultsRowMixin = CreateFromMixins(AuctionHouseHelperResultsRowTemplateMixin)
 
-function AuctionatorCancellingListResultsRowMixin:OnClick(button, ...)
-  Auctionator.Debug.Message("AuctionatorCancellingListResultsRowMixin:OnClick", self.rowData and self.rowData.id)
+function AuctionHouseHelperCancellingListResultsRowMixin:OnClick(button, ...)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperCancellingListResultsRowMixin:OnClick", self.rowData and self.rowData.id)
 
   if IsModifiedClick("DRESSUP") then
     DressUpLink(self.rowData.itemLink);
@@ -13,31 +13,31 @@ function AuctionatorCancellingListResultsRowMixin:OnClick(button, ...)
     self.rowData.cancelled = true
     self:ApplyFade()
 
-    Auctionator.EventBus
+    AuctionHouseHelper.EventBus
       :RegisterSource(self, "CancellingListResultRow")
-      :Fire(self, Auctionator.Cancelling.Events.RequestCancel, self.rowData.id)
+      :Fire(self, AuctionHouseHelper.Cancelling.Events.RequestCancel, self.rowData.id)
       :UnregisterSource(self)
   elseif button == "RightButton" then
-    if Auctionator.Utilities.IsEquipment(select(6, GetItemInfoInstant(self.rowData.itemKey.itemID))) and
-       self.rowData.itemKey.itemLevel < Auctionator.Constants.ITEM_LEVEL_THRESHOLD then
+    if AuctionHouseHelper.Utilities.IsEquipment(select(6, GetItemInfoInstant(self.rowData.itemKey.itemID))) and
+       self.rowData.itemKey.itemLevel < AuctionHouseHelper.Constants.ITEM_LEVEL_THRESHOLD then
       local item = Item:CreateFromItemID(self.rowData.itemKey.itemID)
       item:ContinueOnItemLoad(function()
-        Auctionator.API.v1.MultiSearch(AUCTIONATOR_L_CANCELLING_TAB, { item:GetItemName() })
+        AuctionHouseHelper.API.v1.MultiSearch(AUCTION_HOUSE_HELPER_L_CANCELLING_TAB, { item:GetItemName() })
       end)
     else
-      Auctionator.API.v1.MultiSearchExact(AUCTIONATOR_L_CANCELLING_TAB, { self.rowData.searchName })
+      AuctionHouseHelper.API.v1.MultiSearchExact(AUCTION_HOUSE_HELPER_L_CANCELLING_TAB, { self.rowData.searchName })
     end
   end
 end
 
-function AuctionatorCancellingListResultsRowMixin:Populate(rowData, dataIndex)
-  AuctionatorResultsRowTemplateMixin.Populate(self, rowData, dataIndex)
+function AuctionHouseHelperCancellingListResultsRowMixin:Populate(rowData, dataIndex)
+  AuctionHouseHelperResultsRowTemplateMixin.Populate(self, rowData, dataIndex)
 
   self:ApplyFade()
   self:ApplyHighlight()
 end
 
-function AuctionatorCancellingListResultsRowMixin:ApplyFade()
+function AuctionHouseHelperCancellingListResultsRowMixin:ApplyFade()
   --Fade while waiting for the cancel to take effect
   if self.rowData.cancelled then
     self:SetAlpha(0.5)
@@ -46,8 +46,8 @@ function AuctionatorCancellingListResultsRowMixin:ApplyFade()
   end
 end
 
-function AuctionatorCancellingListResultsRowMixin:ApplyHighlight()
-  if self.rowData.undercut == AUCTIONATOR_L_UNDERCUT_YES then
+function AuctionHouseHelperCancellingListResultsRowMixin:ApplyHighlight()
+  if self.rowData.undercut == AUCTION_HOUSE_HELPER_L_UNDERCUT_YES then
     self.SelectedHighlight:Show()
   else
     self.SelectedHighlight:Hide()

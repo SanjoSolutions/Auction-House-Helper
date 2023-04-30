@@ -1,49 +1,49 @@
 local HISTORICAL_PRICE_PROVIDER_LAYOUT ={
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = AUCTIONATOR_L_UNIT_PRICE,
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
+    headerText = AUCTION_HOUSE_HELPER_L_UNIT_PRICE,
     headerParameters = { "minSeen" },
-    cellTemplate = "AuctionatorPriceCellTemplate",
+    cellTemplate = "AuctionHouseHelperPriceCellTemplate",
     cellParameters = { "minSeen" }
   },
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = AUCTIONATOR_L_UPPER_UNIT_PRICE,
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
+    headerText = AUCTION_HOUSE_HELPER_L_UPPER_UNIT_PRICE,
     headerParameters = { "maxSeen" },
-    cellTemplate = "AuctionatorPriceCellTemplate",
+    cellTemplate = "AuctionHouseHelperPriceCellTemplate",
     cellParameters = { "maxSeen" },
     defaultHide = true
   },
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = AUCTIONATOR_L_RESULTS_AVAILABLE_COLUMN,
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
+    headerText = AUCTION_HOUSE_HELPER_L_RESULTS_AVAILABLE_COLUMN,
     headerParameters = { "available" },
-    cellTemplate = "AuctionatorStringCellTemplate",
+    cellTemplate = "AuctionHouseHelperStringCellTemplate",
     cellParameters = { "availableFormatted" },
     width = 100
   },
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = AUCTIONATOR_L_DATE,
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
+    headerText = AUCTION_HOUSE_HELPER_L_DATE,
     headerParameters = { "rawDay" },
-    cellTemplate = "AuctionatorStringCellTemplate",
+    cellTemplate = "AuctionHouseHelperStringCellTemplate",
     cellParameters = { "date" }
   },
 }
 
-AuctionatorHistoricalPriceProviderMixin = CreateFromMixins(AuctionatorDataProviderMixin)
+AuctionHouseHelperHistoricalPriceProviderMixin = CreateFromMixins(AuctionHouseHelperDataProviderMixin)
 
-function AuctionatorHistoricalPriceProviderMixin:OnShow()
+function AuctionHouseHelperHistoricalPriceProviderMixin:OnShow()
   self:Reset()
 end
 
-function AuctionatorHistoricalPriceProviderMixin:SetItem(dbKey)
+function AuctionHouseHelperHistoricalPriceProviderMixin:SetItem(dbKey)
   self:Reset()
 
   -- Reset columns
   self.onSearchStarted()
 
-  local entries = Auctionator.Database:GetPriceHistory(dbKey)
+  local entries = AuctionHouseHelper.Database:GetPriceHistory(dbKey)
 
   for _, entry in ipairs(entries) do
     if entry.available then
@@ -56,22 +56,22 @@ function AuctionatorHistoricalPriceProviderMixin:SetItem(dbKey)
   self:AppendEntries(entries, true)
 end
 
-function AuctionatorHistoricalPriceProviderMixin:GetTableLayout()
+function AuctionHouseHelperHistoricalPriceProviderMixin:GetTableLayout()
   return HISTORICAL_PRICE_PROVIDER_LAYOUT
 end
 
-function AuctionatorHistoricalPriceProviderMixin:UniqueKey(entry)
+function AuctionHouseHelperHistoricalPriceProviderMixin:UniqueKey(entry)
   return tostring(entry.rawDay)
 end
 
 local COMPARATORS = {
-  minSeen = Auctionator.Utilities.NumberComparator,
-  maxSeen = Auctionator.Utilities.NumberComparator,
-  available = Auctionator.Utilities.NumberComparator,
-  rawDay = Auctionator.Utilities.StringComparator
+  minSeen = AuctionHouseHelper.Utilities.NumberComparator,
+  maxSeen = AuctionHouseHelper.Utilities.NumberComparator,
+  available = AuctionHouseHelper.Utilities.NumberComparator,
+  rawDay = AuctionHouseHelper.Utilities.StringComparator
 }
 
-function AuctionatorHistoricalPriceProviderMixin:Sort(fieldName, sortDirection)
+function AuctionHouseHelperHistoricalPriceProviderMixin:Sort(fieldName, sortDirection)
   local comparator = COMPARATORS[fieldName](sortDirection, fieldName)
 
   table.sort(self.results, function(left, right)

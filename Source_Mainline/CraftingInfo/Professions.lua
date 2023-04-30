@@ -1,6 +1,6 @@
 -- Add a info to the tradeskill frame for reagent prices
 local addedFunctionality = false
-function Auctionator.CraftingInfo.InitializeProfessionsFrame()
+function AuctionHouseHelper.CraftingInfo.InitializeProfessionsFrame()
   if addedFunctionality then
     return
   end
@@ -8,13 +8,13 @@ function Auctionator.CraftingInfo.InitializeProfessionsFrame()
   if ProfessionsFrame then
     addedFunctionality = true
 
-    local craftingPageContainer = CreateFrame("Frame", "AuctionatorCraftingInfoProfessionsFrame", ProfessionsFrame.CraftingPage.SchematicForm, "AuctionatorCraftingInfoProfessionsFrameTemplate");
-    local ordersPageContainer = CreateFrame("Frame", "AuctionatorCraftingInfoProfessionsOrderFrame", ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm, "AuctionatorCraftingInfoProfessionsFrameTemplate");
+    local craftingPageContainer = CreateFrame("Frame", "AuctionHouseHelperCraftingInfoProfessionsFrame", ProfessionsFrame.CraftingPage.SchematicForm, "AuctionHouseHelperCraftingInfoProfessionsFrameTemplate");
+    local ordersPageContainer = CreateFrame("Frame", "AuctionHouseHelperCraftingInfoProfessionsOrderFrame", ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm, "AuctionHouseHelperCraftingInfoProfessionsFrameTemplate");
     ordersPageContainer:SetDoNotShowProfit()
   end
 end
 
-function Auctionator.CraftingInfo.DoTradeSkillReagentsSearch(schematicForm)
+function AuctionHouseHelper.CraftingInfo.DoTradeSkillReagentsSearch(schematicForm)
   local recipeInfo = schematicForm:GetRecipeInfo()
   local recipeID = recipeInfo.recipeID
   local recipeLevel = schematicForm:GetCurrentRecipeLevel()
@@ -29,15 +29,15 @@ function Auctionator.CraftingInfo.DoTradeSkillReagentsSearch(schematicForm)
 
   local continuableContainer = ContinuableContainer:Create()
 
-  local outputLink = Auctionator.CraftingInfo.GetOutputItemLink(recipeID, recipeLevel, transaction:CreateOptionalCraftingReagentInfoTbl(), transaction:GetAllocationItemGUID())
+  local outputLink = AuctionHouseHelper.CraftingInfo.GetOutputItemLink(recipeID, recipeLevel, transaction:CreateOptionalCraftingReagentInfoTbl(), transaction:GetAllocationItemGUID())
 
   if outputLink then
     table.insert(possibleItems, outputLink)
     continuableContainer:AddContinuable(Item:CreateFromItemLink(outputLink))
   -- Special case, enchants don't include an output in the API, so we use a
   -- precomputed table to get the output
-  elseif Auctionator.CraftingInfo.EnchantSpellsToItems[recipeID] then
-    local itemID = Auctionator.CraftingInfo.EnchantSpellsToItems[recipeID][1]
+  elseif AuctionHouseHelper.CraftingInfo.EnchantSpellsToItems[recipeID] then
+    local itemID = AuctionHouseHelper.CraftingInfo.EnchantSpellsToItems[recipeID][1]
     table.insert(possibleItems, itemID)
     continuableContainer:AddContinuable(Item:CreateFromItemID(itemID))
   -- Probably doesn't have a specific item output, but include the recipe name
@@ -62,12 +62,12 @@ function Auctionator.CraftingInfo.DoTradeSkillReagentsSearch(schematicForm)
   local function OnItemInfoReady()
     for _, itemInfo in ipairs(possibleItems) do
       local itemInfo = {GetItemInfo(itemInfo)}
-      if not Auctionator.Utilities.IsBound(itemInfo) then
+      if not AuctionHouseHelper.Utilities.IsBound(itemInfo) then
         table.insert(searchTerms, itemInfo[1])
       end
     end
 
-    Auctionator.API.v1.MultiSearchExact(AUCTIONATOR_L_REAGENT_SEARCH, searchTerms)
+    AuctionHouseHelper.API.v1.MultiSearchExact(AUCTION_HOUSE_HELPER_L_REAGENT_SEARCH, searchTerms)
   end
 
   continuableContainer:ContinueOnLoad(OnItemInfoReady)
@@ -80,11 +80,11 @@ local function GetSkillReagentsTotal(schematicForm)
   local transaction = schematicForm:GetTransaction()
   local recipeSchematic = C_TradeSkillUI.GetRecipeSchematic(recipeID, false, recipeLevel)
 
-  return Auctionator.CraftingInfo.CalculateCraftCost(recipeSchematic, transaction)
+  return AuctionHouseHelper.CraftingInfo.CalculateCraftCost(recipeSchematic, transaction)
 end
 
 local function CalculateProfitFromCosts(currentAH, toCraft, count)
-  return math.floor(math.floor(currentAH * count * Auctionator.Constants.AfterAHCut - toCraft) / 100) * 100
+  return math.floor(math.floor(currentAH * count * AuctionHouseHelper.Constants.AfterAHCut - toCraft) / 100) * 100
 end
 
 -- Search through a list of items for the first matching the wantedQuality
@@ -110,7 +110,7 @@ local function GetEnchantProfit(schematicForm)
   local recipeLevel = schematicForm:GetCurrentRecipeLevel()
   local recipeInfo = C_TradeSkillUI.GetRecipeInfo(recipeID, recipeLevel)
 
-  local possibleOutputItemIDs = Auctionator.CraftingInfo.EnchantSpellsToItems[recipeID] or {}
+  local possibleOutputItemIDs = AuctionHouseHelper.CraftingInfo.EnchantSpellsToItems[recipeID] or {}
   local itemID
 
   -- For Dragonflight recipes determine the quality and then select the quality
@@ -129,9 +129,9 @@ local function GetEnchantProfit(schematicForm)
   end
 
   if itemID ~= nil then
-    local currentAH = Auctionator.API.v1.GetAuctionPriceByItemID(AUCTIONATOR_L_REAGENT_SEARCH, itemID) or 0
+    local currentAH = AuctionHouseHelper.API.v1.GetAuctionPriceByItemID(AUCTION_HOUSE_HELPER_L_REAGENT_SEARCH, itemID) or 0
 
-    local vellumCost = Auctionator.API.v1.GetVendorPriceByItemID(AUCTIONATOR_L_REAGENT_SEARCH, Auctionator.Constants.EnchantingVellumID) or 0
+    local vellumCost = AuctionHouseHelper.API.v1.GetVendorPriceByItemID(AUCTION_HOUSE_HELPER_L_REAGENT_SEARCH, AuctionHouseHelper.Constants.EnchantingVellumID) or 0
     local toCraft = GetSkillReagentsTotal(schematicForm) + vellumCost
 
     local count = schematicForm.recipeSchematic.quantityMin
@@ -152,14 +152,14 @@ local function GetAHProfit(schematicForm)
     --local nextQuality = math.ceil(schematicForm.Details.operationInfo.quality)
     --local nextQualityChance = select(2, math.modf(schematicForm.Details.operationInfo.quality))
 
-    local recipeLinkForMinProfit = Auctionator.CraftingInfo.GetOutputItemLink(
+    local recipeLinkForMinProfit = AuctionHouseHelper.CraftingInfo.GetOutputItemLink(
       recipeInfo.recipeID,
       schematicForm:GetCurrentRecipeLevel(),
       schematicForm:GetTransaction():CreateCraftingReagentInfoTbl(),
       schematicForm:GetTransaction():GetAllocationItemGUID()
     )
 
-    local recipeLinkForMaxProfit = Auctionator.CraftingInfo.GetOutputItemLink(
+    local recipeLinkForMaxProfit = AuctionHouseHelper.CraftingInfo.GetOutputItemLink(
       recipeInfo.recipeID,
       schematicForm:GetCurrentRecipeLevel(),
       schematicForm:GetTransaction():CreateCraftingReagentInfoTbl(),
@@ -167,9 +167,9 @@ local function GetAHProfit(schematicForm)
     )
 
     if recipeLinkForMinProfit ~= nil then
-      local currentAHForMinProfit = Auctionator.API.v1.GetAuctionPriceByItemLink(AUCTIONATOR_L_REAGENT_SEARCH,
+      local currentAHForMinProfit = AuctionHouseHelper.API.v1.GetAuctionPriceByItemLink(AUCTION_HOUSE_HELPER_L_REAGENT_SEARCH,
         recipeLinkForMinProfit) or 0
-      local currentAHForMaxProfit = Auctionator.API.v1.GetAuctionPriceByItemLink(AUCTIONATOR_L_REAGENT_SEARCH,
+      local currentAHForMaxProfit = AuctionHouseHelper.API.v1.GetAuctionPriceByItemLink(AUCTION_HOUSE_HELPER_L_REAGENT_SEARCH,
         recipeLinkForMaxProfit) or 0
 
       local toCraft = GetSkillReagentsTotal(schematicForm)
@@ -190,7 +190,7 @@ end
 local function CraftCostString(schematicForm)
   local price = WHITE_FONT_COLOR:WrapTextInColorCode(GetMoneyString(GetSkillReagentsTotal(schematicForm), true))
 
-  return AUCTIONATOR_L_TO_CRAFT_COLON .. " " .. price
+  return AUCTION_HOUSE_HELPER_L_TO_CRAFT_COLON .. " " .. price
 end
 
 local function PriceString(price)
@@ -205,19 +205,19 @@ end
 
 local function ProfitString(minProfit, maxProfit)
   if maxProfit == nil or minProfit == maxProfit then
-    return AUCTIONATOR_L_PROFIT_COLON .. " " .. PriceString(minProfit)
+    return AUCTION_HOUSE_HELPER_L_PROFIT_COLON .. " " .. PriceString(minProfit)
   else
-    return AUCTIONATOR_L_PROFIT_COLON .. " " .. PriceString(minProfit) .. " " .. AUCTIONATOR_L_PROFIT_TO .. " " .. PriceString(maxProfit)
+    return AUCTION_HOUSE_HELPER_L_PROFIT_COLON .. " " .. PriceString(minProfit) .. " " .. AUCTION_HOUSE_HELPER_L_PROFIT_TO .. " " .. PriceString(maxProfit)
   end
 end
 
-function Auctionator.CraftingInfo.GetInfoText(schematicForm, showProfit)
+function AuctionHouseHelper.CraftingInfo.GetInfoText(schematicForm, showProfit)
   local result = ""
   local lines = 0
 
   local craftingCost = GetSkillReagentsTotal(schematicForm)
   local recipeInfo = schematicForm:GetRecipeInfo()
-  local recipeLink = Auctionator.CraftingInfo.GetOutputItemLink(
+  local recipeLink = AuctionHouseHelper.CraftingInfo.GetOutputItemLink(
       recipeInfo.recipeID,
       schematicForm:GetCurrentRecipeLevel(),
       schematicForm:GetTransaction():CreateCraftingReagentInfoTbl(),
@@ -225,7 +225,7 @@ function Auctionator.CraftingInfo.GetInfoText(schematicForm, showProfit)
     )
   local buyInAuctionHouseCost
   if recipeLink ~= nil then
-    buyInAuctionHouseCost = Auctionator.API.v1.GetAuctionPriceByItemLink(AUCTIONATOR_L_REAGENT_SEARCH, recipeLink)
+    buyInAuctionHouseCost = AuctionHouseHelper.API.v1.GetAuctionPriceByItemLink(AUCTION_HOUSE_HELPER_L_REAGENT_SEARCH, recipeLink)
   else
     buyInAuctionHouseCost = nil
   end
@@ -238,7 +238,7 @@ function Auctionator.CraftingInfo.GetInfoText(schematicForm, showProfit)
   result = result .. 'Recommendation: ' .. WHITE_FONT_COLOR:WrapTextInColorCode(recommendedWayToReceiveItem)
   lines = lines + 1
 
-  if Auctionator.Config.Get(Auctionator.Config.Options.CRAFTING_INFO_SHOW_COST) then
+  if AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.CRAFTING_INFO_SHOW_COST) then
     if lines > 0 then
       result = result .. "\n"
     end
@@ -246,7 +246,7 @@ function Auctionator.CraftingInfo.GetInfoText(schematicForm, showProfit)
     lines = lines + 1
   end
 
-  if showProfit and Auctionator.Config.Get(Auctionator.Config.Options.CRAFTING_INFO_SHOW_PROFIT) then
+  if showProfit and AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.CRAFTING_INFO_SHOW_PROFIT) then
     local minProfit, maxProfit = GetAHProfit(schematicForm)
 
     if minProfit ~= nil then

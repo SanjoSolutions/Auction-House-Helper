@@ -1,6 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
-	<EditBox name="AuctionatorRetailImportLargeMoneyInputBoxTemplate" mixin="AuctionatorRetailImportLargeMoneyInputBoxMixin" inherits="AuctionatorRetailImportLargeInputBoxTemplate" numeric="true" autoFocus="false" virtual="true">
+	<EditBox name="AuctionHouseHelperRetailImportLargeMoneyInputBoxTemplate" mixin="AuctionHouseHelperRetailImportLargeMoneyInputBoxMixin" inherits="AuctionHouseHelperRetailImportLargeInputBoxTemplate" numeric="true" autoFocus="false" virtual="true">
 		<!-- iconAtlas: The atlas to use for the money icon.
 		<KeyValues>
 			<KeyValue key="iconAtlas" value="auctionhouse-icon-coin-gold" type="string"/>
@@ -22,14 +22,14 @@
 		</Scripts>
 	</EditBox>
 
-	<Frame name="AuctionatorRetailImportLargeMoneyInputFrameTemplate" mixin="AuctionatorRetailImportLargeMoneyInputFrameMixin" virtual="true">
+	<Frame name="AuctionHouseHelperRetailImportLargeMoneyInputFrameTemplate" mixin="AuctionHouseHelperRetailImportLargeMoneyInputFrameMixin" virtual="true">
 		<!-- hideCopper: Hide the copper display for this input frame.
 		<KeyValues>
 			<KeyValue key="hideCopper" value="true" type="boolean"/>
 		</KeyValues>
 		-->
 		<Frames>
-			<EditBox parentKey="CopperBox" letters="2" inherits="AuctionatorRetailImportLargeMoneyInputBoxTemplate">
+			<EditBox parentKey="CopperBox" letters="2" inherits="AuctionHouseHelperRetailImportLargeMoneyInputBoxTemplate">
 				<KeyValues>
 					<KeyValue key="iconAtlas" value="auctionhouse-icon-coin-copper" type="string"/>
 				</KeyValues>
@@ -38,7 +38,7 @@
 					<Anchor point="RIGHT"/>
 				</Anchors>
 			</EditBox>
-			<EditBox parentKey="SilverBox" letters="2" inherits="AuctionatorRetailImportLargeMoneyInputBoxTemplate">
+			<EditBox parentKey="SilverBox" letters="2" inherits="AuctionHouseHelperRetailImportLargeMoneyInputBoxTemplate">
 				<KeyValues>
 					<KeyValue key="iconAtlas" value="auctionhouse-icon-coin-silver" type="string"/>
 				</KeyValues>
@@ -48,7 +48,7 @@
 				</Anchors>
 			</EditBox>
       <!-- XXX: Changed letters to "6" rather than the original "7" -->
-			<EditBox parentKey="GoldBox" letters="6" inherits="AuctionatorRetailImportLargeMoneyInputBoxTemplate">
+			<EditBox parentKey="GoldBox" letters="6" inherits="AuctionHouseHelperRetailImportLargeMoneyInputBoxTemplate">
 				<KeyValues>
 					<KeyValue key="iconAtlas" value="auctionhouse-icon-coin-gold" type="string"/>
 				</KeyValues>

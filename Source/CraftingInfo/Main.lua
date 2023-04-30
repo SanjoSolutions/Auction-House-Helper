@@ -1,4 +1,4 @@
-function Auctionator.CraftingInfo.CacheVendorPrices()
+function AuctionHouseHelper.CraftingInfo.CacheVendorPrices()
   for i = 1, GetMerchantNumItems() do
     local itemID = GetMerchantItemID(i)
     if itemID ~= nil then
@@ -7,13 +7,13 @@ function Auctionator.CraftingInfo.CacheVendorPrices()
         item:ContinueOnItemLoad(function()
           local price, stack, numAvailable = select(3, GetMerchantItemInfo(i))
           local itemLink = GetMerchantItemLink(i)
-          local dbKey = Auctionator.Utilities.BasicDBKeyFromLink(itemLink)
+          local dbKey = AuctionHouseHelper.Utilities.BasicDBKeyFromLink(itemLink)
           if dbKey ~= nil and price ~= 0 and numAvailable == -1 then
-            local oldPrice = AUCTIONATOR_VENDOR_PRICE_CACHE[dbKey]
+            local oldPrice = AUCTION_HOUSE_HELPER_VENDOR_PRICE_CACHE[dbKey]
             local newPrice = price / stack
-            AUCTIONATOR_VENDOR_PRICE_CACHE[dbKey] = newPrice
+            AUCTION_HOUSE_HELPER_VENDOR_PRICE_CACHE[dbKey] = newPrice
           elseif dbKey ~= nil then
-            AUCTIONATOR_VENDOR_PRICE_CACHE[dbKey] = nil
+            AUCTION_HOUSE_HELPER_VENDOR_PRICE_CACHE[dbKey] = nil
           end
         end)
       end

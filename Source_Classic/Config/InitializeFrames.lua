@@ -1,5 +1,5 @@
-function Auctionator.Config.InitializeFrames()
-  Auctionator.Config.InternalInitializeFrames({
+function AuctionHouseHelper.Config.InitializeFrames()
+  AuctionHouseHelper.Config.InternalInitializeFrames({
     "BasicOptions",
     "Tooltips",
 

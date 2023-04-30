@@ -1,10 +1,10 @@
-AuctionatorSellingPostingHistoryRowMixin = CreateFromMixins(AuctionatorResultsRowTemplateMixin)
+AuctionHouseHelperSellingPostingHistoryRowMixin = CreateFromMixins(AuctionHouseHelperResultsRowTemplateMixin)
 
-function AuctionatorSellingPostingHistoryRowMixin:OnClick(button, ...)
-  Auctionator.Debug.Message("AuctionatorPostingHistoryRowMixin:OnClick()")
+function AuctionHouseHelperSellingPostingHistoryRowMixin:OnClick(button, ...)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperPostingHistoryRowMixin:OnClick()")
 
-  Auctionator.EventBus
+  AuctionHouseHelper.EventBus
     :RegisterSource(self, "SellingPostingHistoryRow")
-    :Fire(self, Auctionator.Selling.Events.PriceSelected, self.rowData.price)
+    :Fire(self, AuctionHouseHelper.Selling.Events.PriceSelected, self.rowData.price)
     :UnregisterSource(self)
 end

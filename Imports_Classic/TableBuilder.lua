@@ -8,46 +8,46 @@ local ColumnWidthConstraints = {
 -- Any row or cell is expected to initialize itself in terms of the row data. The dataIndex is provided
 -- in case the derived mixin needs to make additional CAPI calls involving it's relative index. The row
 -- data may also be needed for a tooltip, so it will be assigned to the row and cells on update.
-AuctionatorRetailImportTableBuilderElementMixin = {};
+AuctionHouseHelperRetailImportTableBuilderElementMixin = {};
 
 --Derive
-function AuctionatorRetailImportTableBuilderElementMixin:Init(...)
+function AuctionHouseHelperRetailImportTableBuilderElementMixin:Init(...)
 end
 
 --Derive
-function AuctionatorRetailImportTableBuilderElementMixin:Populate(rowData, dataProviderKey)
+function AuctionHouseHelperRetailImportTableBuilderElementMixin:Populate(rowData, dataProviderKey)
 end
 
-AuctionatorRetailImportTableBuilderCellMixin = CreateFromMixins(AuctionatorRetailImportTableBuilderElementMixin);
+AuctionHouseHelperRetailImportTableBuilderCellMixin = CreateFromMixins(AuctionHouseHelperRetailImportTableBuilderElementMixin);
 
 --Derive
-function AuctionatorRetailImportTableBuilderCellMixin:OnLineEnter()
-end
-
---Derive
-function AuctionatorRetailImportTableBuilderCellMixin:OnLineLeave()
-end
-
-
-AuctionatorRetailImportTableBuilderRowMixin = CreateFromMixins(AuctionatorRetailImportTableBuilderElementMixin);
-
---Derive
-function AuctionatorRetailImportTableBuilderRowMixin:OnLineEnter()
+function AuctionHouseHelperRetailImportTableBuilderCellMixin:OnLineEnter()
 end
 
 --Derive
-function AuctionatorRetailImportTableBuilderRowMixin:OnLineLeave()
+function AuctionHouseHelperRetailImportTableBuilderCellMixin:OnLineLeave()
 end
 
 
-function AuctionatorRetailImportTableBuilderRowMixin:OnEnter()
+AuctionHouseHelperRetailImportTableBuilderRowMixin = CreateFromMixins(AuctionHouseHelperRetailImportTableBuilderElementMixin);
+
+--Derive
+function AuctionHouseHelperRetailImportTableBuilderRowMixin:OnLineEnter()
+end
+
+--Derive
+function AuctionHouseHelperRetailImportTableBuilderRowMixin:OnLineLeave()
+end
+
+
+function AuctionHouseHelperRetailImportTableBuilderRowMixin:OnEnter()
 	self:OnLineEnter();
 	for i, cell in ipairs(self.cells) do
 		cell:OnLineEnter();
 	end
 end
 
-function AuctionatorRetailImportTableBuilderRowMixin:OnLeave()
+function AuctionHouseHelperRetailImportTableBuilderRowMixin:OnLeave()
 	self:OnLineLeave();
 	for i, cell in ipairs(self.cells) do
 		cell:OnLineLeave();
@@ -55,8 +55,8 @@ function AuctionatorRetailImportTableBuilderRowMixin:OnLeave()
 end
 
 -- Defines an entire column within the table builder, by default a column's sizing constraints are set to fill.
-AuctionatorRetailImportTableBuilderColumnMixin = {};
-function AuctionatorRetailImportTableBuilderColumnMixin:Init(table)
+AuctionHouseHelperRetailImportTableBuilderColumnMixin = {};
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:Init(table)
 	self.cells = {};
 	self.table = table;
 
@@ -66,7 +66,7 @@ function AuctionatorRetailImportTableBuilderColumnMixin:Init(table)
 end
 
 -- Constructs the header frame with an optional initializer.
-function AuctionatorRetailImportTableBuilderColumnMixin:ConstructHeader(templateType, template, ...)
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:ConstructHeader(templateType, template, ...)
 	local frame = self.table:ConstructHeader(templateType, template);
 	self.headerFrame = frame;
 	if frame.Init then
@@ -75,7 +75,7 @@ function AuctionatorRetailImportTableBuilderColumnMixin:ConstructHeader(template
 	frame:Show();
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:Reset()
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:Reset()
 	for row, cell in pairs(self.cells) do
 		self.pool:Release(cell);
 		tDeleteItem(row.cells, cell);
@@ -83,13 +83,13 @@ function AuctionatorRetailImportTableBuilderColumnMixin:Reset()
 	self.cells = {};
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:RemoveRow(row)
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:RemoveRow(row)
 	local cell = self.cells[row];
 	self.cells[row] = nil;
 	self.pool:Release(cell);
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:ConstructCell(row, rowData, dataProviderKey)
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:ConstructCell(row, rowData, dataProviderKey)
 	local cell = self.pool:Acquire();
 	self.cells[row] = cell;
 
@@ -107,105 +107,105 @@ function AuctionatorRetailImportTableBuilderColumnMixin:ConstructCell(row, rowDa
 end
 
 -- Constructs cells corresponding to each row with an optional initializer.
-function AuctionatorRetailImportTableBuilderColumnMixin:ConstructCells(templateType, template, ...)
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:ConstructCells(templateType, template, ...)
 	self.args = {...};
 
 	self.pool = ColumnFramePoolCollection:GetOrCreatePool(templateType, nil, template);
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:GetFillCoefficient()
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:GetFillCoefficient()
 	return self.fillCoefficient;
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:SetFillCoefficient(fillCoefficient)
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:SetFillCoefficient(fillCoefficient)
 	self.fillCoefficient = fillCoefficient;
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:GetPadding()
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:GetPadding()
 	return self.padding;
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:SetPadding(padding)
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:SetPadding(padding)
 	self.padding = padding;
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:GetCellPadding()
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:GetCellPadding()
 	return self.leftCellPadding or 0, self.rightCellPadding or 0;
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:SetCellPadding(leftCellPadding, rightCellPadding)
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:SetCellPadding(leftCellPadding, rightCellPadding)
 	self.leftCellPadding = leftCellPadding;
 	self.rightCellPadding = rightCellPadding;
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:GetHeaderFrame()
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:GetHeaderFrame()
 	return self.headerFrame;
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:SetHeaderFrame(headerFrame)
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:SetHeaderFrame(headerFrame)
 	self.headerFrame = headerFrame;
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:GetWidthConstraints()
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:GetWidthConstraints()
 	return self.widthConstraints;
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:GetFixedWidth()
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:GetFixedWidth()
 	return self.fixedWidth;
 end
 
 -- A header frame for the column is expected to be constructed or assigned prior to calling this.
 -- See ConstructHeader() or SetHeaderFrame().
-function AuctionatorRetailImportTableBuilderColumnMixin:ConstrainToHeader(padding)
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:ConstrainToHeader(padding)
 	local header = self:GetHeaderFrame();
 	assert(header, "ConstrainToHeader() called with a nil header frame. Use ConstructHeader() or assign one with SetHeaderFrame(), or use SetFixedConstraints to have a headerless column.");
 	self:SetFixedConstraints(header:GetWidth(), padding or 0);
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:SetFixedConstraints(fixedWidth, padding)
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:SetFixedConstraints(fixedWidth, padding)
 	self.widthConstraints = ColumnWidthConstraints.Fixed;
 	self.fixedWidth = fixedWidth;
 	self:SetFillCoefficient(0);
 	self:SetPadding(padding or 0);
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:SetFillConstraints(fillCoefficient, padding)
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:SetFillConstraints(fillCoefficient, padding)
 	self.widthConstraints = ColumnWidthConstraints.Fill;
 	self.fixedWidth = 0;
 	self:SetFillCoefficient(fillCoefficient);
 	self:SetPadding(padding or 0);
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:SetCalculatedWidth(calculatedWidth)
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:SetCalculatedWidth(calculatedWidth)
 	self.calculatedWidth = calculatedWidth;
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:GetCalculatedWidth()
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:GetCalculatedWidth()
 	return self.calculatedWidth;
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:GetCellWidth()
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:GetCellWidth()
 	local leftCellPadding, rightCellPadding = self:GetCellPadding();
 	return (self.calculatedWidth - leftCellPadding) - rightCellPadding;
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:GetFullWidth()
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:GetFullWidth()
 	return self:GetCalculatedWidth() + self:GetPadding();
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:SetDisplayUnderPreviousHeader(displayUnderPreviousHeader)
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:SetDisplayUnderPreviousHeader(displayUnderPreviousHeader)
 	self.displayUnderPreviousHeader = displayUnderPreviousHeader;
 end
 
-function AuctionatorRetailImportTableBuilderColumnMixin:GetDisplayUnderPreviousHeader()
+function AuctionHouseHelperRetailImportTableBuilderColumnMixin:GetDisplayUnderPreviousHeader()
 	return self.displayUnderPreviousHeader;
 end
 
 -- Constructs a table of frames within an existing set of row frames. These row frames could originate from
 -- a hybrid scroll frame or statically fixed set. To populate the table, assign a data provider (CAPI or lua function)
 -- that can retrieve an object by index (number).
-AuctionatorRetailImportTableBuilderMixin = {};
-function AuctionatorRetailImportTableBuilderMixin:Init()
+AuctionHouseHelperRetailImportTableBuilderMixin = {};
+function AuctionHouseHelperRetailImportTableBuilderMixin:Init()
 	self.rows = {};
 	self.columns = {};
 	self.leftMargin = 0;
@@ -215,79 +215,79 @@ function AuctionatorRetailImportTableBuilderMixin:Init()
 	self.headerPoolCollection = CreateFramePoolCollection();
 end
 
-function AuctionatorRetailImportTableBuilderMixin:GetDataProvider()
+function AuctionHouseHelperRetailImportTableBuilderMixin:GetDataProvider()
 	return self.dataProvider;
 end
 
-function AuctionatorRetailImportTableBuilderMixin:SetDataProvider(dataProvider)
+function AuctionHouseHelperRetailImportTableBuilderMixin:SetDataProvider(dataProvider)
 	self.dataProvider = dataProvider;
 end
 
-function AuctionatorRetailImportTableBuilderMixin:GetDataProviderData(dataProviderKey)
+function AuctionHouseHelperRetailImportTableBuilderMixin:GetDataProviderData(dataProviderKey)
 	local dataProvider = self:GetDataProvider();
 	return dataProvider and dataProvider(dataProviderKey) or nil;
 end
 
 -- Controls the margins of the left-most and right-most columns within the table.
-function AuctionatorRetailImportTableBuilderMixin:SetTableMargins(leftMargin, rightMargin)
+function AuctionHouseHelperRetailImportTableBuilderMixin:SetTableMargins(leftMargin, rightMargin)
 	rightMargin = rightMargin or leftMargin; -- Use leftMargin as the default for both.
 	self.leftMargin = leftMargin;
 	self.rightMargin = rightMargin;
 end
 
 -- Column headers overlap to make a consistent display.
-function AuctionatorRetailImportTableBuilderMixin:SetColumnHeaderOverlap(columnHeaderOverlap)
+function AuctionHouseHelperRetailImportTableBuilderMixin:SetColumnHeaderOverlap(columnHeaderOverlap)
 	self.columnHeaderOverlap = columnHeaderOverlap;
 end
 
 -- Can be used to set the table width, particularly if no header frames are involved.
-function AuctionatorRetailImportTableBuilderMixin:SetTableWidth(tableWidth)
+function AuctionHouseHelperRetailImportTableBuilderMixin:SetTableWidth(tableWidth)
 	self.tableWidth = tableWidth;
 end
 
-function AuctionatorRetailImportTableBuilderMixin:GetTableWidth()
+function AuctionHouseHelperRetailImportTableBuilderMixin:GetTableWidth()
 	return self.tableWidth;
 end
 
-function AuctionatorRetailImportTableBuilderMixin:GetTableMargins()
+function AuctionHouseHelperRetailImportTableBuilderMixin:GetTableMargins()
 	return self.leftMargin, self.rightMargin;
 end
 
-function AuctionatorRetailImportTableBuilderMixin:GetColumnHeaderOverlap()
+function AuctionHouseHelperRetailImportTableBuilderMixin:GetColumnHeaderOverlap()
 	return self.columnHeaderOverlap;
 end
 
-function AuctionatorRetailImportTableBuilderMixin:GetColumns()
+function AuctionHouseHelperRetailImportTableBuilderMixin:GetColumns()
 	return self.columns;
 end
 
-function AuctionatorRetailImportTableBuilderMixin:GetHeaderContainer()
+function AuctionHouseHelperRetailImportTableBuilderMixin:GetHeaderContainer()
 	return self.headerContainer;
 end
 
-function AuctionatorRetailImportTableBuilderMixin:SetHeaderContainer(headerContainer)
+function AuctionHouseHelperRetailImportTableBuilderMixin:SetHeaderContainer(headerContainer)
 	assert(headerContainer, "SetHeaderContainer() with a nil header container. Use ConstructHeader() or assign one with SetHeaderFrame(), or use SetFixedConstraints to have a headerless column.");
 	self.headerContainer = headerContainer;
 	self:SetTableWidth(headerContainer:GetWidth());
 end
 
-function AuctionatorRetailImportTableBuilderMixin:GetHeaderPoolCollection()
+function AuctionHouseHelperRetailImportTableBuilderMixin:GetHeaderPoolCollection()
 	return self.headerPoolCollection;
 end
 
-function AuctionatorRetailImportTableBuilderMixin:EnumerateHeaders()
+function AuctionHouseHelperRetailImportTableBuilderMixin:EnumerateHeaders()
 	return self.headerPoolCollection:EnumerateActive();
 end
 
-function AuctionatorRetailImportTableBuilderMixin:ConstructHeader(templateType, template)
+function AuctionHouseHelperRetailImportTableBuilderMixin:ConstructHeader(templateType, template)
 	local headerContainer = self:GetHeaderContainer();
-	assert(headerContainer ~= nil, "A header container must be set with AuctionatorRetailImportTableBuilderMixin:SetHeaderContainer before adding column headers.")
+	assert(headerContainer ~= nil, "A header container must be set with AuctionHouseHelperRetailImportTableBuilderMixin:SetHeaderContainer before adding column headers.")
 	local headerPoolCollection = self:GetHeaderPoolCollection();
 	local pool = headerPoolCollection:GetOrCreatePool(templateType, headerContainer, template);
 	return pool:Acquire(template);
 end
 
-function AuctionatorRetailImportTableBuilderMixin:Arrange()
+function AuctionHouseHelperRetailImportTableBuilderMixin:Arrange()
 	local columns = self:GetColumns();
 	if columns and #columns > 0 then
 		self:CalculateColumnSpacing();
@@ -311,7 +311,7 @@ function AuctionatorRetailImportTableBuilderMixin:Arrange()
 	end
 end
 
-function AuctionatorRetailImportTableBuilderMixin:Reset()
+function AuctionHouseHelperRetailImportTableBuilderMixin:Reset()
 	self:GetHeaderPoolCollection():ReleaseAll();
 
 	for columnIndex, column in ipairs(self.columns) do
@@ -320,7 +320,7 @@ function AuctionatorRetailImportTableBuilderMixin:Reset()
 	self.columns = {};
 end
 
-function AuctionatorRetailImportTableBuilderMixin:AddRow(row, dataProviderKey)
+function AuctionHouseHelperRetailImportTableBuilderMixin:AddRow(row, dataProviderKey)
 	local rowData = self:GetDataProviderData(dataProviderKey);	
 	if not rowData then
 		return;
@@ -341,7 +341,7 @@ function AuctionatorRetailImportTableBuilderMixin:AddRow(row, dataProviderKey)
 	self:ArrangeCells(row);
 end
 
-function AuctionatorRetailImportTableBuilderMixin:RemoveRow(row)
+function AuctionHouseHelperRetailImportTableBuilderMixin:RemoveRow(row)
 	local deleted = tDeleteItem(self.rows, row) > 0;
 	if not deleted then
 		return;
@@ -354,7 +354,7 @@ function AuctionatorRetailImportTableBuilderMixin:RemoveRow(row)
 	row.rowData = nil;
 end
 
-function AuctionatorRetailImportTableBuilderMixin:ArrangeCells(row)
+function AuctionHouseHelperRetailImportTableBuilderMixin:ArrangeCells(row)
 	local columns = self:GetColumns();
 	if #columns == 0 then
 		return;
@@ -386,13 +386,13 @@ function AuctionatorRetailImportTableBuilderMixin:ArrangeCells(row)
 	end
 end
 
-function AuctionatorRetailImportTableBuilderMixin:AddColumn()
-	local column = CreateAndInitFromMixin(AuctionatorRetailImportTableBuilderColumnMixin, self);
+function AuctionHouseHelperRetailImportTableBuilderMixin:AddColumn()
+	local column = CreateAndInitFromMixin(AuctionHouseHelperRetailImportTableBuilderColumnMixin, self);
 	tinsert(self.columns, column);
 	return column;
 end
 
-function AuctionatorRetailImportTableBuilderMixin:CalculateColumnSpacing()
+function AuctionHouseHelperRetailImportTableBuilderMixin:CalculateColumnSpacing()
 	-- The arrangement of frames is daisy-chained left to right. The margin on the left side
 	-- is created by adding the margin to it's anchor offset, and the margin on the right side
 	-- is created by subtracting space from the remaining fill space.
@@ -425,13 +425,13 @@ function AuctionatorRetailImportTableBuilderMixin:CalculateColumnSpacing()
 	end
 end
 
-function AuctionatorRetailImportTableBuilderMixin:ArrangeHorizontally(frame, relativeTo, width, pointTop, pointRelativeTop, pointBottom, pointRelativeBottom, xOffset)
+function AuctionHouseHelperRetailImportTableBuilderMixin:ArrangeHorizontally(frame, relativeTo, width, pointTop, pointRelativeTop, pointBottom, pointRelativeBottom, xOffset)
 	frame:SetPoint(pointTop, relativeTo, pointRelativeTop, xOffset, 0);
 	frame:SetPoint(pointBottom, relativeTo, pointRelativeBottom, xOffset, 0);
 	frame:SetWidth(width);
 end
 
-function AuctionatorRetailImportTableBuilderMixin:ArrangeHeaders()
+function AuctionHouseHelperRetailImportTableBuilderMixin:ArrangeHeaders()
 	local headerOverlap = self:GetColumnHeaderOverlap();
 	local leftMargin, rightMargin = self:GetTableMargins();
 	local columns = self:GetColumns();
@@ -493,8 +493,8 @@ function AuctionatorRetailImportTableBuilderMixin:ArrangeHeaders()
 end
 
 -- ... are additional mixins
-function AuctionatorRetailImportCreateTableBuilder(rows, ...)
-	local tableBuilder = CreateAndInitFromMixin(AuctionatorRetailImportTableBuilderMixin, rows);
+function AuctionHouseHelperRetailImportCreateTableBuilder(rows, ...)
+	local tableBuilder = CreateAndInitFromMixin(AuctionHouseHelperRetailImportTableBuilderMixin, rows);
 	Mixin(tableBuilder, ...);
 	return tableBuilder;
 end

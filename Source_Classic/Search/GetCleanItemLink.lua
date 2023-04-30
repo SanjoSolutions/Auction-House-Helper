@@ -1,4 +1,4 @@
-function Auctionator.Search.GetCleanItemLink(itemLink)
+function AuctionHouseHelper.Search.GetCleanItemLink(itemLink)
   local _, pre, hyperlink, post = ExtractHyperlinkString(itemLink)
 
   local parts = { strsplit(":", hyperlink) }
@@ -7,7 +7,7 @@ function Auctionator.Search.GetCleanItemLink(itemLink)
     parts[index] = ""
   end
 
-  local wantedBits = Auctionator.Utilities.Slice(parts, 1, 8)
+  local wantedBits = AuctionHouseHelper.Utilities.Slice(parts, 1, 8)
 
-  return Auctionator.Utilities.StringJoin(wantedBits, ":")
+  return AuctionHouseHelper.Utilities.StringJoin(wantedBits, ":")
 end

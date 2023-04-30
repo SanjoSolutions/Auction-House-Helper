@@ -1,4 +1,4 @@
-AuctionatorAHScanFrameMixin = {}
+AuctionHouseHelperAHScanFrameMixin = {}
 
 local SCAN_EVENTS = {
   "AUCTION_ITEM_LIST_UPDATE",
@@ -8,39 +8,39 @@ local function ParamsForBlizzardAPI(query, page)
   return query.searchString, query.minLevel, query.maxLevel, page, nil, query.quality, false, query.isExact or false, query.itemClassFilters
 end
 
-function AuctionatorAHScanFrameMixin:OnLoad()
+function AuctionHouseHelperAHScanFrameMixin:OnLoad()
   self.scanRunning = false
-  Auctionator.EventBus:RegisterSource(self, "AuctionatorAHScanFrameMixin")
+  AuctionHouseHelper.EventBus:RegisterSource(self, "AuctionHouseHelperAHScanFrameMixin")
 end
 
-function AuctionatorAHScanFrameMixin:IsOnLastPage()
-  Auctionator.Debug.Message("AuctionatorAHScanFrameMixin:IsOnLastPage()")
+function AuctionHouseHelperAHScanFrameMixin:IsOnLastPage()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperAHScanFrameMixin:IsOnLastPage()")
 
   --Loaded all the terms from API
   return (
     (self.endPage ~= -1 and self.nextPage > self.endPage) or
-    GetNumAuctionItems("list") < Auctionator.Constants.MaxResultsPerPage
+    GetNumAuctionItems("list") < AuctionHouseHelper.Constants.MaxResultsPerPage
   )
 end
 
-function AuctionatorAHScanFrameMixin:GotAllOwners()
+function AuctionHouseHelperAHScanFrameMixin:GotAllOwners()
   local result = true
-  local allAuctions = Auctionator.AH.DumpAuctions("list")
+  local allAuctions = AuctionHouseHelper.AH.DumpAuctions("list")
   for _, auction in ipairs(allAuctions) do
-    result = result and auction.info[Auctionator.Constants.AuctionItemInfo.Owner] ~= nil
+    result = result and auction.info[AuctionHouseHelper.Constants.AuctionItemInfo.Owner] ~= nil
   end
 
   return result
 end
 
-function AuctionatorAHScanFrameMixin:OnEvent(eventName, ...)
+function AuctionHouseHelperAHScanFrameMixin:OnEvent(eventName, ...)
   if eventName == "AUCTION_ITEM_LIST_UPDATE" and self.waitingOnPage and self.sentQuery and self:GotAllOwners() then
     self.waitingOnPage = false
     self:ProcessSearchResults()
   end
 end
 
-function AuctionatorAHScanFrameMixin:StartQuery(query, startPage, endPage)
+function AuctionHouseHelperAHScanFrameMixin:StartQuery(query, startPage, endPage)
   if self.scanRunning then
     error("Scan already running")
   end
@@ -54,16 +54,16 @@ function AuctionatorAHScanFrameMixin:StartQuery(query, startPage, endPage)
   self:DoNextSearchQuery()
 end
 
-function AuctionatorAHScanFrameMixin:AbortQuery()
+function AuctionHouseHelperAHScanFrameMixin:AbortQuery()
   if self.scanRunning then
-    Auctionator.AH.Queue:Remove(self.lastQueuedItem)
+    AuctionHouseHelper.AH.Queue:Remove(self.lastQueuedItem)
     self.scanRunning = false
     self:UnregisterEvents()
-    Auctionator.EventBus:Fire(self, Auctionator.AH.Events.ScanAborted)
+    AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.AH.Events.ScanAborted)
   end
 end
 
-function AuctionatorAHScanFrameMixin:DoNextSearchQuery()
+function AuctionHouseHelperAHScanFrameMixin:DoNextSearchQuery()
   local page = self.nextPage
   self.sentQuery = false
 
@@ -72,16 +72,16 @@ function AuctionatorAHScanFrameMixin:DoNextSearchQuery()
     SortAuctionSetSort("list", "unitprice")
     QueryAuctionItems(ParamsForBlizzardAPI(self.query, page))
   end
-  Auctionator.AH.Queue:Enqueue(self.lastQueuedItem)
+  AuctionHouseHelper.AH.Queue:Enqueue(self.lastQueuedItem)
 
   self.waitingOnPage = true
   self.nextPage = self.nextPage + 1
 
-  Auctionator.EventBus:Fire(self, Auctionator.AH.Events.ScanPageStart, page)
+  AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.AH.Events.ScanPageStart, page)
 end
 
-function AuctionatorAHScanFrameMixin:ProcessSearchResults()
-  Auctionator.Debug.Message("AuctionatorAHScanFrameMixin:ProcessSearchResults()")
+function AuctionHouseHelperAHScanFrameMixin:ProcessSearchResults()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperAHScanFrameMixin:ProcessSearchResults()")
 
   local results = self:GetCurrentPage()
 
@@ -91,11 +91,11 @@ function AuctionatorAHScanFrameMixin:ProcessSearchResults()
   else
     self:DoNextSearchQuery()
   end
-  Auctionator.EventBus:Fire(self, Auctionator.AH.Events.ScanResultsUpdate, results, not self.scanRunning)
+  AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.AH.Events.ScanResultsUpdate, results, not self.scanRunning)
 end
 
-function AuctionatorAHScanFrameMixin:GetCurrentPage()
-  local results = Auctionator.AH.DumpAuctions("list")
+function AuctionHouseHelperAHScanFrameMixin:GetCurrentPage()
+  local results = AuctionHouseHelper.AH.DumpAuctions("list")
   for _, entry in ipairs(results) do
     entry.query = self.query
     entry.page = self.nextPage - 1
@@ -104,10 +104,10 @@ function AuctionatorAHScanFrameMixin:GetCurrentPage()
   return results
 end
 
-function AuctionatorAHScanFrameMixin:RegisterEvents()
+function AuctionHouseHelperAHScanFrameMixin:RegisterEvents()
   FrameUtil.RegisterFrameForEvents(self, SCAN_EVENTS)
 end
 
-function AuctionatorAHScanFrameMixin:UnregisterEvents()
+function AuctionHouseHelperAHScanFrameMixin:UnregisterEvents()
   FrameUtil.UnregisterFrameForEvents(self, SCAN_EVENTS)
 end

@@ -1,26 +1,26 @@
-AuctionatorBuyAuctionsResultsRowMixin = CreateFromMixins(AuctionatorResultsRowTemplateMixin)
+AuctionHouseHelperBuyAuctionsResultsRowMixin = CreateFromMixins(AuctionHouseHelperResultsRowTemplateMixin)
 
-function AuctionatorBuyAuctionsResultsRowMixin:Populate(...)
-  AuctionatorResultsRowTemplateMixin.Populate(self, ...)
+function AuctionHouseHelperBuyAuctionsResultsRowMixin:Populate(...)
+  AuctionHouseHelperResultsRowTemplateMixin.Populate(self, ...)
 
   self.SelectedHighlight:SetShown(self.rowData.isSelected)
   self:SetAlpha(self.rowData.numStacks == 0 and 0.5 or 1.0)
 end
 
-function AuctionatorBuyAuctionsResultsRowMixin:OnEnter()
+function AuctionHouseHelperBuyAuctionsResultsRowMixin:OnEnter()
   if not self.rowData.notReady then
-    AuctionatorResultsRowTemplateMixin.OnEnter(self)
+    AuctionHouseHelperResultsRowTemplateMixin.OnEnter(self)
   end
 end
 
-function AuctionatorBuyAuctionsResultsRowMixin:OnLeave()
+function AuctionHouseHelperBuyAuctionsResultsRowMixin:OnLeave()
   if not self.rowData.notReady then
-    AuctionatorResultsRowTemplateMixin.OnLeave(self)
+    AuctionHouseHelperResultsRowTemplateMixin.OnLeave(self)
   end
 end
 
-function AuctionatorBuyAuctionsResultsRowMixin:OnClick(button, ...)
-  Auctionator.Debug.Message("AuctionatorBuyAuctionsResultsRowMixin:OnClick()")
+function AuctionHouseHelperBuyAuctionsResultsRowMixin:OnClick(button, ...)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperBuyAuctionsResultsRowMixin:OnClick()")
 
   if self.rowData.numStacks < 1 or self.rowData.stackPrice == nil or self.rowData.notReady then
     return
@@ -28,14 +28,14 @@ function AuctionatorBuyAuctionsResultsRowMixin:OnClick(button, ...)
   self.rowData.isSelected = not self.rowData.isSelected
 
   if self.rowData.isSelected then
-    Auctionator.EventBus
+    AuctionHouseHelper.EventBus
       :RegisterSource(self, "BuyAuctionResultsRow")
-      :Fire(self, Auctionator.Buying.Events.AuctionFocussed, self.rowData)
+      :Fire(self, AuctionHouseHelper.Buying.Events.AuctionFocussed, self.rowData)
       :UnregisterSource(self)
   else
-    Auctionator.EventBus
+    AuctionHouseHelper.EventBus
       :RegisterSource(self, "BuyAuctionResultsRow")
-      :Fire(self, Auctionator.Buying.Events.AuctionFocussed, nil)
+      :Fire(self, AuctionHouseHelper.Buying.Events.AuctionFocussed, nil)
       :UnregisterSource(self)
   end
 end

@@ -4,7 +4,7 @@
 -- :AuctionsPosted()
 -- :AuctionCancelled()
 -- :BidPlaced()
-AuctionatorAHThrottlingFrameMixin = {}
+AuctionHouseHelperAHThrottlingFrameMixin = {}
 
 local THROTTLING_EVENTS = {
   "AUCTION_HOUSE_CLOSED",
@@ -27,18 +27,18 @@ local BID_PLACED_EVENTS = {
 }
 local TIMEOUT = 10
 
-function AuctionatorAHThrottlingFrameMixin:OnLoad()
-  Auctionator.Debug.Message("AuctionatorAHThrottlingFrameMixin:OnLoad")
+function AuctionHouseHelperAHThrottlingFrameMixin:OnLoad()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperAHThrottlingFrameMixin:OnLoad")
 
   FrameUtil.RegisterFrameForEvents(self, THROTTLING_EVENTS)
 
-  Auctionator.EventBus:RegisterSource(self, "AuctionatorAHThrottlingFrameMixin")
+  AuctionHouseHelper.EventBus:RegisterSource(self, "AuctionHouseHelperAHThrottlingFrameMixin")
 
   self.oldReady = false
   self:ResetTimeout()
 end
 
-function AuctionatorAHThrottlingFrameMixin:OnEvent(eventName, ...)
+function AuctionHouseHelperAHThrottlingFrameMixin:OnEvent(eventName, ...)
   if eventName == "AUCTION_HOUSE_CLOSED" then
     self:ResetWaiting()
 
@@ -87,7 +87,7 @@ function AuctionatorAHThrottlingFrameMixin:OnEvent(eventName, ...)
   end
 end
 
-function AuctionatorAHThrottlingFrameMixin:OnUpdate(elapsed)
+function AuctionHouseHelperAHThrottlingFrameMixin:OnUpdate(elapsed)
   if self:AnyWaiting() then
     self.timeout = self.timeout - elapsed
     if self.timeout <= 0 then
@@ -98,38 +98,38 @@ function AuctionatorAHThrottlingFrameMixin:OnUpdate(elapsed)
     self.timeout = TIMEOUT
   end
   if self.timeout ~= TIMEOUT then
-    Auctionator.EventBus:Fire(self, Auctionator.AH.Events.CurrentThrottleTimeout, self.timeout)
+    AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.AH.Events.CurrentThrottleTimeout, self.timeout)
   end
 
   local ready = self:IsReady()
 
   if ready and not self.oldReady then
-    Auctionator.EventBus:Fire(self, Auctionator.AH.Events.Ready)
-    Auctionator.EventBus:Fire(self, Auctionator.AH.Events.ThrottleUpdate, true)
+    AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.AH.Events.Ready)
+    AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.AH.Events.ThrottleUpdate, true)
   elseif self.oldReady ~= ready then
-    Auctionator.EventBus:Fire(self, Auctionator.AH.Events.ThrottleUpdate, false)
+    AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.AH.Events.ThrottleUpdate, false)
   end
 
   self.oldReady = ready
 end
 
-function AuctionatorAHThrottlingFrameMixin:SearchQueried()
+function AuctionHouseHelperAHThrottlingFrameMixin:SearchQueried()
 end
 
-function AuctionatorAHThrottlingFrameMixin:IsReady()
+function AuctionHouseHelperAHThrottlingFrameMixin:IsReady()
   return (CanSendAuctionQuery()) and not self:AnyWaiting()
 end
 
-function AuctionatorAHThrottlingFrameMixin:AnyWaiting()
+function AuctionHouseHelperAHThrottlingFrameMixin:AnyWaiting()
   return self.waitingForNewAuction or self.multisellInProgress or self.waitingOnBid or self.waitingForOwnerUpdate
 end
 
-function AuctionatorAHThrottlingFrameMixin:ResetTimeout()
+function AuctionHouseHelperAHThrottlingFrameMixin:ResetTimeout()
   self.timeout = TIMEOUT
-  Auctionator.EventBus:Fire(self, Auctionator.AH.Events.CurrentThrottleTimeout, self.timeout)
+  AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.AH.Events.CurrentThrottleTimeout, self.timeout)
 end
 
-function AuctionatorAHThrottlingFrameMixin:ResetWaiting()
+function AuctionHouseHelperAHThrottlingFrameMixin:ResetWaiting()
   self.waitingForNewAuction = false
   self.multisellInProgress = false
   self.waitingOnBid = false
@@ -139,30 +139,30 @@ function AuctionatorAHThrottlingFrameMixin:ResetWaiting()
   FrameUtil.UnregisterFrameForEvents(self, AUCTIONS_UPDATED_EVENTS)
 end
 
-function AuctionatorAHThrottlingFrameMixin:AuctionsPosted()
+function AuctionHouseHelperAHThrottlingFrameMixin:AuctionsPosted()
   self:ResetTimeout()
   FrameUtil.RegisterFrameForEvents(self, NEW_AUCTION_EVENTS)
   self.waitingForNewAuction = true
   self.oldReady = false
 end
 
-function AuctionatorAHThrottlingFrameMixin:AuctionCancelled()
+function AuctionHouseHelperAHThrottlingFrameMixin:AuctionCancelled()
   self:ResetTimeout()
   self.waitingForOwnerUpdate = true
   self.oldReady = false
   FrameUtil.RegisterFrameForEvents(self, AUCTIONS_UPDATED_EVENTS)
 end
 
-function AuctionatorAHThrottlingFrameMixin:BidPlaced()
+function AuctionHouseHelperAHThrottlingFrameMixin:BidPlaced()
   self:ResetTimeout()
   FrameUtil.RegisterFrameForEvents(self, BID_PLACED_EVENTS)
-  self.currentPage = Auctionator.AH.GetCurrentPage()
+  self.currentPage = AuctionHouseHelper.AH.GetCurrentPage()
   self.waitingOnBid = true
   self.oldReady = false
 end
 
-function AuctionatorAHThrottlingFrameMixin:ComparePages()
-  local newPage = Auctionator.AH.GetCurrentPage()
+function AuctionHouseHelperAHThrottlingFrameMixin:ComparePages()
+  local newPage = AuctionHouseHelper.AH.GetCurrentPage()
   if #newPage ~= #self.currentPage then
     self.waitingOnBid = false
     FrameUtil.UnregisterFrameForEvents(self, BID_PLACED_EVENTS)
@@ -170,14 +170,14 @@ function AuctionatorAHThrottlingFrameMixin:ComparePages()
   end
 
   for index, auction in ipairs(self.currentPage) do
-    local stackPrice = auction.info[Auctionator.Constants.AuctionItemInfo.Buyout]
-    local stackSize = auction.info[Auctionator.Constants.AuctionItemInfo.Quantity]
-    local minBid = auction.info[Auctionator.Constants.AuctionItemInfo.MinBid]
-    local bidAmount = auction.info[Auctionator.Constants.AuctionItemInfo.BidAmount]
-    local newStackPrice = newPage[index].info[Auctionator.Constants.AuctionItemInfo.Buyout]
-    local newStackSize = newPage[index].info[Auctionator.Constants.AuctionItemInfo.Quantity]
-    local newMinBid = newPage[index].info[Auctionator.Constants.AuctionItemInfo.MinBid]
-    local newBidAmount = newPage[index].info[Auctionator.Constants.AuctionItemInfo.BidAmount]
+    local stackPrice = auction.info[AuctionHouseHelper.Constants.AuctionItemInfo.Buyout]
+    local stackSize = auction.info[AuctionHouseHelper.Constants.AuctionItemInfo.Quantity]
+    local minBid = auction.info[AuctionHouseHelper.Constants.AuctionItemInfo.MinBid]
+    local bidAmount = auction.info[AuctionHouseHelper.Constants.AuctionItemInfo.BidAmount]
+    local newStackPrice = newPage[index].info[AuctionHouseHelper.Constants.AuctionItemInfo.Buyout]
+    local newStackSize = newPage[index].info[AuctionHouseHelper.Constants.AuctionItemInfo.Quantity]
+    local newMinBid = newPage[index].info[AuctionHouseHelper.Constants.AuctionItemInfo.MinBid]
+    local newBidAmount = newPage[index].info[AuctionHouseHelper.Constants.AuctionItemInfo.BidAmount]
     if stackPrice ~= newStackPrice or stackSize ~= newStackSize or
        minBid ~= newMinBid or bidAmount ~= newMinBidAmount or
        newPage[index].itemLink ~= auction.itemLink then

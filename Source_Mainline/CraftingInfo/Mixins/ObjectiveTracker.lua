@@ -1,6 +1,6 @@
-AuctionatorCraftingInfoObjectiveTrackerFrameMixin = {}
+AuctionHouseHelperCraftingInfoObjectiveTrackerFrameMixin = {}
 
-function AuctionatorCraftingInfoObjectiveTrackerFrameMixin:OnLoad()
+function AuctionHouseHelperCraftingInfoObjectiveTrackerFrameMixin:OnLoad()
   FrameUtil.RegisterFrameForEvents(self, {
     "PLAYER_INTERACTION_MANAGER_FRAME_SHOW",
     "PLAYER_INTERACTION_MANAGER_FRAME_HIDE",
@@ -16,30 +16,30 @@ function AuctionatorCraftingInfoObjectiveTrackerFrameMixin:OnLoad()
   end
 end
 
-function AuctionatorCraftingInfoObjectiveTrackerFrameMixin:SetDoNotShowProfit()
+function AuctionHouseHelperCraftingInfoObjectiveTrackerFrameMixin:SetDoNotShowProfit()
   self.doNotShowProfit = true
 end
 
-function AuctionatorCraftingInfoObjectiveTrackerFrameMixin:ShowIfRelevant()
-  self:SetShown(Auctionator.Config.Get(Auctionator.Config.Options.CRAFTING_INFO_SHOW) and self:IsAnythingTracked())
+function AuctionHouseHelperCraftingInfoObjectiveTrackerFrameMixin:ShowIfRelevant()
+  self:SetShown(AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.CRAFTING_INFO_SHOW) and self:IsAnythingTracked())
   if self:IsShown() then
     self:UpdateSearchButton()
   end
 end
 
-function AuctionatorCraftingInfoObjectiveTrackerFrameMixin:UpdateSearchButton()
+function AuctionHouseHelperCraftingInfoObjectiveTrackerFrameMixin:UpdateSearchButton()
   self.SearchButton:SetShown(AuctionHouseFrame and AuctionHouseFrame:IsShown())
 end
 
-function AuctionatorCraftingInfoObjectiveTrackerFrameMixin:IsAnythingTracked()
+function AuctionHouseHelperCraftingInfoObjectiveTrackerFrameMixin:IsAnythingTracked()
   return #C_TradeSkillUI.GetRecipesTracked(true) > 0 or #C_TradeSkillUI.GetRecipesTracked(false) > 0 
 end
 
-function AuctionatorCraftingInfoObjectiveTrackerFrameMixin:SearchButtonClicked()
-  Auctionator.CraftingInfo.DoTrackedRecipesSearch()
+function AuctionHouseHelperCraftingInfoObjectiveTrackerFrameMixin:SearchButtonClicked()
+  AuctionHouseHelper.CraftingInfo.DoTrackedRecipesSearch()
 end
 
-function AuctionatorCraftingInfoObjectiveTrackerFrameMixin:OnEvent(eventName, eventData)
+function AuctionHouseHelperCraftingInfoObjectiveTrackerFrameMixin:OnEvent(eventName, eventData)
   if eventName == "TRACKED_RECIPE_UPDATE" then
     self:ShowIfRelevant()
   elseif eventData == Enum.PlayerInteractionType.Auctioneer then

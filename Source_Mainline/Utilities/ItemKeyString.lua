@@ -1,4 +1,4 @@
-function Auctionator.Utilities.ItemKeyString(itemKey)
+function AuctionHouseHelper.Utilities.ItemKeyString(itemKey)
     return
       itemKey.itemID .. " " ..
       itemKey.itemSuffix .. " " ..

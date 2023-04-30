@@ -1,5 +1,5 @@
 local function SearchItem(text)
-  if text == nil or AuctionatorShoppingFrame == nil or not AuctionatorShoppingFrame:IsVisible() then
+  if text == nil or AuctionHouseHelperShoppingFrame == nil or not AuctionHouseHelperShoppingFrame:IsVisible() then
     return false
   end
 
@@ -16,7 +16,7 @@ local function SearchItem(text)
   elseif ( strfind(text, "item:", 1, true) ) then
     name = GetItemInfo(text);
   elseif ( strfind(text, "enchant:", 1, true) ) then
-    name = Auctionator.Utilities.GetNameFromLink(text)
+    name = AuctionHouseHelper.Utilities.GetNameFromLink(text)
   end
 
   if name == nil then
@@ -25,9 +25,9 @@ local function SearchItem(text)
 
   -- Non-exact with enchants as the name doesn't match exactly
   if text:match("enchant:") then
-    AuctionatorShoppingFrame.OneItemSearch:DoSearch(name)
+    AuctionHouseHelperShoppingFrame.OneItemSearch:DoSearch(name)
   else
-    AuctionatorShoppingFrame.OneItemSearch:DoSearch("\"" .. name .. "\"")
+    AuctionHouseHelperShoppingFrame.OneItemSearch:DoSearch("\"" .. name .. "\"")
   end
 
   return true

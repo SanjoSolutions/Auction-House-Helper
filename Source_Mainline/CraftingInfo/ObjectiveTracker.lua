@@ -1,27 +1,27 @@
-function Auctionator.CraftingInfo.InitializeObjectiveTrackerFrame()
+function AuctionHouseHelper.CraftingInfo.InitializeObjectiveTrackerFrame()
   local trackedRecipeSearchContainer = CreateFrame(
     "Frame",
-    "AuctionatorCraftingInfoObjectiveTrackerFrame",
+    "AuctionHouseHelperCraftingInfoObjectiveTrackerFrame",
     ObjectiveTrackerBlocksFrame.ProfessionHeader,
-    "AuctionatorCraftingInfoObjectiveTrackerFrameTemplate"
+    "AuctionHouseHelperCraftingInfoObjectiveTrackerFrameTemplate"
   )
 end
 
-function Auctionator.CraftingInfo.DoTrackedRecipesSearch()
+function AuctionHouseHelper.CraftingInfo.DoTrackedRecipesSearch()
   local searchTerms = {}
 
   local possibleItems = {}
   local continuableContainer = ContinuableContainer:Create()
 
   local function ProcessRecipe(recipeID, isRecraft)
-    local outputLink = Auctionator.CraftingInfo.GetOutputItemLink(recipeID, nil, {})
+    local outputLink = AuctionHouseHelper.CraftingInfo.GetOutputItemLink(recipeID, nil, {})
     if outputLink then
       table.insert(possibleItems, outputLink)
       continuableContainer:AddContinuable(Item:CreateFromItemLink(outputLink))
     -- Special case, enchants don't include an output in the API, so we use a
     -- precomputed table to get the output
-    elseif Auctionator.CraftingInfo.EnchantSpellsToItems[recipeID] then
-      local itemID = Auctionator.CraftingInfo.EnchantSpellsToItems[recipeID][1]
+    elseif AuctionHouseHelper.CraftingInfo.EnchantSpellsToItems[recipeID] then
+      local itemID = AuctionHouseHelper.CraftingInfo.EnchantSpellsToItems[recipeID][1]
       table.insert(possibleItems, itemID)
       continuableContainer:AddContinuable(Item:CreateFromItemID(itemID))
     -- Probably doesn't have a specific item output, but include the recipe name
@@ -58,12 +58,12 @@ function Auctionator.CraftingInfo.DoTrackedRecipesSearch()
   local function OnItemInfoReady()
     for _, itemInfo in ipairs(possibleItems) do
       local itemInfo = {GetItemInfo(itemInfo)}
-      if not Auctionator.Utilities.IsBound(itemInfo) then
+      if not AuctionHouseHelper.Utilities.IsBound(itemInfo) then
         table.insert(searchTerms, itemInfo[1])
       end
     end
 
-    Auctionator.API.v1.MultiSearchExact(AUCTIONATOR_L_REAGENT_SEARCH, searchTerms)
+    AuctionHouseHelper.API.v1.MultiSearchExact(AUCTION_HOUSE_HELPER_L_REAGENT_SEARCH, searchTerms)
   end
 
   continuableContainer:ContinueOnLoad(OnItemInfoReady)

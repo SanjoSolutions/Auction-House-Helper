@@ -1,8 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="AuctionatorBuyAuctionsResultsRowTemplate"
-    mixin="AuctionatorBuyAuctionsResultsRowMixin"
-    inherits="AuctionatorResultsRowTemplate"
+    name="AuctionHouseHelperBuyAuctionsResultsRowTemplate"
+    mixin="AuctionHouseHelperBuyAuctionsResultsRowMixin"
+    inherits="AuctionHouseHelperResultsRowTemplate"
     virtual="true"
     enableMouse="true"
   >

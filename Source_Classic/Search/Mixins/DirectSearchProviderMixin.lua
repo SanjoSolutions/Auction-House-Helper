@@ -1,12 +1,12 @@
-AuctionatorDirectSearchProviderMixin = CreateFromMixins(AuctionatorMultiSearchMixin, AuctionatorSearchProviderMixin)
+AuctionHouseHelperDirectSearchProviderMixin = CreateFromMixins(AuctionHouseHelperMultiSearchMixin, AuctionHouseHelperSearchProviderMixin)
 
 local SEARCH_EVENTS = {
-  Auctionator.AH.Events.ScanResultsUpdate,
-  Auctionator.AH.Events.ScanAborted,
+  AuctionHouseHelper.AH.Events.ScanResultsUpdate,
+  AuctionHouseHelper.AH.Events.ScanAborted,
 }
 
 local function GetPrice(entry)
-  return entry.info[Auctionator.Constants.AuctionItemInfo.Buyout] / entry.info[Auctionator.Constants.AuctionItemInfo.Quantity]
+  return entry.info[AuctionHouseHelper.Constants.AuctionItemInfo.Buyout] / entry.info[AuctionHouseHelper.Constants.AuctionItemInfo.Quantity]
 end
 
 local function GetMinPrice(entries)
@@ -27,14 +27,14 @@ end
 local function GetQuantity(entries)
   local total = 0
   for _, entry in ipairs(entries) do
-    total = total + entry.info[Auctionator.Constants.AuctionItemInfo.Quantity]
+    total = total + entry.info[AuctionHouseHelper.Constants.AuctionItemInfo.Quantity]
   end
   return total
 end
 
 local function GetOwned(entries)
   for _, entry in ipairs(entries) do
-    if entry.info[Auctionator.Constants.AuctionItemInfo.Owner] == (GetUnitName("player")) then
+    if entry.info[AuctionHouseHelper.Constants.AuctionItemInfo.Owner] == (GetUnitName("player")) then
       return true
     end
   end
@@ -43,24 +43,24 @@ end
 
 local function GetIsTop(entries, minPrice)
   for _, entry in ipairs(entries) do
-    if entry.info[Auctionator.Constants.AuctionItemInfo.Owner] == (GetUnitName("player")) and minPrice == GetPrice(entry) then
+    if entry.info[AuctionHouseHelper.Constants.AuctionItemInfo.Owner] == (GetUnitName("player")) and minPrice == GetPrice(entry) then
       return true
     end
   end
   return false
 end
 
-function AuctionatorDirectSearchProviderMixin:CreateSearchTerm(term, config)
-  Auctionator.Debug.Message("AuctionatorDirectSearchProviderMixin:CreateSearchTerm()", term)
+function AuctionHouseHelperDirectSearchProviderMixin:CreateSearchTerm(term, config)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperDirectSearchProviderMixin:CreateSearchTerm()", term)
 
-  local parsed = Auctionator.Search.SplitAdvancedSearch(term)
+  local parsed = AuctionHouseHelper.Search.SplitAdvancedSearch(term)
 
   return {
     query = {
       searchString = parsed.searchString,
       minLevel = parsed.minLevel,
       maxLevel = parsed.maxLevel,
-      itemClassFilters = Auctionator.Search.GetItemClassCategories(parsed.categoryKey),
+      itemClassFilters = AuctionHouseHelper.Search.GetItemClassCategories(parsed.categoryKey),
       isExact = parsed.isExact,
       quality = parsed.quality, -- Blizzard API ignores this parameter, but kept in case it works again
     },
@@ -80,12 +80,12 @@ function AuctionatorDirectSearchProviderMixin:CreateSearchTerm(term, config)
       quality = parsed.quality, -- Check the quality locally because the Blizzard search API ignores quality
     },
     -- Force searchAllPages when the config UI forces it
-    searchAllPages = Auctionator.Config.Get(Auctionator.Config.Options.SHOPPING_ALWAYS_LOAD_MORE) or config.searchAllPages or false,
+    searchAllPages = AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SHOPPING_ALWAYS_LOAD_MORE) or config.searchAllPages or false,
   }
 end
 
-function AuctionatorDirectSearchProviderMixin:GetSearchProvider()
-  Auctionator.Debug.Message("AuctionatorDirectSearchProviderMixin:GetSearchProvider()")
+function AuctionHouseHelperDirectSearchProviderMixin:GetSearchProvider()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperDirectSearchProviderMixin:GetSearchProvider()")
 
   --Run the query, and save extra filter data for processing
   return function(searchTerm)
@@ -96,25 +96,25 @@ function AuctionatorDirectSearchProviderMixin:GetSearchProvider()
     self.resultsByKey = {}
     self.individualResults = {}
 
-    Auctionator.AH.QueryAuctionItems(searchTerm.query)
+    AuctionHouseHelper.AH.QueryAuctionItems(searchTerm.query)
   end
 end
 
-function AuctionatorDirectSearchProviderMixin:HasCompleteTermResults()
-  Auctionator.Debug.Message("AuctionatorDirectSearchProviderMixin:HasCompleteTermResults()")
+function AuctionHouseHelperDirectSearchProviderMixin:HasCompleteTermResults()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperDirectSearchProviderMixin:HasCompleteTermResults()")
 
   return self.gotAllResults
 end
 
-function AuctionatorDirectSearchProviderMixin:GetCurrentEmptyResult()
-  local r = Auctionator.Search.GetEmptyResult(self:GetCurrentSearchParameter(), self:GetCurrentSearchIndex())
+function AuctionHouseHelperDirectSearchProviderMixin:GetCurrentEmptyResult()
+  local r = AuctionHouseHelper.Search.GetEmptyResult(self:GetCurrentSearchParameter(), self:GetCurrentSearchIndex())
   r.complete = not self.aborted
   return r
 end
 
-function AuctionatorDirectSearchProviderMixin:AddFinalResults()
+function AuctionHouseHelperDirectSearchProviderMixin:AddFinalResults()
   local results = {}
-  local waiting = #(Auctionator.Utilities.TableKeys(self.resultsByKey))
+  local waiting = #(AuctionHouseHelper.Utilities.TableKeys(self.resultsByKey))
   local completed = false
   local function DoComplete()
     table.sort(results, function(a, b)
@@ -125,7 +125,7 @@ function AuctionatorDirectSearchProviderMixin:AddFinalResults()
     if #results == 0 and self.aborted then
       table.insert(results, self:GetCurrentEmptyResult())
     end
-    Auctionator.Search.GroupResultsForDB(self.individualResults)
+    AuctionHouseHelper.Search.GroupResultsForDB(self.individualResults)
     self:AddResults(results)
   end
 
@@ -143,7 +143,7 @@ function AuctionatorDirectSearchProviderMixin:AddFinalResults()
     local item = Item:CreateFromItemID(GetItemInfoInstant(key))
     item:ContinueOnItemLoad(function()
       waiting = waiting - 1
-      if Auctionator.Search.CheckFilters(possibleResult, self.currentFilter) then
+      if AuctionHouseHelper.Search.CheckFilters(possibleResult, self.currentFilter) then
         table.insert(results, possibleResult)
       end
       if waiting == 0 then
@@ -157,13 +157,13 @@ function AuctionatorDirectSearchProviderMixin:AddFinalResults()
   end
 end
 
-function AuctionatorDirectSearchProviderMixin:ProcessSearchResults(pageResults)
-  Auctionator.Debug.Message("AuctionatorDirectSearchProviderMixin:ProcessSearchResults()")
+function AuctionHouseHelperDirectSearchProviderMixin:ProcessSearchResults(pageResults)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperDirectSearchProviderMixin:ProcessSearchResults()")
   
   for _, entry in ipairs(pageResults) do
 
-    local itemID = entry.info[Auctionator.Constants.AuctionItemInfo.ItemID]
-    local itemString = Auctionator.Search.GetCleanItemLink(entry.itemLink)
+    local itemID = entry.info[AuctionHouseHelper.Constants.AuctionItemInfo.ItemID]
+    local itemString = AuctionHouseHelper.Search.GetCleanItemLink(entry.itemLink)
 
     if self.resultsByKey[itemString] == nil then
       self.resultsByKey[itemString] = {}
@@ -177,36 +177,36 @@ function AuctionatorDirectSearchProviderMixin:ProcessSearchResults(pageResults)
     self:AddFinalResults()
   elseif not self.searchAllPages then
     self.aborted = true
-    Auctionator.AH.AbortQuery()
+    AuctionHouseHelper.AH.AbortQuery()
   end
 
 end
 
-function AuctionatorDirectSearchProviderMixin:ReceiveEvent(eventName, results, gotAllResults)
-  if eventName == Auctionator.AH.Events.ScanResultsUpdate then
+function AuctionHouseHelperDirectSearchProviderMixin:ReceiveEvent(eventName, results, gotAllResults)
+  if eventName == AuctionHouseHelper.AH.Events.ScanResultsUpdate then
     self.gotAllResults = gotAllResults
     self:ProcessSearchResults(results)
-  elseif eventName == Auctionator.AH.Events.ScanAborted then
+  elseif eventName == AuctionHouseHelper.AH.Events.ScanAborted then
     self.gotAllResults = true
     self:ProcessSearchResults({})
   end
 end
 
 
-function AuctionatorDirectSearchProviderMixin:RegisterProviderEvents()
+function AuctionHouseHelperDirectSearchProviderMixin:RegisterProviderEvents()
   if not self.registeredOnEventBus then
     self.registeredOnEventBus = true
-    Auctionator.EventBus:Register(self, SEARCH_EVENTS)
+    AuctionHouseHelper.EventBus:Register(self, SEARCH_EVENTS)
   end
 end
 
-function AuctionatorDirectSearchProviderMixin:UnregisterProviderEvents()
+function AuctionHouseHelperDirectSearchProviderMixin:UnregisterProviderEvents()
   if self.registeredOnEventBus then
     self.registeredOnEventBus = false
-    Auctionator.EventBus:Unregister(self, SEARCH_EVENTS)
+    AuctionHouseHelper.EventBus:Unregister(self, SEARCH_EVENTS)
   end
 
   if not self.gotAllResults then
-    Auctionator.AH.AbortQuery()
+    AuctionHouseHelper.AH.AbortQuery()
   end
 end

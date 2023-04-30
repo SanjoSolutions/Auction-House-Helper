@@ -36,7 +36,7 @@ data_format = """\
   [{}] = {{itemID = {}, level = {}, itemClass = {}}},\
 """
 
-print("Auctionator.CraftingInfo.EnchantSpellsToItemData = {")
+print("AuctionHouseHelper.CraftingInfo.EnchantSpellsToItemData = {")
 for item_id in enchants_only:
     spell_id = item_to_spell[item_id]
     spell_level = 0

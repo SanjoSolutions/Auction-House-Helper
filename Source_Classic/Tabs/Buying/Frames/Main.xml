@@ -1,11 +1,11 @@
 <Ui>
-  <Frame name="AuctionatorBuyFrameTemplate" mixin="AuctionatorBuyFrameMixin" virtual="true">
+  <Frame name="AuctionHouseHelperBuyFrameTemplate" mixin="AuctionHouseHelperBuyFrameMixin" virtual="true">
     <Size x="450" y="350" />
     <Frames>
-      <Frame parentKey="CurrentPrices" setAllPoints="true" inherits="AuctionatorBuyCurrentPricesFrameTemplate"/>
-      <Frame parentKey="HistoryPrices" setAllPoints="true" inherits="AuctionatorBuyHistoryPricesFrameTemplate" hidden="true"/>
+      <Frame parentKey="CurrentPrices" setAllPoints="true" inherits="AuctionHouseHelperBuyCurrentPricesFrameTemplate"/>
+      <Frame parentKey="HistoryPrices" setAllPoints="true" inherits="AuctionHouseHelperBuyHistoryPricesFrameTemplate" hidden="true"/>
 
-      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_HISTORY" parentKey="HistoryButton">
+      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTION_HOUSE_HELPER_L_HISTORY" parentKey="HistoryButton">
         <Anchors>
           <Anchor point="TOP" relativeKey="$parent.SearchResultsListing" relativePoint="BOTTOM"/>
           <Anchor point="LEFT" x="-8" y="10" />
@@ -19,7 +19,7 @@
     </Frames>
   </Frame>
 
-  <Frame name="AuctionatorBuyFrameTemplateForShopping" hidden="true" inherits="AuctionatorBuyFrameTemplate" mixin="AuctionatorBuyFrameMixinForShopping" virtual="true">
+  <Frame name="AuctionHouseHelperBuyFrameTemplateForShopping" hidden="true" inherits="AuctionHouseHelperBuyFrameTemplate" mixin="AuctionHouseHelperBuyFrameMixinForShopping" virtual="true">
     <Scripts>
       <OnLoad method="Init"/>
       <OnShow method="OnShow"/>
@@ -41,7 +41,7 @@
         </Scripts>
       </Button>
 
-      <Frame mixin="AuctionatorBuyingItemTooltipMixin" enableMouse="true">
+      <Frame mixin="AuctionHouseHelperBuyingItemTooltipMixin" enableMouse="true">
         <Scripts>
           <OnLoad method="OnLoad"/>
           <OnEnter method="OnEnter"/>
@@ -74,7 +74,7 @@
     </Frames>
   </Frame>
 
-  <Frame name="AuctionatorBuyFrameTemplateForSelling" inherits="AuctionatorBuyFrameTemplate" mixin="AuctionatorBuyFrameMixinForSelling" virtual="true">
+  <Frame name="AuctionHouseHelperBuyFrameTemplateForSelling" inherits="AuctionHouseHelperBuyFrameTemplate" mixin="AuctionHouseHelperBuyFrameMixinForSelling" virtual="true">
     <Scripts>
       <OnShow method="OnShow"/>
       <OnHide method="OnHide"/>

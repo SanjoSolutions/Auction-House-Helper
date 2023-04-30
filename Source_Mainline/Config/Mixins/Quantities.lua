@@ -1,34 +1,34 @@
-AuctionatorConfigQuantitiesFrameMixin = CreateFromMixins(AuctionatorPanelConfigMixin)
+AuctionHouseHelperConfigQuantitiesFrameMixin = CreateFromMixins(AuctionHouseHelperPanelConfigMixin)
 
-function AuctionatorConfigQuantitiesFrameMixin:OnLoad()
-  Auctionator.Debug.Message("AuctionatorConfigQuantitiesFrameMixin:OnLoad()")
+function AuctionHouseHelperConfigQuantitiesFrameMixin:OnLoad()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperConfigQuantitiesFrameMixin:OnLoad()")
 
-  self.name = AUCTIONATOR_L_CONFIG_QUANTITIES_CATEGORY
-  self.parent = "Auctionator"
+  self.name = AUCTION_HOUSE_HELPER_L_CONFIG_QUANTITIES_CATEGORY
+  self.parent = "Auction House Helper"
 
   self:SetupPanel()
 
 end
 
-function AuctionatorConfigQuantitiesFrameMixin:OnShow()
-  Auctionator.Debug.Message("AuctionatorConfigQuantitiesFrameMixin:OnShow()")
+function AuctionHouseHelperConfigQuantitiesFrameMixin:OnShow()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperConfigQuantitiesFrameMixin:OnShow()")
 
-  local settings = Auctionator.Config.Get(Auctionator.Config.Options.DEFAULT_QUANTITIES)
+  local settings = AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.DEFAULT_QUANTITIES)
   for _, quantityOption in ipairs(self.Quantities) do
     -- We use or 0 to permit adding more quantities later
     quantityOption:SetNumber(settings[quantityOption.classID] or 0)
   end
 end
 
-function AuctionatorConfigQuantitiesFrameMixin:Save()
-  Auctionator.Debug.Message("AuctionatorConfigQuantitiesFrameMixin:Save()")
+function AuctionHouseHelperConfigQuantitiesFrameMixin:Save()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperConfigQuantitiesFrameMixin:Save()")
 
-  local settings = Auctionator.Config.Get(Auctionator.Config.Options.DEFAULT_QUANTITIES)
+  local settings = AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.DEFAULT_QUANTITIES)
   for _, quantityOption in ipairs(self.Quantities) do
     settings[quantityOption.classID] = quantityOption:GetNumber()
   end
 end
 
-function AuctionatorConfigQuantitiesFrameMixin:Cancel()
-  Auctionator.Debug.Message("AuctionatorConfigQuantitiesFrameMixin:Cancel()")
+function AuctionHouseHelperConfigQuantitiesFrameMixin:Cancel()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperConfigQuantitiesFrameMixin:Cancel()")
 end

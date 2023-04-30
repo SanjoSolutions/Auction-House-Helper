@@ -1,16 +1,16 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="AuctionatorSellingBagFrame"
+    name="AuctionHouseHelperSellingBagFrame"
     virtual="true"
     parentKey="BagListing"
-    mixin="AuctionatorSellingBagFrameMixin"
+    mixin="AuctionHouseHelperSellingBagFrameMixin"
   >
     <Scripts>
       <OnLoad method="OnLoad" />
     </Scripts>
 
     <Frames>
-      <Frame parentKey="ItemIconDropDown" inherits="AuctionatorItemIconDropDownTemplate" hidden="true"/>
+      <Frame parentKey="ItemIconDropDown" inherits="AuctionHouseHelperItemIconDropDownTemplate" hidden="true"/>
 
       <Frame inherits="WowScrollBox" parentKey="ScrollBox">
         <Anchors>
@@ -26,9 +26,9 @@
               <Anchor point="TOP"/>
             </Anchors>
             <Frames>
-              <Frame parentKey="Favourites" inherits="AuctionatorBagClassListing">
+              <Frame parentKey="Favourites" inherits="AuctionHouseHelperBagClassListing">
                 <KeyValues>
-                  <KeyValue key="title" value="AUCTIONATOR_L_FAVOURITES" type="global" />
+                  <KeyValue key="title" value="AUCTION_HOUSE_HELPER_L_FAVOURITES" type="global" />
                 </KeyValues>
                 <Anchors>
                   <Anchor point="TOPLEFT" />

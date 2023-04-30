@@ -1,4 +1,4 @@
-Auctionator.Constants = {
+AuctionHouseHelper.Constants = {
   History = {
     NUMBER_OF_LINES = 20
   },

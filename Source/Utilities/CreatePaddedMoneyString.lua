@@ -15,7 +15,7 @@ local silverIcon = "|TInterface\\MoneyFrame\\UI-SilverIcon:12:12:4:0|t"
 local copperIcon = "|TInterface\\MoneyFrame\\UI-CopperIcon:12:12:4:0|t"
 local padding = "  "
 
-function Auctionator.Utilities.CreatePaddedMoneyString(amount)
+function AuctionHouseHelper.Utilities.CreatePaddedMoneyString(amount)
   amount = math.floor(amount)
 
   local gold, silver, copper = getGold(amount), getSilver(amount), getCopper(amount)

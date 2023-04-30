@@ -1,4 +1,4 @@
-AuctionatorDropDownMixin = {}
+AuctionHouseHelperDropDownMixin = {}
 
 local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
 
@@ -9,13 +9,13 @@ end
 
 local function localizeArray(array)
   for index, itm in ipairs(array) do
-    array[index] = Auctionator.Locales.Apply(itm)
+    array[index] = AuctionHouseHelper.Locales.Apply(itm)
   end
 
   return array
 end
 
-function AuctionatorDropDownMixin:OnLoad()
+function AuctionHouseHelperDropDownMixin:OnLoad()
   LibDD:Create_UIDropDownMenu(self.DropDown)
 
   if self.textString ~= nil and self.valuesString ~= nil then
@@ -30,21 +30,21 @@ function AuctionatorDropDownMixin:OnLoad()
   end
 end
 
-function AuctionatorDropDownMixin:InitAgain(lables, values)
+function AuctionHouseHelperDropDownMixin:InitAgain(lables, values)
   self.DropDown:Initialize(lables, values)
 end
 
-function AuctionatorDropDownMixin:SetValue(...)
+function AuctionHouseHelperDropDownMixin:SetValue(...)
   self.DropDown:SetValue(...)
 end
 
-function AuctionatorDropDownMixin:GetValue(...)
+function AuctionHouseHelperDropDownMixin:GetValue(...)
   return self.DropDown:GetValue(...)
 end
 
-AuctionatorDropDownInternalMixin = {}
+AuctionHouseHelperDropDownInternalMixin = {}
 
-function AuctionatorDropDownInternalMixin:Initialize(text, values)
+function AuctionHouseHelperDropDownInternalMixin:Initialize(text, values)
   self.text = text
   self.values = values
   self.value = self.values[1]
@@ -56,7 +56,7 @@ function AuctionatorDropDownInternalMixin:Initialize(text, values)
   LibDD:UIDropDownMenu_SetWidth(self, 150)
 end
 
-function AuctionatorDropDownInternalMixin:BlizzInitialize()
+function AuctionHouseHelperDropDownInternalMixin:BlizzInitialize()
   local listEntry
 
   for index = 1, #self.text do
@@ -74,11 +74,11 @@ function AuctionatorDropDownInternalMixin:BlizzInitialize()
   self:SetValue(self.value)
 end
 
-function AuctionatorDropDownInternalMixin:GetValue()
+function AuctionHouseHelperDropDownInternalMixin:GetValue()
   return self.value
 end
 
-function AuctionatorDropDownInternalMixin:SetValue(newValue)
+function AuctionHouseHelperDropDownInternalMixin:SetValue(newValue)
   for index, value in ipairs(self.values) do
     if newValue == value then
       LibDD:UIDropDownMenu_SetText(self, self.text[index])

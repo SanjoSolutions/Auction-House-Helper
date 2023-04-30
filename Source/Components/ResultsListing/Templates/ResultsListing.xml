@@ -1,9 +1,9 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="AuctionatorResultsListingTemplate"
+    name="AuctionHouseHelperResultsListingTemplate"
     virtual="true"
     parentKey="ResultsListing"
-    mixin="AuctionatorResultsListingMixin"
+    mixin="AuctionHouseHelperResultsListingMixin"
   >
 
     <Scripts>
@@ -19,7 +19,7 @@
         </Anchors>
       </Frame>
 
-      <Frame parentKey="CustomiseDropDown" inherits="AuctionatorCustomiseColumnsDropDownTemplate" hidden="true"/>
+      <Frame parentKey="CustomiseDropDown" inherits="AuctionHouseHelperCustomiseColumnsDropDownTemplate" hidden="true"/>
 
 
       <Frame parentKey="ScrollArea">
@@ -44,7 +44,7 @@
         </Frames>
         <Layers>
           <Layer level="OVERLAY">
-            <FontString parentKey="NoResultsText" inherits="GameFontNormal" hidden="true" text="AUCTIONATOR_L_NO_RESULTS">
+            <FontString parentKey="NoResultsText" inherits="GameFontNormal" hidden="true" text="AUCTION_HOUSE_HELPER_L_NO_RESULTS">
               <Anchors>
                 <Anchor point="CENTER" />
               </Anchors>
@@ -55,7 +55,7 @@
                 <Color r="0" g="0" b="0"/>
               </Shadow>
             </FontString>
-            <FontString parentKey="ResultsText" inherits="GameFontNormal" hidden="true" text="AUCTIONATOR_L_FETCHING_ITEM_INFO">
+            <FontString parentKey="ResultsText" inherits="GameFontNormal" hidden="true" text="AUCTION_HOUSE_HELPER_L_FETCHING_ITEM_INFO">
               <Anchors>
                 <Anchor point="TOP" relativeKey="$parent.LoadingSpinner" relativePoint="CENTER" y="8"/>
                 <Anchor point="LEFT" x="45"/>

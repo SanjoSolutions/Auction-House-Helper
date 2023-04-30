@@ -2,7 +2,7 @@ local SLASH_COMMAND_DESCRIPTIONS = {
   {commands = "p, post", message = "Posts the chosen item from the \"Selling\" tab." },
   {commands = "cu, cancelundercut", message = "Cancels the next undercut auction in the \"Cancelling\" tab." },
   {commands = "ra, resetall", message = "Reset database and full scan timer." },
-  {commands = "rdb, resetdatabase", message = "Reset Auctionator database."},
+  {commands = "rdb, resetdatabase", message = "Reset AuctionHouseHelper database."},
   {commands = "rt, resettimer", message = "Reset full scan timer."},
   {commands = "rc, resetconfig", message = "Reset configuration to defaults."},
   {commands = "npd, nopricedb", message = "Disable recording auction prices."},
@@ -13,105 +13,105 @@ local SLASH_COMMAND_DESCRIPTIONS = {
   {commands = "h, help", message = "Show this help message."},
 }
 
-function Auctionator.SlashCmd.Post()
-  Auctionator.EventBus
-    :RegisterSource(Auctionator.SlashCmd.Post, "Auctionator.SlashCmd.Post")
-    :Fire(Auctionator.SlashCmd.Post, Auctionator.Selling.Events.RequestPost)
-    :UnregisterSource(Auctionator.SlashCmd.Post)
+function AuctionHouseHelper.SlashCmd.Post()
+  AuctionHouseHelper.EventBus
+    :RegisterSource(AuctionHouseHelper.SlashCmd.Post, "AuctionHouseHelper.SlashCmd.Post")
+    :Fire(AuctionHouseHelper.SlashCmd.Post, AuctionHouseHelper.Selling.Events.RequestPost)
+    :UnregisterSource(AuctionHouseHelper.SlashCmd.Post)
 end
 
-function Auctionator.SlashCmd.CancelUndercut()
-  Auctionator.EventBus
-    :RegisterSource(Auctionator.SlashCmd.CancelUndercut, "Auctionator.SlashCmd.CancelUndercut")
-    :Fire(Auctionator.SlashCmd.CancelUndercut, Auctionator.Cancelling.Events.RequestCancelUndercut)
-    :UnregisterSource(Auctionator.SlashCmd.CancelUndercut)
+function AuctionHouseHelper.SlashCmd.CancelUndercut()
+  AuctionHouseHelper.EventBus
+    :RegisterSource(AuctionHouseHelper.SlashCmd.CancelUndercut, "AuctionHouseHelper.SlashCmd.CancelUndercut")
+    :Fire(AuctionHouseHelper.SlashCmd.CancelUndercut, AuctionHouseHelper.Cancelling.Events.RequestCancelUndercut)
+    :UnregisterSource(AuctionHouseHelper.SlashCmd.CancelUndercut)
 end
 
-function Auctionator.SlashCmd.ToggleDebug()
-  Auctionator.Debug.Toggle()
-  if Auctionator.Debug.IsOn() then
-    Auctionator.Utilities.Message("Debug mode on")
+function AuctionHouseHelper.SlashCmd.ToggleDebug()
+  AuctionHouseHelper.Debug.Toggle()
+  if AuctionHouseHelper.Debug.IsOn() then
+    AuctionHouseHelper.Utilities.Message("Debug mode on")
   else
-    Auctionator.Utilities.Message("Debug mode off")
+    AuctionHouseHelper.Utilities.Message("Debug mode off")
   end
 end
 
-function Auctionator.SlashCmd.ResetDatabase()
-  if Auctionator.Debug.IsOn() then
+function AuctionHouseHelper.SlashCmd.ResetDatabase()
+  if AuctionHouseHelper.Debug.IsOn() then
     -- See Source/Variables/Main.lua for variable usage
-    AUCTIONATOR_PRICE_DATABASE = nil
-    Auctionator.Utilities.Message("Price database reset")
-    Auctionator.Variables.InitializeDatabase()
+    AUCTION_HOUSE_HELPER_PRICE_DATABASE = nil
+    AuctionHouseHelper.Utilities.Message("Price database reset")
+    AuctionHouseHelper.Variables.InitializeDatabase()
   else
-    Auctionator.Utilities.Message("Requires debug mode.")
+    AuctionHouseHelper.Utilities.Message("Requires debug mode.")
   end
 end
 
-function Auctionator.SlashCmd.ResetTimer()
-  if Auctionator.Debug.IsOn() then
-    Auctionator.SavedState.TimeOfLastReplicateScan = nil
-    Auctionator.SavedState.TimeOfLastGetAllScan = nil
-    Auctionator.Utilities.Message("Scan timer reset.")
+function AuctionHouseHelper.SlashCmd.ResetTimer()
+  if AuctionHouseHelper.Debug.IsOn() then
+    AuctionHouseHelper.SavedState.TimeOfLastReplicateScan = nil
+    AuctionHouseHelper.SavedState.TimeOfLastGetAllScan = nil
+    AuctionHouseHelper.Utilities.Message("Scan timer reset.")
   else
-    Auctionator.Utilities.Message("Requires debug mode.")
+    AuctionHouseHelper.Utilities.Message("Requires debug mode.")
   end
 end
 
-function Auctionator.SlashCmd.CleanReset()
-  Auctionator.SlashCmd.ResetTimer()
-  Auctionator.SlashCmd.ResetDatabase()
+function AuctionHouseHelper.SlashCmd.CleanReset()
+  AuctionHouseHelper.SlashCmd.ResetTimer()
+  AuctionHouseHelper.SlashCmd.ResetDatabase()
 end
 
-function Auctionator.SlashCmd.NoPriceDB()
-  Auctionator.Config.Set(Auctionator.Config.Options.NO_PRICE_DATABASE, true)
+function AuctionHouseHelper.SlashCmd.NoPriceDB()
+  AuctionHouseHelper.Config.Set(AuctionHouseHelper.Config.Options.NO_PRICE_DATABASE, true)
 
-  AUCTIONATOR_PRICE_DATABASE = nil
-  Auctionator.Variables.InitializeDatabase()
+  AUCTION_HOUSE_HELPER_PRICE_DATABASE = nil
+  AuctionHouseHelper.Variables.InitializeDatabase()
 
-  Auctionator.Utilities.Message("Disabled recording auction prices in the price database.")
+  AuctionHouseHelper.Utilities.Message("Disabled recording auction prices in the price database.")
 end
 
-function Auctionator.SlashCmd.ResetConfig()
-  if Auctionator.Debug.IsOn() then
-    Auctionator.Config.Reset()
-    Auctionator.Utilities.Message("Config reset.")
+function AuctionHouseHelper.SlashCmd.ResetConfig()
+  if AuctionHouseHelper.Debug.IsOn() then
+    AuctionHouseHelper.Config.Reset()
+    AuctionHouseHelper.Utilities.Message("Config reset.")
   else
-    Auctionator.Utilities.Message("Requires debug mode.")
+    AuctionHouseHelper.Utilities.Message("Requires debug mode.")
   end
 end
 
-function Auctionator.SlashCmd.Config(name, value)
+function AuctionHouseHelper.SlashCmd.Config(name, value)
   if name == nil then
-    Auctionator.Utilities.Message("Current config:")
-    for _, name in pairs(Auctionator.Config.Options) do
-      if Auctionator.Config.IsValidOption(name) then
-        Auctionator.Utilities.Message(name .. "=" .. tostring(Auctionator.Config.Get(name)) .. " (" .. type(Auctionator.Config.Get(name)) .. ")")
+    AuctionHouseHelper.Utilities.Message("Current config:")
+    for _, name in pairs(AuctionHouseHelper.Config.Options) do
+      if AuctionHouseHelper.Config.IsValidOption(name) then
+        AuctionHouseHelper.Utilities.Message(name .. "=" .. tostring(AuctionHouseHelper.Config.Get(name)) .. " (" .. type(AuctionHouseHelper.Config.Get(name)) .. ")")
       end
     end
-  elseif not Auctionator.Config.IsValidOption(name) then
-    Auctionator.Utilities.Message("Unknown config " .. name)
-  elseif type(Auctionator.Config.Get(name)) == "boolean" then
-    Auctionator.Config.Set(name, not Auctionator.Config.Get(name))
-    Auctionator.Utilities.Message("Config set " .. name .. " = " .. tostring(Auctionator.Config.Get(name)))
-  elseif type(Auctionator.Config.Get(name)) == "number" then
+  elseif not AuctionHouseHelper.Config.IsValidOption(name) then
+    AuctionHouseHelper.Utilities.Message("Unknown config " .. name)
+  elseif type(AuctionHouseHelper.Config.Get(name)) == "boolean" then
+    AuctionHouseHelper.Config.Set(name, not AuctionHouseHelper.Config.Get(name))
+    AuctionHouseHelper.Utilities.Message("Config set " .. name .. " = " .. tostring(AuctionHouseHelper.Config.Get(name)))
+  elseif type(AuctionHouseHelper.Config.Get(name)) == "number" then
     if tonumber(value) == nil then
-      Auctionator.Utilities.Message("Config " .. name .. " not modified; Numerical value required")
+      AuctionHouseHelper.Utilities.Message("Config " .. name .. " not modified; Numerical value required")
     else
-      Auctionator.Config.Set(name, tonumber(value))
+      AuctionHouseHelper.Config.Set(name, tonumber(value))
     end
-    Auctionator.Utilities.Message("Config set " .. name .. " = " .. tostring(Auctionator.Config.Get(name)))
+    AuctionHouseHelper.Utilities.Message("Config set " .. name .. " = " .. tostring(AuctionHouseHelper.Config.Get(name)))
   else
-    Auctionator.Utilities.Message("Unable to modify " .. name .. " at this time")
+    AuctionHouseHelper.Utilities.Message("Unable to modify " .. name .. " at this time")
   end
 end
 
-function Auctionator.SlashCmd.Version()
-  Auctionator.Utilities.Message(AUCTIONATOR_L_VERSION_HEADER .. " " .. Auctionator.State.CurrentVersion)
+function AuctionHouseHelper.SlashCmd.Version()
+  AuctionHouseHelper.Utilities.Message(AUCTION_HOUSE_HELPER_L_VERSION_HEADER .. " " .. AuctionHouseHelper.State.CurrentVersion)
 end
 
-function Auctionator.SlashCmd.Help()
+function AuctionHouseHelper.SlashCmd.Help()
   for index = 1, #SLASH_COMMAND_DESCRIPTIONS do
     local description = SLASH_COMMAND_DESCRIPTIONS[index]
-    Auctionator.Utilities.Message(description.commands .. ": " .. description.message)
+    AuctionHouseHelper.Utilities.Message(description.commands .. ": " .. description.message)
   end
 end

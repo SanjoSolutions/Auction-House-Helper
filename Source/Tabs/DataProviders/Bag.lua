@@ -2,13 +2,13 @@ local BAG_TABLE_LAYOUT = { }
 local BAG_EVENTS = {
   "BAG_UPDATE",
 }
-local BAG_AUCTIONATOR_EVENTS = {
-  Auctionator.Selling.Events.BagRefresh,
+local BAG_AUCTION_HOUSE_HELPER_EVENTS = {
+  AuctionHouseHelper.Selling.Events.BagRefresh,
 }
 
-AuctionatorBagDataProviderMixin = CreateFromMixins(AuctionatorDataProviderMixin)
+AuctionHouseHelperBagDataProviderMixin = CreateFromMixins(AuctionHouseHelperDataProviderMixin)
 
-function AuctionatorBagDataProviderMixin:Reload()
+function AuctionHouseHelperBagDataProviderMixin:Reload()
   self:Reset()
   self:LoadBagData()
 
@@ -20,30 +20,30 @@ function AuctionatorBagDataProviderMixin:Reload()
   end)
 end
 
-function AuctionatorBagDataProviderMixin:ReceiveEvent(event)
-  if event == Auctionator.Selling.Events.BagRefresh then
+function AuctionHouseHelperBagDataProviderMixin:ReceiveEvent(event)
+  if event == AuctionHouseHelper.Selling.Events.BagRefresh then
     self:Reload()
   end
 end
 
-function AuctionatorBagDataProviderMixin:OnShow()
+function AuctionHouseHelperBagDataProviderMixin:OnShow()
   FrameUtil.RegisterFrameForEvents(self, BAG_EVENTS)
-  Auctionator.EventBus:Register(self, BAG_AUCTIONATOR_EVENTS)
+  AuctionHouseHelper.EventBus:Register(self, BAG_AUCTION_HOUSE_HELPER_EVENTS)
 
   self:Reload()
 end
 
-function AuctionatorBagDataProviderMixin:OnHide()
+function AuctionHouseHelperBagDataProviderMixin:OnHide()
   FrameUtil.UnregisterFrameForEvents(self, BAG_EVENTS)
-  Auctionator.EventBus:Unregister(self, BAG_AUCTIONATOR_EVENTS)
+  AuctionHouseHelper.EventBus:Unregister(self, BAG_AUCTION_HOUSE_HELPER_EVENTS)
 end
 
 local function IsIgnoredItemKey(keyString)
-  return tIndexOf(Auctionator.Config.Get(Auctionator.Config.Options.SELLING_IGNORED_KEYS), keyString) ~= nil
+  return tIndexOf(AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SELLING_IGNORED_KEYS), keyString) ~= nil
 end
 
-function AuctionatorBagDataProviderMixin:LoadBagData()
-  Auctionator.Debug.Message("AuctionatorBagDataProviderMixin:LoadBagData()")
+function AuctionHouseHelperBagDataProviderMixin:LoadBagData()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperBagDataProviderMixin:LoadBagData()")
 
   local itemMap = {}
   local orderedKeys = {}
@@ -58,13 +58,13 @@ function AuctionatorBagDataProviderMixin:LoadBagData()
     end
   end
 
-  for _, bagId in ipairs(Auctionator.Constants.BagIDs) do
+  for _, bagId in ipairs(AuctionHouseHelper.Constants.BagIDs) do
     for slot = 1, NumSlots(bagId) do
       index = index + 1
 
       local location = ItemLocation:CreateFromBagAndSlot(bagId, slot)
       if C_Item.DoesItemExist(location) then
-        local itemInfo = Auctionator.Utilities.ItemInfoFromLocation(location)
+        local itemInfo = AuctionHouseHelper.Utilities.ItemInfoFromLocation(location)
         local tempId = self:UniqueKey(itemInfo)
 
         if not IsIgnoredItemKey(tempId) and itemInfo.bagListing then
@@ -80,42 +80,42 @@ function AuctionatorBagDataProviderMixin:LoadBagData()
     end
   end
 
-  orderedKeys = Auctionator.Utilities.ReverseArray(orderedKeys)
+  orderedKeys = AuctionHouseHelper.Utilities.ReverseArray(orderedKeys)
 
   for key, item in pairs(itemMap) do
     table.insert(results, item)
   end
 
   table.sort(results, function(left, right)
-    return Auctionator.Selling.UniqueBagKey(left) < Auctionator.Selling.UniqueBagKey(right)
+    return AuctionHouseHelper.Selling.UniqueBagKey(left) < AuctionHouseHelper.Selling.UniqueBagKey(right)
   end)
 
   self:AppendEntries(results, true)
 end
 
-function AuctionatorBagDataProviderMixin:OnEvent(...)
+function AuctionHouseHelperBagDataProviderMixin:OnEvent(...)
   self:Reload()
 end
 
-function AuctionatorBagDataProviderMixin:UniqueKey(entry)
-  return Auctionator.Selling.UniqueBagKey(entry)
+function AuctionHouseHelperBagDataProviderMixin:UniqueKey(entry)
+  return AuctionHouseHelper.Selling.UniqueBagKey(entry)
 end
 
-function AuctionatorBagDataProviderMixin:GetTableLayout()
+function AuctionHouseHelperBagDataProviderMixin:GetTableLayout()
   return BAG_TABLE_LAYOUT
 end
 
-function AuctionatorBagDataProviderMixin:GetRowTemplate()
-  return "AuctionatorBagListResultsRowTemplate"
+function AuctionHouseHelperBagDataProviderMixin:GetRowTemplate()
+  return "AuctionHouseHelperBagListResultsRowTemplate"
 end
 
 local COMPARATORS = {
-  name = Auctionator.Utilities.StringComparator,
-  class = Auctionator.Utilities.NumberComparator,
-  count = Auctionator.Utilities.NumberComparator
+  name = AuctionHouseHelper.Utilities.StringComparator,
+  class = AuctionHouseHelper.Utilities.NumberComparator,
+  count = AuctionHouseHelper.Utilities.NumberComparator
 }
 
-function AuctionatorBagDataProviderMixin:Sort(fieldName, sortDirection)
+function AuctionHouseHelperBagDataProviderMixin:Sort(fieldName, sortDirection)
   local comparator = COMPARATORS[fieldName](sortDirection, fieldName)
 
   table.sort(self.results, function(left, right)

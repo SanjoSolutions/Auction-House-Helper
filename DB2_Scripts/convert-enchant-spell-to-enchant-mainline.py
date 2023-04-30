@@ -45,7 +45,7 @@ def array_str(array):
     result = result + "}"
     return result
 
-print("Auctionator.CraftingInfo.EnchantSpellsToItems = {")
+print("AuctionHouseHelper.CraftingInfo.EnchantSpellsToItems = {")
 for spellID, itemIDs in enchants_to_items.items():
     print("  [" + str(spellID) + "] = " + array_str(itemIDs) + ",")
 print("}")

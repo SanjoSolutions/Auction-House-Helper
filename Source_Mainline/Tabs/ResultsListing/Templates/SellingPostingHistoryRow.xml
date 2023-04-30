@@ -1,8 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="AuctionatorSellingPostingHistoryRowTemplate"
-    mixin="AuctionatorSellingPostingHistoryRowMixin"
-    inherits="AuctionatorHistoricalPriceRowTemplate"
+    name="AuctionHouseHelperSellingPostingHistoryRowTemplate"
+    mixin="AuctionHouseHelperSellingPostingHistoryRowMixin"
+    inherits="AuctionHouseHelperHistoricalPriceRowTemplate"
     virtual="true"
     enableMouse="true"
   >

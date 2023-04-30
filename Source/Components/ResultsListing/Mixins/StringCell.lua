@@ -1,21 +1,21 @@
-AuctionatorStringCellTemplateMixin = CreateFromMixins(AuctionatorCellMixin, AuctionatorRetailImportTableBuilderCellMixin)
+AuctionHouseHelperStringCellTemplateMixin = CreateFromMixins(AuctionHouseHelperCellMixin, AuctionHouseHelperRetailImportTableBuilderCellMixin)
 
-function AuctionatorStringCellTemplateMixin:Init(columnName)
+function AuctionHouseHelperStringCellTemplateMixin:Init(columnName)
   self.columnName = columnName
 
   self.text:SetJustifyH("LEFT")
 end
 
-function AuctionatorStringCellTemplateMixin:Populate(rowData, index)
-  AuctionatorCellMixin.Populate(self, rowData, index)
+function AuctionHouseHelperStringCellTemplateMixin:Populate(rowData, index)
+  AuctionHouseHelperCellMixin.Populate(self, rowData, index)
 
   self.text:SetText(rowData[self.columnName])
 end
 
-function AuctionatorStringCellTemplateMixin:OnHide()
+function AuctionHouseHelperStringCellTemplateMixin:OnHide()
   self.text:Hide()
 end
 
-function AuctionatorStringCellTemplateMixin:OnShow()
+function AuctionHouseHelperStringCellTemplateMixin:OnShow()
   self.text:Show()
 end

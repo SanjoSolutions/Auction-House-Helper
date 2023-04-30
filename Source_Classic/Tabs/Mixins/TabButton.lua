@@ -1,12 +1,12 @@
-AuctionatorTabMixin = {}
+AuctionHouseHelperTabMixin = {}
 
-function AuctionatorTabMixin:Initialize(name, tabTemplate, tabHeader, displayMode)
-  Auctionator.Debug.Message("AuctionatorTabMixin:Initialize()")
+function AuctionHouseHelperTabMixin:Initialize(name, tabTemplate, tabHeader, displayMode)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperTabMixin:Initialize()")
 
   self.ahTitle = tabHeader
   self.displayMode = displayMode
 
-  self.wrapperFrame = CreateFrame("FRAME", nil, AuctionFrame, "AuctionatorTabWrapperTemplate")
+  self.wrapperFrame = CreateFrame("FRAME", nil, AuctionFrame, "AuctionHouseHelperTabWrapperTemplate")
   self.wrapperFrame.Title:SetText(self.ahTitle)
   -- Create this tab's frame
   self.frameRef = CreateFrame(
@@ -27,22 +27,22 @@ function AuctionatorTabMixin:Initialize(name, tabTemplate, tabHeader, displayMod
   --PanelTemplates_DeselectTab(self)
 end
 
-function AuctionatorTabMixin:Selected()
+function AuctionHouseHelperTabMixin:Selected()
   PanelTemplates_SetTab(AuctionFrame, self)
   PanelTemplates_SelectTab(self)
   self.wrapperFrame:Show()
   self.frameRef:Show()
 
   --AuctionHouseFrame:SetTitle(self.ahTitle)
-  AuctionFrameTopLeft:SetTexture("Interface\\AddOns\\Auctionator\\Images_Classic\\topleft");
-  AuctionFrameTop:SetTexture("Interface\\AddOns\\Auctionator\\Images_Classic\\top");
-  AuctionFrameTopRight:SetTexture("Interface\\AddOns\\Auctionator\\Images_Classic\\topright");
-  AuctionFrameBotLeft:SetTexture("Interface\\AddOns\\Auctionator\\Images_Classic\\botleft");
-  AuctionFrameBot:SetTexture("Interface\\AddOns\\Auctionator\\Images_Classic\\bot");
-  AuctionFrameBotRight:SetTexture("Interface\\AddOns\\Auctionator\\Images_Classic\\botright");
+  AuctionFrameTopLeft:SetTexture("Interface\\AddOns\\AuctionHouseHelper\\Images_Classic\\topleft");
+  AuctionFrameTop:SetTexture("Interface\\AddOns\\AuctionHouseHelper\\Images_Classic\\top");
+  AuctionFrameTopRight:SetTexture("Interface\\AddOns\\AuctionHouseHelper\\Images_Classic\\topright");
+  AuctionFrameBotLeft:SetTexture("Interface\\AddOns\\AuctionHouseHelper\\Images_Classic\\botleft");
+  AuctionFrameBot:SetTexture("Interface\\AddOns\\AuctionHouseHelper\\Images_Classic\\bot");
+  AuctionFrameBotRight:SetTexture("Interface\\AddOns\\AuctionHouseHelper\\Images_Classic\\botright");
 end
 
-function AuctionatorTabMixin:DeselectTab()
+function AuctionHouseHelperTabMixin:DeselectTab()
   PanelTemplates_DeselectTab(self)
   self.wrapperFrame:Hide()
 end

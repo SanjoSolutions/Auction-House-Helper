@@ -1,41 +1,41 @@
-AuctionatorConfigCheckboxMixin = {}
+AuctionHouseHelperConfigCheckboxMixin = {}
 
-function AuctionatorConfigCheckboxMixin:OnLoad()
+function AuctionHouseHelperConfigCheckboxMixin:OnLoad()
   if self.labelText ~= nil then
     self.CheckBox.Label:SetText(self.labelText)
   end
 end
 
-function AuctionatorConfigCheckboxMixin:SetText(text)
+function AuctionHouseHelperConfigCheckboxMixin:SetText(text)
   self.labelText = text
   self.CheckBox.Label:SetText(self.labelText)
 end
 
-function AuctionatorConfigCheckboxMixin:GetText()
+function AuctionHouseHelperConfigCheckboxMixin:GetText()
   return self.CheckBox.Label:GetText()
 end
 
-function AuctionatorConfigCheckboxMixin:SetChecked(value)
+function AuctionHouseHelperConfigCheckboxMixin:SetChecked(value)
   self.CheckBox:SetChecked(value)
 end
 
 -- Makes clicking on the text flip the toggle
-function AuctionatorConfigCheckboxMixin:OnMouseUp()
+function AuctionHouseHelperConfigCheckboxMixin:OnMouseUp()
   self.CheckBox:Click()
 end
 
-function AuctionatorConfigCheckboxMixin:OnEnter()
+function AuctionHouseHelperConfigCheckboxMixin:OnEnter()
   self.CheckBox:LockHighlight()
 
-  AuctionatorConfigTooltipMixin.OnEnter(self)
+  AuctionHouseHelperConfigTooltipMixin.OnEnter(self)
 end
 
-function AuctionatorConfigCheckboxMixin:OnLeave()
+function AuctionHouseHelperConfigCheckboxMixin:OnLeave()
   self.CheckBox:UnlockHighlight()
 
-  AuctionatorConfigTooltipMixin.OnLeave(self)
+  AuctionHouseHelperConfigTooltipMixin.OnLeave(self)
 end
 
-function AuctionatorConfigCheckboxMixin:GetChecked()
+function AuctionHouseHelperConfigCheckboxMixin:GetChecked()
   return self.CheckBox:GetChecked()
 end

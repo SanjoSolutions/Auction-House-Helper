@@ -1,8 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="AuctionatorShoppingItemTemplate"
-    mixin="AuctionatorShoppingItemMixin"
-    inherits="AuctionatorPanelTemplate"
+    name="AuctionHouseHelperShoppingItemTemplate"
+    mixin="AuctionHouseHelperShoppingItemMixin"
+    inherits="AuctionHouseHelperPanelTemplate"
     frameStrata="Dialog"
     enableMouse="true"
     virtual="true"
@@ -19,9 +19,9 @@
     </Scripts>
 
     <Frames>
-      <Frame inherits="AuctionatorConfigurationSubHeadingFrame" parentKey="SearchStringHeading">
+      <Frame inherits="AuctionHouseHelperConfigurationSubHeadingFrame" parentKey="SearchStringHeading">
         <KeyValues>
-          <KeyValue key="subHeadingText" value="AUCTIONATOR_L_SEARCH_TERM" type="global"/>
+          <KeyValue key="subHeadingText" value="AUCTION_HOUSE_HELPER_L_SEARCH_TERM" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.Inset" relativePoint="TOPLEFT" y="-5" />
@@ -48,7 +48,7 @@
             </Scripts>
           </EditBox>
 
-          <Button parentKey="ResetSearchStringButton" inherits="AuctionatorResetButton">
+          <Button parentKey="ResetSearchStringButton" inherits="AuctionHouseHelperResetButton">
             <Anchors>
               <Anchor point="TOPLEFT" relativeKey="$parent.SearchString" relativePoint="TOPRIGHT" x="3" y="-3"/>
             </Anchors>
@@ -61,7 +61,7 @@
             </Anchors>
             <Layers>
               <Layer level="BACKGROUND">
-                <FontString inherits="GameFontHighlight" text="AUCTIONATOR_L_EXACT_SEARCH">
+                <FontString inherits="GameFontHighlight" text="AUCTION_HOUSE_HELPER_L_EXACT_SEARCH">
                   <Anchors>
                     <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeKey="$parent" x="25" y="-4" />
                   </Anchors>
@@ -72,51 +72,51 @@
         </Frames>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationSubHeadingFrame" parentKey="ItemClassHeading">
+      <Frame inherits="AuctionHouseHelperConfigurationSubHeadingFrame" parentKey="ItemClassHeading">
         <KeyValues>
-          <KeyValue key="subHeadingText" value="AUCTIONATOR_L_ITEM_CLASS" type="global"/>
+          <KeyValue key="subHeadingText" value="AUCTION_HOUSE_HELPER_L_ITEM_CLASS" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.SearchContainer" relativePoint="BOTTOMLEFT"/>
         </Anchors>
       </Frame>
 
-      <Frame name="$parent_FilterKeySelector" parentKey="FilterKeySelector" inherits="AuctionatorFilterKeySelectorTemplate">
+      <Frame name="$parent_FilterKeySelector" parentKey="FilterKeySelector" inherits="AuctionHouseHelperFilterKeySelectorTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.ItemClassHeading" relativePoint="BOTTOMLEFT"/>
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationMinMaxFrame" parentKey="LevelRange">
+      <Frame inherits="AuctionHouseHelperConfigurationMinMaxFrame" parentKey="LevelRange">
         <KeyValues>
-          <KeyValue key="titleText" value="AUCTIONATOR_L_LEVEL" type="global"/>
+          <KeyValue key="titleText" value="AUCTION_HOUSE_HELPER_L_LEVEL" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.FilterKeySelector" relativePoint="BOTTOMLEFT"/>
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationMinMaxFrame" parentKey="ItemLevelRange">
+      <Frame inherits="AuctionHouseHelperConfigurationMinMaxFrame" parentKey="ItemLevelRange">
         <KeyValues>
-          <KeyValue key="titleText" value="AUCTIONATOR_L_ITEM_LEVEL" type="global"/>
+          <KeyValue key="titleText" value="AUCTION_HOUSE_HELPER_L_ITEM_LEVEL" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.LevelRange" relativePoint="TOPRIGHT"/>
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationMinMaxFrame" parentKey="PriceRange">
+      <Frame inherits="AuctionHouseHelperConfigurationMinMaxFrame" parentKey="PriceRange">
         <KeyValues>
-          <KeyValue key="titleText" value="AUCTIONATOR_L_PRICE" type="global"/>
+          <KeyValue key="titleText" value="AUCTION_HOUSE_HELPER_L_PRICE" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.LevelRange" relativePoint="BOTTOMLEFT" y="-8"/>
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationMinMaxFrame" parentKey="CraftedLevelRange">
+      <Frame inherits="AuctionHouseHelperConfigurationMinMaxFrame" parentKey="CraftedLevelRange">
         <KeyValues>
-          <KeyValue key="titleText" value="AUCTIONATOR_L_CRAFTED_LEVEL" type="global"/>
+          <KeyValue key="titleText" value="AUCTION_HOUSE_HELPER_L_CRAFTED_LEVEL" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.PriceRange" relativePoint="TOPRIGHT"/>
@@ -138,7 +138,7 @@
           </Layer>
         </Layers>
         <Frames>
-          <Frame inherits="AuctionatorDropDown" parentKey="DropDown">
+          <Frame inherits="AuctionHouseHelperDropDown" parentKey="DropDown">
             <KeyValues>
               <KeyValue key="labelText" value="" type="string" />
             </KeyValues>
@@ -147,7 +147,7 @@
             </Anchors>
           </Frame>
 
-          <Button parentKey="ResetQualityButton" inherits="AuctionatorResetButton">
+          <Button parentKey="ResetQualityButton" inherits="AuctionHouseHelperResetButton">
             <Anchors>
               <Anchor point="TOPLEFT" relativeKey="$parent.DropDown.DropDown" relativePoint="TOPRIGHT" x="-10" y="-5"/>
             </Anchors>
@@ -162,7 +162,7 @@
         </Anchors>
         <Layers>
           <Layer level="BACKGROUND">
-            <FontString inherits="GameFontHighlight" parentKey="Label" text="AUCTIONATOR_L_EXPANSION">
+            <FontString inherits="GameFontHighlight" parentKey="Label" text="AUCTION_HOUSE_HELPER_L_EXPANSION">
               <Anchors>
                 <Anchor point="TOPLEFT"/>
               </Anchors>
@@ -170,7 +170,7 @@
           </Layer>
         </Layers>
         <Frames>
-          <Frame inherits="AuctionatorDropDown" parentKey="DropDown">
+          <Frame inherits="AuctionHouseHelperDropDown" parentKey="DropDown">
             <KeyValues>
               <KeyValue key="labelText" value="" type="string" />
             </KeyValues>
@@ -179,7 +179,7 @@
             </Anchors>
           </Frame>
 
-          <Button parentKey="ResetExpansionButton" inherits="AuctionatorResetButton">
+          <Button parentKey="ResetExpansionButton" inherits="AuctionHouseHelperResetButton">
             <Anchors>
               <Anchor point="TOPLEFT" relativeKey="$parent.DropDown.DropDown" relativePoint="TOPRIGHT" x="-10" y="-5"/>
             </Anchors>
@@ -194,7 +194,7 @@
         </Anchors>
         <Layers>
           <Layer level="BACKGROUND">
-            <FontString inherits="GameFontHighlight" parentKey="Label" text="AUCTIONATOR_L_TIER">
+            <FontString inherits="GameFontHighlight" parentKey="Label" text="AUCTION_HOUSE_HELPER_L_TIER">
               <Anchors>
                 <Anchor point="TOPLEFT"/>
               </Anchors>
@@ -202,7 +202,7 @@
           </Layer>
         </Layers>
         <Frames>
-          <Frame inherits="AuctionatorDropDown" parentKey="DropDown">
+          <Frame inherits="AuctionHouseHelperDropDown" parentKey="DropDown">
             <KeyValues>
               <KeyValue key="labelText" value="" type="string" />
             </KeyValues>
@@ -211,7 +211,7 @@
             </Anchors>
           </Frame>
 
-          <Button parentKey="ResetTierButton" inherits="AuctionatorResetButton">
+          <Button parentKey="ResetTierButton" inherits="AuctionHouseHelperResetButton">
             <Anchors>
               <Anchor point="TOPLEFT" relativeKey="$parent.DropDown.DropDown" relativePoint="TOPRIGHT" x="-10" y="-5"/>
             </Anchors>
@@ -230,7 +230,7 @@
         </Scripts>
       </Button>
 
-      <Button parentKey="Cancel" inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_CANCEL">
+      <Button parentKey="Cancel" inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTION_HOUSE_HELPER_L_CANCEL">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.Inset" relativePoint="BOTTOMLEFT"/>
         </Anchors>
@@ -240,7 +240,7 @@
         </Scripts>
       </Button>
 
-      <Button parentKey="ResetAllButton" inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_RESET_ALL">
+      <Button parentKey="ResetAllButton" inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTION_HOUSE_HELPER_L_RESET_ALL">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.Cancel" relativePoint="TOPRIGHT"/>
         </Anchors>

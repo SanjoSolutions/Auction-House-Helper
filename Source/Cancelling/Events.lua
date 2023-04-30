@@ -1,4 +1,4 @@
-Auctionator.Cancelling.Events = {
+AuctionHouseHelper.Cancelling.Events = {
   RequestCancel = "request_auction_cancellation",
   RequestCancelUndercut = "request_cancel_undercut_macro",
   UndercutStatus = "undercut_status",

@@ -1,4 +1,4 @@
-<!-- Tabs/Auctionator/Mixins directory manifest -->
+<!-- Tabs/AuctionHouseHelper/Mixins directory manifest -->
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Script file="Translator.lua" />
   <Script file="Main.lua"/>

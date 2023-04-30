@@ -1,6 +1,6 @@
-Auctionator.Tabs = {}
+AuctionHouseHelper.Tabs = {}
 
-Auctionator.Tabs.State = {
+AuctionHouseHelper.Tabs.State = {
   knownTabs = {}
 }
 
@@ -12,39 +12,39 @@ Auctionator.Tabs.State = {
 --  displayModeKey, -> string
 --  tabOrder -> number
 -- }
-function Auctionator.Tabs.Register(details)
-  table.insert(Auctionator.Tabs.State.knownTabs, details)
+function AuctionHouseHelper.Tabs.Register(details)
+  table.insert(AuctionHouseHelper.Tabs.State.knownTabs, details)
 end
 
-Auctionator.Tabs.Register( {
+AuctionHouseHelper.Tabs.Register( {
   name = "Shopping",
-  textLabel = AUCTIONATOR_L_SHOPPING_TAB,
-  tabTemplate = "AuctionatorShoppingTabFrameTemplate",
-  tabHeader = AUCTIONATOR_L_SHOPPING_TAB_HEADER_2,
-  tabFrameName = "AuctionatorShoppingFrame",
+  textLabel = AUCTION_HOUSE_HELPER_L_SHOPPING_TAB,
+  tabTemplate = "AuctionHouseHelperShoppingTabFrameTemplate",
+  tabHeader = AUCTION_HOUSE_HELPER_L_SHOPPING_TAB_HEADER_2,
+  tabFrameName = "AuctionHouseHelperShoppingFrame",
   tabOrder = 1,
 })
-Auctionator.Tabs.Register( {
-  name = "Auctionator",
-  textLabel = AUCTIONATOR_L_AUCTIONATOR,
-  tabTemplate = "AuctionatorConfigurationTabFrameTemplate",
-  tabHeader = AUCTIONATOR_L_INFO_TAB_HEADER,
-  tabFrameName = "AuctionatorConfigFrame",
+AuctionHouseHelper.Tabs.Register( {
+  name = "AuctionHouseHelper",
+  textLabel = AUCTION_HOUSE_HELPER_L_AUCTION_HOUSE_HELPER,
+  tabTemplate = "AuctionHouseHelperConfigurationTabFrameTemplate",
+  tabHeader = AUCTION_HOUSE_HELPER_L_INFO_TAB_HEADER,
+  tabFrameName = "AuctionHouseHelperConfigFrame",
   tabOrder = 4,
 })
-Auctionator.Tabs.Register( {
+AuctionHouseHelper.Tabs.Register( {
   name = "Cancelling",
-  textLabel = AUCTIONATOR_L_CANCELLING_TAB,
-  tabTemplate = "AuctionatorCancellingTabFrameTemplate",
-  tabHeader = AUCTIONATOR_L_CANCELLING_TAB_HEADER,
-  tabFrameName = "AuctionatorCancellingFrame",
+  textLabel = AUCTION_HOUSE_HELPER_L_CANCELLING_TAB,
+  tabTemplate = "AuctionHouseHelperCancellingTabFrameTemplate",
+  tabHeader = AUCTION_HOUSE_HELPER_L_CANCELLING_TAB_HEADER,
+  tabFrameName = "AuctionHouseHelperCancellingFrame",
   tabOrder = 3,
 })
-Auctionator.Tabs.Register( {
+AuctionHouseHelper.Tabs.Register( {
   name = "Selling",
-  textLabel = AUCTIONATOR_L_SELLING_TAB,
-  tabTemplate = "AuctionatorSellingTabFrameTemplate",
-  tabHeader = AUCTIONATOR_L_SELLING_TAB_HEADER,
-  tabFrameName = "AuctionatorSellingFrame",
+  textLabel = AUCTION_HOUSE_HELPER_L_SELLING_TAB,
+  tabTemplate = "AuctionHouseHelperSellingTabFrameTemplate",
+  tabHeader = AUCTION_HOUSE_HELPER_L_SELLING_TAB_HEADER,
+  tabFrameName = "AuctionHouseHelperSellingFrame",
   tabOrder = 2,
 })

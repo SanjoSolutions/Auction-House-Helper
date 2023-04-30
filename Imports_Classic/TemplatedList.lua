@@ -1,52 +1,52 @@
-AuctionatorRetailImportTemplatedListElementMixin = {};
+AuctionHouseHelperRetailImportTemplatedListElementMixin = {};
 
-function AuctionatorRetailImportTemplatedListElementMixin:InitElement(...)
+function AuctionHouseHelperRetailImportTemplatedListElementMixin:InitElement(...)
 	-- Override in your mixin.
 end
 
-function AuctionatorRetailImportTemplatedListElementMixin:UpdateDisplay()
+function AuctionHouseHelperRetailImportTemplatedListElementMixin:UpdateDisplay()
 	-- Override in your mixin.
 	assert("Your templated list element must define a display method");
 end
 
-function AuctionatorRetailImportTemplatedListElementMixin:OnSelected()
+function AuctionHouseHelperRetailImportTemplatedListElementMixin:OnSelected()
 	-- Override in your mixin.
 end
 
-function AuctionatorRetailImportTemplatedListElementMixin:OnEnter()
+function AuctionHouseHelperRetailImportTemplatedListElementMixin:OnEnter()
 	-- Override in your mixin.
 end
 
-function AuctionatorRetailImportTemplatedListElementMixin:OnLeave()
+function AuctionHouseHelperRetailImportTemplatedListElementMixin:OnLeave()
 	-- Override in your mixin.
 end
 
-function AuctionatorRetailImportTemplatedListElementMixin:Populate(listIndex)
+function AuctionHouseHelperRetailImportTemplatedListElementMixin:Populate(listIndex)
 	self.listIndex = listIndex;
 	self:UpdateDisplay();
 end
 
-function AuctionatorRetailImportTemplatedListElementMixin:OnClick()
+function AuctionHouseHelperRetailImportTemplatedListElementMixin:OnClick()
 	self:GetList():SetSelectedListIndex(self.listIndex);
 	self:OnSelected();
 end
 
-function AuctionatorRetailImportTemplatedListElementMixin:IsSelected()
+function AuctionHouseHelperRetailImportTemplatedListElementMixin:IsSelected()
 	return self:GetListIndex() == self:GetList():GetSelectedListIndex();
 end
 
-function AuctionatorRetailImportTemplatedListElementMixin:GetListIndex()
+function AuctionHouseHelperRetailImportTemplatedListElementMixin:GetListIndex()
 	return self.listIndex;
 end
 
-function AuctionatorRetailImportTemplatedListElementMixin:GetList()
+function AuctionHouseHelperRetailImportTemplatedListElementMixin:GetList()
 	return self:GetParent();
 end
 
 
-AuctionatorRetailImportTemplatedListMixin = {};
+AuctionHouseHelperRetailImportTemplatedListMixin = {};
 
-function AuctionatorRetailImportTemplatedListMixin:SetElementTemplate(elementTemplate, ...)
+function AuctionHouseHelperRetailImportTemplatedListMixin:SetElementTemplate(elementTemplate, ...)
 	if self.elementTemplate ~= nil then
 		assert("You cannot change the element template once it is set, as the necessary frames may have already been created from the old template.");
 		return;
@@ -56,33 +56,33 @@ function AuctionatorRetailImportTemplatedListMixin:SetElementTemplate(elementTem
 	self.elementTemplateInitArgs = SafePack(...);
 end
 
-function AuctionatorRetailImportTemplatedListMixin:SetGetNumResultsFunction(getNumResultsFunction)
+function AuctionHouseHelperRetailImportTemplatedListMixin:SetGetNumResultsFunction(getNumResultsFunction)
 	self.getNumResultsFunction = getNumResultsFunction;
 	self:ResetList();
 end
 
-function AuctionatorRetailImportTemplatedListMixin:SetSelectionCallback(selectionCallback)
+function AuctionHouseHelperRetailImportTemplatedListMixin:SetSelectionCallback(selectionCallback)
 	self.selectionCallback = selectionCallback;
 end
 
-function AuctionatorRetailImportTemplatedListMixin:SetRefreshCallback(refreshCallback)
+function AuctionHouseHelperRetailImportTemplatedListMixin:SetRefreshCallback(refreshCallback)
 	self.refreshCallback = refreshCallback;
 end
 
-function AuctionatorRetailImportTemplatedListMixin:GetSelectedHighlight()
+function AuctionHouseHelperRetailImportTemplatedListMixin:GetSelectedHighlight()
 	return self.ArtOverlay.SelectedHighlight;
 end
 
-function AuctionatorRetailImportTemplatedListMixin:OnShow()
+function AuctionHouseHelperRetailImportTemplatedListMixin:OnShow()
 	self:CheckListInitialization();
 	self:RefreshListDisplay();
 end
 
-function AuctionatorRetailImportTemplatedListMixin:IsInitialized()
+function AuctionHouseHelperRetailImportTemplatedListMixin:IsInitialized()
 	return self.isInitialized;
 end
 
-function AuctionatorRetailImportTemplatedListMixin:CheckListInitialization()
+function AuctionHouseHelperRetailImportTemplatedListMixin:CheckListInitialization()
 	if self.isInitialized or (self:GetElementTemplate() == nil) or not self:CanInitialize() then
 		return;
 	end
@@ -93,15 +93,15 @@ function AuctionatorRetailImportTemplatedListMixin:CheckListInitialization()
 	self.isInitialized = true;
 end
 
-function AuctionatorRetailImportTemplatedListMixin:GetElementTemplate()
+function AuctionHouseHelperRetailImportTemplatedListMixin:GetElementTemplate()
 	return self.elementTemplate;
 end
 
-function AuctionatorRetailImportTemplatedListMixin:GetElementInitializationArgs()
+function AuctionHouseHelperRetailImportTemplatedListMixin:GetElementInitializationArgs()
 	return SafeUnpack(self.elementTemplateInitArgs);
 end
 
-function AuctionatorRetailImportTemplatedListMixin:InitializeElements()
+function AuctionHouseHelperRetailImportTemplatedListMixin:InitializeElements()
 	-- We use a local sub-function to capture the variadic parameters and avoid unpacking multiple times.
 	local function InitializeAllElementFrames(...)
 		for i = 1, self:GetNumElementFrames() do
@@ -112,7 +112,7 @@ function AuctionatorRetailImportTemplatedListMixin:InitializeElements()
 	InitializeAllElementFrames(self:GetElementInitializationArgs());
 end
 
-function AuctionatorRetailImportTemplatedListMixin:UpdatedSelectedHighlight()
+function AuctionHouseHelperRetailImportTemplatedListMixin:UpdatedSelectedHighlight()
 	local selectedHighlight = self:GetSelectedHighlight();
 	selectedHighlight:ClearAllPoints();
 	selectedHighlight:Hide();
@@ -127,13 +127,13 @@ function AuctionatorRetailImportTemplatedListMixin:UpdatedSelectedHighlight()
 	end
 end
 
-function AuctionatorRetailImportTemplatedListMixin:AttachHighlightToElementFrame(selectedHighlight, elementFrame)
+function AuctionHouseHelperRetailImportTemplatedListMixin:AttachHighlightToElementFrame(selectedHighlight, elementFrame)
 	local elementFrame = self:GetElementFrame(elementOffset);
 	selectedHighlight:SetPoint("CENTER", elementFrame, "CENTER", 0, 0);
 	selectedHighlight:Show();
 end
 
-function AuctionatorRetailImportTemplatedListMixin:SetSelectedListIndex(listIndex, skipUpdates)
+function AuctionHouseHelperRetailImportTemplatedListMixin:SetSelectedListIndex(listIndex, skipUpdates)
 	local sameIndex = selectedListIndex == listIndex;
 	self.selectedListIndex = listIndex;
 
@@ -150,23 +150,23 @@ function AuctionatorRetailImportTemplatedListMixin:SetSelectedListIndex(listInde
 	self:RefreshListDisplay();
 end
 
-function AuctionatorRetailImportTemplatedListMixin:GetSelectedListIndex()
+function AuctionHouseHelperRetailImportTemplatedListMixin:GetSelectedListIndex()
 	return self.selectedListIndex;
 end
 
-function AuctionatorRetailImportTemplatedListMixin:ResetList()
+function AuctionHouseHelperRetailImportTemplatedListMixin:ResetList()
 	if self.isInitialized then
 		self:ResetDisplay();
 	end
 end
 
-function AuctionatorRetailImportTemplatedListMixin:CanDisplay()
+function AuctionHouseHelperRetailImportTemplatedListMixin:CanDisplay()
 	if self.elementTemplate == nil then
-		return false, "Templated list elementTemplate not set. Use AuctionatorRetailImportTemplatedListMixin:SetElementTemplate.";
+		return false, "Templated list elementTemplate not set. Use AuctionHouseHelperRetailImportTemplatedListMixin:SetElementTemplate.";
 	end
 
 	if self.getNumResultsFunction == nil then
-		return false, "Templated list getNumResultsFunction not set. Use AuctionatorRetailImportTemplatedListMixin:SetGetNumResultsFunction.";
+		return false, "Templated list getNumResultsFunction not set. Use AuctionHouseHelperRetailImportTemplatedListMixin:SetGetNumResultsFunction.";
 	end
 
 	if not self.isInitialized then
@@ -176,7 +176,7 @@ function AuctionatorRetailImportTemplatedListMixin:CanDisplay()
 	return true, nil;
 end
 
-function AuctionatorRetailImportTemplatedListMixin:RefreshListDisplay()
+function AuctionHouseHelperRetailImportTemplatedListMixin:RefreshListDisplay()
 	if not self:IsVisible() then
 		return;
 	end
@@ -197,7 +197,7 @@ function AuctionatorRetailImportTemplatedListMixin:RefreshListDisplay()
 	end
 end
 
-function AuctionatorRetailImportTemplatedListMixin:DisplayList(numResults)
+function AuctionHouseHelperRetailImportTemplatedListMixin:DisplayList(numResults)
 	local listOffset = self:GetListOffset();
 	local numElementFrames = self:GetNumElementFrames();
 	local lastDisplayedOffset = 0;
@@ -218,7 +218,7 @@ function AuctionatorRetailImportTemplatedListMixin:DisplayList(numResults)
 	return lastDisplayedOffset;
 end
 
-function AuctionatorRetailImportTemplatedListMixin:EnumerateElementFrames()
+function AuctionHouseHelperRetailImportTemplatedListMixin:EnumerateElementFrames()
 	local numElementFrames = self:GetNumElementFrames();
 	local elementFrameIndex = 0;
 	local function ElementFrameIterator()
@@ -234,30 +234,30 @@ function AuctionatorRetailImportTemplatedListMixin:EnumerateElementFrames()
 	return ElementFrameIterator;
 end
 
-function AuctionatorRetailImportTemplatedListMixin:CanInitialize()
+function AuctionHouseHelperRetailImportTemplatedListMixin:CanInitialize()
 	return true; -- May be implemented by derived mixins.
 end
 
-function AuctionatorRetailImportTemplatedListMixin:InitializeList()
+function AuctionHouseHelperRetailImportTemplatedListMixin:InitializeList()
 	-- Implemented by derived mixins.
 	error("This must be implemented for a templated list to function.");
 end
 
-function AuctionatorRetailImportTemplatedListMixin:GetNumElementFrames()
+function AuctionHouseHelperRetailImportTemplatedListMixin:GetNumElementFrames()
 	-- Implemented by derived mixins.
 	error("This must be implemented for a templated list to function.");
 end
 
-function AuctionatorRetailImportTemplatedListMixin:GetElementFrame(frameIndex)
+function AuctionHouseHelperRetailImportTemplatedListMixin:GetElementFrame(frameIndex)
 	-- Implemented by derived mixins.
 	error("This must be implemented for a templated list to function.");
 end
 
-function AuctionatorRetailImportTemplatedListMixin:GetListOffset()
+function AuctionHouseHelperRetailImportTemplatedListMixin:GetListOffset()
 	-- Implemented by derived mixins.
 	error("This must be implemented for a templated list to function.");
 end
 
-function AuctionatorRetailImportTemplatedListMixin:ResetDisplay()
+function AuctionHouseHelperRetailImportTemplatedListMixin:ResetDisplay()
 	-- Implemented by derived mixins.
 end

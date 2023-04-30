@@ -1,17 +1,17 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="AuctionatorConfigShoppingAltFrameTemplate"
-    inherits="AuctionatorConfigShoppingFrameTemplate"
-    mixin="AuctionatorConfigShoppingAltFrameMixin"
+    name="AuctionHouseHelperConfigShoppingAltFrameTemplate"
+    inherits="AuctionHouseHelperConfigShoppingFrameTemplate"
+    mixin="AuctionHouseHelperConfigShoppingAltFrameMixin"
     parent="InterfaceOptionsFrame"
     virtual="true">
 
     <Frames>
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="AlwaysLoadMore">
+      <Frame inherits="AuctionHouseHelperConfigurationCheckbox" parentKey="AlwaysLoadMore">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SHOPPING_ALWAYS_LOAD_MORE" type="global" />
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_SHOPPING_ALWAYS_LOAD_MORE_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_SHOPPING_ALWAYS_LOAD_MORE_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SHOPPING_ALWAYS_LOAD_MORE" type="global" />
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SHOPPING_ALWAYS_LOAD_MORE_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SHOPPING_ALWAYS_LOAD_MORE_TOOLTIP_TEXT" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.ListMissingTerms" relativePoint="BOTTOMLEFT" />

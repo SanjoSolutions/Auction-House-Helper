@@ -1,35 +1,35 @@
-AuctionatorBagItemSelectedMixin = CreateFromMixins(AuctionatorBagItemMixin)
+AuctionHouseHelperBagItemSelectedMixin = CreateFromMixins(AuctionHouseHelperBagItemMixin)
 
 local seenBag, seenSlot
 
-function AuctionatorBagItemSelectedMixin:OnClick(button)
+function AuctionHouseHelperBagItemSelectedMixin:OnClick(button)
   local wasCursorItem = C_Cursor.GetCursorItem()
   if not self:ProcessCursor() then
     if button == "LeftButton" and not wasCursorItem and self.itemInfo ~= nil then
       self:SearchInShoppingTab()
     else
-      AuctionatorBagItemMixin.OnClick(self, button)
+      AuctionHouseHelperBagItemMixin.OnClick(self, button)
     end
   end
 end
 
-function AuctionatorBagItemSelectedMixin:SearchInShoppingTab()
+function AuctionHouseHelperBagItemSelectedMixin:SearchInShoppingTab()
   local item = Item:CreateFromItemLink(self.itemInfo.itemLink)
   item:ContinueOnItemLoad(function()
-    Auctionator.API.v1.MultiSearchExact(AUCTIONATOR_L_SELLING_TAB, { item:GetItemName() })
+    AuctionHouseHelper.API.v1.MultiSearchExact(AUCTION_HOUSE_HELPER_L_SELLING_TAB, { item:GetItemName() })
   end)
 end
 
-function AuctionatorBagItemSelectedMixin:OnReceiveDrag()
+function AuctionHouseHelperBagItemSelectedMixin:OnReceiveDrag()
   self:ProcessCursor()
 end
 
-function AuctionatorBagItemSelectedMixin:ProcessCursor()
+function AuctionHouseHelperBagItemSelectedMixin:ProcessCursor()
   local location = C_Cursor.GetCursorItem()
   ClearCursor()
 
   if not location then
-    Auctionator.Debug.Message("nothing on cursor")
+    AuctionHouseHelper.Debug.Message("nothing on cursor")
     return false
   end
 
@@ -40,29 +40,29 @@ function AuctionatorBagItemSelectedMixin:ProcessCursor()
   --  clicks.
   -- We use 2.
   if not location:HasAnyLocation() then
-    Auctionator.Debug.Message("AuctionatorBagItemSelected", "recovering")
+    AuctionHouseHelper.Debug.Message("AuctionHouseHelperBagItemSelected", "recovering")
     location = ItemLocation:CreateFromBagAndSlot(seenBag, seenSlot)
   end
 
   if not C_Item.DoesItemExist(location) then
-    Auctionator.Debug.Message("AuctionatorBagItemSelected", "not exists")
+    AuctionHouseHelper.Debug.Message("AuctionHouseHelperBagItemSelected", "not exists")
     return false
   end
 
-  local itemInfo = Auctionator.Utilities.ItemInfoFromLocation(location)
-  itemInfo.count = Auctionator.Selling.GetItemCount(location)
+  local itemInfo = AuctionHouseHelper.Utilities.ItemInfoFromLocation(location)
+  itemInfo.count = AuctionHouseHelper.Selling.GetItemCount(location)
 
-  if not Auctionator.EventBus:IsSourceRegistered(self) then
-    Auctionator.EventBus:RegisterSource(self, "AuctionatorBagItemSelectedMixin")
+  if not AuctionHouseHelper.EventBus:IsSourceRegistered(self) then
+    AuctionHouseHelper.EventBus:RegisterSource(self, "AuctionHouseHelperBagItemSelectedMixin")
   end
 
   if itemInfo.auctionable then
-    Auctionator.Debug.Message("AuctionatorBagItemSelected", "auctionable")
-    Auctionator.EventBus:Fire(self, Auctionator.Selling.Events.BagItemClicked, itemInfo)
+    AuctionHouseHelper.Debug.Message("AuctionHouseHelperBagItemSelected", "auctionable")
+    AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.Selling.Events.BagItemClicked, itemInfo)
     return true
   end
 
-  Auctionator.Debug.Message("AuctionatorBagItemSelected", "err")
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperBagItemSelected", "err")
   UIErrorsFrame:AddMessage(ERR_AUCTION_BOUND_ITEM, 1.0, 0.1, 0.1, 1.0)
   return false
 end

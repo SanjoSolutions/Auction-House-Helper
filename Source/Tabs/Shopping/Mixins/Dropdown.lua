@@ -1,8 +1,8 @@
-AuctionatorShoppingListDropdownMixin = {}
+AuctionHouseHelperShoppingListDropdownMixin = {}
 
 local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0")
 
-function AuctionatorShoppingListDropdownMixin:OnLoad()
+function AuctionHouseHelperShoppingListDropdownMixin:OnLoad()
   LibDD:Create_UIDropDownMenu(self)
 
   LibDD:UIDropDownMenu_SetInitializeFunction(self, self.Initialize)
@@ -13,60 +13,60 @@ function AuctionatorShoppingListDropdownMixin:OnLoad()
   self:SetNoList()
 end
 
-function AuctionatorShoppingListDropdownMixin:SetNoList()
-  LibDD:UIDropDownMenu_SetText(self, AUCTIONATOR_L_SELECT_SHOPPING_LIST)
+function AuctionHouseHelperShoppingListDropdownMixin:SetNoList()
+  LibDD:UIDropDownMenu_SetText(self, AUCTION_HOUSE_HELPER_L_SELECT_SHOPPING_LIST)
   self.currentList = nil
 end
 
-function AuctionatorShoppingListDropdownMixin:OnShow()
+function AuctionHouseHelperShoppingListDropdownMixin:OnShow()
   if not self.searchNextTime then
     return
   end
   self.searchNextTime = false
 
-  local listName = Auctionator.Config.Get(Auctionator.Config.Options.DEFAULT_LIST)
+  local listName = AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.DEFAULT_LIST)
 
-  if listName == Auctionator.Constants.NO_LIST then
+  if listName == AuctionHouseHelper.Constants.NO_LIST then
     return
   end
 
-  local listIndex = Auctionator.Shopping.ListManager:GetIndexForName(listName)
+  local listIndex = AuctionHouseHelper.Shopping.ListManager:GetIndexForName(listName)
 
   if listIndex ~= nil then
-    self:SelectList(Auctionator.Shopping.ListManager:GetByIndex(listIndex))
+    self:SelectList(AuctionHouseHelper.Shopping.ListManager:GetByIndex(listIndex))
   end
 end
 
-function AuctionatorShoppingListDropdownMixin:OnEvent(eventName, ...)
+function AuctionHouseHelperShoppingListDropdownMixin:OnEvent(eventName, ...)
   if eventName == "AUCTION_HOUSE_CLOSED" then
     self.searchNextTime = true
   end
 end
 
-function AuctionatorShoppingListDropdownMixin:SetUpEvents()
-  Auctionator.EventBus:RegisterSource(self, "Shopping List Dropdown")
+function AuctionHouseHelperShoppingListDropdownMixin:SetUpEvents()
+  AuctionHouseHelper.EventBus:RegisterSource(self, "Shopping List Dropdown")
 
-  Auctionator.EventBus:Register(self, {
-    Auctionator.Shopping.Events.ListMetaChange,
-    Auctionator.Shopping.Tab.Events.ListCreated,
-    Auctionator.Shopping.Tab.Events.ListRenamed,
-    Auctionator.Shopping.Tab.Events.ListSelected,
+  AuctionHouseHelper.EventBus:Register(self, {
+    AuctionHouseHelper.Shopping.Events.ListMetaChange,
+    AuctionHouseHelper.Shopping.Tab.Events.ListCreated,
+    AuctionHouseHelper.Shopping.Tab.Events.ListRenamed,
+    AuctionHouseHelper.Shopping.Tab.Events.ListSelected,
   })
   FrameUtil.RegisterFrameForEvents(self, {
     "AUCTION_HOUSE_CLOSED"
   })
 end
 
-function AuctionatorShoppingListDropdownMixin:Initialize(level, rootEntry)
+function AuctionHouseHelperShoppingListDropdownMixin:Initialize(level, rootEntry)
   local listEntry
   if level == 1 then
 
     -- Add entry to create a new shopping list
     listEntry = LibDD:UIDropDownMenu_CreateInfo()
     listEntry.notCheckable = true
-    listEntry.text = GREEN_FONT_COLOR:WrapTextInColorCode(AUCTIONATOR_L_NEW_SHOPPING_LIST)
+    listEntry.text = GREEN_FONT_COLOR:WrapTextInColorCode(AUCTION_HOUSE_HELPER_L_NEW_SHOPPING_LIST)
     listEntry.func = function(entry)
-      StaticPopup_Show(Auctionator.Constants.DialogNames.CreateShoppingList)
+      StaticPopup_Show(AuctionHouseHelper.Constants.DialogNames.CreateShoppingList)
     end
     LibDD:UIDropDownMenu_AddButton(listEntry)
 
@@ -76,19 +76,19 @@ function AuctionatorShoppingListDropdownMixin:Initialize(level, rootEntry)
       if isTemp then
         listEntry = LibDD:UIDropDownMenu_CreateInfo()
         listEntry.notCheckable = true
-        listEntry.text = BLUE_FONT_COLOR:WrapTextInColorCode(AUCTIONATOR_L_SAVE_THIS_LIST_AS)
+        listEntry.text = BLUE_FONT_COLOR:WrapTextInColorCode(AUCTION_HOUSE_HELPER_L_SAVE_THIS_LIST_AS)
         listEntry.func = function(entry)
-          local message = AUCTIONATOR_L_RENAME_LIST_CONFIRM:format(self.currentList:GetName())
-          StaticPopupDialogs[Auctionator.Constants.DialogNames.RenameShoppingList].text = message
-          StaticPopup_Show(Auctionator.Constants.DialogNames.RenameShoppingList, nil, nil, self.currentList:GetName())
+          local message = AUCTION_HOUSE_HELPER_L_RENAME_LIST_CONFIRM:format(self.currentList:GetName())
+          StaticPopupDialogs[AuctionHouseHelper.Constants.DialogNames.RenameShoppingList].text = message
+          StaticPopup_Show(AuctionHouseHelper.Constants.DialogNames.RenameShoppingList, nil, nil, self.currentList:GetName())
         end
         LibDD:UIDropDownMenu_AddButton(listEntry)
       end
     end
 
     -- Add an entry for each shopping list
-    for index = 1, Auctionator.Shopping.ListManager:GetCount() do
-      local list = Auctionator.Shopping.ListManager:GetByIndex(index)
+    for index = 1, AuctionHouseHelper.Shopping.ListManager:GetCount() do
+      local list = AuctionHouseHelper.Shopping.ListManager:GetByIndex(index)
       listEntry = LibDD:UIDropDownMenu_CreateInfo()
       listEntry.text = list:GetName()
       listEntry.value = index
@@ -107,46 +107,46 @@ function AuctionatorShoppingListDropdownMixin:Initialize(level, rootEntry)
     listEntry.notCheckable = true
     listEntry.value = index
 
-    local list = Auctionator.Shopping.ListManager:GetByIndex(tonumber(rootEntry.index))
-    listEntry.text = AUCTIONATOR_L_DELETE
+    local list = AuctionHouseHelper.Shopping.ListManager:GetByIndex(tonumber(rootEntry.index))
+    listEntry.text = AUCTION_HOUSE_HELPER_L_DELETE
     listEntry.func = function(entry)
-      local message = AUCTIONATOR_L_DELETE_LIST_CONFIRM:format(list:GetName()):gsub("%%", "%%%%")
-      StaticPopupDialogs[Auctionator.Constants.DialogNames.DeleteShoppingList].text = message
-      StaticPopup_Show(Auctionator.Constants.DialogNames.DeleteShoppingList, nil, nil, list:GetName())
+      local message = AUCTION_HOUSE_HELPER_L_DELETE_LIST_CONFIRM:format(list:GetName()):gsub("%%", "%%%%")
+      StaticPopupDialogs[AuctionHouseHelper.Constants.DialogNames.DeleteShoppingList].text = message
+      StaticPopup_Show(AuctionHouseHelper.Constants.DialogNames.DeleteShoppingList, nil, nil, list:GetName())
       LibDD:HideDropDownMenu(1)
     end
     LibDD:UIDropDownMenu_AddButton(listEntry, 2)
 
     if list.isTemporary then
-      listEntry.text = AUCTIONATOR_L_SAVE_AS
+      listEntry.text = AUCTION_HOUSE_HELPER_L_SAVE_AS
     else
-      listEntry.text = AUCTIONATOR_L_RENAME
+      listEntry.text = AUCTION_HOUSE_HELPER_L_RENAME
     end
     listEntry.func = function(entry)
-      local message = AUCTIONATOR_L_RENAME_LIST_CONFIRM:format(list:GetName()):gsub("%%", "%%%%")
-      StaticPopupDialogs[Auctionator.Constants.DialogNames.RenameShoppingList].text = message
-      StaticPopup_Show(Auctionator.Constants.DialogNames.RenameShoppingList, nil, nil, list:GetName())
+      local message = AUCTION_HOUSE_HELPER_L_RENAME_LIST_CONFIRM:format(list:GetName()):gsub("%%", "%%%%")
+      StaticPopupDialogs[AuctionHouseHelper.Constants.DialogNames.RenameShoppingList].text = message
+      StaticPopup_Show(AuctionHouseHelper.Constants.DialogNames.RenameShoppingList, nil, nil, list:GetName())
       LibDD:HideDropDownMenu(1)
     end
     LibDD:UIDropDownMenu_AddButton(listEntry, 2)
   end
 end
 
-function AuctionatorShoppingListDropdownMixin:SelectList(selectedList)
+function AuctionHouseHelperShoppingListDropdownMixin:SelectList(selectedList)
   LibDD:UIDropDownMenu_SetText(self, selectedList:GetName())
-  Auctionator.EventBus:Fire(self, Auctionator.Shopping.Tab.Events.ListSelected, selectedList)
+  AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.Shopping.Tab.Events.ListSelected, selectedList)
 end
 
-function AuctionatorShoppingListDropdownMixin:ReceiveEvent(eventName, eventData)
-  if eventName == Auctionator.Shopping.Events.ListMetaChange then
-    if self.currentList ~= nil and self.currentList:GetName() == eventData and Auctionator.Shopping.ListManager:GetIndexForName(eventData) == nil then
+function AuctionHouseHelperShoppingListDropdownMixin:ReceiveEvent(eventName, eventData)
+  if eventName == AuctionHouseHelper.Shopping.Events.ListMetaChange then
+    if self.currentList ~= nil and self.currentList:GetName() == eventData and AuctionHouseHelper.Shopping.ListManager:GetIndexForName(eventData) == nil then
       self:SetNoList()
     end
-  elseif eventName == Auctionator.Shopping.Tab.Events.ListCreated then
+  elseif eventName == AuctionHouseHelper.Shopping.Tab.Events.ListCreated then
     self:SelectList(eventData)
-  elseif eventName == Auctionator.Shopping.Tab.Events.ListSelected then
+  elseif eventName == AuctionHouseHelper.Shopping.Tab.Events.ListSelected then
     self.currentList = eventData
-  elseif eventName == Auctionator.Shopping.Tab.Events.ListRenamed then
+  elseif eventName == AuctionHouseHelper.Shopping.Tab.Events.ListRenamed then
     if self.currentList ~= nil and self.currentList:GetName() == eventData:GetName() then
       self:SelectList(eventData)
     end

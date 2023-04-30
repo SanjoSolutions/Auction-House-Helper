@@ -1,26 +1,26 @@
-AuctionatorShoppingSearchManagerMixin = {}
+AuctionHouseHelperShoppingSearchManagerMixin = {}
 
-local SearchForTerms = Auctionator.Shopping.Tab.Events.SearchForTerms
-local CancelSearch = Auctionator.Shopping.Tab.Events.CancelSearch
+local SearchForTerms = AuctionHouseHelper.Shopping.Tab.Events.SearchForTerms
+local CancelSearch = AuctionHouseHelper.Shopping.Tab.Events.CancelSearch
 
-function AuctionatorShoppingSearchManagerMixin:OnLoad()
-  Auctionator.EventBus:RegisterSource(self, "Auctionator Shopping List Search Manager")
-  Auctionator.EventBus:Register(self, {
-    SearchForTerms, CancelSearch, Auctionator.Shopping.Events.ListItemChange, Auctionator.Shopping.Events.ListMetaChange
+function AuctionHouseHelperShoppingSearchManagerMixin:OnLoad()
+  AuctionHouseHelper.EventBus:RegisterSource(self, "AuctionHouseHelper Shopping List Search Manager")
+  AuctionHouseHelper.EventBus:Register(self, {
+    SearchForTerms, CancelSearch, AuctionHouseHelper.Shopping.Events.ListItemChange, AuctionHouseHelper.Shopping.Events.ListMetaChange
   })
 
-  self.searchProvider = CreateFrame("FRAME", nil, nil, "AuctionatorDirectSearchProviderTemplate")
+  self.searchProvider = CreateFrame("FRAME", nil, nil, "AuctionHouseHelperDirectSearchProviderTemplate")
   self.searchProvider:InitSearch(
     function(results)
-      Auctionator.EventBus:Fire(self, Auctionator.Shopping.Tab.Events.ListSearchEnded, results)
+      AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.Shopping.Tab.Events.ListSearchEnded, results)
     end,
     function(current, total, partialResults)
-      Auctionator.EventBus:Fire(self, Auctionator.Shopping.Tab.Events.ListSearchIncrementalUpdate, partialResults, total, current)
+      AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.Shopping.Tab.Events.ListSearchIncrementalUpdate, partialResults, total, current)
     end
   )
 end
 
-function AuctionatorShoppingSearchManagerMixin:ReceiveEvent(eventName, ...)
+function AuctionHouseHelperShoppingSearchManagerMixin:ReceiveEvent(eventName, ...)
   if eventName == SearchForTerms then
     local searchTerms, config = ...
     self:DoSearch(searchTerms, config)
@@ -30,16 +30,16 @@ function AuctionatorShoppingSearchManagerMixin:ReceiveEvent(eventName, ...)
   end
 end
 
-function AuctionatorShoppingSearchManagerMixin:OnHide()
+function AuctionHouseHelperShoppingSearchManagerMixin:OnHide()
   self.searchProvider:AbortSearch()
 end
 
-function AuctionatorShoppingSearchManagerMixin:DoSearch(searchTerms, config)
+function AuctionHouseHelperShoppingSearchManagerMixin:DoSearch(searchTerms, config)
   self.searchProvider:AbortSearch()
 
-  Auctionator.EventBus:Fire(
+  AuctionHouseHelper.EventBus:Fire(
     self,
-    Auctionator.Shopping.Tab.Events.ListSearchStarted
+    AuctionHouseHelper.Shopping.Tab.Events.ListSearchStarted
   )
 
   self.searchProvider:Search(searchTerms, config)

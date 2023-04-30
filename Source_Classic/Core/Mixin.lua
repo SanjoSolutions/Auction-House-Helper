@@ -1,53 +1,53 @@
-AuctionatorAHFrameMixin = {}
+AuctionHouseHelperAHFrameMixin = {}
 
 local function InitializeAuctionHouseTabs()
-  if Auctionator.State.TabFrameRef == nil then
-    Auctionator.State.TabFrameRef = CreateFrame(
+  if AuctionHouseHelper.State.TabFrameRef == nil then
+    AuctionHouseHelper.State.TabFrameRef = CreateFrame(
       "Frame",
-      "AuctionatorAHTabsContainer",
+      "AuctionHouseHelperAHTabsContainer",
       AuctionFrame,
-      "AuctionatorAHTabsContainerTemplate"
+      "AuctionHouseHelperAHTabsContainerTemplate"
     )
   end
 end
 
 local function InitializeBuyFrame()
-  if Auctionator.State.BuyFrameRef == nil then
-    Auctionator.State.BuyFrameRef = CreateFrame(
+  if AuctionHouseHelper.State.BuyFrameRef == nil then
+    AuctionHouseHelper.State.BuyFrameRef = CreateFrame(
       "Frame",
-      "AuctionatorBuyFrame",
-      AuctionatorShoppingFrame,
-      "AuctionatorBuyFrameTemplateForShopping"
+      "AuctionHouseHelperBuyFrame",
+      AuctionHouseHelperShoppingFrame,
+      "AuctionHouseHelperBuyFrameTemplateForShopping"
     )
   end
 end
 
 local function InitializePageStatusDialog()
-  if Auctionator.State.PageStatusFrameRef == nil then
-    Auctionator.State.PageStatusFrameRef = CreateFrame(
+  if AuctionHouseHelper.State.PageStatusFrameRef == nil then
+    AuctionHouseHelper.State.PageStatusFrameRef = CreateFrame(
       "Frame",
-      "AuctionatorPageStatusDialogFrame",
+      "AuctionHouseHelperPageStatusDialogFrame",
       AuctionFrame,
-      "AuctionatorPageStatusDialogTemplate"
+      "AuctionHouseHelperPageStatusDialogTemplate"
     )
   end
 end
 
 local function InitializeThrottlingTimeoutDialog()
-  if Auctionator.State.ThrottlingTimeoutFrameRef == nil then
-    Auctionator.State.ThrottlingTimeoutFrameRef = CreateFrame(
+  if AuctionHouseHelper.State.ThrottlingTimeoutFrameRef == nil then
+    AuctionHouseHelper.State.ThrottlingTimeoutFrameRef = CreateFrame(
       "Frame",
-      "AuctionatorThrottlingTimeoutDialogFrame",
+      "AuctionHouseHelperThrottlingTimeoutDialogFrame",
       AuctionFrame,
-      "AuctionatorThrottlingTimeoutDialogTemplate"
+      "AuctionHouseHelperThrottlingTimeoutDialogTemplate"
     )
   end
 end
 
 local function ShowDefaultTab()
-  local tabs = AuctionatorAHTabsContainer.Tabs
+  local tabs = AuctionHouseHelperAHTabsContainer.Tabs
 
-  local chosenTab = tabs[Auctionator.Config.Get(Auctionator.Config.Options.DEFAULT_TAB)]
+  local chosenTab = tabs[AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.DEFAULT_TAB)]
 
   if chosenTab then
     chosenTab:Click()
@@ -55,23 +55,23 @@ local function ShowDefaultTab()
 end
 
 local function InitializeSplashScreen()
-  if Auctionator.State.SplashScreenRef == nil then
-    Auctionator.State.SplashScreenRef = CreateFrame(
+  if AuctionHouseHelper.State.SplashScreenRef == nil then
+    AuctionHouseHelper.State.SplashScreenRef = CreateFrame(
       "Frame",
-      "AuctionatorSplashScreen",
+      "AuctionHouseHelperSplashScreen",
       UIParent,
-      "AuctionatorSplashScreenTemplate"
+      "AuctionHouseHelperSplashScreenTemplate"
     )
   end
 end
 
 local function InitializeFullScanFrame()
-  if Auctionator.State.FullScanFrameRef == nil then
-    Auctionator.State.FullScanFrameRef = CreateFrame(
+  if AuctionHouseHelper.State.FullScanFrameRef == nil then
+    AuctionHouseHelper.State.FullScanFrameRef = CreateFrame(
       "FRAME",
-      "AuctionatorFullScanFrame",
+      "AuctionHouseHelperFullScanFrame",
       AuctionHouseFrame,
-      "AuctionatorFullScanFrameTemplate"
+      "AuctionHouseHelperFullScanFrameTemplate"
     )
   end
 end
@@ -82,13 +82,13 @@ local function InitializeSearchCategories()
     return
   end
 
-  Auctionator.Search.InitializeCategories()
+  AuctionHouseHelper.Search.InitializeCategories()
 
   setupSearchCategories = true
 end
 
-function AuctionatorAHFrameMixin:OnShow()
-  Auctionator.Debug.Message("AuctionatorAHFrameMixin:OnShow()")
+function AuctionHouseHelperAHFrameMixin:OnShow()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperAHFrameMixin:OnShow()")
 
   InitializeSearchCategories()
   InitializeAuctionHouseTabs()
@@ -101,7 +101,7 @@ function AuctionatorAHFrameMixin:OnShow()
   ShowDefaultTab()
 end
 
-function AuctionatorAHFrameMixin:OnEvent(eventName, ...)
+function AuctionHouseHelperAHFrameMixin:OnEvent(eventName, ...)
   if eventName == "AUCTION_HOUSE_SHOW" then
     self:Show()
   elseif eventName == "AUCTION_HOUSE_CLOSED" then

@@ -1,5 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Frame name="AuctionatorFullScanFrameTemplate" hidden="true" mixin="AuctionatorFullScanFrameMixin" virtual="true">
+  <Frame name="AuctionHouseHelperFullScanFrameTemplate" hidden="true" mixin="AuctionHouseHelperFullScanFrameMixin" virtual="true">
     <Scripts>
       <OnLoad method="OnLoad"/>
       <OnEvent method="OnEvent" />

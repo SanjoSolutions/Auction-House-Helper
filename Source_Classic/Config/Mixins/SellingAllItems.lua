@@ -1,10 +1,10 @@
-AuctionatorConfigSellingAllItemsFrameMixin = CreateFromMixins(AuctionatorPanelConfigMixin)
+AuctionHouseHelperConfigSellingAllItemsFrameMixin = CreateFromMixins(AuctionHouseHelperPanelConfigMixin)
 
-function AuctionatorConfigSellingAllItemsFrameMixin:OnLoad()
-  Auctionator.Debug.Message("AuctionatorConfigSellingAllItemsFrameMixin:OnLoad()")
+function AuctionHouseHelperConfigSellingAllItemsFrameMixin:OnLoad()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperConfigSellingAllItemsFrameMixin:OnLoad()")
 
-  self.name = AUCTIONATOR_L_CONFIG_SELLING_ALL_ITEMS_CATEGORY
-  self.parent = "Auctionator"
+  self.name = AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_ALL_ITEMS_CATEGORY
+  self.parent = "Auction House Helper"
   self.beenShown = false
 
   self:SetupPanel()
@@ -14,24 +14,24 @@ function AuctionatorConfigSellingAllItemsFrameMixin:OnLoad()
   end)
 end
 
-function AuctionatorConfigSellingAllItemsFrameMixin:OnShow()
+function AuctionHouseHelperConfigSellingAllItemsFrameMixin:OnShow()
   self.beenShown = true
-  self.currentUndercutPreference = Auctionator.Config.Get(Auctionator.Config.Options.AUCTION_SALES_PREFERENCE)
+  self.currentUndercutPreference = AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.AUCTION_SALES_PREFERENCE)
 
-  self.DurationGroup:SetSelectedValue(Auctionator.Config.Get(Auctionator.Config.Options.AUCTION_DURATION))
-  self.SaveLastDurationAsDefault:SetChecked(Auctionator.Config.Get(Auctionator.Config.Options.SAVE_LAST_DURATION_AS_DEFAULT))
+  self.DurationGroup:SetSelectedValue(AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.AUCTION_DURATION))
+  self.SaveLastDurationAsDefault:SetChecked(AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SAVE_LAST_DURATION_AS_DEFAULT))
   self.SalesPreference:SetSelectedValue(self.currentUndercutPreference)
 
   self:OnSalesPreferenceChange(self.currentUndercutPreference)
 
-  self.UndercutPercentage:SetNumber(Auctionator.Config.Get(Auctionator.Config.Options.UNDERCUT_PERCENTAGE))
-  self.UndercutValue:SetAmount(Auctionator.Config.Get(Auctionator.Config.Options.UNDERCUT_STATIC_VALUE))
+  self.UndercutPercentage:SetNumber(AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.UNDERCUT_PERCENTAGE))
+  self.UndercutValue:SetAmount(AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.UNDERCUT_STATIC_VALUE))
 
-  self.GearPriceMultiplier:SetNumber(Auctionator.Config.Get(Auctionator.Config.Options.GEAR_PRICE_MULTIPLIER))
+  self.GearPriceMultiplier:SetNumber(AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.GEAR_PRICE_MULTIPLIER))
 
-  self.StartingPricePercentage:SetNumber(Auctionator.Config.Get(Auctionator.Config.Options.STARTING_PRICE_PERCENTAGE))
+  self.StartingPricePercentage:SetNumber(AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.STARTING_PRICE_PERCENTAGE))
 
-  local defaultStacks = Auctionator.Config.Get(Auctionator.Config.Options.DEFAULT_SELLING_STACKS)
+  local defaultStacks = AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.DEFAULT_SELLING_STACKS)
   self.DefaultStacks.StackSize:SetNumber(defaultStacks.stackSize)
   self.DefaultStacks.NumStacks:SetNumber(defaultStacks.numStacks)
   self.DefaultStacks.StackSize:Show()
@@ -39,13 +39,13 @@ function AuctionatorConfigSellingAllItemsFrameMixin:OnShow()
   self.DefaultStacks:SetMaxStackSize(0)
   self.DefaultStacks:SetMaxNumStacks(0)
 
-  self.ResetStackSizeMemory:SetEnabled(next(Auctionator.Config.Get(Auctionator.Config.Options.STACK_SIZE_MEMORY)) ~= nil)
+  self.ResetStackSizeMemory:SetEnabled(next(AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.STACK_SIZE_MEMORY)) ~= nil)
 end
 
-function AuctionatorConfigSellingAllItemsFrameMixin:OnSalesPreferenceChange(selectedValue)
+function AuctionHouseHelperConfigSellingAllItemsFrameMixin:OnSalesPreferenceChange(selectedValue)
   self.currentUndercutPreference = selectedValue
 
-  if self.currentUndercutPreference == Auctionator.Config.SalesTypes.PERCENTAGE then
+  if self.currentUndercutPreference == AuctionHouseHelper.Config.SalesTypes.PERCENTAGE then
     self.UndercutPercentage:Show()
     self.UndercutValue:Hide()
   else
@@ -54,29 +54,29 @@ function AuctionatorConfigSellingAllItemsFrameMixin:OnSalesPreferenceChange(sele
   end
 end
 
-function AuctionatorConfigSellingAllItemsFrameMixin:Save()
+function AuctionHouseHelperConfigSellingAllItemsFrameMixin:Save()
   if not self.beenShown then
     return
   end
 
-  Auctionator.Debug.Message("AuctionatorConfigSellingAllItemsFrameMixin:Save()")
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperConfigSellingAllItemsFrameMixin:Save()")
 
-  Auctionator.Config.Set(Auctionator.Config.Options.AUCTION_DURATION, self.DurationGroup:GetValue())
-  Auctionator.Config.Set(Auctionator.Config.Options.SAVE_LAST_DURATION_AS_DEFAULT, self.SaveLastDurationAsDefault:GetChecked())
+  AuctionHouseHelper.Config.Set(AuctionHouseHelper.Config.Options.AUCTION_DURATION, self.DurationGroup:GetValue())
+  AuctionHouseHelper.Config.Set(AuctionHouseHelper.Config.Options.SAVE_LAST_DURATION_AS_DEFAULT, self.SaveLastDurationAsDefault:GetChecked())
 
-  Auctionator.Config.Set(Auctionator.Config.Options.AUCTION_SALES_PREFERENCE, self.SalesPreference:GetValue())
-  Auctionator.Config.Set(
-    Auctionator.Config.Options.UNDERCUT_PERCENTAGE,
-    Auctionator.Utilities.ValidatePercentage(self.UndercutPercentage:GetNumber())
+  AuctionHouseHelper.Config.Set(AuctionHouseHelper.Config.Options.AUCTION_SALES_PREFERENCE, self.SalesPreference:GetValue())
+  AuctionHouseHelper.Config.Set(
+    AuctionHouseHelper.Config.Options.UNDERCUT_PERCENTAGE,
+    AuctionHouseHelper.Utilities.ValidatePercentage(self.UndercutPercentage:GetNumber())
   )
-  Auctionator.Config.Set(Auctionator.Config.Options.UNDERCUT_STATIC_VALUE, self.UndercutValue:GetAmount())
+  AuctionHouseHelper.Config.Set(AuctionHouseHelper.Config.Options.UNDERCUT_STATIC_VALUE, self.UndercutValue:GetAmount())
 
-  Auctionator.Config.Set(Auctionator.Config.Options.GEAR_PRICE_MULTIPLIER, self.GearPriceMultiplier:GetNumber())
+  AuctionHouseHelper.Config.Set(AuctionHouseHelper.Config.Options.GEAR_PRICE_MULTIPLIER, self.GearPriceMultiplier:GetNumber())
 
-  local newPercentage = Auctionator.Utilities.ValidatePercentage(self.StartingPricePercentage:GetNumber())
+  local newPercentage = AuctionHouseHelper.Utilities.ValidatePercentage(self.StartingPricePercentage:GetNumber())
   if newPercentage > 0 then
-    Auctionator.Config.Set(
-      Auctionator.Config.Options.STARTING_PRICE_PERCENTAGE,
+    AuctionHouseHelper.Config.Set(
+      AuctionHouseHelper.Config.Options.STARTING_PRICE_PERCENTAGE,
       newPercentage
     )
   end
@@ -85,14 +85,14 @@ function AuctionatorConfigSellingAllItemsFrameMixin:Save()
     stackSize = self.DefaultStacks.StackSize:GetNumber(),
     numStacks = self.DefaultStacks.NumStacks:GetNumber()
   }
-  Auctionator.Config.Set(Auctionator.Config.Options.DEFAULT_SELLING_STACKS, defaultStacks)
+  AuctionHouseHelper.Config.Set(AuctionHouseHelper.Config.Options.DEFAULT_SELLING_STACKS, defaultStacks)
 end
 
-function AuctionatorConfigSellingAllItemsFrameMixin:ResetStackSizeMemoryClicked()
-  Auctionator.Config.Set(Auctionator.Config.Options.STACK_SIZE_MEMORY, {})
+function AuctionHouseHelperConfigSellingAllItemsFrameMixin:ResetStackSizeMemoryClicked()
+  AuctionHouseHelper.Config.Set(AuctionHouseHelper.Config.Options.STACK_SIZE_MEMORY, {})
   self.ResetStackSizeMemory:Disable()
 end
 
-function AuctionatorConfigSellingAllItemsFrameMixin:Cancel()
-  Auctionator.Debug.Message("AuctionatorConfigSellingAllItemsFrameMixin:Cancel()")
+function AuctionHouseHelperConfigSellingAllItemsFrameMixin:Cancel()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperConfigSellingAllItemsFrameMixin:Cancel()")
 end

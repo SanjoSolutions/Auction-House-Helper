@@ -1,8 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Frame name="AuctionatorInsetTemplate" useParentLevel="true" virtual="true">
+  <Frame name="AuctionHouseHelperInsetTemplate" useParentLevel="true" virtual="true">
     <Layers>
       <Layer level="BACKGROUND">
-        <Texture parentKey="Bg" inherits="Auctionator_AuctionHouseBackgroundIndex">
+        <Texture parentKey="Bg" inherits="AuctionHouseHelper_AuctionHouseBackgroundIndex">
           <Anchors>
             <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT"/>
             <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT"/>
@@ -20,10 +20,10 @@
 		</Frames>
   </Frame>
 
-  <Frame name="AuctionatorInsetDarkTemplate" useParentLevel="true" virtual="true">
+  <Frame name="AuctionHouseHelperInsetDarkTemplate" useParentLevel="true" virtual="true">
     <Layers>
       <Layer level="BACKGROUND">
-        <Texture parentKey="Bg" inherits="Auctionator_AuctionHouseBackgroundSellRight">
+        <Texture parentKey="Bg" inherits="AuctionHouseHelper_AuctionHouseBackgroundSellRight">
           <Anchors>
             <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT"/>
             <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT"/>
@@ -41,10 +41,10 @@
 		</Frames>
   </Frame>
 
-  <Frame name="AuctionatorInsetLeaveScrollSpaceTemplate" useParentLevel="true" virtual="true">
+  <Frame name="AuctionHouseHelperInsetLeaveScrollSpaceTemplate" useParentLevel="true" virtual="true">
     <Layers>
       <Layer level="BACKGROUND">
-        <Texture parentKey="Bg" inherits="Auctionator_AuctionHouseBackgroundIndex">
+        <Texture parentKey="Bg" inherits="AuctionHouseHelper_AuctionHouseBackgroundIndex">
           <Anchors>
             <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT"/>
             <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-28"/>

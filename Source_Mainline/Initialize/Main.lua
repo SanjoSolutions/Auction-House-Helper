@@ -1,18 +1,18 @@
-local AUCTIONATOR_EVENTS = {
+local AUCTION_HOUSE_HELPER_EVENTS = {
   "PLAYER_LOGIN",
   "PLAYER_INTERACTION_MANAGER_FRAME_SHOW",
   "TRADE_SKILL_SHOW",
 }
 
-AuctionatorInitializeMainlineMixin = {}
+AuctionHouseHelperInitializeMainlineMixin = {}
 
-function AuctionatorInitializeMainlineMixin:OnLoad()
-  FrameUtil.RegisterFrameForEvents(self, AUCTIONATOR_EVENTS)
+function AuctionHouseHelperInitializeMainlineMixin:OnLoad()
+  FrameUtil.RegisterFrameForEvents(self, AUCTION_HOUSE_HELPER_EVENTS)
 end
 
-function AuctionatorInitializeMainlineMixin:OnEvent(event, ...)
+function AuctionHouseHelperInitializeMainlineMixin:OnEvent(event, ...)
   if event == "PLAYER_LOGIN" then
-    Auctionator.CraftingInfo.InitializeObjectiveTrackerFrame()
+    AuctionHouseHelper.CraftingInfo.InitializeObjectiveTrackerFrame()
   elseif event == "PLAYER_INTERACTION_MANAGER_FRAME_SHOW" then
     local showType = ...
     -- Cache vendor prices events
@@ -21,30 +21,30 @@ function AuctionatorInitializeMainlineMixin:OnEvent(event, ...)
       -- other realms, breaking crafting info prices, this prevents it happening
       -- again.
       if not IsOnTournamentRealm() then
-        Auctionator.CraftingInfo.CacheVendorPrices()
+        AuctionHouseHelper.CraftingInfo.CacheVendorPrices()
       end
      -- AH Window Initialization Events
     elseif showType == Enum.PlayerInteractionType.Auctioneer then
       self:AuctionHouseShown()
     elseif showType == Enum.PlayerInteractionType.ProfessionsCustomerOrder then
-      Auctionator.CraftingInfo.InitializeCustomerOrdersFrame()
+      AuctionHouseHelper.CraftingInfo.InitializeCustomerOrdersFrame()
     end
   elseif event == "TRADE_SKILL_SHOW" then
-    Auctionator.CraftingInfo.InitializeProfessionsFrame()
+    AuctionHouseHelper.CraftingInfo.InitializeProfessionsFrame()
   end
 end
 
-function AuctionatorInitializeMainlineMixin:AuctionHouseShown()
-  Auctionator.Debug.Message("AuctionatorInitializeMainlineMixin:AuctionHouseShown()")
+function AuctionHouseHelperInitializeMainlineMixin:AuctionHouseShown()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperInitializeMainlineMixin:AuctionHouseShown()")
 
   -- Avoids a lot of errors if this is loaded in a classic client
   if AuctionHouseFrame == nil then
     return
   end
 
-  Auctionator.AH.Initialize()
+  AuctionHouseHelper.AH.Initialize()
 
-  if Auctionator.State.AuctionatorFrame == nil then
-    Auctionator.State.AuctionatorFrame = CreateFrame("FRAME", "AuctionatorAHFrame", AuctionHouseFrame, "AuctionatorAHFrameTemplate")
+  if AuctionHouseHelper.State.AuctionHouseHelperFrame == nil then
+    AuctionHouseHelper.State.AuctionHouseHelperFrame = CreateFrame("FRAME", "AuctionHouseHelperAHFrame", AuctionHouseFrame, "AuctionHouseHelperAHFrameTemplate")
   end
 end

@@ -1,14 +1,14 @@
-function Auctionator.Debug.IsOn()
-  return Auctionator.Config.Get(Auctionator.Config.Options.DEBUG)
+function AuctionHouseHelper.Debug.IsOn()
+  return AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.DEBUG)
 end
 
-function Auctionator.Debug.Toggle()
-  Auctionator.Config.Set(Auctionator.Config.Options.DEBUG,
-    not Auctionator.Config.Get(Auctionator.Config.Options.DEBUG))
+function AuctionHouseHelper.Debug.Toggle()
+  AuctionHouseHelper.Config.Set(AuctionHouseHelper.Config.Options.DEBUG,
+    not AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.DEBUG))
 end
 
-function Auctionator.Debug.Message(message, ...)
-  if Auctionator.Debug.IsOn() then
+function AuctionHouseHelper.Debug.Message(message, ...)
+  if AuctionHouseHelper.Debug.IsOn() then
     print(GREEN_FONT_COLOR:WrapTextInColorCode(message), ...)
   end
 end

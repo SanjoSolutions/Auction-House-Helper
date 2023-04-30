@@ -1,6 +1,6 @@
 local SALE_ITEM_EVENTS = {
-  Auctionator.AH.Events.CommoditySearchResultsReady,
-  Auctionator.AH.Events.ItemSearchResultsReady,
+  AuctionHouseHelper.AH.Events.CommoditySearchResultsReady,
+  AuctionHouseHelper.AH.Events.ItemSearchResultsReady,
 }
 
 -- Necessary because attempting to post an auction with copper value silently
@@ -22,7 +22,7 @@ local function NormalizePrice(price)
 end
 
 local function IsEquipment(itemInfo)
-  return Auctionator.Utilities.IsEquipment(itemInfo.classId)
+  return AuctionHouseHelper.Utilities.IsEquipment(itemInfo.classId)
 end
 
 local function IsValidItem(item)
@@ -33,51 +33,51 @@ local function IsValidItem(item)
     C_Item.DoesItemExist(item.location)
 end
 
-AuctionatorSaleItemMixin = {}
+AuctionHouseHelperSaleItemMixin = {}
 
-function AuctionatorSaleItemMixin:OnLoad()
-  if Auctionator.Config.Get(Auctionator.Config.Options.SHOW_SELLING_BID_PRICE) then
+function AuctionHouseHelperSaleItemMixin:OnLoad()
+  if AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SHOW_SELLING_BID_PRICE) then
     self.BidPrice:Show()
   end
 end
 
-function AuctionatorSaleItemMixin:OnShow()
-  Auctionator.EventBus:Register(self, {
-    Auctionator.Selling.Events.BagItemClicked,
-    Auctionator.Selling.Events.RequestPost,
-    Auctionator.Selling.Events.ConfirmPost,
-    Auctionator.AH.Events.ThrottleUpdate,
-    Auctionator.Selling.Events.PriceSelected,
-    Auctionator.Selling.Events.RefreshSearch,
-    Auctionator.Components.Events.EnterPressed,
+function AuctionHouseHelperSaleItemMixin:OnShow()
+  AuctionHouseHelper.EventBus:Register(self, {
+    AuctionHouseHelper.Selling.Events.BagItemClicked,
+    AuctionHouseHelper.Selling.Events.RequestPost,
+    AuctionHouseHelper.Selling.Events.ConfirmPost,
+    AuctionHouseHelper.AH.Events.ThrottleUpdate,
+    AuctionHouseHelper.Selling.Events.PriceSelected,
+    AuctionHouseHelper.Selling.Events.RefreshSearch,
+    AuctionHouseHelper.Components.Events.EnterPressed,
   })
-  Auctionator.EventBus:RegisterSource(self, "AuctionatorSaleItemMixin")
+  AuctionHouseHelper.EventBus:RegisterSource(self, "AuctionHouseHelperSaleItemMixin")
 
-  SetOverrideBinding(self, false, Auctionator.Config.Get(Auctionator.Config.Options.SELLING_POST_SHORTCUT), "CLICK AuctionatorPostButton:LeftButton")
-  SetOverrideBinding(self, false, Auctionator.Config.Get(Auctionator.Config.Options.SELLING_SKIP_SHORTCUT), "CLICK AuctionatorSkipPostingButton:LeftButton")
+  SetOverrideBinding(self, false, AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SELLING_POST_SHORTCUT), "CLICK AuctionHouseHelperPostButton:LeftButton")
+  SetOverrideBinding(self, false, AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SELLING_SKIP_SHORTCUT), "CLICK AuctionHouseHelperSkipPostingButton:LeftButton")
 
   self.lastItemInfo = nil
   self:UpdateSkipButton()
   self:Reset()
 end
 
-function AuctionatorSaleItemMixin:OnHide()
-  Auctionator.EventBus:Unregister(self, {
-    Auctionator.Selling.Events.BagItemClicked,
-    Auctionator.Selling.Events.RequestPost,
-    Auctionator.Selling.Events.ConfirmPost,
-    Auctionator.AH.Events.ThrottleUpdate,
-    Auctionator.Selling.Events.PriceSelected,
-    Auctionator.Selling.Events.RefreshSearch,
-    Auctionator.Components.Events.EnterPressed,
+function AuctionHouseHelperSaleItemMixin:OnHide()
+  AuctionHouseHelper.EventBus:Unregister(self, {
+    AuctionHouseHelper.Selling.Events.BagItemClicked,
+    AuctionHouseHelper.Selling.Events.RequestPost,
+    AuctionHouseHelper.Selling.Events.ConfirmPost,
+    AuctionHouseHelper.AH.Events.ThrottleUpdate,
+    AuctionHouseHelper.Selling.Events.PriceSelected,
+    AuctionHouseHelper.Selling.Events.RefreshSearch,
+    AuctionHouseHelper.Components.Events.EnterPressed,
   })
-  Auctionator.EventBus:UnregisterSource(self)
+  AuctionHouseHelper.EventBus:UnregisterSource(self)
   self:UnlockItem()
   ClearOverrideBindings(self)
 end
 
-function AuctionatorSaleItemMixin:UpdateSkipButton()
-  if Auctionator.Config.Get(Auctionator.Config.Options.SELLING_AUTO_SELECT_NEXT) then
+function AuctionHouseHelperSaleItemMixin:UpdateSkipButton()
+  if AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SELLING_AUTO_SELECT_NEXT) then
     self.PostButton:SetSize(114, 22)
     self.SkipButton:Show()
   else
@@ -86,7 +86,7 @@ function AuctionatorSaleItemMixin:UpdateSkipButton()
   end
 end
 
-function AuctionatorSaleItemMixin:UnlockItem()
+function AuctionHouseHelperSaleItemMixin:UnlockItem()
   if self.itemInfo ~= nil then
     --Existence check added because of a bug report from a user where (for an
     --unknown reason) the item no longer existed.
@@ -97,13 +97,13 @@ function AuctionatorSaleItemMixin:UnlockItem()
   end
 end
 
-function AuctionatorSaleItemMixin:LockItem()
+function AuctionHouseHelperSaleItemMixin:LockItem()
   if self.itemInfo.count > 0 then
     C_Item.LockItem(self.itemInfo.location)
   end
 end
 
-function AuctionatorSaleItemMixin:OnUpdate()
+function AuctionHouseHelperSaleItemMixin:OnUpdate()
   if self.itemInfo == nil then
     return
 
@@ -132,24 +132,24 @@ function AuctionatorSaleItemMixin:OnUpdate()
   self:UpdateSkipButtonState()
 end
 
-function AuctionatorSaleItemMixin:GetPostLimit()
+function AuctionHouseHelperSaleItemMixin:GetPostLimit()
   return math.min(C_AuctionHouse.GetAvailablePostCount(self.itemInfo.location), self.itemInfo.count)
 end
-function AuctionatorSaleItemMixin:SetMax()
+function AuctionHouseHelperSaleItemMixin:SetMax()
   self.Quantity:SetNumber(self:GetPostLimit())
 end
 
-function AuctionatorSaleItemMixin:GetDeposit()
+function AuctionHouseHelperSaleItemMixin:GetDeposit()
   local deposit = 0
 
-  if self.itemInfo.itemType == Auctionator.Constants.ITEM_TYPES.COMMODITY then
+  if self.itemInfo.itemType == AuctionHouseHelper.Constants.ITEM_TYPES.COMMODITY then
     deposit = C_AuctionHouse.CalculateCommodityDeposit(
       self.itemInfo.itemKey.itemID,
       self:GetDuration(),
       self.Quantity:GetNumber()
     ) or deposit
 
-  elseif self.itemInfo.itemType == Auctionator.Constants.ITEM_TYPES.ITEM then
+  elseif self.itemInfo.itemType == AuctionHouseHelper.Constants.ITEM_TYPES.ITEM then
     deposit = C_AuctionHouse.CalculateItemDeposit(
       self.itemInfo.location,
       self:GetDuration(),
@@ -160,60 +160,60 @@ function AuctionatorSaleItemMixin:GetDeposit()
   return NormalizePrice(deposit)
 end
 
-function AuctionatorSaleItemMixin:ReceiveEvent(event, ...)
-  if event == Auctionator.Selling.Events.BagItemClicked then
+function AuctionHouseHelperSaleItemMixin:ReceiveEvent(event, ...)
+  if event == AuctionHouseHelper.Selling.Events.BagItemClicked then
     self:UnlockItem()
     self.itemInfo = ...
     self:LockItem()
     self:Update()
 
-  elseif event == Auctionator.AH.Events.ThrottleUpdate then
+  elseif event == AuctionHouseHelper.AH.Events.ThrottleUpdate then
     self:UpdatePostButtonState()
 
-  elseif event == Auctionator.Selling.Events.RequestPost then
+  elseif event == AuctionHouseHelper.Selling.Events.RequestPost then
     self:PostItem()
 
-  elseif event == Auctionator.Selling.Events.ConfirmPost then
+  elseif event == AuctionHouseHelper.Selling.Events.ConfirmPost then
     self:PostItem(true)
 
-  elseif event == Auctionator.Components.Events.EnterPressed then
+  elseif event == AuctionHouseHelper.Components.Events.EnterPressed then
     self:PostItem()
 
-  elseif event == Auctionator.Selling.Events.PriceSelected and
+  elseif event == AuctionHouseHelper.Selling.Events.PriceSelected and
          self.itemInfo ~= nil then
     local buyoutAmount, shouldUndercut = ...
 
     if shouldUndercut then
-      buyoutAmount = Auctionator.Selling.CalculateItemPriceFromPrice(buyoutAmount)
+      buyoutAmount = AuctionHouseHelper.Selling.CalculateItemPriceFromPrice(buyoutAmount)
     end
 
     self:UpdateSalesPrice(buyoutAmount)
 
-  elseif event == Auctionator.Selling.Events.RefreshSearch then
+  elseif event == AuctionHouseHelper.Selling.Events.RefreshSearch then
     self:RefreshButtonClicked()
 
-  elseif event == Auctionator.AH.Events.CommoditySearchResultsReady then
+  elseif event == AuctionHouseHelper.AH.Events.CommoditySearchResultsReady then
     local itemID = ...
     if itemID ~= self.expectedItemKey.itemID then
       return
     end
 
     self:ProcessCommodityResults(...)
-    Auctionator.EventBus:Unregister(self, SALE_ITEM_EVENTS)
+    AuctionHouseHelper.EventBus:Unregister(self, SALE_ITEM_EVENTS)
 
-  elseif event == Auctionator.AH.Events.ItemSearchResultsReady then
+  elseif event == AuctionHouseHelper.AH.Events.ItemSearchResultsReady then
     local itemKey = ...
-    if Auctionator.Utilities.ItemKeyString(itemKey) ~=
-        Auctionator.Utilities.ItemKeyString(self.expectedItemKey) then
+    if AuctionHouseHelper.Utilities.ItemKeyString(itemKey) ~=
+        AuctionHouseHelper.Utilities.ItemKeyString(self.expectedItemKey) then
       return
     end
 
     self:ProcessItemResults(...)
-    Auctionator.EventBus:Unregister(self, SALE_ITEM_EVENTS)
+    AuctionHouseHelper.EventBus:Unregister(self, SALE_ITEM_EVENTS)
   end
 end
 
-function AuctionatorSaleItemMixin:Update()
+function AuctionHouseHelperSaleItemMixin:Update()
   self:UpdateVisuals()
 
   if self.itemInfo ~= nil then
@@ -227,7 +227,7 @@ function AuctionatorSaleItemMixin:Update()
 
 end
 
-function AuctionatorSaleItemMixin:UpdateVisuals()
+function AuctionHouseHelperSaleItemMixin:UpdateVisuals()
   self.Icon:SetItemInfo(self.itemInfo)
 
   if self.itemInfo ~= nil then
@@ -236,7 +236,7 @@ function AuctionatorSaleItemMixin:UpdateVisuals()
     self.Icon:HideCount()
 
     -- Fade the (optionally visible) bid price if posting a commodity
-    if self.itemInfo.itemType == Auctionator.Constants.ITEM_TYPES.COMMODITY then
+    if self.itemInfo.itemType == AuctionHouseHelper.Constants.ITEM_TYPES.COMMODITY then
       self.BidPrice:SetAlpha(0.5)
     else
       self.BidPrice:SetAlpha(1)
@@ -250,12 +250,12 @@ end
 
 -- The exact item name is only loaded when needed as it slows down loading the
 -- bag items too much to do in BagDataProvider.
-function AuctionatorSaleItemMixin:SetItemName()
+function AuctionHouseHelperSaleItemMixin:SetItemName()
   if self.itemInfo.keyName ~= nil then
     self.TitleArea.Text:SetText(self.itemInfo.keyName)
 
   else
-    Auctionator.AH.GetItemKeyInfo(self.itemInfo.itemKey, function(itemInfo)
+    AuctionHouseHelper.AH.GetItemKeyInfo(self.itemInfo.itemKey, function(itemInfo)
       self.itemInfo.keyName = AuctionHouseUtil.GetItemDisplayTextFromItemKey(
         self.itemInfo.itemKey, itemInfo, false
       )
@@ -266,13 +266,13 @@ function AuctionatorSaleItemMixin:SetItemName()
   end
 end
 
-function AuctionatorSaleItemMixin:UpdateForNewItem()
+function AuctionHouseHelperSaleItemMixin:UpdateForNewItem()
   self:SetDuration()
 
   self:SetQuantity()
 
-  local price = Auctionator.Database:GetFirstPrice(
-    Auctionator.Utilities.DBKeyFromBrowseResult({ itemKey = self.itemInfo.itemKey })
+  local price = AuctionHouseHelper.Database:GetFirstPrice(
+    AuctionHouseHelper.Utilities.DBKeyFromBrowseResult({ itemKey = self.itemInfo.itemKey })
   )
 
   if price ~= nil then
@@ -286,7 +286,7 @@ function AuctionatorSaleItemMixin:UpdateForNewItem()
   self:DoSearch(self.itemInfo)
 end
 
-function AuctionatorSaleItemMixin:UpdateForNoItem()
+function AuctionHouseHelperSaleItemMixin:UpdateForNoItem()
   self.Quantity:SetNumber(0)
   self.MaxButton:Disable()
   self:UpdateSalesPrice(0)
@@ -295,14 +295,14 @@ function AuctionatorSaleItemMixin:UpdateForNoItem()
   self.TotalPrice:SetText(GetMoneyString(100, true))
 end
 
-function AuctionatorSaleItemMixin:SetDuration()
+function AuctionHouseHelperSaleItemMixin:SetDuration()
   self.Duration:SetSelectedValue(
-    Auctionator.Config.Get(Auctionator.Config.Options.AUCTION_DURATION)
+    AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.AUCTION_DURATION)
   )
 end
 
-function AuctionatorSaleItemMixin:SetQuantity()
-  local defaultQuantity = Auctionator.Config.Get(Auctionator.Config.Options.DEFAULT_QUANTITIES)[self.itemInfo.classId]
+function AuctionHouseHelperSaleItemMixin:SetQuantity()
+  local defaultQuantity = AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.DEFAULT_QUANTITIES)[self.itemInfo.classId]
 
   if self.itemInfo.count == 0 then
     self.Quantity:SetNumber(0)
@@ -315,36 +315,36 @@ function AuctionatorSaleItemMixin:SetQuantity()
   end
 end
 
-function AuctionatorSaleItemMixin:DoSearch(itemInfo, ...)
-  Auctionator.EventBus:Register(self, SALE_ITEM_EVENTS)
+function AuctionHouseHelperSaleItemMixin:DoSearch(itemInfo, ...)
+  AuctionHouseHelper.EventBus:Register(self, SALE_ITEM_EVENTS)
 
   local sortingOrder
 
-  if itemInfo.itemType == Auctionator.Constants.ITEM_TYPES.COMMODITY then
+  if itemInfo.itemType == AuctionHouseHelper.Constants.ITEM_TYPES.COMMODITY then
     sortingOrder = {sortOrder = 0, reverseSort = false}
   else
     sortingOrder = {sortOrder = 4, reverseSort = false}
   end
 
-  if IsEquipment(itemInfo) and Auctionator.Config.Get(Auctionator.Config.Options.SELLING_ITEM_MATCHING) ~= Auctionator.Config.ItemMatching.ITEM_NAME_AND_LEVEL then
+  if IsEquipment(itemInfo) and AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SELLING_ITEM_MATCHING) ~= AuctionHouseHelper.Config.ItemMatching.ITEM_NAME_AND_LEVEL then
     -- Bug with PTR C_AuctionHouse.MakeItemKey(...), it always sets the
     -- itemLevel to a non-zero value, so we have to create the key directly
     self.expectedItemKey = {itemID = itemInfo.itemKey.itemID, itemLevel = 0, itemSuffix = 0, battlePetSpeciesID = 0}
-    Auctionator.AH.SendSellSearchQueryByItemKey(self.expectedItemKey, {sortingOrder}, true)
+    AuctionHouseHelper.AH.SendSellSearchQueryByItemKey(self.expectedItemKey, {sortingOrder}, true)
   else
     self.expectedItemKey = itemInfo.itemKey
-    Auctionator.AH.SendSearchQueryByItemKey(self.expectedItemKey, {sortingOrder}, true)
+    AuctionHouseHelper.AH.SendSearchQueryByItemKey(self.expectedItemKey, {sortingOrder}, true)
   end
-  Auctionator.EventBus:Fire(self, Auctionator.Selling.Events.SellSearchStart, self.expectedItemKey, itemInfo.itemKey, itemInfo.itemLink)
+  AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.Selling.Events.SellSearchStart, self.expectedItemKey, itemInfo.itemKey, itemInfo.itemLink)
 end
 
-function AuctionatorSaleItemMixin:Reset()
+function AuctionHouseHelperSaleItemMixin:Reset()
   self:UnlockItem()
 
   self:Update()
 end
 
-function AuctionatorSaleItemMixin:UpdateSalesPrice(salesPrice)
+function AuctionHouseHelperSaleItemMixin:UpdateSalesPrice(salesPrice)
   if salesPrice == 0 then
     self.Price:SetAmount(0)
   else
@@ -353,13 +353,13 @@ function AuctionatorSaleItemMixin:UpdateSalesPrice(salesPrice)
   self.BidPrice:Clear()
 end
 
-function AuctionatorSaleItemMixin:SetEquipmentMultiplier(itemLink)
+function AuctionHouseHelperSaleItemMixin:SetEquipmentMultiplier(itemLink)
   self:UpdateSalesPrice(0)
 
   local item = Item:CreateFromItemLink(itemLink)
   item:ContinueOnItemLoad(function()
-    local multiplier = Auctionator.Config.Get(Auctionator.Config.Options.GEAR_PRICE_MULTIPLIER)
-    local vendorPrice = select(Auctionator.Constants.ITEM_INFO.SELL_PRICE, GetItemInfo(itemLink))
+    local multiplier = AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.GEAR_PRICE_MULTIPLIER)
+    local vendorPrice = select(AuctionHouseHelper.Constants.ITEM_INFO.SELL_PRICE, GetItemInfo(itemLink))
     if multiplier ~= 0 and vendorPrice ~= 0 then
       -- Check for a vendor price multiplier being set (and a vendor price)
       self:UpdateSalesPrice(
@@ -369,10 +369,10 @@ function AuctionatorSaleItemMixin:SetEquipmentMultiplier(itemLink)
   end)
 end
 
-function AuctionatorSaleItemMixin:OnEvent(eventName, ...)
+function AuctionHouseHelperSaleItemMixin:OnEvent(eventName, ...)
 end
 
-function AuctionatorSaleItemMixin:GetCommodityResult(itemID)
+function AuctionHouseHelperSaleItemMixin:GetCommodityResult(itemID)
   if C_AuctionHouse.GetCommoditySearchResultsQuantity(itemID) > 0 then
     return C_AuctionHouse.GetCommoditySearchResultInfo(itemID, 1)
   else
@@ -382,7 +382,7 @@ end
 
 -- Identifies when an auction is skewing the current price down and is probably
 -- not meant to be so low.
-function AuctionatorSaleItemMixin:GetCommodityThreshold(itemID)
+function AuctionHouseHelperSaleItemMixin:GetCommodityThreshold(itemID)
   local amount = 0
   -- Scan half the auctions, of the first 500, whichever is fewer
   local target = math.min(5000, math.floor(C_AuctionHouse.GetCommoditySearchResultsQuantity(itemID) * 0.2))
@@ -392,23 +392,23 @@ function AuctionatorSaleItemMixin:GetCommodityThreshold(itemID)
     amount = amount + result.quantity
 
     if amount >= target then
-      return Auctionator.Utilities.PriceWarningThreshold(result.unitPrice)
+      return AuctionHouseHelper.Utilities.PriceWarningThreshold(result.unitPrice)
     end
   end
 
   return nil
 end
 
-function AuctionatorSaleItemMixin:ProcessCommodityResults(itemID, ...)
-  Auctionator.Debug.Message("AuctionatorSaleItemMixin:ProcessCommodityResults()")
+function AuctionHouseHelperSaleItemMixin:ProcessCommodityResults(itemID, ...)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperSaleItemMixin:ProcessCommodityResults()")
 
-  local dbKeys = Auctionator.Utilities.DBKeyFromBrowseResult({ itemKey = C_AuctionHouse.MakeItemKey(itemID) })
+  local dbKeys = AuctionHouseHelper.Utilities.DBKeyFromBrowseResult({ itemKey = C_AuctionHouse.MakeItemKey(itemID) })
 
   local result = self:GetCommodityResult(itemID)
   -- Update DB with current lowest price
   if result ~= nil then
     for _, key in ipairs(dbKeys) do
-      Auctionator.Database:SetPrice(key, result.unitPrice)
+      AuctionHouseHelper.Database:SetPrice(key, result.unitPrice)
     end
   end
   if self.itemInfo ~= nil then
@@ -427,46 +427,46 @@ function AuctionatorSaleItemMixin:ProcessCommodityResults(itemID, ...)
 
   if result == nil then
     -- This commodity was not found in the AH, so use the last lowest price from DB
-    postingPrice = Auctionator.Database:GetFirstPrice(dbKeys)
+    postingPrice = AuctionHouseHelper.Database:GetFirstPrice(dbKeys)
   elseif result ~= nil then
     -- No need to undercut myself
     postingPrice = result.unitPrice
   else
     -- Otherwise, we're not the lowest price, so calculate based on user preferences
-    postingPrice = Auctionator.Selling.CalculateItemPriceFromPrice(result.unitPrice)
+    postingPrice = AuctionHouseHelper.Selling.CalculateItemPriceFromPrice(result.unitPrice)
   end
 
   -- Didn't find anything currently posted, and nothing in DB
   if postingPrice == nil then
-    Auctionator.Debug.Message("No prices have been recorded for this item.")
+    AuctionHouseHelper.Debug.Message("No prices have been recorded for this item.")
     return
   end
 
   self:UpdateSalesPrice(postingPrice)
 end
 
-function AuctionatorSaleItemMixin:GetItemResult(itemKey)
+function AuctionHouseHelperSaleItemMixin:GetItemResult(itemKey)
   local itemInfo = self.itemInfo or self.lastItemInfo
   for i = 1, C_AuctionHouse.GetItemSearchResultsQuantity(itemKey) do
     local resultInfo = C_AuctionHouse.GetItemSearchResultInfo(itemKey, i)
-    if Auctionator.Selling.DoesItemMatch(itemInfo.itemKey, itemInfo.itemLink, resultInfo.itemKey, resultInfo.itemLink) then
+    if AuctionHouseHelper.Selling.DoesItemMatch(itemInfo.itemKey, itemInfo.itemLink, resultInfo.itemKey, resultInfo.itemLink) then
       return resultInfo
     end
   end
   return nil
 end
 
-function AuctionatorSaleItemMixin:ProcessItemResults(itemKey)
-  Auctionator.Debug.Message("AuctionatorSaleItemMixin:ProcessItemResults()")
+function AuctionHouseHelperSaleItemMixin:ProcessItemResults(itemKey)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperSaleItemMixin:ProcessItemResults()")
 
-  local dbKeys = Auctionator.Utilities.DBKeyFromBrowseResult({ itemKey = itemKey })
+  local dbKeys = AuctionHouseHelper.Utilities.DBKeyFromBrowseResult({ itemKey = itemKey })
 
   local result = self:GetItemResult(itemKey)
 
   -- Update DB with current lowest price
   if result ~= nil then
     for _, key in ipairs(dbKeys) do
-      Auctionator.Database:SetPrice(key, result.buyoutAmount or result.bidAmount)
+      AuctionHouseHelper.Database:SetPrice(key, result.buyoutAmount or result.bidAmount)
     end
   end
   if self.itemInfo ~= nil then
@@ -479,25 +479,25 @@ function AuctionatorSaleItemMixin:ProcessItemResults(itemKey)
 
   if result == nil then
     -- This item was not found in the AH, so use the lowest price from the dbKey
-    postingPrice = Auctionator.Database:GetFirstPrice(dbKeys)
+    postingPrice = AuctionHouseHelper.Database:GetFirstPrice(dbKeys)
   elseif result ~= nil and result.containsOwnerItem then
     -- Posting an item I have already posted, and that is the current lowest price, so just
     -- use this price
     postingPrice = result.buyoutAmount
   else
-    postingPrice = Auctionator.Selling.CalculateItemPriceFromPrice(result.buyoutAmount or result.bidAmount)
+    postingPrice = AuctionHouseHelper.Selling.CalculateItemPriceFromPrice(result.buyoutAmount or result.bidAmount)
   end
 
   -- Didn't find anything currently posted, and nothing in DB
   if postingPrice == nil then
-    Auctionator.Debug.Message("Lowest price not found.")
+    AuctionHouseHelper.Debug.Message("Lowest price not found.")
     return
   end
 
   self:UpdateSalesPrice(postingPrice)
 end
 
-function AuctionatorSaleItemMixin:GetPostButtonState()
+function AuctionHouseHelperSaleItemMixin:GetPostButtonState()
   return
     self.itemInfo ~= nil and
     self.itemInfo.count > 0 and
@@ -521,9 +521,9 @@ function AuctionatorSaleItemMixin:GetPostButtonState()
         self.BidPrice:GetAmount() <= self.Price:GetAmount()
       ) or (
       -- Bid only with no buyout price
-        Auctionator.Config.Get(Auctionator.Config.Options.SHOW_SELLING_BID_PRICE) and
+        AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SHOW_SELLING_BID_PRICE) and
         -- Only items can have a bid amount
-        self.itemInfo.itemType == Auctionator.Constants.ITEM_TYPES.ITEM and
+        self.itemInfo.itemType == AuctionHouseHelper.Constants.ITEM_TYPES.ITEM and
         -- Only items can have a bid amount
         self.Price:GetAmount() == 0 and
         self.BidPrice:GetAmount() > 0
@@ -531,38 +531,38 @@ function AuctionatorSaleItemMixin:GetPostButtonState()
     ) and
 
     -- Not throttled (to avoid silent post failure)
-    Auctionator.AH.IsNotThrottled()
+    AuctionHouseHelper.AH.IsNotThrottled()
 end
 
-function AuctionatorSaleItemMixin:GetConfirmationMessage()
+function AuctionHouseHelperSaleItemMixin:GetConfirmationMessage()
   local effectiveUnitPrice = self.Price:GetAmount()
-  if Auctionator.Config.Get(Auctionator.Config.Options.SHOW_SELLING_BID_PRICE) and effectiveUnitPrice == 0 then
+  if AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SHOW_SELLING_BID_PRICE) and effectiveUnitPrice == 0 then
     effectiveUnitPrice = self.BidPrice:GetAmount()
   end
 
   -- Check if the item was underpriced compared to the currently on sale items
   if self.priceThreshold ~= nil and self.priceThreshold >= effectiveUnitPrice then
-    return AUCTIONATOR_L_CONFIRM_POST_LOW_PRICE:format(GetMoneyString(effectiveUnitPrice, true))
+    return AUCTION_HOUSE_HELPER_L_CONFIRM_POST_LOW_PRICE:format(GetMoneyString(effectiveUnitPrice, true))
   end
 
   -- Determine if the item is worth more to sell to a vendor than to post on the
   -- AH.
   local itemInfo = { GetItemInfo(self.itemInfo.itemLink) }
-  local vendorPrice = itemInfo[Auctionator.Constants.ITEM_INFO.SELL_PRICE]
-  if Auctionator.Utilities.IsVendorable(itemInfo) and
+  local vendorPrice = itemInfo[AuctionHouseHelper.Constants.ITEM_INFO.SELL_PRICE]
+  if AuctionHouseHelper.Utilities.IsVendorable(itemInfo) and
      vendorPrice * self.Quantity:GetNumber() + self:GetDeposit()
-       > math.floor(effectiveUnitPrice * self.Quantity:GetNumber() * Auctionator.Constants.AfterAHCut) then
-    return AUCTIONATOR_L_CONFIRM_POST_BELOW_VENDOR
+       > math.floor(effectiveUnitPrice * self.Quantity:GetNumber() * AuctionHouseHelper.Constants.AfterAHCut) then
+    return AUCTION_HOUSE_HELPER_L_CONFIRM_POST_BELOW_VENDOR
   end
 end
 
-function AuctionatorSaleItemMixin:RequiresConfirmationState()
+function AuctionHouseHelperSaleItemMixin:RequiresConfirmationState()
   return
-    Auctionator.Config.Get(Auctionator.Config.Options.SELLING_CONFIRM_LOW_PRICE) and
+    AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SELLING_CONFIRM_LOW_PRICE) and
     self:GetConfirmationMessage() ~= nil
 end
 
-function AuctionatorSaleItemMixin:UpdatePostButtonState()
+function AuctionHouseHelperSaleItemMixin:UpdatePostButtonState()
   if self:GetPostButtonState() then
     self.PostButton:Enable()
   else
@@ -570,7 +570,7 @@ function AuctionatorSaleItemMixin:UpdatePostButtonState()
   end
 end
 
-function AuctionatorSaleItemMixin:UpdateSkipButtonState()
+function AuctionHouseHelperSaleItemMixin:UpdateSkipButtonState()
   self.SkipButton:SetEnabled(self.SkipButton:IsShown() and IsValidItem(self.itemInfo and self.itemInfo.nextItem))
 end
 
@@ -580,17 +580,17 @@ local AUCTION_DURATIONS = {
   [48] = 3,
 }
 
-function AuctionatorSaleItemMixin:GetDuration()
+function AuctionHouseHelperSaleItemMixin:GetDuration()
   return AUCTION_DURATIONS[self.Duration:GetValue()]
 end
 
-function AuctionatorSaleItemMixin:PostItem(confirmed)
+function AuctionHouseHelperSaleItemMixin:PostItem(confirmed)
   if not self:GetPostButtonState() then
-    Auctionator.Debug.Message("Trying to post when we can't. Returning")
+    AuctionHouseHelper.Debug.Message("Trying to post when we can't. Returning")
     return
   elseif not confirmed and self:RequiresConfirmationState() then
-    StaticPopupDialogs[Auctionator.Constants.DialogNames.SellingConfirmPost].text = self:GetConfirmationMessage()
-    StaticPopup_Show(Auctionator.Constants.DialogNames.SellingConfirmPost)
+    StaticPopupDialogs[AuctionHouseHelper.Constants.DialogNames.SellingConfirmPost].text = self:GetConfirmationMessage()
+    StaticPopup_Show(AuctionHouseHelper.Constants.DialogNames.SellingConfirmPost)
     return
   end
 
@@ -602,7 +602,7 @@ function AuctionatorSaleItemMixin:PostItem(confirmed)
 
   self.MultisellProgress:SetDetails(self.itemInfo.iconTexture, quantity)
 
-  if self.itemInfo.itemType == Auctionator.Constants.ITEM_TYPES.ITEM then
+  if self.itemInfo.itemType == AuctionHouseHelper.Constants.ITEM_TYPES.ITEM then
     local params = nil
     if startingBid ~= 0 then
       bidAmountReported = startingBid
@@ -632,12 +632,12 @@ function AuctionatorSaleItemMixin:PostItem(confirmed)
   }
 
   --Print auction to chat
-  if Auctionator.Config.Get(Auctionator.Config.Options.AUCTION_CHAT_LOG) then
-    Auctionator.Utilities.Message(Auctionator.Selling.ComposeAuctionPostedMessage(postedInfo))
+  if AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.AUCTION_CHAT_LOG) then
+    AuctionHouseHelper.Utilities.Message(AuctionHouseHelper.Selling.ComposeAuctionPostedMessage(postedInfo))
   end
 
-  Auctionator.EventBus:Fire(self,
-    Auctionator.Selling.Events.AuctionCreated,
+  AuctionHouseHelper.EventBus:Fire(self,
+    AuctionHouseHelper.Selling.Events.AuctionCreated,
     postedInfo
   )
 
@@ -648,32 +648,32 @@ function AuctionatorSaleItemMixin:PostItem(confirmed)
     priceToSave = postedInfo.bidAmount
   end
   if self.itemInfo.existingValue == nil or self.itemInfo.existingValue > priceToSave then
-    Auctionator.Utilities.DBKeyFromLink(self.itemInfo.itemLink, function(dbKeys)
+    AuctionHouseHelper.Utilities.DBKeyFromLink(self.itemInfo.itemLink, function(dbKeys)
       for _, key in ipairs(dbKeys) do
-        Auctionator.Database:SetPrice(key, priceToSave)
+        AuctionHouseHelper.Database:SetPrice(key, priceToSave)
       end
       -- Refresh history listing after the new price is saved
-      Auctionator.EventBus:Fire(self, Auctionator.Selling.Events.RefreshHistory)
+      AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.Selling.Events.RefreshHistory)
     end)
   else
     -- Refresh history (posting and price history)
-    Auctionator.EventBus:Fire(self, Auctionator.Selling.Events.RefreshHistory)
+    AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.Selling.Events.RefreshHistory)
   end
 
-  if Auctionator.Config.Get(Auctionator.Config.Options.SAVE_LAST_DURATION_AS_DEFAULT) then
-    Auctionator.Config.Set(Auctionator.Config.Options.AUCTION_DURATION, self.Duration:GetValue())
+  if AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SAVE_LAST_DURATION_AS_DEFAULT) then
+    AuctionHouseHelper.Config.Set(AuctionHouseHelper.Config.Options.AUCTION_DURATION, self.Duration:GetValue())
   end
 
   -- Save item info for refreshing search results
   self.lastItemInfo = self.itemInfo
   self:Reset()
 
-  if (Auctionator.Config.Get(Auctionator.Config.Options.SELLING_AUTO_SELECT_NEXT) and
+  if (AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SELLING_AUTO_SELECT_NEXT) and
       IsValidItem(self.lastItemInfo.nextItem)
      ) then
     -- Option to automatically select the next item in the bag view
-    Auctionator.EventBus:Fire(
-      self, Auctionator.Selling.Events.BagItemClicked, self.lastItemInfo.nextItem
+    AuctionHouseHelper.EventBus:Fire(
+      self, AuctionHouseHelper.Selling.Events.BagItemClicked, self.lastItemInfo.nextItem
     )
 
   else
@@ -682,15 +682,15 @@ function AuctionatorSaleItemMixin:PostItem(confirmed)
   end
 end
 
-function AuctionatorSaleItemMixin:SkipItem()
+function AuctionHouseHelperSaleItemMixin:SkipItem()
   if self.SkipButton:IsEnabled() then
-    Auctionator.EventBus:Fire(
-      self, Auctionator.Selling.Events.BagItemClicked, self.itemInfo.nextItem
+    AuctionHouseHelper.EventBus:Fire(
+      self, AuctionHouseHelper.Selling.Events.BagItemClicked, self.itemInfo.nextItem
     )
   end
 end
 
-function AuctionatorSaleItemMixin:RefreshButtonClicked()
+function AuctionHouseHelperSaleItemMixin:RefreshButtonClicked()
   -- Search for the current item or the last item posted
   if self.itemInfo ~= nil then
     self:DoSearch(self.itemInfo)

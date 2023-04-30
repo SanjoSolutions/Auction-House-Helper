@@ -1,17 +1,17 @@
-AuctionatorBuyHistoryPricesFrameMixin = {}
-function AuctionatorBuyHistoryPricesFrameMixin:Init()
+AuctionHouseHelperBuyHistoryPricesFrameMixin = {}
+function AuctionHouseHelperBuyHistoryPricesFrameMixin:Init()
   self.RealmHistoryResultsListing:Init(self.RealmHistoryDataProvider)
   self.PostingHistoryResultsListing:Init(self.PostingHistoryDataProvider)
 end
 
-function AuctionatorBuyHistoryPricesFrameMixin:Reset()
+function AuctionHouseHelperBuyHistoryPricesFrameMixin:Reset()
   self.RealmHistoryDataProvider:Reset()
   self.PostingHistoryDataProvider:Reset()
 
   self:SelectRealmHistory()
 end
 
-function AuctionatorBuyHistoryPricesFrameMixin:SelectRealmHistory()
+function AuctionHouseHelperBuyHistoryPricesFrameMixin:SelectRealmHistory()
   self.RealmHistoryResultsListing:Show()
   self.PostingHistoryResultsListing:Hide()
 
@@ -19,7 +19,7 @@ function AuctionatorBuyHistoryPricesFrameMixin:SelectRealmHistory()
   self.PostingHistoryButton:Enable()
 end
 
-function AuctionatorBuyHistoryPricesFrameMixin:SelectPostingHistory()
+function AuctionHouseHelperBuyHistoryPricesFrameMixin:SelectPostingHistory()
   self.RealmHistoryResultsListing:Hide()
   self.PostingHistoryResultsListing:Show()
 

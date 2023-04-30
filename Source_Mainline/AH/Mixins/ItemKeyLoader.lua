@@ -1,11 +1,11 @@
-AuctionatorAHItemKeyLoaderFrameMixin = {}
+AuctionHouseHelperAHItemKeyLoaderFrameMixin = {}
 
 local ITEM_KEY_INFO_EVENTS = {
   "ITEM_KEY_ITEM_INFO_RECEIVED"
 }
 
-function AuctionatorAHItemKeyLoaderFrameMixin:OnLoad()
-  Auctionator.EventBus:RegisterSource(self, "AuctionatorItemKeyLoadingMixin")
+function AuctionHouseHelperAHItemKeyLoaderFrameMixin:OnLoad()
+  AuctionHouseHelper.EventBus:RegisterSource(self, "AuctionHouseHelperItemKeyLoadingMixin")
   self.waiting = {}
   self.cache = {}
   self.callbackMap = {}
@@ -13,8 +13,8 @@ function AuctionatorAHItemKeyLoaderFrameMixin:OnLoad()
   self.registered = false
 end
 
-function AuctionatorAHItemKeyLoaderFrameMixin:Get(itemKey, callback)
-  local itemKeyString = Auctionator.Utilities.ItemKeyString(itemKey)
+function AuctionHouseHelperAHItemKeyLoaderFrameMixin:Get(itemKey, callback)
+  local itemKeyString = AuctionHouseHelper.Utilities.ItemKeyString(itemKey)
 
   local info = self.cache[itemKeyString]
   if info then
@@ -47,17 +47,17 @@ function AuctionatorAHItemKeyLoaderFrameMixin:Get(itemKey, callback)
       self.registered = true
       FrameUtil.RegisterFrameForEvents(self, ITEM_KEY_INFO_EVENTS)
 
-      Auctionator.Debug.Message("AuctionatorAHItemKeyLoaderFrameMixin", self.registered)
+      AuctionHouseHelper.Debug.Message("AuctionHouseHelperAHItemKeyLoaderFrameMixin", self.registered)
     end
 
     self:MergeRequests(itemKey)
   end
 end
 
-function AuctionatorAHItemKeyLoaderFrameMixin:MergeRequests(itemKey)
-  local keyString = Auctionator.Utilities.ItemKeyString(itemKey)
+function AuctionHouseHelperAHItemKeyLoaderFrameMixin:MergeRequests(itemKey)
+  local keyString = AuctionHouseHelper.Utilities.ItemKeyString(itemKey)
   for _, key in ipairs(self.waiting[itemKey.itemID]) do
-    if keyString == Auctionator.Utilities.ItemKeyString(key) then
+    if keyString == AuctionHouseHelper.Utilities.ItemKeyString(key) then
       return
     end
   end
@@ -65,7 +65,7 @@ function AuctionatorAHItemKeyLoaderFrameMixin:MergeRequests(itemKey)
   table.insert(self.waiting[itemKey.itemID], itemKey)
 end
 
-function AuctionatorAHItemKeyLoaderFrameMixin:OnEvent(event, itemID)
+function AuctionHouseHelperAHItemKeyLoaderFrameMixin:OnEvent(event, itemID)
   if (
     event == "ITEM_KEY_ITEM_INFO_RECEIVED" and
     self.waiting[itemID] ~= nil
@@ -85,6 +85,6 @@ function AuctionatorAHItemKeyLoaderFrameMixin:OnEvent(event, itemID)
     self.registered = false
     FrameUtil.UnregisterFrameForEvents(self, ITEM_KEY_INFO_EVENTS)
 
-    Auctionator.Debug.Message("AuctionatorAHItemKeyLoaderFrameMixin", self.registered)
+    AuctionHouseHelper.Debug.Message("AuctionHouseHelperAHItemKeyLoaderFrameMixin", self.registered)
   end
 end

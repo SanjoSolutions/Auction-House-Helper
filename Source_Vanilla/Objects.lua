@@ -1,1 +1,1 @@
-Auctionator.EnchantInfo = {}
+AuctionHouseHelper.EnchantInfo = {}

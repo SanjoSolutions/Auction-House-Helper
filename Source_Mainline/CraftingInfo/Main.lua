@@ -1,7 +1,7 @@
 -- Get vendor or auction cost of an item depending on which is available
 local function GetCostByItemID(itemID, multiplier)
-  local vendorPrice = Auctionator.API.v1.GetVendorPriceByItemID(AUCTIONATOR_L_REAGENT_SEARCH, itemID)
-  local auctionPrice = Auctionator.API.v1.GetAuctionPriceByItemID(AUCTIONATOR_L_REAGENT_SEARCH, itemID)
+  local vendorPrice = AuctionHouseHelper.API.v1.GetVendorPriceByItemID(AUCTION_HOUSE_HELPER_L_REAGENT_SEARCH, itemID)
+  local auctionPrice = AuctionHouseHelper.API.v1.GetAuctionPriceByItemID(AUCTION_HOUSE_HELPER_L_REAGENT_SEARCH, itemID)
 
   local unitPrice = vendorPrice or auctionPrice
 
@@ -43,7 +43,7 @@ local function GetAllocatedCosts(reagentSlotSchematic, slotAllocations)
   return total
 end
 
-function Auctionator.CraftingInfo.CalculateCraftCost(recipeSchematic, transaction)
+function AuctionHouseHelper.CraftingInfo.CalculateCraftCost(recipeSchematic, transaction)
   local total = 0
 
   for slotIndex, reagentSlotSchematic in ipairs(recipeSchematic.reagentSlotSchematics) do
@@ -69,7 +69,7 @@ end
 
 -- Work around Blizzard APIs returning the wrong item ID for crafted reagents in
 -- the C_TradeSKillUI.GetRecipeOutputItemData function with Dragonflight
-function Auctionator.CraftingInfo.GetOutputItemLink(recipeID, recipeLevel, reagents, allocations)
+function AuctionHouseHelper.CraftingInfo.GetOutputItemLink(recipeID, recipeLevel, reagents, allocations)
   local recipeSchematic = C_TradeSkillUI.GetRecipeSchematic(recipeID, false, recipeLevel)
 
   local outputInfo = C_TradeSkillUI.GetRecipeOutputItemData(recipeID, reagents, allocations)

@@ -1,5 +1,5 @@
 <Ui>
-  <Frame name="AuctionatorFullScanStatusTemplate" mixin="AuctionatorFullScanStatusMixin" virtual="true">
+  <Frame name="AuctionHouseHelperFullScanStatusTemplate" mixin="AuctionHouseHelperFullScanStatusMixin" virtual="true">
     <Scripts>
       <OnLoad method="OnLoad"/>
       <OnShow method="OnShow"/>

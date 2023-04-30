@@ -1,7 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="AuctionatorConfigBasicOptionsFrameTemplate"
-    mixin="AuctionatorConfigBasicOptionsFrameMixin"
+    name="AuctionHouseHelperConfigBasicOptionsFrameTemplate"
+    mixin="AuctionHouseHelperConfigBasicOptionsFrameMixin"
     virtual="true">
 
     <Scripts>
@@ -11,57 +11,57 @@
     </Scripts>
 
     <Frames>
-      <Frame inherits="AuctionatorConfigurationTitleFrame" parentKey="TitleArea">
+      <Frame inherits="AuctionHouseHelperConfigurationTitleFrame" parentKey="TitleArea">
         <KeyValues>
-          <KeyValue key="titleText" value="AUCTIONATOR_L_CONFIG_BASIC_OPTIONS_CATEGORY" type="global" />
-          <KeyValue key="subTitleText" value="AUCTIONATOR_L_CONFIG_BASIC_OPTIONS_TEXT" type="global"/>
+          <KeyValue key="titleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_BASIC_OPTIONS_CATEGORY" type="global" />
+          <KeyValue key="subTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_BASIC_OPTIONS_TEXT" type="global"/>
         </KeyValues>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="Autoscan">
+      <Frame inherits="AuctionHouseHelperConfigurationCheckbox" parentKey="Autoscan">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_AUTOSCAN" type="global" />
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_AUTOSCAN_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_AUTOSCAN_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_AUTOSCAN" type="global" />
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_AUTOSCAN_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_AUTOSCAN_TOOLTIP_TEXT" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.TitleArea" relativePoint="BOTTOMLEFT" />
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationSubHeadingFrame" parentKey="AutoscanIntervalHeader">
+      <Frame inherits="AuctionHouseHelperConfigurationSubHeadingFrame" parentKey="AutoscanIntervalHeader">
         <KeyValues>
-          <KeyValue key="subHeadingText" value="AUCTIONATOR_L_CONFIG_AUTOSCAN_INTERVAL_HEADER" type="global"/>
+          <KeyValue key="subHeadingText" value="AUCTION_HOUSE_HELPER_L_CONFIG_AUTOSCAN_INTERVAL_HEADER" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.Autoscan" relativePoint="BOTTOMLEFT"/>
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationNumericInput" parentKey="AutoscanInterval">
+      <Frame inherits="AuctionHouseHelperConfigurationNumericInput" parentKey="AutoscanInterval">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_AUTOSCAN_INTERVAL" type="global"/>
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_AUTOSCAN_INTERVAL_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_AUTOSCAN_INTERVAL_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_AUTOSCAN_INTERVAL" type="global"/>
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_AUTOSCAN_INTERVAL_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_AUTOSCAN_INTERVAL_TOOLTIP_TEXT" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.AutoscanIntervalHeader" relativePoint="BOTTOMLEFT" y="-15"/>
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="DefaultTabHeading">
+      <Frame inherits="AuctionHouseHelperConfigurationHeadingFrame" parentKey="DefaultTabHeading">
         <KeyValues>
-          <KeyValue key="headingText" value="AUCTIONATOR_L_DEFAULT_TAB" type="global"/>
+          <KeyValue key="headingText" value="AUCTION_HOUSE_HELPER_L_DEFAULT_TAB" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.AutoscanInterval" relativePoint="BOTTOMLEFT"/>
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorDropDown" parentKey="DefaultTab">
+      <Frame inherits="AuctionHouseHelperDropDown" parentKey="DefaultTab">
        <KeyValues>
-         <KeyValue key="labelText" value="AUCTIONATOR_L_DEFAULT_TAB_TEXT" type="global"/>
-         <KeyValue key="textString" value="NONE;SHOPPING_TAB;SELLING_TAB;CANCELLING_TAB;AUCTIONATOR"/>
+         <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_DEFAULT_TAB_TEXT" type="global"/>
+         <KeyValue key="textString" value="NONE;SHOPPING_TAB;SELLING_TAB;CANCELLING_TAB;AUCTION_HOUSE_HELPER"/>
          <KeyValue key="valuesString" value="0;1;2;3;4"/>
        </KeyValues>
        <Anchors>
@@ -69,53 +69,53 @@
        </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="SmallTabs">
+      <Frame inherits="AuctionHouseHelperConfigurationCheckbox" parentKey="SmallTabs">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SMALL_TABS" type="global" />
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_SMALL_TABS_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_SMALL_TABS_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SMALL_TABS" type="global" />
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SMALL_TABS_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SMALL_TABS_TOOLTIP_TEXT" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.DefaultTab" relativePoint="BOTTOMLEFT" />
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="CraftingInfoHeading">
+      <Frame inherits="AuctionHouseHelperConfigurationHeadingFrame" parentKey="CraftingInfoHeading">
         <KeyValues>
-          <KeyValue key="headingText" value="AUCTIONATOR_L_CRAFTING_INFO" type="global"/>
+          <KeyValue key="headingText" value="AUCTION_HOUSE_HELPER_L_CRAFTING_INFO" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.SmallTabs" relativePoint="BOTTOMLEFT"/>
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="ShowCraftingInfo">
+      <Frame inherits="AuctionHouseHelperConfigurationCheckbox" parentKey="ShowCraftingInfo">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_CRAFTING_INFO_SHOW" type="global" />
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_CRAFTING_INFO_SHOW_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_CRAFTING_INFO_SHOW_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_CRAFTING_INFO_SHOW" type="global" />
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_CRAFTING_INFO_SHOW_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_CRAFTING_INFO_SHOW_TOOLTIP_TEXT" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.CraftingInfoHeading" relativePoint="BOTTOMLEFT" />
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="ShowCraftingCost">
+      <Frame inherits="AuctionHouseHelperConfigurationCheckbox" parentKey="ShowCraftingCost">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_CRAFTING_INFO_SHOW_COST" type="global" />
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_CRAFTING_INFO_SHOW_COST_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_CRAFTING_INFO_SHOW_COST_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_CRAFTING_INFO_SHOW_COST" type="global" />
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_CRAFTING_INFO_SHOW_COST_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_CRAFTING_INFO_SHOW_COST_TOOLTIP_TEXT" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.ShowCraftingInfo" relativePoint="BOTTOMLEFT" />
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="ShowCraftingProfit">
+      <Frame inherits="AuctionHouseHelperConfigurationCheckbox" parentKey="ShowCraftingProfit">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_CRAFTING_INFO_SHOW_PROFIT" type="global" />
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_CRAFTING_INFO_SHOW_PROFIT_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_CRAFTING_INFO_SHOW_PROFIT_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_CRAFTING_INFO_SHOW_PROFIT" type="global" />
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_CRAFTING_INFO_SHOW_PROFIT_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_CRAFTING_INFO_SHOW_PROFIT_TOOLTIP_TEXT" type="global"/>
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.ShowCraftingCost" relativePoint="BOTTOMLEFT" />

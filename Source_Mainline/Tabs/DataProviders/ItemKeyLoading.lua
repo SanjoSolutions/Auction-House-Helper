@@ -1,10 +1,10 @@
-AuctionatorItemKeyLoadingMixin = {}
+AuctionHouseHelperItemKeyLoadingMixin = {}
 
-function AuctionatorItemKeyLoadingMixin:OnLoad()
-  Auctionator.EventBus:Register(self, {Auctionator.AH.Events.ItemKeyInfo})
+function AuctionHouseHelperItemKeyLoadingMixin:OnLoad()
+  AuctionHouseHelper.EventBus:Register(self, {AuctionHouseHelper.AH.Events.ItemKeyInfo})
 
   self:SetOnEntryProcessedCallback(function(entry)
-    Auctionator.AH.GetItemKeyInfo(entry.itemKey, function(itemKeyInfo, wasCached)
+    AuctionHouseHelper.AH.GetItemKeyInfo(entry.itemKey, function(itemKeyInfo, wasCached)
       self:ProcessItemKey(entry, itemKeyInfo)
       if wasCached then
         self:NotifyCacheUsed()
@@ -13,7 +13,7 @@ function AuctionatorItemKeyLoadingMixin:OnLoad()
   end)
 end
 
-function AuctionatorItemKeyLoadingMixin:ProcessItemKey(rowEntry, itemKeyInfo)
+function AuctionHouseHelperItemKeyLoadingMixin:ProcessItemKey(rowEntry, itemKeyInfo)
   local text = AuctionHouseUtil.GetItemDisplayTextFromItemKey(
     rowEntry.itemKey,
     itemKeyInfo,
@@ -21,7 +21,7 @@ function AuctionatorItemKeyLoadingMixin:ProcessItemKey(rowEntry, itemKeyInfo)
   )
 
   rowEntry.itemName = text
-  rowEntry.name = Auctionator.Utilities.RemoveTextColor(text):gsub("|A.-Tier(%d).-|a", AUCTIONATOR_L_TIER .. " %1")
+  rowEntry.name = AuctionHouseHelper.Utilities.RemoveTextColor(text):gsub("|A.-Tier(%d).-|a", AUCTION_HOUSE_HELPER_L_TIER .. " %1")
   rowEntry.iconTexture = itemKeyInfo.iconFileID
   rowEntry.noneAvailable = rowEntry.totalQuantity == 0
 

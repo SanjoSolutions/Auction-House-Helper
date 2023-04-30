@@ -1,5 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Frame name="AuctionatorPanelBorderTemplate" inherits="NineSlicePanelTemplate" virtual="true">
+  <Frame name="AuctionHouseHelperPanelBorderTemplate" inherits="NineSlicePanelTemplate" virtual="true">
     <KeyValues>
       <KeyValue key="layoutType" value="SimplePanelTemplate" type="string"/>
     </KeyValues>

@@ -1,8 +1,8 @@
-AUCTIONATOR_LOCALES.enUS = function()
+AUCTION_HOUSE_HELPER_LOCALES.enUS = function()
   local L = {}
 
   L["CONFIG_BASIC_OPTIONS_CATEGORY"] = "Basic Options"
-  L["CONFIG_BASIC_OPTIONS_TEXT"] = "Basic options for enabling features in Auctionator."
+  L["CONFIG_BASIC_OPTIONS_TEXT"] = "Basic options for enabling features in Auction House Helper."
   L["CONFIG_AUTO_LIST_SEARCH"] = "Automatically scan for shopping list items."
   L["CONFIG_AUTO_LIST_SEARCH_TOOLTIP_HEADER"] = "Automatic List Search"
   L["CONFIG_AUTO_LIST_SEARCH_TOOLTIP_TEXT"] = "When a list is selected, automatically scan the auction house for the list entries. When this option is off, you may scan for the entire list when selecting the 'Search' button in the Shopping List sidebar."
@@ -27,7 +27,7 @@ AUCTIONATOR_LOCALES.enUS = function()
 
   L["CONFIG_DEVELOPER"] = "Developer Settings"
   L["CONFIG_DEBUG"] = "Toggle debug output."
-  L["CONFIG_DEBUG_TOOLTIP_HEADER"] = "Auctionator Debug"
+  L["CONFIG_DEBUG_TOOLTIP_HEADER"] = "Auction House Helper Debug"
   L["CONFIG_DEBUG_TOOLTIP_TEXT"] = "This is used by the maintainers to output debug messages to the chat frame."
 
   L["CONFIG_SHOPPING_CATEGORY"] = "Shopping"
@@ -41,10 +41,10 @@ AUCTIONATOR_LOCALES.enUS = function()
   L["CONFIG_TOOLTIPS_TEXT"] = "Options to display different auction related information on game tooltips."
   L["CONFIG_MAIL_TOOLTIP"] = "Show mailbox tooltips"
   L["MAIL_TOOLTIP_TOOLTIP_HEADER"] = "Mailbox Tooltips"
-  L["MAIL_TOOLTIP_TOOLTIP_TEXT"] = "Shows Auctionator information for items in your mailbox on mouseover."
+  L["MAIL_TOOLTIP_TOOLTIP_TEXT"] = "Shows Auction House Helper information for items in your mailbox on mouseover."
   L["CONFIG_PET_TOOLTIP"] = "Show pet tooltips"
   L["PET_TOOLTIP_TOOLTIP_HEADER"] = "Pet Tooltips"
-  L["PET_TOOLTIP_TOOLTIP_TEXT"] = "Shows Auctionator information for caged pets."
+  L["PET_TOOLTIP_TOOLTIP_TEXT"] = "Shows Auction House Helper information for caged pets."
   L["CONFIG_VENDOR_TOOLTIP"] = "Show vendor tooltips."
   L["VENDOR_TOOLTIP_TOOLTIP_HEADER"] = "Vendor Tooltip Information"
   L["VENDOR_TOOLTIP_TOOLTIP_TEXT"] = "Show vendor information in tooltip on mouseover."
@@ -104,15 +104,15 @@ AUCTIONATOR_LOCALES.enUS = function()
   L["TRANSLATORS_HEADER"] = "Translators"
   L["VERSION_HEADER"] = "Version"
   L["OPEN_ADDON_OPTIONS"] = "Open Addon Options"
-  L["ENGAGE_HEADER"] = "Engage With Auctionator"
+  L["ENGAGE_HEADER"] = "Engage With Auction House Helper"
   L["DISCORD"] = "Discord"
   L["DISCORD_TOOLTIP_HEADER"] = "Join us in Discord!"
-  L["DISCORD_TOOLTIP_TEXT"] = "We have an active community of Auctionator users that can help answer any questions you might have."
+  L["DISCORD_TOOLTIP_TEXT"] = "We have an active community of Auction House Helper users that can help answer any questions you might have."
   L["BUG_REPORT"] = "Report a Bug"
   L["BUG_TOOLTIP_HEADER"] = "Report a Bug on Github"
-  L["BUG_TOOLTIP_TEXT"] = "If you encounter an error while using Auctionator, please report on Github. Please provide enough details so that we can reproduce the bug! Using !BugGrabber and BugSack addons will help us as well."
+  L["BUG_TOOLTIP_TEXT"] = "If you encounter an error while using Auction House Helper, please report on Github. Please provide enough details so that we can reproduce the bug! Using !BugGrabber and BugSack addons will help us as well."
   L["ROADMAP"] = "Technical Roadmap"
-  L["ROADMAP_TOOLTIP_TEXT"] = "The technical roadmap defined the work we have planned for upcoming releases of Auctionator. Please check here for implementation progress towards your favorite feature!"
+  L["ROADMAP_TOOLTIP_TEXT"] = "The technical roadmap defined the work we have planned for upcoming releases of Auction House Helper. Please check here for implementation progress towards your favorite feature!"
   L["TRANSLATORS_HELP"] = "Please help translate!"
   L["TRANSLATORS_GERMAN"] = "German"
   L["TRANSLATORS_BRAZIL_PORTUGUEUSE"] = "Brazilian Portuguese"
@@ -188,16 +188,16 @@ AUCTIONATOR_LOCALES.enUS = function()
   L["EXTENDED_SEARCH_ACTIVE_TEXT"] = "%extended search active%"
 
   L["SHOPPING_TAB"] = "Shopping"
-  L["SHOPPING_TAB_HEADER_2"] = "Auctionator - Shopping"
-  L["INFO_TAB_HEADER"] = "Auctionator - Info"
+  L["SHOPPING_TAB_HEADER_2"] = "Auction House Helper - Shopping"
+  L["INFO_TAB_HEADER"] = "Auction House Helper - Info"
 
   L["OPEN_IN_SHOPPING_TAB"] = "Open in Shopping Tab"
 
   L["SELLING_TAB"] = "Selling"
-  L["SELLING_TAB_HEADER"] = "Auctionator - Selling"
+  L["SELLING_TAB_HEADER"] = "Auction House Helper - Selling"
 
   L["CANCELLING_TAB"] = "Cancelling"
-  L["CANCELLING_TAB_HEADER"] = "Auctionator - Cancelling"
+  L["CANCELLING_TAB_HEADER"] = "Auction House Helper - Cancelling"
   L["BID_EXISTING_ON_OWNED_AUCTION"] = "Someone has bid on this auction so cancelling will cost you your deposit and:"
 
   L["FETCHING_ITEM_INFO"] = "Fetching item info..."
@@ -217,17 +217,17 @@ AUCTIONATOR_LOCALES.enUS = function()
 
   L["FULL_SCAN_BUTTON"] = "Full Scan"
 
-  L["SPLASH_SCREEN_HEADER"] = "Welcome to Auctionator"
-  L["SPLASH_830_DESCRIPTION"] = "Auctionator 8.3.0 is a complete re-write of Auctionator to work with the changes that Blizzard made to the Auction House in their 8.3 release. Please note that many of the features you may be used to from previous versions of Auctionator may not be implemented yet or may be in a different location! Please read the notes below for details."
+  L["SPLASH_SCREEN_HEADER"] = "Welcome to Auction House Helper"
+  L["SPLASH_830_DESCRIPTION"] = "Auction House Helper 8.3.0 is a complete re-write of Auction House Helper to work with the changes that Blizzard made to the Auction House in their 8.3 release. Please note that many of the features you may be used to from previous versions of Auction House Helper may not be implemented yet or may be in a different location! Please read the notes below for details."
   L["SPLASH_830_BUGS_HEADER"] = "Communication and Bug Reports"
-  L["SPLASH_830_BUGS_1"] = "Please join us in the Auctionator Discord server %s"
+  L["SPLASH_830_BUGS_1"] = "Please join us in the Auction House Helper Discord server %s"
   L["SPLASH_830_BUGS_2"] = "Please report bugs on Github %s"
-  L["SPLASH_830_BUGS_3"] = "We are most active on Discord, and do not take bug reports on curseforge or Auctionator forums"
+  L["SPLASH_830_BUGS_3"] = "We are most active on Discord, and do not take bug reports on curseforge or Auction House Helper forums"
   L["SPLASH_830_BUGS_4"] = "For the roadmap of upcoming features, visit %s"
 
   L["SPLASH_830_DONE_HEADER"] = "Implemented Features"
   L["SPLASH_830_DONE_1"] = "Automatic scanning of the Auction House when opened (limited by Blizzard to every 15 minutes)"
-  L["SPLASH_830_DONE_2"] = "Manual scanning of the Auction House from the 'Auctionator' tab in the Auction House"
+  L["SPLASH_830_DONE_2"] = "Manual scanning of the Auction House from the 'Auction House Helper' tab in the Auction House"
   L["SPLASH_830_DONE_3"] = "Shopping Lists with advanced search terms from the 'Shopping' tab in the Auction House"
 
   L["SPLASH_830_NOT_DONE_HEADER"] = "Not Yet Implemented (But Coming Soon!)"
@@ -322,7 +322,7 @@ AUCTIONATOR_LOCALES.enUS = function()
   L["SPLASH_9106_FEATURES_1"] = "Search box and recent searches panel in the Shopping tab."
   L["SPLASH_9106_FEATURES_2"] = "Button to sort a shopping list's terms alphabetically."
   L["SPLASH_9106_FEATURES_3"] = "Option to show not found search terms in a shopping list's results."
-  L["SPLASH_9108_DESCRIPTION"] = "The main feature of this release is the newer Retail appearance now working on WoW classic (Burning Crusade and Vanilla). Almost all retail features work on classic. There are the usual bugfixes on all versions of Auctionator."
+  L["SPLASH_9108_DESCRIPTION"] = "The main feature of this release is the newer Retail appearance now working on WoW classic (Burning Crusade and Vanilla). Almost all retail features work on classic. There are the usual bugfixes on all versions of Auction House Helper."
   L["SPLASH_9108_FEATURES_HEADER"] = "Features of the classic release"
   L["SPLASH_9108_FEATURES_1"] = "Searching shopping lists and doing quick searches."
   L["SPLASH_9108_FEATURES_2"] = "Can buy items and see all auctions on sale, grouped by price and stack"
@@ -460,7 +460,7 @@ AUCTIONATOR_LOCALES.enUS = function()
   L["CONFIG_PROFILE_TEXT"] = "Setup per-character settings."
   L["CONFIG_PROFILE_TOGGLE"] = "Only apply settings to this character"
   L["PROFILE_TOGGLE_TOOLTIP_HEADER"] = "Enable per character settings"
-  L["PROFILE_TOGGLE_TOOLTIP_TEXT"] = "Makes changes to the Auctionator settings only affect this character."
+  L["PROFILE_TOGGLE_TOOLTIP_TEXT"] = "Makes changes to the Auction House Helper settings only affect this character."
 
   L["BUYOUT_PRICE"] = "Buyout Price"
   L["BID_PRICE"] = "Bid Price"
@@ -555,7 +555,7 @@ AUCTIONATOR_LOCALES.enUS = function()
   L["SHIFT_LEFT_CLICK"] = "Shift Left Click"
   L["SHIFT_RIGHT_CLICK"] = "Shift Right Click"
   L["DISABLED"] = "Disabled"
-  L["AUCTIONATOR"] = "Auctionator"
+  L["AUCTION_HOUSE_HELPER"] = "Auction House Helper"
 
   L["GEAR_VENDOR_PRICE_MULTIPLIER"] = "Gear vendor price multiplier"
 
@@ -564,7 +564,7 @@ AUCTIONATOR_LOCALES.enUS = function()
   L["CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT"] = "This lets you change the default amount used when posting an item. Set this to 0 to use the maximum possible amount."
   L["CONFIG_SELLING_GEAR_VENDOR_PRICE_MULTIPLIER_SUFFIX"] = "Set to 0 for no price"
   L["CONFIG_SELLING_GEAR_VENDOR_PRICE_MULTIPLIER_TOOLTIP_HEADER"] = "Gear Vendor Price Default"
-  L["CONFIG_SELLING_GEAR_VENDOR_PRICE_MULTIPLIER_TOOLTIP_TEXT"] = "This lets you set a default price for gear as a multiple of the vendor price. This is used for any gear Auctionator doesn't have a price for. Set this to 0 to not set a price."
+  L["CONFIG_SELLING_GEAR_VENDOR_PRICE_MULTIPLIER_TOOLTIP_TEXT"] = "This lets you set a default price for gear as a multiple of the vendor price. This is used for any gear Auction House Helper doesn't have a price for. Set this to 0 to not set a price."
   L["CONFIG_SELLING_GEAR_USE_ILVL_VARIANTS"] = "For gear, use item level and title when selecting the price to compete with"
   L["CONFIG_SELLING_GEAR_USE_ILVL_VARIANTS_TOOLTIP_HEADER"] = "Use Item Level and Title"
   L["CONFIG_SELLING_GEAR_USE_ILVL_VARIANTS_TOOLTIP_TEXT"] = "Normally gear is compared with any other gear that is similar, but without taking item level and the \"of the\" titles into account. This will make them be taken into account."

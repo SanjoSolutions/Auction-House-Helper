@@ -1,14 +1,14 @@
-Auctionator.Prospect = {}
+AuctionHouseHelper.Prospect = {}
 
-function Auctionator.Prospect.IsProspectable(itemID)
-  return Auctionator.Prospect.PROSPECT_TABLE[tostring(itemID)] ~= nil
+function AuctionHouseHelper.Prospect.IsProspectable(itemID)
+  return AuctionHouseHelper.Prospect.PROSPECT_TABLE[tostring(itemID)] ~= nil
 end
 
 local function GetProspectResults(itemID)
-  return Auctionator.Prospect.PROSPECT_TABLE[tostring(itemID)]
+  return AuctionHouseHelper.Prospect.PROSPECT_TABLE[tostring(itemID)]
 end
 
-function Auctionator.Prospect.GetProspectAuctionPrice(itemID)
+function AuctionHouseHelper.Prospect.GetProspectAuctionPrice(itemID)
   local prospectResults = GetProspectResults(itemID)
 
   if prospectResults == nil then
@@ -18,7 +18,7 @@ function Auctionator.Prospect.GetProspectAuctionPrice(itemID)
   local price = 0
 
   for reagentKey, allDrops in pairs(prospectResults) do
-    local reagentPrice = Auctionator.Database:GetPrice(reagentKey)
+    local reagentPrice = AuctionHouseHelper.Database:GetPrice(reagentKey)
 
     if reagentPrice == nil then
       return nil

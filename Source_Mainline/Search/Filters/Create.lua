@@ -1,13 +1,13 @@
 local MAPPING = {
-  itemLevel = Auctionator.Search.Filters.ItemLevelMixin,
-  exactSearch = Auctionator.Search.Filters.ExactMixin,
-  craftedLevel = Auctionator.Search.Filters.CraftedLevelMixin,
-  price = Auctionator.Search.Filters.PriceMixin,
-  tier = Auctionator.Search.Filters.TierMixin,
-  expansion = Auctionator.Search.Filters.ExpansionMixin,
+  itemLevel = AuctionHouseHelper.Search.Filters.ItemLevelMixin,
+  exactSearch = AuctionHouseHelper.Search.Filters.ExactMixin,
+  craftedLevel = AuctionHouseHelper.Search.Filters.CraftedLevelMixin,
+  price = AuctionHouseHelper.Search.Filters.PriceMixin,
+  tier = AuctionHouseHelper.Search.Filters.TierMixin,
+  expansion = AuctionHouseHelper.Search.Filters.ExpansionMixin,
 }
 
-function Auctionator.Search.Filters.Create(browseResult, allFilters, filterTracker)
+function AuctionHouseHelper.Search.Filters.Create(browseResult, allFilters, filterTracker)
   local result = {}
   local key, filter
   for key, filter in pairs(allFilters) do
@@ -17,7 +17,7 @@ function Auctionator.Search.Filters.Create(browseResult, allFilters, filterTrack
   end
   if #result == 0 then
     table.insert(result, CreateAndInitFromMixin(
-        Auctionator.Search.Filters.BlankFilterMixin,
+        AuctionHouseHelper.Search.Filters.BlankFilterMixin,
         filterTracker,
         browseResult
       )

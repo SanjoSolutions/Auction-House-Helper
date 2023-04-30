@@ -1,4 +1,4 @@
-function AuctionatorRetailImportEditBox_OnTabPressed(self)
+function AuctionHouseHelperRetailImportEditBox_OnTabPressed(self)
 	if ( self.previousEditBox and IsShiftKeyDown() ) then
 		self.previousEditBox:SetFocus();
 	elseif ( self.nextEditBox ) then

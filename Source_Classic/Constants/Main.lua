@@ -1,8 +1,8 @@
-Auctionator.Constants.MaxResultsPerPage = 50
-Auctionator.Constants.ITEM_LEVEL_THRESHOLD = 0
-Auctionator.Constants.IsClassic = true
+AuctionHouseHelper.Constants.MaxResultsPerPage = 50
+AuctionHouseHelper.Constants.ITEM_LEVEL_THRESHOLD = 0
+AuctionHouseHelper.Constants.IsClassic = true
 
-Auctionator.Constants.AuctionItemInfo = {
+AuctionHouseHelper.Constants.AuctionItemInfo = {
   Buyout = 10,
   Quantity = 3,
   Owner = 14,
@@ -13,7 +13,7 @@ Auctionator.Constants.AuctionItemInfo = {
   Bidder = 12,
   SaleStatus = 16,
 }
-Auctionator.Constants.ValidItemClassIDs = {
+AuctionHouseHelper.Constants.ValidItemClassIDs = {
   Enum.ItemClass.Weapon,
   Enum.ItemClass.Armor,
   Enum.ItemClass.Container,
@@ -29,8 +29,8 @@ Auctionator.Constants.ValidItemClassIDs = {
   Enum.ItemClass.Key,
 }
 -- Note that -2 is the keyring bag, which only exists in classic
-Auctionator.Constants.BagIDs = {-2, 0, 1, 2, 3, 4}
-Auctionator.Constants.QualityIDs = {
+AuctionHouseHelper.Constants.BagIDs = {-2, 0, 1, 2, 3, 4}
+AuctionHouseHelper.Constants.QualityIDs = {
   Enum.ItemQuality.Poor,
   Enum.ItemQuality.Standard,
   Enum.ItemQuality.Good,
@@ -38,5 +38,5 @@ Auctionator.Constants.QualityIDs = {
   Enum.ItemQuality.Epic,
 }
 
-Auctionator.Constants.PriceIncreaseWarningDuration = 5
-Auctionator.Constants.PriceIncreaseWarningThreshold = 40
+AuctionHouseHelper.Constants.PriceIncreaseWarningDuration = 5
+AuctionHouseHelper.Constants.PriceIncreaseWarningThreshold = 40

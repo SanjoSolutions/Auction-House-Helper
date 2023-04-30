@@ -1,8 +1,8 @@
 -- Filter based on the game-level needed to craft/use a crafted item
-Auctionator.Search.Filters.CraftedLevelMixin = {}
+AuctionHouseHelper.Search.Filters.CraftedLevelMixin = {}
 
 local CRAFTED_EVENTS = {
-  Auctionator.Search.Events.BlizzardInfo
+  AuctionHouseHelper.Search.Events.BlizzardInfo
 }
 
 local function IsCraftedCategory(classID)
@@ -12,8 +12,8 @@ local function IsCraftedCategory(classID)
     classID == Enum.ItemClass.Consumable
 end
 
-function Auctionator.Search.Filters.CraftedLevelMixin:Init(filterTracker, browseResult, limits)
-  Auctionator.EventBus:Register(self, CRAFTED_EVENTS)
+function AuctionHouseHelper.Search.Filters.CraftedLevelMixin:Init(filterTracker, browseResult, limits)
+  AuctionHouseHelper.EventBus:Register(self, CRAFTED_EVENTS)
 
   self.browseResult = browseResult
   self.limits = limits
@@ -22,7 +22,7 @@ function Auctionator.Search.Filters.CraftedLevelMixin:Init(filterTracker, browse
   self:TryComplete()
 end
 
-function Auctionator.Search.Filters.CraftedLevelMixin:TryComplete()
+function AuctionHouseHelper.Search.Filters.CraftedLevelMixin:TryComplete()
   if self.limits.min ~= nil or self.limits.max ~= nil then
 
     local itemKey = self.browseResult.itemKey
@@ -50,7 +50,7 @@ function Auctionator.Search.Filters.CraftedLevelMixin:TryComplete()
   end
 end
 
-function Auctionator.Search.Filters.CraftedLevelMixin:InRange(craftedLevel)
+function AuctionHouseHelper.Search.Filters.CraftedLevelMixin:InRange(craftedLevel)
   return
     (
       --Minimum level check
@@ -63,12 +63,12 @@ function Auctionator.Search.Filters.CraftedLevelMixin:InRange(craftedLevel)
     )
 end
 
-function Auctionator.Search.Filters.CraftedLevelMixin:PostComplete(result)
+function AuctionHouseHelper.Search.Filters.CraftedLevelMixin:PostComplete(result)
   self.filterTracker:ReportFilterComplete(result)
 end
 
-function Auctionator.Search.Filters.CraftedLevelMixin:ReceiveEvent(eventName, blizzardName, itemID, ...)
-  if eventName ~= Auctionator.Search.Events.BlizzardInfo then
+function AuctionHouseHelper.Search.Filters.CraftedLevelMixin:ReceiveEvent(eventName, blizzardName, itemID, ...)
+  if eventName ~= AuctionHouseHelper.Search.Events.BlizzardInfo then
     return
   end
 

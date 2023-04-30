@@ -1,6 +1,6 @@
-AuctionatorCraftingInfoFrameMixin = {}
+AuctionHouseHelperCraftingInfoFrameMixin = {}
 
-function AuctionatorCraftingInfoFrameMixin:OnLoad()
+function AuctionHouseHelperCraftingInfoFrameMixin:OnLoad()
   FrameUtil.RegisterFrameForEvents(self, {
     "AUCTION_HOUSE_SHOW",
     "AUCTION_HOUSE_CLOSED",
@@ -15,7 +15,7 @@ function AuctionatorCraftingInfoFrameMixin:OnLoad()
       self:UpdateTotal()
     end
   end)
-  Auctionator.API.v1.RegisterForDBUpdate(AUCTIONATOR_L_REAGENT_SEARCH, function()
+  AuctionHouseHelper.API.v1.RegisterForDBUpdate(AUCTION_HOUSE_HELPER_L_REAGENT_SEARCH, function()
     if self:IsVisible() then
       self:UpdateTotal()
     end
@@ -26,8 +26,8 @@ function AuctionatorCraftingInfoFrameMixin:OnLoad()
   end
 end
 
-function AuctionatorCraftingInfoFrameMixin:ShowIfRelevant()
-  self:SetShown(Auctionator.Config.Get(Auctionator.Config.Options.CRAFTING_INFO_SHOW) and GetTradeSkillSelectionIndex() ~= 0 and self:IsAnyReagents())
+function AuctionHouseHelperCraftingInfoFrameMixin:ShowIfRelevant()
+  self:SetShown(AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.CRAFTING_INFO_SHOW) and GetTradeSkillSelectionIndex() ~= 0 and self:IsAnyReagents())
   if self:IsVisible() then
     self.SearchButton:SetShown(AuctionFrame ~= nil and AuctionFrame:IsShown())
 
@@ -40,7 +40,7 @@ end
 -- Update the position of the search button and other anchors so that nothing
 -- gets hidden if crafting costs are hidden but the search button for the AH is
 -- left enabled.
-function AuctionatorCraftingInfoFrameMixin:AdjustPosition()
+function AuctionHouseHelperCraftingInfoFrameMixin:AdjustPosition()
   self:ClearAllPoints()
   self.SearchButton:ClearAllPoints()
   self:SetPoint(unpack(self.originalDescriptionPoint))
@@ -55,26 +55,26 @@ end
 
 -- Checks for case when there are no regeants, for example a DK Runeforging
 -- crafting view.
-function AuctionatorCraftingInfoFrameMixin:IsAnyReagents()
+function AuctionHouseHelperCraftingInfoFrameMixin:IsAnyReagents()
   local recipeIndex = GetTradeSkillSelectionIndex()
   return GetTradeSkillNumReagents(recipeIndex) > 0
 end
 
-function AuctionatorCraftingInfoFrameMixin:UpdateTotal()
-  local infoText, lines = Auctionator.CraftingInfo.GetInfoText()
+function AuctionHouseHelperCraftingInfoFrameMixin:UpdateTotal()
+  local infoText, lines = AuctionHouseHelper.CraftingInfo.GetInfoText()
   self.Total:SetText(infoText)
   self:SetHeight(16 * lines)
 
   self:AdjustPosition()
 end
 
-function AuctionatorCraftingInfoFrameMixin:SearchButtonClicked()
+function AuctionHouseHelperCraftingInfoFrameMixin:SearchButtonClicked()
   if AuctionFrame and AuctionFrame:IsShown() then
-    Auctionator.CraftingInfo.DoTradeSkillReagentsSearch()
+    AuctionHouseHelper.CraftingInfo.DoTradeSkillReagentsSearch()
   end
 end
 
-function AuctionatorCraftingInfoFrameMixin:OnEvent(...)
+function AuctionHouseHelperCraftingInfoFrameMixin:OnEvent(...)
   if self:IsVisible() then
     self:UpdateTotal()
   end

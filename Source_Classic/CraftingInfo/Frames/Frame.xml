@@ -1,5 +1,5 @@
 <Ui>
-  <Frame name="AuctionatorCraftingInfoFrameTemplate" mixin="AuctionatorCraftingInfoFrameMixin" frameLevel="3" virtual="true">
+  <Frame name="AuctionHouseHelperCraftingInfoFrameTemplate" mixin="AuctionHouseHelperCraftingInfoFrameMixin" frameLevel="3" virtual="true">
     <Size x="200" y="16"/>
     <Scripts>
       <OnLoad method="OnLoad"/>
@@ -15,7 +15,7 @@
       </Layer>
     </Layers>
     <Frames>
-      <Button parentKey="SearchButton" inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_SEARCH">
+      <Button parentKey="SearchButton" inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTION_HOUSE_HELPER_L_SEARCH">
         <Scripts>
           <OnClick>
             self:GetParent():SearchButtonClicked()

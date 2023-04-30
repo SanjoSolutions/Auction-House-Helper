@@ -1,4 +1,4 @@
-Auctionator.Constants.ValidItemClassIDs = {
+AuctionHouseHelper.Constants.ValidItemClassIDs = {
   Enum.ItemClass.Weapon,
   Enum.ItemClass.Armor,
   Enum.ItemClass.Container,
@@ -11,9 +11,9 @@ Auctionator.Constants.ValidItemClassIDs = {
   Enum.ItemClass.Miscellaneous,
 }
 
-Auctionator.Constants.IsVanilla = true
+AuctionHouseHelper.Constants.IsVanilla = true
 
-Auctionator.Constants.Durations = {
+AuctionHouseHelper.Constants.Durations = {
   Short = 2,
   Medium = 8,
   Long = 24,

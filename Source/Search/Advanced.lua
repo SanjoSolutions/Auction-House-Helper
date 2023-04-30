@@ -1,10 +1,10 @@
 -- Extract components of an advanced search string.
 -- Assumes searchParametersString is an advanced search.
-function Auctionator.Search.SplitAdvancedSearch(searchParametersString)
+function AuctionHouseHelper.Search.SplitAdvancedSearch(searchParametersString)
   local queryString, categoryKey, minItemLevel, maxItemLevel, minLevel, maxLevel,
     minCraftedLevel, maxCraftedLevel, minPrice, maxPrice, quality, tier,
     expansion =
-    strsplit( Auctionator.Constants.AdvancedSearchDivider, searchParametersString )
+    strsplit( AuctionHouseHelper.Constants.AdvancedSearchDivider, searchParametersString )
 
   -- A nil queryString causes a disconnect if searched for, but an empty one
   -- doesn't, this ensures searchString ~= nil.
@@ -111,20 +111,20 @@ local function TooltipRangeString(min, max)
   elseif max ~= nil then
     return "<= " .. tostring(max)
   else
-    return AUCTIONATOR_L_ANY_LOWER
+    return AUCTION_HOUSE_HELPER_L_ANY_LOWER
   end
 end
 
 local function QualityString(quality)
   if quality ~= nil and ITEM_QUALITY_COLORS[quality] ~= nil then
-    return Auctionator.Utilities.CreateColoredQuality(quality)
+    return AuctionHouseHelper.Utilities.CreateColoredQuality(quality)
   else
     return ""
   end
 end
 
 local function TierString(tier)
-  if not Auctionator.Constants.IsClassic and tier ~= nil then
+  if not AuctionHouseHelper.Constants.IsClassic and tier ~= nil then
     return C_Texture.GetCraftingReagentQualityChatIcon(tier)
   else
     return ""
@@ -214,8 +214,8 @@ local function WrapExactSearch(splitSearch)
   end
 end
 
-function Auctionator.Search.PrettifySearchString(searchString)
-  local splitSearch = Auctionator.Search.SplitAdvancedSearch(searchString)
+function AuctionHouseHelper.Search.PrettifySearchString(searchString)
+  local splitSearch = AuctionHouseHelper.Search.SplitAdvancedSearch(searchString)
 
   local result = WrapExactSearch(splitSearch)
     .. " ["
@@ -243,11 +243,11 @@ local function TooltipCategory(splitSearch)
   local key = splitSearch.categoryKey
 
   if splitSearch.categoryKey == nil or splitSearch.categoryKey == "" then
-    key = AUCTIONATOR_L_ANY_LOWER
+    key = AUCTION_HOUSE_HELPER_L_ANY_LOWER
   end
 
   return {
-    AUCTIONATOR_L_ITEM_CLASS,
+    AUCTION_HOUSE_HELPER_L_ITEM_CLASS,
     key
   }
 end
@@ -256,13 +256,13 @@ local function TooltipExpansion(splitSearch)
   local key
 
   if splitSearch.expansion == nil then
-    key = AUCTIONATOR_L_ANY_LOWER
+    key = AUCTION_HOUSE_HELPER_L_ANY_LOWER
   else
-    key = _G["EXPANSION_NAME" .. splitSearch.expansion] or AUCTIONATOR_L_UNKNOWN
+    key = _G["EXPANSION_NAME" .. splitSearch.expansion] or AUCTION_HOUSE_HELPER_L_UNKNOWN
   end
 
   return {
-    AUCTIONATOR_L_EXPANSION,
+    AUCTION_HOUSE_HELPER_L_EXPANSION,
     key
   }
 end
@@ -271,9 +271,9 @@ local function TooltipQuality(splitSearch)
   local key
 
   if splitSearch.quality == nil or ITEM_QUALITY_COLORS[splitSearch.quality] == nil then
-    key = AUCTIONATOR_L_ANY_LOWER
+    key = AUCTION_HOUSE_HELPER_L_ANY_LOWER
   else
-    key = Auctionator.Utilities.CreateColoredQuality(splitSearch.quality)
+    key = AuctionHouseHelper.Utilities.CreateColoredQuality(splitSearch.quality)
   end
 
   return {
@@ -285,14 +285,14 @@ end
 local function TooltipTier(splitSearch)
   local key
 
-  if Auctionator.Constants.IsClassic or splitSearch.tier == nil then
-    key = AUCTIONATOR_L_ANY_LOWER
+  if AuctionHouseHelper.Constants.IsClassic or splitSearch.tier == nil then
+    key = AUCTION_HOUSE_HELPER_L_ANY_LOWER
   else
     key = C_Texture.GetCraftingReagentQualityChatIcon(splitSearch.tier)
   end
 
   return {
-    AUCTIONATOR_L_TIER,
+    AUCTION_HOUSE_HELPER_L_TIER,
     key
   }
 end
@@ -301,34 +301,34 @@ local function TooltipPriceRange(splitSearch)
   local minPrice, maxPrice = ConvertMoneyStrings(splitSearch)
 
   return {
-    AUCTIONATOR_L_PRICE,
+    AUCTION_HOUSE_HELPER_L_PRICE,
     TooltipRangeString(minPrice, maxPrice)
   }
 end
 
 local function TooltipLevelRange(splitSearch)
   return {
-    AUCTIONATOR_L_LEVEL,
+    AUCTION_HOUSE_HELPER_L_LEVEL,
     TooltipRangeString(splitSearch.minLevel, splitSearch.maxLevel)
   }
 end
 
 local function TooltipItemLevelRange(splitSearch)
   return {
-    AUCTIONATOR_L_ITEM_LEVEL,
+    AUCTION_HOUSE_HELPER_L_ITEM_LEVEL,
     TooltipRangeString(splitSearch.minItemLevel, splitSearch.maxItemLevel)
   }
 end
 
 local function TooltipCraftedLevelRange(splitSearch)
   return {
-    AUCTIONATOR_L_CRAFTED_LEVEL,
+    AUCTION_HOUSE_HELPER_L_CRAFTED_LEVEL,
     TooltipRangeString(splitSearch.minCraftedLevel, splitSearch.maxCraftedLevel)
   }
 end
 
-function Auctionator.Search.ComposeTooltip(searchString)
-  local splitSearch = Auctionator.Search.SplitAdvancedSearch(searchString)
+function AuctionHouseHelper.Search.ComposeTooltip(searchString)
+  local splitSearch = AuctionHouseHelper.Search.SplitAdvancedSearch(searchString)
 
   local lines = {}
 
@@ -338,7 +338,7 @@ function Auctionator.Search.ComposeTooltip(searchString)
   table.insert(lines, TooltipItemLevelRange(splitSearch))
   table.insert(lines, TooltipCraftedLevelRange(splitSearch))
   table.insert(lines, TooltipQuality(splitSearch))
-  if not Auctionator.Constants.IsClassic then
+  if not AuctionHouseHelper.Constants.IsClassic then
     table.insert(lines, TooltipExpansion(splitSearch))
     table.insert(lines, TooltipTier(splitSearch))
   end
@@ -360,7 +360,7 @@ local function GetQueryString(search)
     return search.searchString
   end
 end
-function Auctionator.Search.ReconstituteAdvancedSearch(search)
+function AuctionHouseHelper.Search.ReconstituteAdvancedSearch(search)
   return strjoin(";",
     GetQueryString(search),
     search.categoryKey,

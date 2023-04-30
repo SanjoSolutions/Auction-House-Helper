@@ -1,48 +1,48 @@
-AuctionatorScrollListRecentsMixin = CreateFromMixins(AuctionatorScrollListMixin)
+AuctionHouseHelperScrollListRecentsMixin = CreateFromMixins(AuctionHouseHelperScrollListMixin)
 
-function AuctionatorScrollListRecentsMixin:OnLoad()
-  self:SetLineTemplate("AuctionatorScrollListLineRecentsTemplate")
+function AuctionHouseHelperScrollListRecentsMixin:OnLoad()
+  self:SetLineTemplate("AuctionHouseHelperScrollListLineRecentsTemplate")
 
   self:SetUpEvents()
 end
 
-function AuctionatorScrollListRecentsMixin:SetUpEvents()
-  -- Auctionator Events
-  Auctionator.EventBus:RegisterSource(self, "Shopping List Recents Scroll Frame")
+function AuctionHouseHelperScrollListRecentsMixin:SetUpEvents()
+  -- AuctionHouseHelper Events
+  AuctionHouseHelper.EventBus:RegisterSource(self, "Shopping List Recents Scroll Frame")
 
-  Auctionator.EventBus:Register(self, {
-    Auctionator.Shopping.Tab.Events.ListSearchStarted,
-    Auctionator.Shopping.Tab.Events.ListSearchEnded,
-    Auctionator.Shopping.Tab.Events.RecentSearchesUpdate,
-    Auctionator.Shopping.Tab.Events.OneItemSearch,
+  AuctionHouseHelper.EventBus:Register(self, {
+    AuctionHouseHelper.Shopping.Tab.Events.ListSearchStarted,
+    AuctionHouseHelper.Shopping.Tab.Events.ListSearchEnded,
+    AuctionHouseHelper.Shopping.Tab.Events.RecentSearchesUpdate,
+    AuctionHouseHelper.Shopping.Tab.Events.OneItemSearch,
   })
 end
 
-function AuctionatorScrollListRecentsMixin:ReceiveEvent(eventName, eventData)
-  if eventName == Auctionator.Shopping.Tab.Events.OneItemSearch and self:IsShown() then
+function AuctionHouseHelperScrollListRecentsMixin:ReceiveEvent(eventName, eventData)
+  if eventName == AuctionHouseHelper.Shopping.Tab.Events.OneItemSearch and self:IsShown() then
     self:StartSearch({ eventData }, true)
-  elseif eventName == Auctionator.Shopping.Tab.Events.RecentSearchesUpdate then
+  elseif eventName == AuctionHouseHelper.Shopping.Tab.Events.RecentSearchesUpdate then
     self:RefreshScrollFrame(true)
-  elseif eventName == Auctionator.Shopping.Tab.Events.ListSearchStarted then
+  elseif eventName == AuctionHouseHelper.Shopping.Tab.Events.ListSearchStarted then
     self.SpinnerAnim:Play()
     self.LoadingSpinner:Show()
-  elseif eventName == Auctionator.Shopping.Tab.Events.ListSearchEnded then
+  elseif eventName == AuctionHouseHelper.Shopping.Tab.Events.ListSearchEnded then
     self.LoadingSpinner:Hide()
   end
 end
 
-function AuctionatorScrollListRecentsMixin:StartSearch(searchTerms)
-  Auctionator.EventBus:Fire(
+function AuctionHouseHelperScrollListRecentsMixin:StartSearch(searchTerms)
+  AuctionHouseHelper.EventBus:Fire(
     self,
-    Auctionator.Shopping.Tab.Events.SearchForTerms,
+    AuctionHouseHelper.Shopping.Tab.Events.SearchForTerms,
     searchTerms
   )
 end
 
-function AuctionatorScrollListRecentsMixin:GetNumEntries()
-  return #Auctionator.Shopping.Recents.GetAll()
+function AuctionHouseHelperScrollListRecentsMixin:GetNumEntries()
+  return #AuctionHouseHelper.Shopping.Recents.GetAll()
 end
 
-function AuctionatorScrollListRecentsMixin:GetEntry(index)
-  return Auctionator.Shopping.Recents.GetAll()[index]
+function AuctionHouseHelperScrollListRecentsMixin:GetEntry(index)
+  return AuctionHouseHelper.Shopping.Recents.GetAll()[index]
 end

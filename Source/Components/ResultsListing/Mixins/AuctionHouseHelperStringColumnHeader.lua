@@ -1,6 +1,6 @@
-AuctionatorStringColumnHeaderTemplateMixin = CreateFromMixins(AuctionatorRetailImportTableBuilderElementMixin)
+AuctionHouseHelperStringColumnHeaderTemplateMixin = CreateFromMixins(AuctionHouseHelperRetailImportTableBuilderElementMixin)
 
-function AuctionatorStringColumnHeaderTemplateMixin:Init(name, customiseFunction, sortFunction, clearSortFunction, sortKey, tooltipText)
+function AuctionHouseHelperStringColumnHeaderTemplateMixin:Init(name, customiseFunction, sortFunction, clearSortFunction, sortKey, tooltipText)
   self.tooltipText = tooltipText
   self.sortKey = sortKey
   self.customiseFunction = customiseFunction
@@ -11,17 +11,17 @@ function AuctionatorStringColumnHeaderTemplateMixin:Init(name, customiseFunction
   self:SetText(name)
 end
 
-function AuctionatorStringColumnHeaderTemplateMixin:DoSort()
+function AuctionHouseHelperStringColumnHeaderTemplateMixin:DoSort()
   if self.sortKey then
-    if self.sortDirection == Auctionator.Constants.SORT.DESCENDING or self.sortDirection == nil then
-      self.sortDirection = Auctionator.Constants.SORT.ASCENDING
+    if self.sortDirection == AuctionHouseHelper.Constants.SORT.DESCENDING or self.sortDirection == nil then
+      self.sortDirection = AuctionHouseHelper.Constants.SORT.ASCENDING
     else
-      self.sortDirection = Auctionator.Constants.SORT.DESCENDING
+      self.sortDirection = AuctionHouseHelper.Constants.SORT.DESCENDING
     end
 
     self.sortFunction(self.sortKey, self.sortDirection)
 
-    if self.sortDirection == Auctionator.Constants.SORT.DESCENDING then
+    if self.sortDirection == AuctionHouseHelper.Constants.SORT.DESCENDING then
       self.Arrow:SetTexCoord(0, 1, 1, 0)
     else
       self.Arrow:SetTexCoord(0, 1, 0, 1)
@@ -34,7 +34,7 @@ function AuctionatorStringColumnHeaderTemplateMixin:DoSort()
 end
 
 -- Implementing mouse events for sorting
-function AuctionatorStringColumnHeaderTemplateMixin:OnClick(button, ...)
+function AuctionHouseHelperStringColumnHeaderTemplateMixin:OnClick(button, ...)
   if button == "LeftButton" then
     if IsShiftKeyDown() then
       self.clearSortFunction()
@@ -44,7 +44,7 @@ function AuctionatorStringColumnHeaderTemplateMixin:OnClick(button, ...)
   end
 end
 
-function AuctionatorStringColumnHeaderTemplateMixin:OnMouseUp(button, ...)
+function AuctionHouseHelperStringColumnHeaderTemplateMixin:OnMouseUp(button, ...)
   -- Registered to the mouse handler so that the dropdown still shows even when
   -- the headers are disabled
   if button == "RightButton" then
@@ -53,7 +53,7 @@ function AuctionatorStringColumnHeaderTemplateMixin:OnMouseUp(button, ...)
 end
 
 -- Implementing mouse events for tooltip
-function AuctionatorStringColumnHeaderTemplateMixin:OnEnter()
+function AuctionHouseHelperStringColumnHeaderTemplateMixin:OnEnter()
   if self.tooltipText then
     GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
     GameTooltip_AddColoredLine(GameTooltip, self.tooltipText, WHITE_FONT_COLOR, true)
@@ -61,6 +61,6 @@ function AuctionatorStringColumnHeaderTemplateMixin:OnEnter()
   end
 end
 
-function AuctionatorStringColumnHeaderTemplateMixin:OnLeave()
+function AuctionHouseHelperStringColumnHeaderTemplateMixin:OnLeave()
   GameTooltip:Hide()
 end

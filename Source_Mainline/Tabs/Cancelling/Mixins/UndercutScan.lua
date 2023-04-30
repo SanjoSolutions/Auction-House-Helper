@@ -1,4 +1,4 @@
-AuctionatorUndercutScanMixin = {}
+AuctionHouseHelperUndercutScanMixin = {}
 
 local UNDERCUT_START_STOP_EVENTS = {
   "OWNED_AUCTIONS_UPDATED",
@@ -6,19 +6,19 @@ local UNDERCUT_START_STOP_EVENTS = {
 }
 
 local AH_SCAN_EVENTS = {
-  Auctionator.AH.Events.CommoditySearchResultsReady,
-  Auctionator.AH.Events.ItemSearchResultsReady,
+  AuctionHouseHelper.AH.Events.CommoditySearchResultsReady,
+  AuctionHouseHelper.AH.Events.ItemSearchResultsReady,
 }
 
 local CANCELLING_EVENTS = {
   "AUCTION_CANCELED"
 }
 
-function AuctionatorUndercutScanMixin:OnLoad()
-  Auctionator.EventBus:RegisterSource(self, "AuctionatorUndercutScanMixin")
-  Auctionator.EventBus:Register(self, {
-    Auctionator.Cancelling.Events.RequestCancel,
-    Auctionator.Cancelling.Events.RequestCancelUndercut,
+function AuctionHouseHelperUndercutScanMixin:OnLoad()
+  AuctionHouseHelper.EventBus:RegisterSource(self, "AuctionHouseHelperUndercutScanMixin")
+  AuctionHouseHelper.EventBus:Register(self, {
+    AuctionHouseHelper.Cancelling.Events.RequestCancel,
+    AuctionHouseHelper.Cancelling.Events.RequestCancelUndercut,
   })
 
   self.undercutAuctions = {}
@@ -27,26 +27,26 @@ function AuctionatorUndercutScanMixin:OnLoad()
   self:SetCancel()
 end
 
-function AuctionatorUndercutScanMixin:OnShow()
-  SetOverrideBinding(self, false, Auctionator.Config.Get(Auctionator.Config.Options.CANCEL_UNDERCUT_SHORTCUT), "CLICK AuctionatorCancelUndercutButton:LeftButton")
+function AuctionHouseHelperUndercutScanMixin:OnShow()
+  SetOverrideBinding(self, false, AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.CANCEL_UNDERCUT_SHORTCUT), "CLICK AuctionHouseHelperCancelUndercutButton:LeftButton")
 end
 
-function AuctionatorUndercutScanMixin:OnHide()
+function AuctionHouseHelperUndercutScanMixin:OnHide()
   ClearOverrideBindings(self)
   FrameUtil.UnregisterFrameForEvents(self, CANCELLING_EVENTS)
 end
 
-function AuctionatorUndercutScanMixin:StartScan()
-  Auctionator.Debug.Message("AuctionatorUndercutScanMixin:OnUndercutScanButtonClick()")
+function AuctionHouseHelperUndercutScanMixin:StartScan()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperUndercutScanMixin:OnUndercutScanButtonClick()")
 
   self.currentAuction = nil
   self.undercutAuctions = {}
   self.seenAuctionResults = {}
 
-  Auctionator.EventBus:Fire(self, Auctionator.Cancelling.Events.UndercutScanStart)
+  AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.Cancelling.Events.UndercutScanStart)
 
   FrameUtil.RegisterFrameForEvents(self, UNDERCUT_START_STOP_EVENTS)
-  Auctionator.EventBus:Register(self, AH_SCAN_EVENTS)
+  AuctionHouseHelper.EventBus:Register(self, AH_SCAN_EVENTS)
 
   self.StartScanButton:SetEnabled(false)
   self:SetCancel()
@@ -54,15 +54,15 @@ function AuctionatorUndercutScanMixin:StartScan()
   self:GetParent().DataProvider:QueryAuctions()
 end
 
-function AuctionatorUndercutScanMixin:SetCancel()
+function AuctionHouseHelperUndercutScanMixin:SetCancel()
   self.CancelNextButton:SetEnabled(#self.undercutAuctions > 0)
 end
 
-function AuctionatorUndercutScanMixin:EndScan()
-  Auctionator.Debug.Message("undercut scan ended")
+function AuctionHouseHelperUndercutScanMixin:EndScan()
+  AuctionHouseHelper.Debug.Message("undercut scan ended")
 
   FrameUtil.UnregisterFrameForEvents(self, UNDERCUT_START_STOP_EVENTS)
-  Auctionator.EventBus:Unregister(self, AH_SCAN_EVENTS)
+  AuctionHouseHelper.EventBus:Unregister(self, AH_SCAN_EVENTS)
 
   self.StartScanButton:SetEnabled(true)
 
@@ -70,7 +70,7 @@ function AuctionatorUndercutScanMixin:EndScan()
 end
 
 local function ShouldInclude(itemKey)
-  if Auctionator.Config.Get(Auctionator.Config.Options.UNDERCUT_SCAN_NOT_LIFO) then
+  if AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.UNDERCUT_SCAN_NOT_LIFO) then
     return true
   else
     local classID = select(6, GetItemInfoInstant(itemKey.itemID))
@@ -79,8 +79,8 @@ local function ShouldInclude(itemKey)
           itemKey.battlePetSpeciesID == 0
   end
 end
-function AuctionatorUndercutScanMixin:NextStep()
-  Auctionator.Debug.Message("next step")
+function AuctionHouseHelperUndercutScanMixin:NextStep()
+  AuctionHouseHelper.Debug.Message("next step")
   self.scanIndex = self.scanIndex + 1
 
   if self.scanIndex > C_AuctionHouse.GetNumOwnedAuctions() then
@@ -89,18 +89,18 @@ function AuctionatorUndercutScanMixin:NextStep()
   end
 
   self.currentAuction = C_AuctionHouse.GetOwnedAuctionInfo(self.scanIndex)
-  local itemKeyString = Auctionator.Utilities.ItemKeyString(self.currentAuction.itemKey)
+  local itemKeyString = AuctionHouseHelper.Utilities.ItemKeyString(self.currentAuction.itemKey)
 
   if (self.currentAuction.status == 1 or
       self.currentAuction.buyoutAmount == nil or
       self.currentAuction.bidder ~= nil or
-      self.currentAuction.itemKey.itemID == Auctionator.Constants.WOW_TOKEN_ID or
+      self.currentAuction.itemKey.itemID == AuctionHouseHelper.Constants.WOW_TOKEN_ID or
       not ShouldInclude(self.currentAuction.itemKey)) then
-    Auctionator.Debug.Message("undercut scan skip")
+    AuctionHouseHelper.Debug.Message("undercut scan skip")
 
     self:NextStep()
   elseif self.seenAuctionResults[itemKeyString] ~= nil then
-    Auctionator.Debug.Message("undercut scan already seen")
+    AuctionHouseHelper.Debug.Message("undercut scan already seen")
 
     self:ProcessUndercutResult(
       self.currentAuction,
@@ -109,22 +109,22 @@ function AuctionatorUndercutScanMixin:NextStep()
 
     self:NextStep()
   else
-    Auctionator.Debug.Message("undercut scan searching for undercuts", self.currentAuction.auctionID)
+    AuctionHouseHelper.Debug.Message("undercut scan searching for undercuts", self.currentAuction.auctionID)
 
     self:SearchForUndercuts(self.currentAuction)
   end
 end
 
-function AuctionatorUndercutScanMixin:OnEvent(eventName, ...)
+function AuctionHouseHelperUndercutScanMixin:OnEvent(eventName, ...)
   if eventName == "OWNED_AUCTIONS_UPDATED" then
     if not self.currentAuction then
-      Auctionator.Debug.Message("next step auto")
+      AuctionHouseHelper.Debug.Message("next step auto")
 
       self.scanIndex = 0
 
       self:NextStep()
     else
-      Auctionator.Debug.Message("list no step auto")
+      AuctionHouseHelper.Debug.Message("list no step auto")
     end
 
   elseif eventName == "AUCTION_HOUSE_CLOSED" then
@@ -136,8 +136,8 @@ function AuctionatorUndercutScanMixin:OnEvent(eventName, ...)
   end
 end
 
-function AuctionatorUndercutScanMixin:ReceiveEvent(eventName, ...)
-  if eventName == Auctionator.Cancelling.Events.RequestCancel then
+function AuctionHouseHelperUndercutScanMixin:ReceiveEvent(eventName, ...)
+  if eventName == AuctionHouseHelper.Cancelling.Events.RequestCancel then
     local auctionID = ...
     -- Used to disable button if all the undercut auctions have been cancelled
     for index, info in ipairs(self.undercutAuctions) do
@@ -146,19 +146,19 @@ function AuctionatorUndercutScanMixin:ReceiveEvent(eventName, ...)
         break
       end
     end
-  elseif eventName == Auctionator.Cancelling.Events.RequestCancelUndercut then
+  elseif eventName == AuctionHouseHelper.Cancelling.Events.RequestCancelUndercut then
     if self.CancelNextButton:IsEnabled() then
       self:CancelNextAuction()
     end
 
   else -- AH_SCAN_EVENTS
-    Auctionator.Debug.Message("search results")
+    AuctionHouseHelper.Debug.Message("search results")
     self:ProcessSearchResults(self.currentAuction, ...)
   end
 end
 
-function AuctionatorUndercutScanMixin:SearchForUndercuts(auctionInfo)
-  Auctionator.AH.GetItemKeyInfo(auctionInfo.itemKey, function(itemKeyInfo)
+function AuctionHouseHelperUndercutScanMixin:SearchForUndercuts(auctionInfo)
+  AuctionHouseHelper.AH.GetItemKeyInfo(auctionInfo.itemKey, function(itemKeyInfo)
     local sortingOrder = nil
 
     if itemKeyInfo == nil then
@@ -169,19 +169,19 @@ function AuctionatorUndercutScanMixin:SearchForUndercuts(auctionInfo)
       sortingOrder = {sortOrder = 4, reverseSort = false}
     end
 
-    if not Auctionator.Config.Get(Auctionator.Config.Options.UNDERCUT_SCAN_GEAR_MATCH_ILVL_VARIANTS) and
-       Auctionator.Utilities.IsEquipment(select(6, GetItemInfoInstant(auctionInfo.itemKey.itemID))) then
+    if not AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.UNDERCUT_SCAN_GEAR_MATCH_ILVL_VARIANTS) and
+       AuctionHouseHelper.Utilities.IsEquipment(select(6, GetItemInfoInstant(auctionInfo.itemKey.itemID))) then
       self.expectedItemKey = {itemID = auctionInfo.itemKey.itemID, itemLevel = 0, itemSuffix = 0, battlePetSpeciesID = 0}
-      Auctionator.AH.SendSellSearchQueryByItemKey(self.expectedItemKey, {sortingOrder}, true)
+      AuctionHouseHelper.AH.SendSellSearchQueryByItemKey(self.expectedItemKey, {sortingOrder}, true)
     else
       self.expectedItemKey = auctionInfo.itemKey
-      Auctionator.AH.SendSearchQueryByItemKey(auctionInfo.itemKey, {sortingOrder}, true)
+      AuctionHouseHelper.AH.SendSearchQueryByItemKey(auctionInfo.itemKey, {sortingOrder}, true)
     end
   end)
 end
 
-function AuctionatorUndercutScanMixin:ProcessSearchResults(auctionInfo, ...)
-  Auctionator.AH.GetItemKeyInfo(auctionInfo.itemKey, function(itemKeyInfo)
+function AuctionHouseHelperUndercutScanMixin:ProcessSearchResults(auctionInfo, ...)
+  AuctionHouseHelper.AH.GetItemKeyInfo(auctionInfo.itemKey, function(itemKeyInfo)
     local notUndercutIDs = {}
     local resultCount = 0
 
@@ -217,30 +217,30 @@ function AuctionatorUndercutScanMixin:ProcessSearchResults(auctionInfo, ...)
   end)
 end
 
-function AuctionatorUndercutScanMixin:ProcessUndercutResult(auctionInfo, notUndercutIDs)
+function AuctionHouseHelperUndercutScanMixin:ProcessUndercutResult(auctionInfo, notUndercutIDs)
   local isUndercut = tIndexOf(notUndercutIDs, auctionInfo.auctionID) == nil
   if isUndercut then
     table.insert(self.undercutAuctions, auctionInfo)
   end
 
-  local itemKeyString = Auctionator.Utilities.ItemKeyString(self.currentAuction.itemKey)
+  local itemKeyString = AuctionHouseHelper.Utilities.ItemKeyString(self.currentAuction.itemKey)
   self.seenAuctionResults[itemKeyString] = notUndercutIDs
 
-  Auctionator.EventBus:Fire(
+  AuctionHouseHelper.EventBus:Fire(
     self,
-    Auctionator.Cancelling.Events.UndercutStatus,
+    AuctionHouseHelper.Cancelling.Events.UndercutStatus,
     auctionInfo.auctionID,
     isUndercut
   )
 end
 
-function AuctionatorUndercutScanMixin:CancelNextAuction()
-  Auctionator.Debug.Message("AuctionatorUndercutScanMixin:CancelNextAuction()")
+function AuctionHouseHelperUndercutScanMixin:CancelNextAuction()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperUndercutScanMixin:CancelNextAuction()")
   FrameUtil.RegisterFrameForEvents(self, CANCELLING_EVENTS)
 
-  Auctionator.EventBus:Fire(
+  AuctionHouseHelper.EventBus:Fire(
     self,
-    Auctionator.Cancelling.Events.RequestCancel,
+    AuctionHouseHelper.Cancelling.Events.RequestCancel,
     self.undercutAuctions[1].auctionID
   )
 

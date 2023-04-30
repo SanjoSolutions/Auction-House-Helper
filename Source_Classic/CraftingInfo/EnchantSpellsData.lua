@@ -1,4 +1,4 @@
-Auctionator.CraftingInfo.EnchantSpellsToItemData = {
+AuctionHouseHelper.CraftingInfo.EnchantSpellsToItemData = {
   [2831] = {itemID = 2304, level = 0, itemClass = 4},
   [2832] = {itemID = 2313, level = 0, itemClass = 4},
   [2833] = {itemID = 4265, level = 15, itemClass = 4},

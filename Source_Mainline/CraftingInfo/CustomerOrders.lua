@@ -1,6 +1,6 @@
 -- Add a info to the tradeskill frame for reagent prices
 local addedFunctionality = false
-function Auctionator.CraftingInfo.InitializeCustomerOrdersFrame()
+function AuctionHouseHelper.CraftingInfo.InitializeCustomerOrdersFrame()
   if addedFunctionality then
     return
   end
@@ -8,17 +8,17 @@ function Auctionator.CraftingInfo.InitializeCustomerOrdersFrame()
   if ProfessionsCustomerOrdersFrame then
     addedFunctionality = true
 
-    local buttonFrame = CreateFrame("BUTTON", "AuctionatorTradeSkillSearch", ProfessionsCustomerOrdersFrame.Form, "AuctionatorCraftingInfoCustomerOrdersFrameTemplate");
+    local buttonFrame = CreateFrame("BUTTON", "AuctionHouseHelperTradeSkillSearch", ProfessionsCustomerOrdersFrame.Form, "AuctionHouseHelperCraftingInfoCustomerOrdersFrameTemplate");
   end
 end
 
 local function CraftCostString(cost)
   local price = WHITE_FONT_COLOR:WrapTextInColorCode(GetMoneyString(cost, true))
 
-  return AUCTIONATOR_L_REAGENTS_VALUE_COLON .. " " .. price
+  return AUCTION_HOUSE_HELPER_L_REAGENTS_VALUE_COLON .. " " .. price
 end
 
-function Auctionator.CraftingInfo.GetCustomerOrdersInfoText(customerOrdersForm)
+function AuctionHouseHelper.CraftingInfo.GetCustomerOrdersInfoText(customerOrdersForm)
   local transaction = customerOrdersForm.transaction
 
   if transaction == nil then
@@ -27,7 +27,7 @@ function Auctionator.CraftingInfo.GetCustomerOrdersInfoText(customerOrdersForm)
 
   local recipeSchematic = transaction:GetRecipeSchematic()
 
-  local cost = Auctionator.CraftingInfo.CalculateCraftCost(recipeSchematic, transaction)
+  local cost = AuctionHouseHelper.CraftingInfo.CalculateCraftCost(recipeSchematic, transaction)
 
   return CraftCostString(cost)
 end

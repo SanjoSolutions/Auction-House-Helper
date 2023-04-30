@@ -1,6 +1,6 @@
-AuctionatorShoppingOneItemSearchEditBoxMixin = {}
+AuctionHouseHelperShoppingOneItemSearchEditBoxMixin = {}
 
-function AuctionatorShoppingOneItemSearchEditBoxMixin:OnTextChanged(isUserInput)
+function AuctionHouseHelperShoppingOneItemSearchEditBoxMixin:OnTextChanged(isUserInput)
   if isUserInput and not self:IsInIMECompositionMode() then
     local current = self:GetText():lower()
     if current == "" or (self.prevCurrent ~= nil and #self.prevCurrent >= #current) then
@@ -11,7 +11,7 @@ function AuctionatorShoppingOneItemSearchEditBoxMixin:OnTextChanged(isUserInput)
 
     local function CompareSearch(toCompare)
       if toCompare:lower():sub(1, #current) == current then
-        local split = Auctionator.Search.SplitAdvancedSearch(toCompare)
+        local split = AuctionHouseHelper.Search.SplitAdvancedSearch(toCompare)
         local searchString = split.searchString
         if split.isExact then
           searchString = "\"" .. searchString .. "\""
@@ -25,14 +25,14 @@ function AuctionatorShoppingOneItemSearchEditBoxMixin:OnTextChanged(isUserInput)
       end
     end
 
-    for _, recent in ipairs(Auctionator.Shopping.Recents.GetAll()) do
+    for _, recent in ipairs(AuctionHouseHelper.Shopping.Recents.GetAll()) do
       if CompareSearch(recent) then
         return
       end
     end
 
-    for i = 1, Auctionator.Shopping.ListManager:GetCount() do
-      local list = Auctionator.Shopping.ListManager:GetByIndex(i)
+    for i = 1, AuctionHouseHelper.Shopping.ListManager:GetCount() do
+      local list = AuctionHouseHelper.Shopping.ListManager:GetByIndex(i)
       for j = 1, list:GetItemCount() do
         local search = list:GetItemByIndex(j)
         if CompareSearch(search) then

@@ -1,22 +1,22 @@
-function Auctionator.AH.Initialize()
-  if Auctionator.AH.Internals ~= nil then
+function AuctionHouseHelper.AH.Initialize()
+  if AuctionHouseHelper.AH.Internals ~= nil then
     return
   end
-  Auctionator.AH.Internals = {}
+  AuctionHouseHelper.AH.Internals = {}
 
-  Auctionator.AH.Internals.throttling = CreateFrame(
+  AuctionHouseHelper.AH.Internals.throttling = CreateFrame(
     "FRAME",
-    "AuctionatorAHThrottlingFrame",
+    "AuctionHouseHelperAHThrottlingFrame",
     AuctionFrame,
-    "AuctionatorAHThrottlingFrameTemplate"
+    "AuctionHouseHelperAHThrottlingFrameTemplate"
   )
 
-  Auctionator.AH.Internals.scan = CreateFrame(
+  AuctionHouseHelper.AH.Internals.scan = CreateFrame(
     "FRAME",
-    "AuctionatorAHScanFrame",
+    "AuctionHouseHelperAHScanFrame",
     AuctionFrame,
-    "AuctionatorAHScanFrameTemplate"
+    "AuctionHouseHelperAHScanFrameTemplate"
   )
 
-  Auctionator.AH.Queue = CreateAndInitFromMixin(Auctionator.AH.QueueMixin)
+  AuctionHouseHelper.AH.Queue = CreateAndInitFromMixin(AuctionHouseHelper.AH.QueueMixin)
 end

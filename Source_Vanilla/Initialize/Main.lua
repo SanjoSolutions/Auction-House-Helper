@@ -1,37 +1,37 @@
-local AUCTIONATOR_EVENTS = {
+local AUCTION_HOUSE_HELPER_EVENTS = {
   "CRAFT_SHOW",
 }
 
-AuctionatorInitializeVanillaMixin = {}
+AuctionHouseHelperInitializeVanillaMixin = {}
 
-function AuctionatorInitializeVanillaMixin:OnLoad()
-  FrameUtil.RegisterFrameForEvents(self, AUCTIONATOR_EVENTS)
+function AuctionHouseHelperInitializeVanillaMixin:OnLoad()
+  FrameUtil.RegisterFrameForEvents(self, AUCTION_HOUSE_HELPER_EVENTS)
 end
 
-function AuctionatorInitializeVanillaMixin:OnEvent(event, ...)
+function AuctionHouseHelperInitializeVanillaMixin:OnEvent(event, ...)
   if event == "CRAFT_SHOW" then
-    Auctionator.EnchantInfo.Initialize()
+    AuctionHouseHelper.EnchantInfo.Initialize()
     self:CraftShown()
   end
 end
 
-function AuctionatorInitializeVanillaMixin:CraftShown()
-  Auctionator.Debug.Message("AuctionatorInitializeVanillaMixin::CraftShown()")
+function AuctionHouseHelperInitializeVanillaMixin:CraftShown()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperInitializeVanillaMixin::CraftShown()")
 
   if self.initializedCraftHooks then
     return
   end
 
   local reagentHook = function(self)
-    if IsModifiedClick("CHATLINK") and AuctionatorShoppingFrame ~= nil and AuctionatorShoppingFrame:IsVisible() then
+    if IsModifiedClick("CHATLINK") and AuctionHouseHelperShoppingFrame ~= nil and AuctionHouseHelperShoppingFrame:IsVisible() then
       local name = GetCraftReagentInfo(GetCraftSelectionIndex(), self:GetID())
 
       if name == nil then
         return
       end
 
-      AuctionatorShoppingFrame.OneItemSearchBox:SetText(name)
-      AuctionatorShoppingFrame.OneItemSearchButton:Click()
+      AuctionHouseHelperShoppingFrame.OneItemSearchBox:SetText(name)
+      AuctionHouseHelperShoppingFrame.OneItemSearchButton:Click()
     end
   end
   CraftReagent1:HookScript("OnClick", reagentHook)

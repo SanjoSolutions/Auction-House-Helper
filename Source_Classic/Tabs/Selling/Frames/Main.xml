@@ -1,9 +1,9 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="AuctionatorSellingTabFrameTemplate"
+    name="AuctionHouseHelperSellingTabFrameTemplate"
     virtual="true"
-    parentKey="AuctionatorSellingFrame"
-    mixin="AuctionatorSellingTabMixin"
+    parentKey="AuctionHouseHelperSellingFrame"
+    mixin="AuctionHouseHelperSellingTabMixin"
     hidden="true"
   >
     <Scripts>
@@ -17,7 +17,7 @@
     </Anchors>
 
     <Frames>
-      <Frame parentKey="BagDataProvider" mixin="AuctionatorBagDataProviderMixin">
+      <Frame parentKey="BagDataProvider" mixin="AuctionHouseHelperBagDataProviderMixin">
         <Scripts>
           <OnLoad method="OnLoad"/>
           <OnEvent method="OnEvent"/>
@@ -27,28 +27,28 @@
         </Scripts>
       </Frame>
 
-      <Frame parentKey="SaleItemFrame" inherits="AuctionatorSaleItemFrameTemplate">
+      <Frame parentKey="SaleItemFrame" inherits="AuctionHouseHelperSaleItemFrameTemplate">
         <Anchors>
           <Anchor point="TOP" relativePoint="TOP" y="-38" />
           <Anchor point="LEFT" relativePoint="LEFT" x="70" />
         </Anchors>
       </Frame>
 
-      <Frame parentKey="BagListing" inherits="AuctionatorSellingBagFrame">
+      <Frame parentKey="BagListing" inherits="AuctionHouseHelperSellingBagFrame">
         <Anchors>
           <Anchor point="TOPLEFT" x="4" y="-180" />
           <Anchor point="BOTTOM" y="5" />
         </Anchors>
       </Frame>
 
-      <Frame parentKey="BagInset" inherits="AuctionatorInsetLeaveScrollSpaceTemplate">
+      <Frame parentKey="BagInset" inherits="AuctionHouseHelperInsetLeaveScrollSpaceTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.BagListing" x="-5" y="5"/>
           <Anchor point="BOTTOMRIGHT" relativeKey="$parent.BagListing" y="-3" x="30"/>
         </Anchors>
       </Frame>
 
-      <Frame parentKey="BuyFrame" inherits="AuctionatorBuyFrameTemplateForSelling">
+      <Frame parentKey="BuyFrame" inherits="AuctionHouseHelperBuyFrameTemplateForSelling">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.BagListing" relativePoint="TOPRIGHT" y="10" x="40"/>
           <Anchor point="BOTTOMRIGHT"/>

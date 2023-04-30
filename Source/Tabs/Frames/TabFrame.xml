@@ -1,8 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="AuctionatorTabFrameTemplate"
+    name="AuctionHouseHelperTabFrameTemplate"
     virtual="true"
-    inherits="AuctionatorInsetTemplate"
+    inherits="AuctionHouseHelperInsetTemplate"
   >
   <!-- Note that inheriting frames need to set their own parentKey!
 

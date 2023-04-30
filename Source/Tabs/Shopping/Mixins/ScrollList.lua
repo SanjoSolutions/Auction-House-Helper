@@ -1,23 +1,23 @@
-AuctionatorScrollListMixin = {}
+AuctionHouseHelperScrollListMixin = {}
 
-function AuctionatorScrollListMixin:GetNumEntries()
+function AuctionHouseHelperScrollListMixin:GetNumEntries()
   error("Need to override")
 end
 
-function AuctionatorScrollListMixin:GetEntry(index)
+function AuctionHouseHelperScrollListMixin:GetEntry(index)
   error("Need to override")
 end
 
-function AuctionatorScrollListMixin:InitLine(line)
+function AuctionHouseHelperScrollListMixin:InitLine(line)
   line:InitLine()
 end
 
-function AuctionatorScrollListMixin:OnShow()
+function AuctionHouseHelperScrollListMixin:OnShow()
   self:Init()
   self:RefreshScrollFrame(true)
 end
 
-function AuctionatorScrollListMixin:Init()
+function AuctionHouseHelperScrollListMixin:Init()
   if self.isInitialized then
     return
   end
@@ -38,7 +38,7 @@ function AuctionatorScrollListMixin:Init()
     end
   end
   view:SetElementExtent(20)
-  if Auctionator.Constants.IsVanilla then
+  if AuctionHouseHelper.Constants.IsVanilla then
     view:SetElementInitializer("Button", self.lineTemplate, function(frame, elementData)
       FirstTimeInit(frame)
       frame:Populate(elementData.searchTerm, elementData.index)
@@ -51,8 +51,8 @@ function AuctionatorScrollListMixin:Init()
   end
 end
 
-function AuctionatorScrollListMixin:RefreshScrollFrame(persistScroll)
-  Auctionator.Debug.Message("AuctionatorScrollListMixin:RefreshScrollFrame()")
+function AuctionHouseHelperScrollListMixin:RefreshScrollFrame(persistScroll)
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperScrollListMixin:RefreshScrollFrame()")
 
   if not self.isInitialized or not self:IsVisible() then
     return
@@ -69,10 +69,10 @@ function AuctionatorScrollListMixin:RefreshScrollFrame(persistScroll)
   self.ScrollBox:SetDataProvider(CreateDataProvider(entries), persistScroll)
 end
 
-function AuctionatorScrollListMixin:ScrollToBottom()
+function AuctionHouseHelperScrollListMixin:ScrollToBottom()
   self.ScrollBox:SetScrollPercentage(1)
 end
 
-function AuctionatorScrollListMixin:SetLineTemplate(lineTemplate)
+function AuctionHouseHelperScrollListMixin:SetLineTemplate(lineTemplate)
   self.lineTemplate = lineTemplate;
 end

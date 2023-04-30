@@ -1,6 +1,6 @@
-AuctionatorConfigMinMaxMixin = {}
+AuctionHouseHelperConfigMinMaxMixin = {}
 
-function AuctionatorConfigMinMaxMixin:OnLoad()
+function AuctionHouseHelperConfigMinMaxMixin:OnLoad()
   self.onTabOut = function() end
   self.onEnter = function() end
 
@@ -13,36 +13,36 @@ function AuctionatorConfigMinMaxMixin:OnLoad()
   end)
 end
 
-function AuctionatorConfigMinMaxMixin:SetFocus()
+function AuctionHouseHelperConfigMinMaxMixin:SetFocus()
   self.MinBox:SetFocus()
 end
 
-function AuctionatorConfigMinMaxMixin:SetCallbacks(callbacks)
+function AuctionHouseHelperConfigMinMaxMixin:SetCallbacks(callbacks)
   self.onTabOut = callbacks.OnTab or function() end
   self.onEnter = callbacks.OnEnter or function() end
 end
 
-function AuctionatorConfigMinMaxMixin:OnEnterPressed()
+function AuctionHouseHelperConfigMinMaxMixin:OnEnterPressed()
   self.onEnter()
 end
 
-function AuctionatorConfigMinMaxMixin:MinTabPressed()
+function AuctionHouseHelperConfigMinMaxMixin:MinTabPressed()
   self.MaxBox:SetFocus()
 end
 
-function AuctionatorConfigMinMaxMixin:MaxTabPressed()
+function AuctionHouseHelperConfigMinMaxMixin:MaxTabPressed()
   self.onTabOut()
 end
 
-function AuctionatorConfigMinMaxMixin:GetMin()
+function AuctionHouseHelperConfigMinMaxMixin:GetMin()
   return self.MinBox:GetNumber()
 end
 
-function AuctionatorConfigMinMaxMixin:GetMax()
+function AuctionHouseHelperConfigMinMaxMixin:GetMax()
   return self.MaxBox:GetNumber()
 end
 
-function AuctionatorConfigMinMaxMixin:SetMin(value)
+function AuctionHouseHelperConfigMinMaxMixin:SetMin(value)
   if value == nil then
     self.MinBox:SetText("")
   else
@@ -50,7 +50,7 @@ function AuctionatorConfigMinMaxMixin:SetMin(value)
   end
 end
 
-function AuctionatorConfigMinMaxMixin:SetMax(value)
+function AuctionHouseHelperConfigMinMaxMixin:SetMax(value)
   if value == nil then
     self.MaxBox:SetText("")
   else
@@ -58,7 +58,7 @@ function AuctionatorConfigMinMaxMixin:SetMax(value)
   end
 end
 
-function AuctionatorConfigMinMaxMixin:Reset()
+function AuctionHouseHelperConfigMinMaxMixin:Reset()
   self.MinBox:SetText("")
   self.MaxBox:SetText("")
 end

@@ -5,8 +5,8 @@ ignore:
   - DB2_Scripts
   - *Classic*
   - *Vanilla*
-  - Auctionator_TBC.toc
-  - Auctionator_Wrath.toc
+  - AuctionaAuctionHouseHelper_TBC.toc
+  - AuctionHouseHelper_Wrath.toc
   - Patches
 plain-copy:
   - Imports_Mainline

@@ -1,8 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="AuctionatorConfigurationMinMaxFrame"
-    mixin="AuctionatorConfigMinMaxMixin"
-    inherits="AuctionatorConfigurationTooltip"
+    name="AuctionHouseHelperConfigurationMinMaxFrame"
+    mixin="AuctionHouseHelperConfigMinMaxMixin"
+    inherits="AuctionHouseHelperConfigurationTooltip"
     virtual="true"
   >
     <!--
@@ -54,7 +54,7 @@
 
         <Layers>
           <Layer level="BACKGROUND">
-            <FontString inherits="GameFontNormalSmall" text="AUCTIONATOR_L_MIN" justifyH="CENTER">
+            <FontString inherits="GameFontNormalSmall" text="AUCTION_HOUSE_HELPER_L_MIN" justifyH="CENTER">
               <Size x="50" />
               <Anchors>
                 <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="BOTTOMLEFT" />
@@ -69,8 +69,8 @@
           <OnEnterPressed>self:GetParent():OnEnterPressed()</OnEnterPressed>
           <OnEscapePressed>self:ClearFocus()</OnEscapePressed>
           <OnTabPressed>self:GetParent():MinTabPressed()</OnTabPressed>
-          <OnTextChanged function="Auctionator_EditBox_OnTextChanged" />
-          <OnKeyDown function="Auctionator_EditBox_OnKeyDown" />
+          <OnTextChanged function="AuctionHouseHelper_EditBox_OnTextChanged" />
+          <OnKeyDown function="AuctionHouseHelper_EditBox_OnKeyDown" />
         </Scripts>
       </EditBox>
 
@@ -85,7 +85,7 @@
 
         <Layers>
           <Layer level="BACKGROUND">
-            <FontString inherits="GameFontNormalSmall" text="AUCTIONATOR_L_MAX" justifyH="CENTER">
+            <FontString inherits="GameFontNormalSmall" text="AUCTION_HOUSE_HELPER_L_MAX" justifyH="CENTER">
               <Size x="50" />
               <Anchors>
                 <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="BOTTOMLEFT"/>
@@ -100,12 +100,12 @@
           <OnEnterPressed>self:GetParent():OnEnterPressed()</OnEnterPressed>
           <OnEscapePressed>self:ClearFocus()</OnEscapePressed>
           <OnTabPressed>self:GetParent():MaxTabPressed()</OnTabPressed>
-          <OnTextChanged function="Auctionator_EditBox_OnTextChanged" />
-          <OnKeyDown function="Auctionator_EditBox_OnKeyDown" />
+          <OnTextChanged function="AuctionHouseHelper_EditBox_OnTextChanged" />
+          <OnKeyDown function="AuctionHouseHelper_EditBox_OnKeyDown" />
         </Scripts>
       </EditBox>
 
-      <Button parentKey="ResetButton" inherits="AuctionatorResetButton">
+      <Button parentKey="ResetButton" inherits="AuctionHouseHelperResetButton">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.MaxBox" relativePoint="TOPRIGHT" x="3" y="-3" />
         </Anchors>

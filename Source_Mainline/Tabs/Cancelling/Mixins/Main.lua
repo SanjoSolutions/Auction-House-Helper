@@ -1,13 +1,13 @@
-AuctionatorCancellingFrameMixin = {}
+AuctionHouseHelperCancellingFrameMixin = {}
 
-function AuctionatorCancellingFrameMixin:OnLoad()
-  Auctionator.Debug.Message("AuctionatorCancellingFrameMixin:OnLoad()")
+function AuctionHouseHelperCancellingFrameMixin:OnLoad()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperCancellingFrameMixin:OnLoad()")
 
   self.ResultsListing:Init(self.DataProvider)
 
-  Auctionator.EventBus:Register(self, {
-    Auctionator.Cancelling.Events.RequestCancel,
-    Auctionator.Cancelling.Events.TotalUpdated,
+  AuctionHouseHelper.EventBus:Register(self, {
+    AuctionHouseHelper.Cancelling.Events.RequestCancel,
+    AuctionHouseHelper.Cancelling.Events.TotalUpdated,
   })
 
   self.SearchFilter:HookScript("OnTextChanged", function()
@@ -15,18 +15,18 @@ function AuctionatorCancellingFrameMixin:OnLoad()
   end)
 end
 
-function AuctionatorCancellingFrameMixin:RefreshButtonClicked()
+function AuctionHouseHelperCancellingFrameMixin:RefreshButtonClicked()
   self.DataProvider:QueryAuctions()
 end
 
-local ConfirmBidPricePopup = "AuctionatorConfirmBidPricePopupDialog"
+local ConfirmBidPricePopup = "AuctionHouseHelperConfirmBidPricePopupDialog"
 
 StaticPopupDialogs[ConfirmBidPricePopup] = {
-  text = AUCTIONATOR_L_BID_EXISTING_ON_OWNED_AUCTION,
+  text = AUCTION_HOUSE_HELPER_L_BID_EXISTING_ON_OWNED_AUCTION,
   button1 = ACCEPT,
   button2 = CANCEL,
   OnAccept = function(self)
-    Auctionator.AH.CancelAuction(self.data)
+    AuctionHouseHelper.AH.CancelAuction(self.data)
   end,
   hasMoneyFrame = 1,
   showAlert = 1,
@@ -35,10 +35,10 @@ StaticPopupDialogs[ConfirmBidPricePopup] = {
   hideOnEscape = 1
 }
 
-function AuctionatorCancellingFrameMixin:ReceiveEvent(eventName, ...)
-  if eventName == Auctionator.Cancelling.Events.RequestCancel then
+function AuctionHouseHelperCancellingFrameMixin:ReceiveEvent(eventName, ...)
+  if eventName == AuctionHouseHelper.Cancelling.Events.RequestCancel then
     local auctionID = ...
-    Auctionator.Debug.Message("Executing cancel request", auctionID)
+    AuctionHouseHelper.Debug.Message("Executing cancel request", auctionID)
 
     local cancelCost = C_AuctionHouse.GetCancelCost(auctionID)
     if cancelCost > 0 then
@@ -48,20 +48,20 @@ function AuctionatorCancellingFrameMixin:ReceiveEvent(eventName, ...)
         MoneyFrame_Update(dialog.moneyFrame, cancelCost);
       end
     else
-      Auctionator.AH.CancelAuction(auctionID)
+      AuctionHouseHelper.AH.CancelAuction(auctionID)
     end
 
     PlaySound(SOUNDKIT.IG_MAINMENU_OPEN)
 
-  elseif eventName == Auctionator.Cancelling.Events.TotalUpdated then
+  elseif eventName == AuctionHouseHelper.Cancelling.Events.TotalUpdated then
     local totalOnSale, totalPending = ...
 
-    local text = AUCTIONATOR_L_TOTAL_ON_SALE:format(
+    local text = AUCTION_HOUSE_HELPER_L_TOTAL_ON_SALE:format(
         GetMoneyString(totalOnSale, true)
       )
     if totalPending > 0 then
       text = text .. " " ..
-      AUCTIONATOR_L_TOTAL_PENDING:format(
+      AUCTION_HOUSE_HELPER_L_TOTAL_PENDING:format(
         GetMoneyString(totalPending, true)
       )
     end

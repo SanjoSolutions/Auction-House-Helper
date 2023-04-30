@@ -5,43 +5,43 @@
 --   itemClassFilters -> itemClassFilter[]
 --   isExact -> boolean?
 -- }
-function Auctionator.AH.QueryAuctionItems(query)
-  Auctionator.AH.Internals.scan:StartQuery(query, 0, -1)
+function AuctionHouseHelper.AH.QueryAuctionItems(query)
+  AuctionHouseHelper.AH.Internals.scan:StartQuery(query, 0, -1)
 end
 
-function Auctionator.AH.QueryAndFocusPage(query, page)
-  Auctionator.AH.Internals.scan:StartQuery(query, page, page)
+function AuctionHouseHelper.AH.QueryAndFocusPage(query, page)
+  AuctionHouseHelper.AH.Internals.scan:StartQuery(query, page, page)
 end
 
-function Auctionator.AH.GetCurrentPage()
-  return Auctionator.AH.Internals.scan:GetCurrentPage()
+function AuctionHouseHelper.AH.GetCurrentPage()
+  return AuctionHouseHelper.AH.Internals.scan:GetCurrentPage()
 end
 
-function Auctionator.AH.AbortQuery()
-  Auctionator.AH.Internals.scan:AbortQuery()
+function AuctionHouseHelper.AH.AbortQuery()
+  AuctionHouseHelper.AH.Internals.scan:AbortQuery()
 end
 
 -- Event ThrottleUpdate will fire whenever the state changes
-function Auctionator.AH.IsNotThrottled()
-  return Auctionator.AH.Internals.throttling:IsReady()
+function AuctionHouseHelper.AH.IsNotThrottled()
+  return AuctionHouseHelper.AH.Internals.throttling:IsReady()
 end
 
-function Auctionator.AH.GetAuctionItemSubClasses(classID)
+function AuctionHouseHelper.AH.GetAuctionItemSubClasses(classID)
   return { GetAuctionItemSubClasses(classID) }
 end
 
-function Auctionator.AH.PlaceAuctionBid(...)
-  Auctionator.AH.Internals.throttling:BidPlaced()
+function AuctionHouseHelper.AH.PlaceAuctionBid(...)
+  AuctionHouseHelper.AH.Internals.throttling:BidPlaced()
   PlaceAuctionBid("list", ...)
 end
 
-function Auctionator.AH.PostAuction(...)
-  Auctionator.AH.Internals.throttling:AuctionsPosted()
+function AuctionHouseHelper.AH.PostAuction(...)
+  AuctionHouseHelper.AH.Internals.throttling:AuctionsPosted()
   PostAuction(...)
 end
 
 -- view is a string and must be "list", "owner" or "bidder"
-function Auctionator.AH.DumpAuctions(view)
+function AuctionHouseHelper.AH.DumpAuctions(view)
   local auctions = {}
   for index = 1, GetNumAuctionItems(view) do
     local auctionInfo = { GetAuctionItemInfo(view, index) }
@@ -58,18 +58,18 @@ function Auctionator.AH.DumpAuctions(view)
   return auctions
 end
 
-function Auctionator.AH.CancelAuction(auction)
+function AuctionHouseHelper.AH.CancelAuction(auction)
   for index = 1, GetNumAuctionItems("owner") do
     local info = { GetAuctionItemInfo("owner", index) }
 
-    local stackPrice = info[Auctionator.Constants.AuctionItemInfo.Buyout]
-    local stackSize = info[Auctionator.Constants.AuctionItemInfo.Quantity]
-    local bidAmount = info[Auctionator.Constants.AuctionItemInfo.BidAmount]
-    local saleStatus = info[Auctionator.Constants.AuctionItemInfo.SaleStatus]
+    local stackPrice = info[AuctionHouseHelper.Constants.AuctionItemInfo.Buyout]
+    local stackSize = info[AuctionHouseHelper.Constants.AuctionItemInfo.Quantity]
+    local bidAmount = info[AuctionHouseHelper.Constants.AuctionItemInfo.BidAmount]
+    local saleStatus = info[AuctionHouseHelper.Constants.AuctionItemInfo.SaleStatus]
     local itemLink = GetAuctionItemLink("owner", index)
 
-    if saleStatus ~= 1 and auction.bidAmount == bidAmount and auction.stackPrice == stackPrice and auction.stackSize == stackSize and Auctionator.Search.GetCleanItemLink(itemLink) == Auctionator.Search.GetCleanItemLink(auction.itemLink) then
-      Auctionator.AH.Internals.throttling:AuctionCancelled()
+    if saleStatus ~= 1 and auction.bidAmount == bidAmount and auction.stackPrice == stackPrice and auction.stackSize == stackSize and AuctionHouseHelper.Search.GetCleanItemLink(itemLink) == AuctionHouseHelper.Search.GetCleanItemLink(auction.itemLink) then
+      AuctionHouseHelper.AH.Internals.throttling:AuctionCancelled()
       CancelAuction(index)
       break
     end

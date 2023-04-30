@@ -1,15 +1,15 @@
-AuctionatorBuyingRealmHistoryDataProviderMixin = CreateFromMixins(AuctionatorHistoricalPriceProviderMixin)
+AuctionHouseHelperBuyingRealmHistoryDataProviderMixin = CreateFromMixins(AuctionHouseHelperHistoricalPriceProviderMixin)
 
-function AuctionatorBuyingRealmHistoryDataProviderMixin:SetItemLink(itemLink)
-  Auctionator.Utilities.DBKeyFromLink(itemLink, function(dbKeys)
+function AuctionHouseHelperBuyingRealmHistoryDataProviderMixin:SetItemLink(itemLink)
+  AuctionHouseHelper.Utilities.DBKeyFromLink(itemLink, function(dbKeys)
     self:SetItem(dbKeys[1])
   end)
 end
 
-function AuctionatorBuyingRealmHistoryDataProviderMixin:GetColumnHideStates()
-  return Auctionator.Config.Get(Auctionator.Config.Options.COLUMNS_BUYING_HISTORICAL_PRICES)
+function AuctionHouseHelperBuyingRealmHistoryDataProviderMixin:GetColumnHideStates()
+  return AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.COLUMNS_BUYING_HISTORICAL_PRICES)
 end
 
-function AuctionatorBuyingRealmHistoryDataProviderMixin:GetRowTemplate()
-  return "AuctionatorBuyingHistoricalPriceRowTemplate"
+function AuctionHouseHelperBuyingRealmHistoryDataProviderMixin:GetRowTemplate()
+  return "AuctionHouseHelperBuyingHistoricalPriceRowTemplate"
 end

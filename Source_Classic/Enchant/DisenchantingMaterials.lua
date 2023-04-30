@@ -1,4 +1,4 @@
-Auctionator.Constants.DisenchantMats = {
+AuctionHouseHelper.Constants.DisenchantMats = {
   LESSER_MAGIC = 10938,
   GREATER_MAGIC = 10939,
   STRANGE_DUST = 10940,

@@ -1,5 +1,5 @@
 <Ui>
-  <Frame name="AuctionatorCraftingInfoCustomerOrdersFrameTemplate" mixin="AuctionatorCraftingInfoCustomerOrdersFrameMixin" virtual="true" frameLevel="520">
+  <Frame name="AuctionHouseHelperCraftingInfoCustomerOrdersFrameTemplate" mixin="AuctionHouseHelperCraftingInfoCustomerOrdersFrameMixin" virtual="true" frameLevel="520">
     <Size x="400" y="22"/>
     <Scripts>
       <OnLoad method="OnLoad"/>

@@ -1,7 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="AuctionatorConfigurationFrameTemplate"
-    mixin="AuctionatorConfigFrameMixin"
+    name="AuctionHouseHelperConfigurationFrameTemplate"
+    mixin="AuctionHouseHelperConfigFrameMixin"
     hidden="true"
   >
     <Scripts>

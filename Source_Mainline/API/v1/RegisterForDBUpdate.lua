@@ -1,19 +1,19 @@
-function Auctionator.API.v1.RegisterForDBUpdate(callerID, callback)
-  Auctionator.API.InternalVerifyID(callerID)
+function AuctionHouseHelper.API.v1.RegisterForDBUpdate(callerID, callback)
+  AuctionHouseHelper.API.InternalVerifyID(callerID)
 
   if type(callback) ~= "function" then
-    Auctionator.API.ComposeError(
+    AuctionHouseHelper.API.ComposeError(
       callerID,
-      "Usage Auctionator.API.v1.RegisterForDBUpdate(string, function)"
+      "Usage AuctionHouseHelper.API.v1.RegisterForDBUpdate(string, function)"
     )
   end
 
-  Auctionator.EventBus:Register({
+  AuctionHouseHelper.EventBus:Register({
     ReceiveEvent = function()
       callback()
     end
   }, {
-    Auctionator.IncrementalScan.Events.PricesProcessed,
-    Auctionator.FullScan.Events.ScanComplete,
+    AuctionHouseHelper.IncrementalScan.Events.PricesProcessed,
+    AuctionHouseHelper.FullScan.Events.ScanComplete,
   })
 end

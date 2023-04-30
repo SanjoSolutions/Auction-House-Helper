@@ -1,26 +1,26 @@
-AuctionatorConfigAdvancedFrameMixin = CreateFromMixins(AuctionatorPanelConfigMixin)
+AuctionHouseHelperConfigAdvancedFrameMixin = CreateFromMixins(AuctionHouseHelperPanelConfigMixin)
 
-function AuctionatorConfigAdvancedFrameMixin:OnLoad()
-  Auctionator.Debug.Message("AuctionatorConfigAdvancedFrameMixin:OnLoad()")
+function AuctionHouseHelperConfigAdvancedFrameMixin:OnLoad()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperConfigAdvancedFrameMixin:OnLoad()")
 
-  self.name = AUCTIONATOR_L_CONFIG_ADVANCED_CATEGORY
-  self.parent = "Auctionator"
+  self.name = AUCTION_HOUSE_HELPER_L_CONFIG_ADVANCED_CATEGORY
+  self.parent = "Auction House Helper"
 
   self:SetupPanel()
 end
 
-function AuctionatorConfigAdvancedFrameMixin:OnShow()
-  self.ReplicateScan:SetChecked(Auctionator.Config.Get(Auctionator.Config.Options.REPLICATE_SCAN))
-  self.Debug:SetChecked(Auctionator.Config.Get(Auctionator.Config.Options.DEBUG))
+function AuctionHouseHelperConfigAdvancedFrameMixin:OnShow()
+  self.ReplicateScan:SetChecked(AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.REPLICATE_SCAN))
+  self.Debug:SetChecked(AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.DEBUG))
 end
 
-function AuctionatorConfigAdvancedFrameMixin:Save()
-  Auctionator.Debug.Message("AuctionatorConfigAdvancedFrameMixin:Save()")
+function AuctionHouseHelperConfigAdvancedFrameMixin:Save()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperConfigAdvancedFrameMixin:Save()")
 
-  Auctionator.Config.Set(Auctionator.Config.Options.REPLICATE_SCAN, self.ReplicateScan:GetChecked())
-  Auctionator.Config.Set(Auctionator.Config.Options.DEBUG, self.Debug:GetChecked())
+  AuctionHouseHelper.Config.Set(AuctionHouseHelper.Config.Options.REPLICATE_SCAN, self.ReplicateScan:GetChecked())
+  AuctionHouseHelper.Config.Set(AuctionHouseHelper.Config.Options.DEBUG, self.Debug:GetChecked())
 end
 
-function AuctionatorConfigAdvancedFrameMixin:Cancel()
-  Auctionator.Debug.Message("AuctionatorConfigAdvancedFrameMixin:Cancel()")
+function AuctionHouseHelperConfigAdvancedFrameMixin:Cancel()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperConfigAdvancedFrameMixin:Cancel()")
 end

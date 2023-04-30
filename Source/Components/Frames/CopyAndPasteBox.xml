@@ -1,8 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="AuctionatorConfigurationCopyAndPasteFrame"
-    mixin="AuctionatorConfigurationCopyAndPasteMixin"
-    inherits="AuctionatorConfigurationTooltip"
+    name="AuctionHouseHelperConfigurationCopyAndPasteFrame"
+    mixin="AuctionHouseHelperConfigurationCopyAndPasteMixin"
+    inherits="AuctionHouseHelperConfigurationTooltip"
     virtual="true"
   >
     <!--

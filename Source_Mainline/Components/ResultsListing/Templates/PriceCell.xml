@@ -1,12 +1,12 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Button
-    name="AuctionatorPriceCellTemplate"
-    mixin="AuctionatorPriceCellTemplateMixin"
-    inherits="AuctionatorCell"
+    name="AuctionHouseHelperPriceCellTemplate"
+    mixin="AuctionHouseHelperPriceCellTemplateMixin"
+    inherits="AuctionHouseHelperCell"
     virtual="true"
   >
     <Frames>
-      <Frame parentKey="MoneyDisplay" inherits="AuctionatorRetailImportMoneyDisplayFrameTemplate">
+      <Frame parentKey="MoneyDisplay" inherits="AuctionHouseHelperRetailImportMoneyDisplayFrameTemplate">
         <Anchors>
           <Anchor point="LEFT"/>
           <Anchor point="RIGHT" x="-20"/>

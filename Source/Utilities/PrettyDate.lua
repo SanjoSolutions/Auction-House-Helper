@@ -1,11 +1,11 @@
-function Auctionator.Utilities.PrettyDate(when)
+function AuctionHouseHelper.Utilities.PrettyDate(when)
   local details = date("*t", when)
   local currentDay = date("*t", time())
 
-  local weekDay = Auctionator.Locales.Apply("DAY_"..tostring(details.wday))
+  local weekDay = AuctionHouseHelper.Locales.Apply("DAY_"..tostring(details.wday))
 
   if details.year == currentDay.year and details.month == currentDay.month and details.day == currentDay.day then
-    return AUCTIONATOR_L_TODAY
+    return AUCTION_HOUSE_HELPER_L_TODAY
 
   elseif GetLocale() == "koKR" then
     -- Korean date format
@@ -17,7 +17,7 @@ function Auctionator.Utilities.PrettyDate(when)
     -- Prints, for 25th February 2020, "Tuesday, February 25"
     return
       weekDay ..  ", " ..
-      Auctionator.Locales.Apply("MONTH_"..tostring(details.month)) ..
+      AuctionHouseHelper.Locales.Apply("MONTH_"..tostring(details.month)) ..
       " " .. details.day
     end
 end

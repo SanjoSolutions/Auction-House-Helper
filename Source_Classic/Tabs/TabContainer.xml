@@ -1,8 +1,8 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="AuctionatorAHTabsContainerTemplate"
+    name="AuctionHouseHelperAHTabsContainerTemplate"
     virtual="true"
-    mixin="AuctionatorTabContainerMixin"
+    mixin="AuctionHouseHelperTabContainerMixin"
   >
     <Scripts>
       <OnLoad method="OnLoad"/>

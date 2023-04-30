@@ -1,30 +1,30 @@
-AuctionatorSellingPostingHistoryProviderMixin = CreateFromMixins(AuctionatorPostingHistoryProviderMixin)
+AuctionHouseHelperSellingPostingHistoryProviderMixin = CreateFromMixins(AuctionHouseHelperPostingHistoryProviderMixin)
 
-function AuctionatorSellingPostingHistoryProviderMixin:OnLoad()
-  AuctionatorPostingHistoryProviderMixin.OnLoad(self)
+function AuctionHouseHelperSellingPostingHistoryProviderMixin:OnLoad()
+  AuctionHouseHelperPostingHistoryProviderMixin.OnLoad(self)
 
-  Auctionator.EventBus:Register( self, {
-    Auctionator.Selling.Events.BagItemClicked,
-    Auctionator.Selling.Events.RefreshHistory,
+  AuctionHouseHelper.EventBus:Register( self, {
+    AuctionHouseHelper.Selling.Events.BagItemClicked,
+    AuctionHouseHelper.Selling.Events.RefreshHistory,
   })
 end
 
-function AuctionatorSellingPostingHistoryProviderMixin:GetColumnHideStates()
-  return Auctionator.Config.Get(Auctionator.Config.Options.COLUMNS_POSTING_HISTORY)
+function AuctionHouseHelperSellingPostingHistoryProviderMixin:GetColumnHideStates()
+  return AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.COLUMNS_POSTING_HISTORY)
 end
 
-function AuctionatorSellingPostingHistoryProviderMixin:ReceiveEvent(eventName, eventData)
-  if eventName == Auctionator.Selling.Events.BagItemClicked then
-    local dbKey = Auctionator.Utilities.DBKeyFromBrowseResult({ itemKey = eventData.itemKey })[1]
+function AuctionHouseHelperSellingPostingHistoryProviderMixin:ReceiveEvent(eventName, eventData)
+  if eventName == AuctionHouseHelper.Selling.Events.BagItemClicked then
+    local dbKey = AuctionHouseHelper.Utilities.DBKeyFromBrowseResult({ itemKey = eventData.itemKey })[1]
     self.lastDBKey = dbKey
 
     self:SetItem(dbKey)
 
-  elseif eventName == Auctionator.Selling.Events.RefreshHistory and self.lastDBKey ~= nil then
+  elseif eventName == AuctionHouseHelper.Selling.Events.RefreshHistory and self.lastDBKey ~= nil then
     self:SetItem(self.lastDBKey)
   end
 end
 
-function AuctionatorSellingPostingHistoryProviderMixin:GetRowTemplate()
-  return "AuctionatorSellingPostingHistoryRowTemplate"
+function AuctionHouseHelperSellingPostingHistoryProviderMixin:GetRowTemplate()
+  return "AuctionHouseHelperSellingPostingHistoryRowTemplate"
 end

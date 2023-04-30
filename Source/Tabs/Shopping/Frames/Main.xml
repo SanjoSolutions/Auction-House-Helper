@@ -1,9 +1,9 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
   <Frame
-    name="AuctionatorShoppingTabFrameTemplate"
+    name="AuctionHouseHelperShoppingTabFrameTemplate"
     virtual="true"
-    parentKey="AuctionatorShoppingFrame"
-    mixin="AuctionatorShoppingTabMixin"
+    parentKey="AuctionHouseHelperShoppingFrame"
+    mixin="AuctionHouseHelperShoppingTabMixin"
     hidden="true"
   >
     <Scripts>
@@ -19,20 +19,20 @@
     </Anchors>
 
     <Frames>
-      <Frame parentKey="SearchManager" mixin="AuctionatorShoppingSearchManagerMixin">
+      <Frame parentKey="SearchManager" mixin="AuctionHouseHelperShoppingSearchManagerMixin">
         <Scripts>
           <OnLoad method="OnLoad"/>
           <OnHide method="OnHide" />
         </Scripts>
       </Frame>
-      <Frame parentKey="DataProvider" mixin="AuctionatorShoppingDataProviderMixin">
+      <Frame parentKey="DataProvider" mixin="AuctionHouseHelperShoppingDataProviderMixin">
         <Scripts>
           <OnLoad method="OnLoad"/>
           <OnUpdate method="OnUpdate" />
         </Scripts>
       </Frame>
 
-      <Frame parentKey="OneItemSearch" mixin="AuctionatorShoppingOneItemSearchMixin">
+      <Frame parentKey="OneItemSearch" mixin="AuctionHouseHelperShoppingOneItemSearchMixin">
         <Size x="10" y="10"/>
         <Anchors>
           <Anchor point="TOPLEFT" x="50" y="-48"/>
@@ -42,7 +42,7 @@
           <OnShow method="OnShow" />
         </Scripts>
         <Frames>
-          <EditBox autoFocus="false" inherits="InputBoxTemplate" parentKey="SearchBox" letters="100" mixin="AuctionatorShoppingOneItemSearchEditBoxMixin">
+          <EditBox autoFocus="false" inherits="InputBoxTemplate" parentKey="SearchBox" letters="100" mixin="AuctionHouseHelperShoppingOneItemSearchEditBoxMixin">
             <Size x="180" y="20"/>
             <Anchors>
               <Anchor point="TOPLEFT"/>
@@ -55,7 +55,7 @@
             </Scripts>
           </EditBox>
 
-          <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_SEARCH" parentKey="SearchButton">
+          <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTION_HOUSE_HELPER_L_SEARCH" parentKey="SearchButton">
             <Anchors>
               <Anchor point="TOPLEFT" relativeKey="$parent.SearchBox" relativePoint="TOPRIGHT" y="1"/>
             </Anchors>
@@ -90,7 +90,7 @@
       </Frame>
 
       <!-- Shopping List item scroll frame -->
-      <Frame parentKey="ScrollListShoppingList" mixin="AuctionatorScrollListShoppingListMixin">
+      <Frame parentKey="ScrollListShoppingList" mixin="AuctionHouseHelperScrollListShoppingListMixin">
         <Anchors>
           <Anchor point="TOPLEFT" y="-106" />
           <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" x="300" y="35" />
@@ -140,7 +140,7 @@
                   <Anchor point="BOTTOMRIGHT"/>
               </Anchors>
           </EventFrame>
-          <Frame parentKey="Inset" inherits="AuctionatorInsetTemplate">
+          <Frame parentKey="Inset" inherits="AuctionHouseHelperInsetTemplate">
             <Anchors>
               <Anchor point="TOPLEFT" relativePoint="TOPLEFT"/>
               <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" relativeKey="$parent.ScrollBar" x="2"/>
@@ -149,7 +149,7 @@
         </Frames>
       </Frame>
 
-      <Frame parentKey="ScrollListRecents" mixin="AuctionatorScrollListRecentsMixin">
+      <Frame parentKey="ScrollListRecents" mixin="AuctionHouseHelperScrollListRecentsMixin">
         <Anchors>
           <Anchor point="TOPLEFT" y="-106" />
           <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" x="300" />
@@ -186,7 +186,7 @@
                   <Anchor point="BOTTOMRIGHT"/>
               </Anchors>
           </EventFrame>
-          <Frame parentKey="Inset" inherits="AuctionatorInsetTemplate">
+          <Frame parentKey="Inset" inherits="AuctionHouseHelperInsetTemplate">
             <Anchors>
               <Anchor point="TOPLEFT" relativePoint="TOPLEFT"/>
               <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" relativeKey="$parent.ScrollBar" x="2"/>
@@ -195,7 +195,7 @@
         </Frames>
       </Frame>
 
-      <Frame parentKey="RecentsTabsContainer" mixin="AuctionatorShoppingTabRecentsContainerMixin">
+      <Frame parentKey="RecentsTabsContainer" mixin="AuctionHouseHelperShoppingTabRecentsContainerMixin">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeKey="$parent.ScrollListShoppingList" x="10"/>
           <Anchor point="RIGHT" relativePoint="TOPRIGHT" y="15" relativeKey="$parent.ScrollListShoppingList"/>
@@ -205,12 +205,12 @@
           <OnLoad method="OnLoad"/>
         </Scripts>
         <Frames>
-          <Button parentKey="ListTab" id="1" inherits="AuctionatorShoppingMiniTabButtonTemplate" text="AUCTIONATOR_L_SHOPPING_LIST">
+          <Button parentKey="ListTab" id="1" inherits="AuctionHouseHelperShoppingMiniTabButtonTemplate" text="AUCTION_HOUSE_HELPER_L_SHOPPING_LIST">
             <Anchors>
               <Anchor point="TOPLEFT" />
             </Anchors>
           </Button>
-          <Button parentKey="RecentsTab" id="2" inherits="AuctionatorShoppingMiniTabButtonTemplate" text="AUCTIONATOR_L_RECENT_SEARCHES">
+          <Button parentKey="RecentsTab" id="2" inherits="AuctionHouseHelperShoppingMiniTabButtonTemplate" text="AUCTION_HOUSE_HELPER_L_RECENT_SEARCHES">
             <Anchors>
               <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.ListTab"/>
             </Anchors>
@@ -221,7 +221,7 @@
       <!-- List Add Item Button -->
       <Button
         inherits="UIPanelDynamicResizeButtonTemplate"
-        text="AUCTIONATOR_L_ADD_ITEM"
+        text="AUCTION_HOUSE_HELPER_L_ADD_ITEM"
         parentKey="AddItem"
       >
         <Anchors>
@@ -232,7 +232,7 @@
         </Scripts>
       </Button>
 
-      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_SEARCH_ALL" mixin="AuctionatorListSearchButtonMixin" parentKey="ManualSearch">
+      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTION_HOUSE_HELPER_L_SEARCH_ALL" mixin="AuctionHouseHelperListSearchButtonMixin" parentKey="ManualSearch">
         <Anchors>
           <Anchor point="TOPRIGHT" relativeKey="$parent.ScrollListShoppingList" relativePoint="BOTTOMRIGHT" x="-25" y="-4"/>
         </Anchors>
@@ -243,7 +243,7 @@
       </Button>
       <Button
         inherits="UIPanelDynamicResizeButtonTemplate"
-        text="AUCTIONATOR_L_SORT"
+        text="AUCTION_HOUSE_HELPER_L_SORT"
         parentKey="SortItems"
       >
         <Anchors>
@@ -254,21 +254,21 @@
         </Scripts>
       </Button>
 
-      <Frame inherits="AuctionatorResultsListingTemplate">
+      <Frame inherits="AuctionHouseHelperResultsListingTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.ScrollListShoppingList" relativePoint="TOPRIGHT" x="5" y="27"/>
           <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20"/>
         </Anchors>
       </Frame>
 
-      <Frame parentKey="ShoppingResultsInset" inherits="AuctionatorInsetTemplate">
+      <Frame parentKey="ShoppingResultsInset" inherits="AuctionHouseHelperInsetTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.ResultsListing" relativePoint="TOPLEFT" x="-10" y="-25"/>
           <Anchor point="BOTTOMRIGHT" relativeKey="$parent.ResultsListing" relativePoint="BOTTOMRIGHT" y="2"/>
         </Anchors>
       </Frame>
 
-      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_EXPORT_RESULTS" parentKey="ExportCSV">
+      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTION_HOUSE_HELPER_L_EXPORT_RESULTS" parentKey="ExportCSV">
         <Anchors>
           <Anchor point="TOP" relativeKey="$parent.ResultsListing" relativePoint="BOTTOM"/>
           <Anchor point="RIGHT" relativePoint="RIGHT" x="-8" y="10" />
@@ -279,7 +279,7 @@
       </Button>
 
       <!-- Shopping List Dropdown -->
-      <Frame parentKey="ListDropdown" mixin="AuctionatorShoppingListDropdownMixin">
+      <Frame parentKey="ListDropdown" mixin="AuctionHouseHelperShoppingListDropdownMixin">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.ResultsListing" y="35" x="50"/>
         </Anchors>
@@ -291,7 +291,7 @@
       </Frame>
 
       <!-- List export/Import -->
-      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_IMPORT" parentKey="Import">
+      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTION_HOUSE_HELPER_L_IMPORT" parentKey="Import">
         <Anchors>
           <Anchor point="TOPRIGHT" x="-5" y="-48"/>
         </Anchors>
@@ -300,7 +300,7 @@
         </Scripts>
       </Button>
 
-      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTIONATOR_L_EXPORT" parentKey="Export">
+      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="AUCTION_HOUSE_HELPER_L_EXPORT" parentKey="Export">
         <Anchors>
           <Anchor point="TOPRIGHT" relativeKey="$parent.Import" relativePoint="TOPLEFT"/>
         </Anchors>

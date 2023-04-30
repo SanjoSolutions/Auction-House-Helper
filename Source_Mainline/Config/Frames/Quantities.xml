@@ -1,19 +1,19 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Frame name="AuctionatorConfigQuantitiesFrameTemplate" mixin="AuctionatorConfigQuantitiesFrameMixin" virtual="true">
+  <Frame name="AuctionHouseHelperConfigQuantitiesFrameTemplate" mixin="AuctionHouseHelperConfigQuantitiesFrameMixin" virtual="true">
     <Scripts>
       <OnLoad method="OnLoad"/>
       <OnShow method="OnShow"/>
       <OnHide method="Save"/>
     </Scripts>
     <Frames>
-      <Frame inherits="AuctionatorConfigurationTitleFrame" parentKey="TitleArea">
+      <Frame inherits="AuctionHouseHelperConfigurationTitleFrame" parentKey="TitleArea">
         <KeyValues>
-          <KeyValue key="titleText" value="AUCTIONATOR_L_CONFIG_QUANTITIES_CATEGORY" type="global"/>
-          <KeyValue key="subTitleText" value="AUCTIONATOR_L_CONFIG_QUANTITIES_TEXT" type="global"/>
+          <KeyValue key="titleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_QUANTITIES_CATEGORY" type="global"/>
+          <KeyValue key="subTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_QUANTITIES_TEXT" type="global"/>
         </KeyValues>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationSubHeadingFrame" parentKey="WeaponHeading">
+      <Frame inherits="AuctionHouseHelperConfigurationSubHeadingFrame" parentKey="WeaponHeading">
         <KeyValues>
           <KeyValue key="subHeadingText" value="AUCTION_CATEGORY_WEAPONS" type="global"/>
         </KeyValues>
@@ -22,11 +22,11 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationNumericInput" parentKey="WeaponQuantity" parentArray="Quantities">
+      <Frame inherits="AuctionHouseHelperConfigurationNumericInput" parentKey="WeaponQuantity" parentArray="Quantities">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
           <KeyValue key="classID" value="Enum.ItemClass.Weapon" type="global"/>
         </KeyValues>
         <Anchors>
@@ -34,7 +34,7 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationSubHeadingFrame" parentKey="ArmorHeading">
+      <Frame inherits="AuctionHouseHelperConfigurationSubHeadingFrame" parentKey="ArmorHeading">
         <KeyValues>
           <KeyValue key="subHeadingText" value="ARMOR" type="global"/>
         </KeyValues>
@@ -43,11 +43,11 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationNumericInput" parentKey="ArmorQuantity" parentArray="Quantities">
+      <Frame inherits="AuctionHouseHelperConfigurationNumericInput" parentKey="ArmorQuantity" parentArray="Quantities">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
           <KeyValue key="classID" value="Enum.ItemClass.Armor" type="global"/>
         </KeyValues>
         <Anchors>
@@ -55,7 +55,7 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationSubHeadingFrame" parentKey="ContainerHeading">
+      <Frame inherits="AuctionHouseHelperConfigurationSubHeadingFrame" parentKey="ContainerHeading">
         <KeyValues>
           <KeyValue key="subHeadingText" value="AUCTION_CATEGORY_CONTAINERS" type="global"/>
         </KeyValues>
@@ -64,11 +64,11 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationNumericInput" parentKey="ContainerQuantity" parentArray="Quantities">
+      <Frame inherits="AuctionHouseHelperConfigurationNumericInput" parentKey="ContainerQuantity" parentArray="Quantities">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
           <KeyValue key="classID" value="Enum.ItemClass.Container" type="global"/>
         </KeyValues>
         <Anchors>
@@ -76,7 +76,7 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationSubHeadingFrame" parentKey="GemHeading">
+      <Frame inherits="AuctionHouseHelperConfigurationSubHeadingFrame" parentKey="GemHeading">
         <KeyValues>
           <KeyValue key="subHeadingText" value="AUCTION_CATEGORY_GEMS" type="global"/>
         </KeyValues>
@@ -85,11 +85,11 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationNumericInput" parentKey="GemQuantity" parentArray="Quantities">
+      <Frame inherits="AuctionHouseHelperConfigurationNumericInput" parentKey="GemQuantity" parentArray="Quantities">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
           <KeyValue key="classID" value="Enum.ItemClass.Gem" type="global"/>
         </KeyValues>
         <Anchors>
@@ -97,7 +97,7 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationSubHeadingFrame" parentKey="EnhancementHeading">
+      <Frame inherits="AuctionHouseHelperConfigurationSubHeadingFrame" parentKey="EnhancementHeading">
         <KeyValues>
           <KeyValue key="subHeadingText" value="AUCTION_CATEGORY_ITEM_ENHANCEMENT" type="global"/>
         </KeyValues>
@@ -106,11 +106,11 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationNumericInput" parentKey="EnhancementQuantity" parentArray="Quantities">
+      <Frame inherits="AuctionHouseHelperConfigurationNumericInput" parentKey="EnhancementQuantity" parentArray="Quantities">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
           <KeyValue key="classID" value="Enum.ItemClass.ItemEnhancement" type="global"/>
         </KeyValues>
         <Anchors>
@@ -118,7 +118,7 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationSubHeadingFrame" parentKey="ConsumableHeading">
+      <Frame inherits="AuctionHouseHelperConfigurationSubHeadingFrame" parentKey="ConsumableHeading">
         <KeyValues>
           <KeyValue key="subHeadingText" value="AUCTION_CATEGORY_CONSUMABLES" type="global"/>
         </KeyValues>
@@ -127,11 +127,11 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationNumericInput" parentKey="ConsumableQuantity" parentArray="Quantities">
+      <Frame inherits="AuctionHouseHelperConfigurationNumericInput" parentKey="ConsumableQuantity" parentArray="Quantities">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
           <KeyValue key="classID" value="Enum.ItemClass.Consumable" type="global"/>
         </KeyValues>
         <Anchors>
@@ -139,7 +139,7 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationSubHeadingFrame" parentKey="GlyphHeading">
+      <Frame inherits="AuctionHouseHelperConfigurationSubHeadingFrame" parentKey="GlyphHeading">
         <KeyValues>
           <KeyValue key="subHeadingText" value="GLYPHS" type="global"/>
         </KeyValues>
@@ -148,11 +148,11 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationNumericInput" parentKey="GlyphQuantity" parentArray="Quantities">
+      <Frame inherits="AuctionHouseHelperConfigurationNumericInput" parentKey="GlyphQuantity" parentArray="Quantities">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
           <KeyValue key="classID" value="Enum.ItemClass.Glyph" type="global"/>
         </KeyValues>
         <Anchors>
@@ -160,7 +160,7 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationSubHeadingFrame" parentKey="TradeGoodsHeading">
+      <Frame inherits="AuctionHouseHelperConfigurationSubHeadingFrame" parentKey="TradeGoodsHeading">
         <KeyValues>
           <KeyValue key="subHeadingText" value="AUCTION_CATEGORY_TRADE_GOODS" type="global"/>
         </KeyValues>
@@ -169,11 +169,11 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationNumericInput" parentKey="TradeGoodsQuantity" parentArray="Quantities">
+      <Frame inherits="AuctionHouseHelperConfigurationNumericInput" parentKey="TradeGoodsQuantity" parentArray="Quantities">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
           <KeyValue key="classID" value="Enum.ItemClass.Tradegoods" type="global"/>
         </KeyValues>
         <Anchors>
@@ -181,7 +181,7 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationSubHeadingFrame" parentKey="ProfessionToolsHeading">
+      <Frame inherits="AuctionHouseHelperConfigurationSubHeadingFrame" parentKey="ProfessionToolsHeading">
         <KeyValues>
           <KeyValue key="subHeadingText" value="AUCTION_CATEGORY_PROFESSION_EQUIPMENT" type="global"/>
         </KeyValues>
@@ -190,11 +190,11 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationNumericInput" parentKey="ProfessionToolsQuantity" parentArray="Quantities">
+      <Frame inherits="AuctionHouseHelperConfigurationNumericInput" parentKey="ProfessionToolsQuantity" parentArray="Quantities">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
           <KeyValue key="classID" value="Enum.ItemClass.Profession" type="global"/>
         </KeyValues>
         <Anchors>
@@ -202,7 +202,7 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationSubHeadingFrame" parentKey="RecipesHeading">
+      <Frame inherits="AuctionHouseHelperConfigurationSubHeadingFrame" parentKey="RecipesHeading">
         <KeyValues>
           <KeyValue key="subHeadingText" value="AUCTION_CATEGORY_RECIPES" type="global"/>
         </KeyValues>
@@ -211,11 +211,11 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationNumericInput" parentKey="RecipesQuantity" parentArray="Quantities">
+      <Frame inherits="AuctionHouseHelperConfigurationNumericInput" parentKey="RecipesQuantity" parentArray="Quantities">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
           <KeyValue key="classID" value="Enum.ItemClass.Recipe" type="global"/>
         </KeyValues>
         <Anchors>
@@ -223,7 +223,7 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationSubHeadingFrame" parentKey="BattlePetsHeading">
+      <Frame inherits="AuctionHouseHelperConfigurationSubHeadingFrame" parentKey="BattlePetsHeading">
         <KeyValues>
           <KeyValue key="subHeadingText" value="AUCTION_CATEGORY_BATTLE_PETS" type="global"/>
         </KeyValues>
@@ -232,11 +232,11 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationNumericInput" parentKey="BattlePetsQuantity" parentArray="Quantities">
+      <Frame inherits="AuctionHouseHelperConfigurationNumericInput" parentKey="BattlePetsQuantity" parentArray="Quantities">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
           <KeyValue key="classID" value="Enum.ItemClass.Battlepet" type="global"/>
         </KeyValues>
         <Anchors>
@@ -244,7 +244,7 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationSubHeadingFrame" parentKey="QuestHeading">
+      <Frame inherits="AuctionHouseHelperConfigurationSubHeadingFrame" parentKey="QuestHeading">
         <KeyValues>
           <KeyValue key="subHeadingText" value="AUCTION_CATEGORY_QUEST_ITEMS" type="global"/>
         </KeyValues>
@@ -253,11 +253,11 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationNumericInput" parentKey="QuestQuantity" parentArray="Quantities">
+      <Frame inherits="AuctionHouseHelperConfigurationNumericInput" parentKey="QuestQuantity" parentArray="Quantities">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
           <KeyValue key="classID" value="Enum.ItemClass.Questitem" type="global"/>
         </KeyValues>
         <Anchors>
@@ -265,7 +265,7 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationSubHeadingFrame" parentKey="MiscHeading">
+      <Frame inherits="AuctionHouseHelperConfigurationSubHeadingFrame" parentKey="MiscHeading">
         <KeyValues>
           <KeyValue key="subHeadingText" value="AUCTION_CATEGORY_MISCELLANEOUS" type="global"/>
         </KeyValues>
@@ -274,11 +274,11 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationNumericInput" parentKey="MiscQuantity" parentArray="Quantities">
+      <Frame inherits="AuctionHouseHelperConfigurationNumericInput" parentKey="MiscQuantity" parentArray="Quantities">
         <KeyValues>
-          <KeyValue key="labelText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
-          <KeyValue key="tooltipTitleText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
-          <KeyValue key="tooltipText" value="AUCTIONATOR_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
+          <KeyValue key="labelText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_SUFFIX" type="global" />
+          <KeyValue key="tooltipTitleText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_HEADER" type="global" />
+          <KeyValue key="tooltipText" value="AUCTION_HOUSE_HELPER_L_CONFIG_SELLING_DEFAULT_QUANTITY_TOOLTIP_TEXT" type="global"/>
           <KeyValue key="classID" value="Enum.ItemClass.Miscellaneous" type="global"/>
         </KeyValues>
         <Anchors>

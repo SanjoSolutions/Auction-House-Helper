@@ -1,5 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-    <Frame name="AuctionatorItemIconDropDownTemplate" mixin="AuctionatorItemIconDropDownMixin" virtual="true">
+    <Frame name="AuctionHouseHelperItemIconDropDownTemplate" mixin="AuctionHouseHelperItemIconDropDownMixin" virtual="true">
         <Scripts>
             <OnLoad method="OnLoad"/>
         </Scripts>

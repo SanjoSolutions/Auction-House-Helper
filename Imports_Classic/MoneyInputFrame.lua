@@ -1,24 +1,24 @@
 local popupOwner;
 
-function AuctionatorRetailImportMoneyInputFrame_SetEnabled(moneyFrame, enabled)
+function AuctionHouseHelperRetailImportMoneyInputFrame_SetEnabled(moneyFrame, enabled)
 	moneyFrame.gold:SetEnabled(enabled);
 	moneyFrame.silver:SetEnabled(enabled);
 	moneyFrame.copper:SetEnabled(enabled);
 end
 
-function AuctionatorRetailImportMoneyInputFrame_ResetMoney(moneyFrame)
+function AuctionHouseHelperRetailImportMoneyInputFrame_ResetMoney(moneyFrame)
 	moneyFrame.gold:SetText("");
 	moneyFrame.silver:SetText("");
 	moneyFrame.copper:SetText("");
 end
 
-function AuctionatorRetailImportMoneyInputFrame_ClearFocus(moneyFrame)
+function AuctionHouseHelperRetailImportMoneyInputFrame_ClearFocus(moneyFrame)
 	moneyFrame.gold:ClearFocus();
 	moneyFrame.silver:ClearFocus();
 	moneyFrame.copper:ClearFocus();
 end
 
-function AuctionatorRetailImportMoneyInputFrame_SetGoldOnly(moneyFrame, set)
+function AuctionHouseHelperRetailImportMoneyInputFrame_SetGoldOnly(moneyFrame, set)
 	if ( set ) then
 		moneyFrame.goldOnly = true;
 	else
@@ -26,12 +26,12 @@ function AuctionatorRetailImportMoneyInputFrame_SetGoldOnly(moneyFrame, set)
 	end
 end
 
-function AuctionatorRetailImportMoneyInputFrame_SetCopperShown(moneyFrame, shown)
+function AuctionHouseHelperRetailImportMoneyInputFrame_SetCopperShown(moneyFrame, shown)
 	moneyFrame.copper:SetShown(shown);
 	moneyFrame:SetWidth(shown and 176 or 126);
 end
 
-function AuctionatorRetailImportMoneyInputFrame_GetCopper(moneyFrame)
+function AuctionHouseHelperRetailImportMoneyInputFrame_GetCopper(moneyFrame)
 	local totalCopper = 0;
 	local copper = moneyFrame.copper:GetText();
 	local silver = moneyFrame.silver:GetText();
@@ -49,13 +49,13 @@ function AuctionatorRetailImportMoneyInputFrame_GetCopper(moneyFrame)
 	return totalCopper;
 end
 
-function AuctionatorRetailImportMoneyInputFrame_SetTextColor(moneyFrame, r, g, b)
+function AuctionHouseHelperRetailImportMoneyInputFrame_SetTextColor(moneyFrame, r, g, b)
 	moneyFrame.copper:SetTextColor(r, g, b);
 	moneyFrame.silver:SetTextColor(r, g, b);
 	moneyFrame.gold:SetTextColor(r, g, b);
 end
 
-function AuctionatorRetailImportMoneyInputFrame_SetCopper(moneyFrame, money)
+function AuctionHouseHelperRetailImportMoneyInputFrame_SetCopper(moneyFrame, money)
 	local gold = floor(money / (COPPER_PER_GOLD));
 	local silver = floor((money - (gold * COPPER_PER_GOLD)) / COPPER_PER_SILVER);
 	local copper = mod(money, COPPER_PER_SILVER);
@@ -84,7 +84,7 @@ function AuctionatorRetailImportMoneyInputFrame_SetCopper(moneyFrame, money)
 	end
 end
 
-function AuctionatorRetailImportMoneyInputFrame_OnTextChanged(self)
+function AuctionHouseHelperRetailImportMoneyInputFrame_OnTextChanged(self)
 	local moneyFrame = self:GetParent();
 	if ( moneyFrame.expectChanges ) then
 		if ( moneyFrame.expectChanges > 1 ) then
@@ -132,7 +132,7 @@ function AuctionatorRetailImportMoneyInputFrame_OnTextChanged(self)
 	end
 end
 
-function AuctionatorRetailImportMoneyInputFrame_SetCompact(frame, width, expandOnDigits)
+function AuctionHouseHelperRetailImportMoneyInputFrame_SetCompact(frame, width, expandOnDigits)
 	local goldFrame = frame.gold;
 	goldFrame.normalWidth = goldFrame:GetWidth();
 	goldFrame.minWidth = width;
@@ -161,19 +161,19 @@ function AuctionatorRetailImportMoneyInputFrame_SetCompact(frame, width, expandO
 end
 
 -- Used to set the frames before the moneyframe when tabbing through
-function AuctionatorRetailImportMoneyInputFrame_SetPreviousFocus(moneyFrame, focus)
+function AuctionHouseHelperRetailImportMoneyInputFrame_SetPreviousFocus(moneyFrame, focus)
 	moneyFrame.previousFocus = focus;
 end
 
-function AuctionatorRetailImportMoneyInputFrame_SetNextFocus(moneyFrame, focus)
+function AuctionHouseHelperRetailImportMoneyInputFrame_SetNextFocus(moneyFrame, focus)
 	moneyFrame.nextFocus = focus;
 end
 
-function AuctionatorRetailImportMoneyInputFrame_SetOnValueChangedFunc(moneyFrame, func)
+function AuctionHouseHelperRetailImportMoneyInputFrame_SetOnValueChangedFunc(moneyFrame, func)
 	moneyFrame.onValueChangedFunc = func;
 end
 
-function AuctionatorRetailImportMoneyInputFrame_OnShow(moneyFrame)
+function AuctionHouseHelperRetailImportMoneyInputFrame_OnShow(moneyFrame)
 	if ( ENABLE_COLORBLIND_MODE == "1" ) then
 		moneyFrame.copper.texture:Hide();
 		moneyFrame.gold.texture:Hide();
@@ -215,7 +215,7 @@ function AuctionatorRetailImportMoneyInputFrame_OnShow(moneyFrame)
 	end
 end
 
-function AuctionatorRetailImportMoneyInputFrame_OpenPopup(moneyFrame)
+function AuctionHouseHelperRetailImportMoneyInputFrame_OpenPopup(moneyFrame)
 	if ( popupOwner ) then
 		popupOwner.hasPickup = 0;
 	end
@@ -226,13 +226,13 @@ function AuctionatorRetailImportMoneyInputFrame_OpenPopup(moneyFrame)
 	end
 end
 
-function AuctionatorRetailImportMoneyInputFrame_ClosePopup()
+function AuctionHouseHelperRetailImportMoneyInputFrame_ClosePopup()
 	popupOwner = nil;
 	StaticPopup_Hide("PICKUP_MONEY");
 end
 
-function AuctionatorRetailImportMoneyInputFrame_PickupPlayerMoney(moneyFrame)
-	local copper = AuctionatorRetailImportMoneyInputFrame_GetCopper(moneyFrame);
+function AuctionHouseHelperRetailImportMoneyInputFrame_PickupPlayerMoney(moneyFrame)
+	local copper = AuctionHouseHelperRetailImportMoneyInputFrame_GetCopper(moneyFrame);
 	if ( copper > GetMoney() ) then
 		UIErrorsFrame:AddMessage(ERR_NOT_ENOUGH_MONEY, 1.0, 0.1, 0.1, 1.0);
 	else
@@ -240,9 +240,9 @@ function AuctionatorRetailImportMoneyInputFrame_PickupPlayerMoney(moneyFrame)
 	end
 end
 
-AuctionatorRetailImportLargeMoneyInputBoxMixin = {};
+AuctionHouseHelperRetailImportLargeMoneyInputBoxMixin = {};
 
-function AuctionatorRetailImportLargeMoneyInputBoxMixin:OnLoad()
+function AuctionHouseHelperRetailImportLargeMoneyInputBoxMixin:OnLoad()
 	self:SetFontObject("ChatFontNormal");
 	
 	if self.iconAtlas then
@@ -250,25 +250,25 @@ function AuctionatorRetailImportLargeMoneyInputBoxMixin:OnLoad()
 	end
 end
 
-function AuctionatorRetailImportLargeMoneyInputBoxMixin:Clear()
+function AuctionHouseHelperRetailImportLargeMoneyInputBoxMixin:Clear()
 	self:SetText("");
 end
 
-function AuctionatorRetailImportLargeMoneyInputBoxMixin:SetAmount(amount)
+function AuctionHouseHelperRetailImportLargeMoneyInputBoxMixin:SetAmount(amount)
 	self:SetNumber(amount);
 end
 
-function AuctionatorRetailImportLargeMoneyInputBoxMixin:GetAmount()
+function AuctionHouseHelperRetailImportLargeMoneyInputBoxMixin:GetAmount()
 	return self:GetNumber() or 0;
 end
 
-function AuctionatorRetailImportLargeMoneyInputBoxMixin:OnTextChanged()
+function AuctionHouseHelperRetailImportLargeMoneyInputBoxMixin:OnTextChanged()
 	self:GetParent():OnAmountChanged();
 end
 
-AuctionatorRetailImportLargeMoneyInputFrameMixin = {};
+AuctionHouseHelperRetailImportLargeMoneyInputFrameMixin = {};
 
-function AuctionatorRetailImportLargeMoneyInputFrameMixin:OnLoad()
+function AuctionHouseHelperRetailImportLargeMoneyInputFrameMixin:OnLoad()
 	if self.hideCopper then
 		self.CopperBox:Hide();
 		self.SilverBox:ClearAllPoints();
@@ -287,7 +287,7 @@ function AuctionatorRetailImportLargeMoneyInputFrameMixin:OnLoad()
 	end
 end
 
-function AuctionatorRetailImportLargeMoneyInputFrameMixin:SetNextEditBox(nextEditBox)
+function AuctionHouseHelperRetailImportLargeMoneyInputFrameMixin:SetNextEditBox(nextEditBox)
 	if self.hideCopper then
 		self.SilverBox.nextEditBox = nextEditBox or self.GoldBox;
 
@@ -303,27 +303,27 @@ function AuctionatorRetailImportLargeMoneyInputFrameMixin:SetNextEditBox(nextEdi
 	end
 end
 
-function AuctionatorRetailImportLargeMoneyInputFrameMixin:Clear()
+function AuctionHouseHelperRetailImportLargeMoneyInputFrameMixin:Clear()
 	self.CopperBox:Clear();
 	self.SilverBox:Clear();
 	self.GoldBox:Clear();
 end
 
-function AuctionatorRetailImportLargeMoneyInputFrameMixin:SetAmount(amount)
+function AuctionHouseHelperRetailImportLargeMoneyInputFrameMixin:SetAmount(amount)
 	self.CopperBox:SetAmount(amount % COPPER_PER_SILVER);
 	self.SilverBox:SetAmount(math.floor((amount % COPPER_PER_GOLD) / COPPER_PER_SILVER));
 	self.GoldBox:SetAmount(math.floor(amount / COPPER_PER_GOLD));
 end
 
-function AuctionatorRetailImportLargeMoneyInputFrameMixin:GetAmount()
+function AuctionHouseHelperRetailImportLargeMoneyInputFrameMixin:GetAmount()
 	return self.CopperBox:GetAmount() + (self.SilverBox:GetAmount() * COPPER_PER_SILVER) + (self.GoldBox:GetAmount() * COPPER_PER_GOLD);
 end
 
-function AuctionatorRetailImportLargeMoneyInputFrameMixin:SetOnValueChangedCallback(callback)
+function AuctionHouseHelperRetailImportLargeMoneyInputFrameMixin:SetOnValueChangedCallback(callback)
 	self.onValueChangedCallback = callback;
 end
 
-function AuctionatorRetailImportLargeMoneyInputFrameMixin:OnAmountChanged(callback)
+function AuctionHouseHelperRetailImportLargeMoneyInputFrameMixin:OnAmountChanged(callback)
 	if self.onValueChangedCallback then
 		self.onValueChangedCallback();
 	end

@@ -1,4 +1,4 @@
-AuctionatorShoppingItemMixin = CreateFromMixins(AuctionatorEscapeToCloseMixin)
+AuctionHouseHelperShoppingItemMixin = CreateFromMixins(AuctionHouseHelperEscapeToCloseMixin)
 
 local NO_QUALITY = ""
 
@@ -6,11 +6,11 @@ local function InitializeQualityDropDown(dropDown)
   local qualityStrings = {}
   local qualityIDs = {}
 
-  table.insert(qualityStrings, AUCTIONATOR_L_ANY_UPPER)
+  table.insert(qualityStrings, AUCTION_HOUSE_HELPER_L_ANY_UPPER)
   table.insert(qualityIDs, NO_QUALITY)
 
-  for _, quality in ipairs(Auctionator.Constants.QualityIDs) do
-    table.insert(qualityStrings, Auctionator.Utilities.CreateColoredQuality(quality))
+  for _, quality in ipairs(AuctionHouseHelper.Constants.QualityIDs) do
+    table.insert(qualityStrings, AuctionHouseHelper.Utilities.CreateColoredQuality(quality))
     table.insert(qualityIDs, tostring(quality))
   end
 
@@ -21,10 +21,10 @@ local function InitializeTierDropDown(dropDown)
   local tierStrings = {}
   local tierIDs = {}
 
-  table.insert(tierStrings, AUCTIONATOR_L_ANY_UPPER)
+  table.insert(tierStrings, AUCTION_HOUSE_HELPER_L_ANY_UPPER)
   table.insert(tierIDs, NO_QUALITY)
 
-  if not Auctionator.Constants.IsClassic then
+  if not AuctionHouseHelper.Constants.IsClassic then
     for tier = 1, 3 do
       table.insert(tierStrings, C_Texture.GetCraftingReagentQualityChatIcon(tier))
       table.insert(tierIDs, tostring(tier))
@@ -38,7 +38,7 @@ local function InitializeExpansionDropDown(dropDown)
   local expansionStrings = {}
   local expansionIDs = {}
 
-  table.insert(expansionStrings, AUCTIONATOR_L_ANY_UPPER)
+  table.insert(expansionStrings, AUCTION_HOUSE_HELPER_L_ANY_UPPER)
   table.insert(expansionIDs, NO_QUALITY)
 
   for i = 0, LE_EXPANSION_LEVEL_CURRENT do
@@ -51,7 +51,7 @@ local function InitializeExpansionDropDown(dropDown)
   dropDown:InitAgain(expansionStrings, expansionIDs)
 end
 
-function AuctionatorShoppingItemMixin:OnLoad()
+function AuctionHouseHelperShoppingItemMixin:OnLoad()
   self.onFinishedClicked = function() end
 
   self.SearchContainer.ResetSearchStringButton:SetClickCallback(function()
@@ -106,7 +106,7 @@ function AuctionatorShoppingItemMixin:OnLoad()
   InitializeQualityDropDown(self.QualityContainer.DropDown)
   InitializeTierDropDown(self.TierContainer.DropDown)
 
-  if not Auctionator.Constants.IsClassic then
+  if not AuctionHouseHelper.Constants.IsClassic then
     self:SetHeight(420)
     self.TierContainer:Show()
     self.ExpansionContainer:Show()
@@ -116,46 +116,46 @@ function AuctionatorShoppingItemMixin:OnLoad()
     self.ExpansionContainer:Hide()
   end
 
-  Auctionator.EventBus:Register(self, {
-    Auctionator.Shopping.Tab.Events.ListSearchStarted,
-    Auctionator.Shopping.Tab.Events.ListSearchEnded
+  AuctionHouseHelper.EventBus:Register(self, {
+    AuctionHouseHelper.Shopping.Tab.Events.ListSearchStarted,
+    AuctionHouseHelper.Shopping.Tab.Events.ListSearchEnded
   })
 end
 
-function AuctionatorShoppingItemMixin:Init(title, finishedButtonText)
+function AuctionHouseHelperShoppingItemMixin:Init(title, finishedButtonText)
   self.DialogTitle:SetText(title)
   self.Finished:SetText(finishedButtonText)
   DynamicResizeButton_Resize(self.Finished)
 end
 
-function AuctionatorShoppingItemMixin:OnShow()
+function AuctionHouseHelperShoppingItemMixin:OnShow()
   self:ResetAll()
   self.SearchContainer.SearchString:SetFocus()
 
-  Auctionator.EventBus
+  AuctionHouseHelper.EventBus
     :RegisterSource(self, "add item dialog")
-    :Fire(self, Auctionator.Shopping.Tab.Events.DialogOpened)
+    :Fire(self, AuctionHouseHelper.Shopping.Tab.Events.DialogOpened)
     :UnregisterSource(self)
 end
 
-function AuctionatorShoppingItemMixin:OnHide()
+function AuctionHouseHelperShoppingItemMixin:OnHide()
   self:Hide()
 
-  Auctionator.EventBus
+  AuctionHouseHelper.EventBus
     :RegisterSource(self, "add item dialog")
-    :Fire(self, Auctionator.Shopping.Tab.Events.DialogClosed)
+    :Fire(self, AuctionHouseHelper.Shopping.Tab.Events.DialogClosed)
     :UnregisterSource(self)
 end
 
-function AuctionatorShoppingItemMixin:OnCancelClicked()
+function AuctionHouseHelperShoppingItemMixin:OnCancelClicked()
   self:Hide()
 end
 
-function AuctionatorShoppingItemMixin:SetOnFinishedClicked(callback)
+function AuctionHouseHelperShoppingItemMixin:SetOnFinishedClicked(callback)
   self.onFinishedClicked = callback
 end
 
-function AuctionatorShoppingItemMixin:OnFinishedClicked()
+function AuctionHouseHelperShoppingItemMixin:OnFinishedClicked()
   if not self.Finished:IsEnabled() then
     return
   end
@@ -165,19 +165,19 @@ function AuctionatorShoppingItemMixin:OnFinishedClicked()
   if self:HasItemInfo() then
     self.onFinishedClicked(self:GetItemString())
   else
-    Auctionator.Utilities.Message(AUCTIONATOR_L_NO_ITEM_INFO_SPECIFIED)
+    AuctionHouseHelper.Utilities.Message(AUCTION_HOUSE_HELPER_L_NO_ITEM_INFO_SPECIFIED)
   end
 end
 
-function AuctionatorShoppingItemMixin:HasItemInfo()
+function AuctionHouseHelperShoppingItemMixin:HasItemInfo()
   return
     self:GetItemString()
-      :gsub(Auctionator.Constants.AdvancedSearchDivider, "")
+      :gsub(AuctionHouseHelper.Constants.AdvancedSearchDivider, "")
       :gsub("\"", "")
       :len() > 0
 end
 
-function AuctionatorShoppingItemMixin:GetItemString()
+function AuctionHouseHelperShoppingItemMixin:GetItemString()
   local search = {
     searchString = self.SearchContainer.SearchString:GetText(),
     isExact = self.SearchContainer.IsExact:GetChecked(),
@@ -195,11 +195,11 @@ function AuctionatorShoppingItemMixin:GetItemString()
     tier = tonumber(self.TierContainer.DropDown:GetValue()),
   }
   
-  return Auctionator.Search.ReconstituteAdvancedSearch(search)
+  return AuctionHouseHelper.Search.ReconstituteAdvancedSearch(search)
 end
 
-function AuctionatorShoppingItemMixin:SetItemString(itemString)
-  local search = Auctionator.Search.SplitAdvancedSearch(itemString)
+function AuctionHouseHelperShoppingItemMixin:SetItemString(itemString)
+  local search = AuctionHouseHelper.Search.SplitAdvancedSearch(itemString)
 
   self.SearchContainer.IsExact:SetChecked(search.isExact)
   self.SearchContainer.SearchString:SetText(search.searchString)
@@ -233,21 +233,21 @@ function AuctionatorShoppingItemMixin:SetItemString(itemString)
     self.QualityContainer.DropDown:SetValue(tostring(search.quality))
   end
 
-  if Auctionator.Constants.IsClassic or search.tier == nil then
+  if AuctionHouseHelper.Constants.IsClassic or search.tier == nil then
     self.TierContainer.DropDown:SetValue(NO_QUALITY)
   else
     self.TierContainer.DropDown:SetValue(tostring(search.tier))
   end
 
-  if Auctionator.Constants.IsClassic or search.expansion == nil then
+  if AuctionHouseHelper.Constants.IsClassic or search.expansion == nil then
     self.ExpansionContainer.DropDown:SetValue(NO_QUALITY)
   else
     self.ExpansionContainer.DropDown:SetValue(tostring(search.expansion))
   end
 end
 
-function AuctionatorShoppingItemMixin:ResetAll()
-  Auctionator.Debug.Message("AuctionatorShoppingItemMixin:ResetAll()")
+function AuctionHouseHelperShoppingItemMixin:ResetAll()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperShoppingItemMixin:ResetAll()")
 
   self.SearchContainer.SearchString:SetText("")
   self.SearchContainer.IsExact:SetChecked(false)
@@ -260,10 +260,10 @@ function AuctionatorShoppingItemMixin:ResetAll()
   self.CraftedLevelRange:Reset()
 end
 
-function AuctionatorShoppingItemMixin:ReceiveEvent(eventName)
-  if eventName == Auctionator.Shopping.Tab.Events.ListSearchStarted then
+function AuctionHouseHelperShoppingItemMixin:ReceiveEvent(eventName)
+  if eventName == AuctionHouseHelper.Shopping.Tab.Events.ListSearchStarted then
     self.Finished:Disable()
-  elseif eventName == Auctionator.Shopping.Tab.Events.ListSearchEnded then
+  elseif eventName == AuctionHouseHelper.Shopping.Tab.Events.ListSearchEnded then
     self.Finished:Enable()
   end
 end

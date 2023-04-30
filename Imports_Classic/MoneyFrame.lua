@@ -4,7 +4,7 @@ local TextureType = {
 	Atlas = 2,
 };
 
-AuctionatorRetailImportMoneyDenominationDisplayType = {
+AuctionHouseHelperRetailImportMoneyDenominationDisplayType = {
 	Copper = { TextureType.File, [[Interface\MoneyFrame\UI-MoneyIcons]], 0.5, 0.75, 0, 1, },
 	Silver = { TextureType.File, [[Interface\MoneyFrame\UI-MoneyIcons]], 0.25, 0.5, 0, 1, },
 	Gold = { TextureType.File, [[Interface\MoneyFrame\UI-MoneyIcons]], 0, 0.25, 0, 1, },
@@ -13,34 +13,34 @@ AuctionatorRetailImportMoneyDenominationDisplayType = {
 	AuctionHouseGold = { TextureType.Atlas, "auctionhouse-icon-coin-gold" },
 };
 
-AUCTIONATOR_IMPORT_DENOMINATION_SYMBOLS_BY_DISPLAY_TYPE = {
-	[AuctionatorRetailImportMoneyDenominationDisplayType.Copper] = COPPER_AMOUNT_SYMBOL,
-	[AuctionatorRetailImportMoneyDenominationDisplayType.Silver] = SILVER_AMOUNT_SYMBOL,
-	[AuctionatorRetailImportMoneyDenominationDisplayType.Gold] = GOLD_AMOUNT_SYMBOL,
-	[AuctionatorRetailImportMoneyDenominationDisplayType.AuctionHouseCopper] = COPPER_AMOUNT_SYMBOL,
-	[AuctionatorRetailImportMoneyDenominationDisplayType.AuctionHouseSilver] = SILVER_AMOUNT_SYMBOL,
-	[AuctionatorRetailImportMoneyDenominationDisplayType.AuctionHouseGold] = GOLD_AMOUNT_SYMBOL,
+AUCTION_HOUSE_HELPER_IMPORT_DENOMINATION_SYMBOLS_BY_DISPLAY_TYPE = {
+	[AuctionHouseHelperRetailImportMoneyDenominationDisplayType.Copper] = COPPER_AMOUNT_SYMBOL,
+	[AuctionHouseHelperRetailImportMoneyDenominationDisplayType.Silver] = SILVER_AMOUNT_SYMBOL,
+	[AuctionHouseHelperRetailImportMoneyDenominationDisplayType.Gold] = GOLD_AMOUNT_SYMBOL,
+	[AuctionHouseHelperRetailImportMoneyDenominationDisplayType.AuctionHouseCopper] = COPPER_AMOUNT_SYMBOL,
+	[AuctionHouseHelperRetailImportMoneyDenominationDisplayType.AuctionHouseSilver] = SILVER_AMOUNT_SYMBOL,
+	[AuctionHouseHelperRetailImportMoneyDenominationDisplayType.AuctionHouseGold] = GOLD_AMOUNT_SYMBOL,
 };
 
-AuctionatorRetailImportMoneyDenominationDisplayMixin = {};
+AuctionHouseHelperRetailImportMoneyDenominationDisplayMixin = {};
 
-function AuctionatorRetailImportMoneyDenominationDisplayMixin:OnLoad()
+function AuctionHouseHelperRetailImportMoneyDenominationDisplayMixin:OnLoad()
 	self.amount = 0;
 	
 	if self.displayType == nil then
-		error("A money denomination display needs a type. Add a KeyValue entry, displayType = AuctionatorRetailImportMoneyDenominationDisplayType.[Copper|Silver|Gold|AuctionHouseCopper|AuctionHouseSilver|AuctionHouseGold].");
+		error("A money denomination display needs a type. Add a KeyValue entry, displayType = AuctionHouseHelperRetailImportMoneyDenominationDisplayType.[Copper|Silver|Gold|AuctionHouseCopper|AuctionHouseSilver|AuctionHouseGold].");
 		return;
 	end
 
 	self:UpdateDisplayType();
 end
 
-function AuctionatorRetailImportMoneyDenominationDisplayMixin:SetDisplayType(displayType)
+function AuctionHouseHelperRetailImportMoneyDenominationDisplayMixin:SetDisplayType(displayType)
 	self.displayType = displayType;
 	self:UpdateDisplayType();
 end
 
-function AuctionatorRetailImportMoneyDenominationDisplayMixin:UpdateDisplayType()
+function AuctionHouseHelperRetailImportMoneyDenominationDisplayMixin:UpdateDisplayType()
 	local textureType, fileOrAtlas, l, r, b, t = unpack(self.displayType);
 
 	if textureType == TextureType.Atlas then
@@ -55,47 +55,47 @@ function AuctionatorRetailImportMoneyDenominationDisplayMixin:UpdateDisplayType(
 	self:UpdateWidth();
 end
 
-function AuctionatorRetailImportMoneyDenominationDisplayMixin:SetFontObject(fontObject)
+function AuctionHouseHelperRetailImportMoneyDenominationDisplayMixin:SetFontObject(fontObject)
 	self.Text:SetFontObject(fontObject);
 	self:UpdateWidth();
 end
 
-function AuctionatorRetailImportMoneyDenominationDisplayMixin:GetFontObject()
+function AuctionHouseHelperRetailImportMoneyDenominationDisplayMixin:GetFontObject()
 	return self.Text:GetFontObject();
 end
 
-function AuctionatorRetailImportMoneyDenominationDisplayMixin:SetFontAndIconDisabled(disabled)
+function AuctionHouseHelperRetailImportMoneyDenominationDisplayMixin:SetFontAndIconDisabled(disabled)
 	self:SetFontObject(disabled and NumberFontNormalGray or NumberFontNormal);
 	self.Icon:SetAlpha(disabled and 0.5 or 1);
 end
 
-function AuctionatorRetailImportMoneyDenominationDisplayMixin:SetFormatter(formatter)
+function AuctionHouseHelperRetailImportMoneyDenominationDisplayMixin:SetFormatter(formatter)
 	self.formatter = formatter;
 end
 
-function AuctionatorRetailImportMoneyDenominationDisplayMixin:SetForcedHidden(forcedHidden)
+function AuctionHouseHelperRetailImportMoneyDenominationDisplayMixin:SetForcedHidden(forcedHidden)
 	self.forcedHidden = forcedHidden;
 	self:SetShown(self:ShouldBeShown());
 end
 
-function AuctionatorRetailImportMoneyDenominationDisplayMixin:IsForcedHidden()
+function AuctionHouseHelperRetailImportMoneyDenominationDisplayMixin:IsForcedHidden()
 	return self.forcedHidden;
 end
 
-function AuctionatorRetailImportMoneyDenominationDisplayMixin:SetShowsZeroAmount(showsZeroAmount)
+function AuctionHouseHelperRetailImportMoneyDenominationDisplayMixin:SetShowsZeroAmount(showsZeroAmount)
 	self.showsZeroAmount = showsZeroAmount;
 	self:SetShown(self:ShouldBeShown());
 end
 
-function AuctionatorRetailImportMoneyDenominationDisplayMixin:ShowsZeroAmount()
+function AuctionHouseHelperRetailImportMoneyDenominationDisplayMixin:ShowsZeroAmount()
 	return self.showsZeroAmount;
 end
 
-function AuctionatorRetailImportMoneyDenominationDisplayMixin:ShouldBeShown()
+function AuctionHouseHelperRetailImportMoneyDenominationDisplayMixin:ShouldBeShown()
 	return not self:IsForcedHidden() and self.amount ~= nil and (self.amount > 0 or self:ShowsZeroAmount());
 end
 
-function AuctionatorRetailImportMoneyDenominationDisplayMixin:SetAmount(amount)
+function AuctionHouseHelperRetailImportMoneyDenominationDisplayMixin:SetAmount(amount)
 	self.amount = amount;
 
 	local shouldBeShown = self:ShouldBeShown();
@@ -111,7 +111,7 @@ function AuctionatorRetailImportMoneyDenominationDisplayMixin:SetAmount(amount)
 
 	local colorblindMode = ENABLE_COLORBLIND_MODE == "1";
 	if colorblindMode then
-		amountText = amountText..AUCTIONATOR_IMPORT_DENOMINATION_SYMBOLS_BY_DISPLAY_TYPE[self.displayType];
+		amountText = amountText..AUCTION_HOUSE_HELPER_IMPORT_DENOMINATION_SYMBOLS_BY_DISPLAY_TYPE[self.displayType];
 	end
 
 	self.Text:SetText(amountText);
@@ -120,7 +120,7 @@ function AuctionatorRetailImportMoneyDenominationDisplayMixin:SetAmount(amount)
 	self:UpdateWidth();
 end
 
-function AuctionatorRetailImportMoneyDenominationDisplayMixin:UpdateWidth()
+function AuctionHouseHelperRetailImportMoneyDenominationDisplayMixin:UpdateWidth()
 	local iconWidth = self.Icon:IsShown() and self.Icon:GetWidth() or 0;
 	local iconSpacing = 2;
 	self.Text:SetPoint("RIGHT", -(iconWidth + iconSpacing), 0);
@@ -128,11 +128,11 @@ function AuctionatorRetailImportMoneyDenominationDisplayMixin:UpdateWidth()
 end
 
 
-AuctionatorRetailImportMoneyDisplayFrameMixin = {};
+AuctionHouseHelperRetailImportMoneyDisplayFrameMixin = {};
 
 local DENOMINATION_DISPLAY_WIDTH = 36; -- Space for two characters and an anchor offset.
 
-function AuctionatorRetailImportMoneyDisplayFrameMixin:OnLoad()
+function AuctionHouseHelperRetailImportMoneyDisplayFrameMixin:OnLoad()
 	self.CopperDisplay:SetShowsZeroAmount(true);
 	self.SilverDisplay:SetShowsZeroAmount(true);
 	self.GoldDisplay:SetFormatter(BreakUpLargeNumbers);
@@ -142,15 +142,15 @@ function AuctionatorRetailImportMoneyDisplayFrameMixin:OnLoad()
 	end
 
 	if self.useAuctionHouseIcons then
-		self.CopperDisplay:SetDisplayType(AuctionatorRetailImportMoneyDenominationDisplayType.AuctionHouseCopper);
-		self.SilverDisplay:SetDisplayType(AuctionatorRetailImportMoneyDenominationDisplayType.AuctionHouseSilver);
-		self.GoldDisplay:SetDisplayType(AuctionatorRetailImportMoneyDenominationDisplayType.AuctionHouseGold);
+		self.CopperDisplay:SetDisplayType(AuctionHouseHelperRetailImportMoneyDenominationDisplayType.AuctionHouseCopper);
+		self.SilverDisplay:SetDisplayType(AuctionHouseHelperRetailImportMoneyDenominationDisplayType.AuctionHouseSilver);
+		self.GoldDisplay:SetDisplayType(AuctionHouseHelperRetailImportMoneyDenominationDisplayType.AuctionHouseGold);
 	end
 
 	self:UpdateAnchoring();
 end
 
-function AuctionatorRetailImportMoneyDisplayFrameMixin:SetFontAndIconDisabled(disabled)
+function AuctionHouseHelperRetailImportMoneyDisplayFrameMixin:SetFontAndIconDisabled(disabled)
 	self.CopperDisplay:SetFontAndIconDisabled(disabled);
 	self.SilverDisplay:SetFontAndIconDisabled(disabled);
 	self.GoldDisplay:SetFontAndIconDisabled(disabled);
@@ -160,7 +160,7 @@ function AuctionatorRetailImportMoneyDisplayFrameMixin:SetFontAndIconDisabled(di
 	end
 end
 
-function AuctionatorRetailImportMoneyDisplayFrameMixin:SetFontObject(fontObject)
+function AuctionHouseHelperRetailImportMoneyDisplayFrameMixin:SetFontObject(fontObject)
 	self.CopperDisplay:SetFontObject(fontObject);
 	self.SilverDisplay:SetFontObject(fontObject);
 	self.GoldDisplay:SetFontObject(fontObject);
@@ -170,11 +170,11 @@ function AuctionatorRetailImportMoneyDisplayFrameMixin:SetFontObject(fontObject)
 	end
 end
 
-function AuctionatorRetailImportMoneyDisplayFrameMixin:GetFontObject()
+function AuctionHouseHelperRetailImportMoneyDisplayFrameMixin:GetFontObject()
 	return self.CopperDisplay:GetFontObject();
 end
 
-function AuctionatorRetailImportMoneyDisplayFrameMixin:UpdateAnchoring()
+function AuctionHouseHelperRetailImportMoneyDisplayFrameMixin:UpdateAnchoring()
 	self.CopperDisplay:ClearAllPoints();
 	self.SilverDisplay:ClearAllPoints();
 	self.GoldDisplay:ClearAllPoints();
@@ -210,7 +210,7 @@ function AuctionatorRetailImportMoneyDisplayFrameMixin:UpdateAnchoring()
 	end
 end
 
-function AuctionatorRetailImportMoneyDisplayFrameMixin:SetAmount(rawCopper)
+function AuctionHouseHelperRetailImportMoneyDisplayFrameMixin:SetAmount(rawCopper)
 	self.rawCopper = rawCopper;
 	
 	local gold = floor(rawCopper / (COPPER_PER_SILVER * SILVER_PER_GOLD));
@@ -227,7 +227,7 @@ function AuctionatorRetailImportMoneyDisplayFrameMixin:SetAmount(rawCopper)
 	end
 end
 
-function AuctionatorRetailImportMoneyDisplayFrameMixin:UpdateWidth()
+function AuctionHouseHelperRetailImportMoneyDisplayFrameMixin:UpdateWidth()
 	local width = 0;
 	local goldDisplayed = self.GoldDisplay:IsShown()
 	if goldDisplayed then
@@ -254,10 +254,10 @@ function AuctionatorRetailImportMoneyDisplayFrameMixin:UpdateWidth()
 	self:SetWidth(width);
 end
 
-function AuctionatorRetailImportMoneyDisplayFrameMixin:GetAmount()
+function AuctionHouseHelperRetailImportMoneyDisplayFrameMixin:GetAmount()
 	return self.rawCopper;
 end
 
-function AuctionatorRetailImportMoneyDisplayFrameMixin:SetResizeToFit(resizeToFit)
+function AuctionHouseHelperRetailImportMoneyDisplayFrameMixin:SetResizeToFit(resizeToFit)
 	self.resizeToFit = resizeToFit;
 end

@@ -1,11 +1,11 @@
-AuctionatorPriceCellTemplateMixin = CreateFromMixins(AuctionatorCellMixin, AuctionatorRetailImportTableBuilderCellMixin)
+AuctionHouseHelperPriceCellTemplateMixin = CreateFromMixins(AuctionHouseHelperCellMixin, AuctionHouseHelperRetailImportTableBuilderCellMixin)
 
-function AuctionatorPriceCellTemplateMixin:Init(columnName)
+function AuctionHouseHelperPriceCellTemplateMixin:Init(columnName)
   self.columnName = columnName
 end
 
-function AuctionatorPriceCellTemplateMixin:Populate(rowData, index)
-  AuctionatorCellMixin.Populate(self, rowData, index)
+function AuctionHouseHelperPriceCellTemplateMixin:Populate(rowData, index)
+  AuctionHouseHelperCellMixin.Populate(self, rowData, index)
 
   if rowData[self.columnName] ~= nil then
     self.MoneyDisplay:SetAmount(rowData[self.columnName])

@@ -1,12 +1,12 @@
-function Auctionator.AH.SendSearchQueryByGenerator(itemKeyGenerator, sorts, splitOwnedItems)
+function AuctionHouseHelper.AH.SendSearchQueryByGenerator(itemKeyGenerator, sorts, splitOwnedItems)
   function rawSearch(itemKey)
     C_AuctionHouse.SendSearchQuery(itemKey, sorts, splitOwnedItems)
   end
 
-  Auctionator.AH.Internals.searchScan:SetSearch(itemKeyGenerator, rawSearch)
+  AuctionHouseHelper.AH.Internals.searchScan:SetSearch(itemKeyGenerator, rawSearch)
 end
 
-function Auctionator.AH.SendSearchQueryByItemKey(itemKey, sorts, splitOwnedItems)
+function AuctionHouseHelper.AH.SendSearchQueryByItemKey(itemKey, sorts, splitOwnedItems)
   function itemKeyGenerator()
     return itemKey
   end
@@ -14,18 +14,18 @@ function Auctionator.AH.SendSearchQueryByItemKey(itemKey, sorts, splitOwnedItems
     C_AuctionHouse.SendSearchQuery(itemKey, sorts, splitOwnedItems)
   end
 
-  Auctionator.AH.Internals.searchScan:SetSearch(itemKeyGenerator, rawSearch)
+  AuctionHouseHelper.AH.Internals.searchScan:SetSearch(itemKeyGenerator, rawSearch)
 end
 
-function Auctionator.AH.SendSellSearchQueryByGenerator(itemKeyGenerator, sorts, splitOwnedItems)
+function AuctionHouseHelper.AH.SendSellSearchQueryByGenerator(itemKeyGenerator, sorts, splitOwnedItems)
   function rawSearch(itemKey)
     C_AuctionHouse.SendSellSearchQuery(itemKey, sorts, splitOwnedItems)
   end
 
-  Auctionator.AH.Internals.searchScan:SetSearch(itemKeyGenerator, rawSearch)
+  AuctionHouseHelper.AH.Internals.searchScan:SetSearch(itemKeyGenerator, rawSearch)
 end
 
-function Auctionator.AH.SendSellSearchQueryByItemKey(itemKey, sorts, splitOwnedItems)
+function AuctionHouseHelper.AH.SendSellSearchQueryByItemKey(itemKey, sorts, splitOwnedItems)
   function itemKeyGenerator()
     return itemKey
   end
@@ -33,55 +33,55 @@ function Auctionator.AH.SendSellSearchQueryByItemKey(itemKey, sorts, splitOwnedI
     C_AuctionHouse.SendSellSearchQuery(itemKey, sorts, splitOwnedItems)
   end
 
-  Auctionator.AH.Internals.searchScan:SetSearch(itemKeyGenerator, rawSearch)
+  AuctionHouseHelper.AH.Internals.searchScan:SetSearch(itemKeyGenerator, rawSearch)
 end
 
-function Auctionator.AH.QueryOwnedAuctions(...)
+function AuctionHouseHelper.AH.QueryOwnedAuctions(...)
   local args = {...}
-  Auctionator.AH.Queue:Enqueue(function()
+  AuctionHouseHelper.AH.Queue:Enqueue(function()
     C_AuctionHouse.QueryOwnedAuctions(unpack(args))
   end)
 end
 
 local sentBrowseQuery = true
-function Auctionator.AH.SendBrowseQuery(...)
+function AuctionHouseHelper.AH.SendBrowseQuery(...)
   local args = {...}
   sentBrowseQuery = false
-  Auctionator.AH.Queue:Enqueue(function()
+  AuctionHouseHelper.AH.Queue:Enqueue(function()
     sentBrowseQuery = true
     C_AuctionHouse.SendBrowseQuery(unpack(args))
   end)
 end
 
-function Auctionator.AH.HasFullBrowseResults()
+function AuctionHouseHelper.AH.HasFullBrowseResults()
   return sentBrowseQuery and C_AuctionHouse.HasFullBrowseResults()
 end
 
-function Auctionator.AH.RequestMoreBrowseResults(...)
+function AuctionHouseHelper.AH.RequestMoreBrowseResults(...)
   local args = {...}
-  Auctionator.AH.Queue:Enqueue(function()
+  AuctionHouseHelper.AH.Queue:Enqueue(function()
     C_AuctionHouse.RequestMoreBrowseResults(unpack(args))
   end)
 end
 
 -- Event ThrottleUpdate will fire whenever the state changes
-function Auctionator.AH.IsNotThrottled()
-  return Auctionator.AH.Internals.throttling:IsReady()
+function AuctionHouseHelper.AH.IsNotThrottled()
+  return AuctionHouseHelper.AH.Internals.throttling:IsReady()
 end
 
-function Auctionator.AH.CancelAuction(...)
+function AuctionHouseHelper.AH.CancelAuction(...)
   -- Can't be queued, "protected" call
   C_AuctionHouse.CancelAuction(...)
 end
 
-function Auctionator.AH.ReplicateItems()
+function AuctionHouseHelper.AH.ReplicateItems()
   C_AuctionHouse.ReplicateItems()
 end
 
-function Auctionator.AH.GetItemKeyInfo(itemKey, callback)
-  Auctionator.AH.Internals.itemKeyLoader:Get(itemKey, callback)
+function AuctionHouseHelper.AH.GetItemKeyInfo(itemKey, callback)
+  AuctionHouseHelper.AH.Internals.itemKeyLoader:Get(itemKey, callback)
 end
 
-function Auctionator.AH.GetAuctionItemSubClasses(classID)
+function AuctionHouseHelper.AH.GetAuctionItemSubClasses(classID)
   return C_AuctionHouse.GetAuctionItemSubClasses(classID)
 end

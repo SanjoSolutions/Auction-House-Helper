@@ -1,30 +1,30 @@
-AuctionatorSellingHistoricalPriceProviderMixin = CreateFromMixins(AuctionatorHistoricalPriceProviderMixin)
+AuctionHouseHelperSellingHistoricalPriceProviderMixin = CreateFromMixins(AuctionHouseHelperHistoricalPriceProviderMixin)
 
-function AuctionatorSellingHistoricalPriceProviderMixin:OnLoad()
-  AuctionatorHistoricalPriceProviderMixin.OnLoad(self)
+function AuctionHouseHelperSellingHistoricalPriceProviderMixin:OnLoad()
+  AuctionHouseHelperHistoricalPriceProviderMixin.OnLoad(self)
 
-  Auctionator.EventBus:Register( self, {
-    Auctionator.Selling.Events.BagItemClicked,
-    Auctionator.Selling.Events.RefreshHistory,
+  AuctionHouseHelper.EventBus:Register( self, {
+    AuctionHouseHelper.Selling.Events.BagItemClicked,
+    AuctionHouseHelper.Selling.Events.RefreshHistory,
   })
 end
 
-function AuctionatorSellingHistoricalPriceProviderMixin:ReceiveEvent(eventName, itemInfo)
-  if eventName == Auctionator.Selling.Events.BagItemClicked then
-    local dbKey = Auctionator.Utilities.DBKeyFromBrowseResult({ itemKey = itemInfo.itemKey })[1]
+function AuctionHouseHelperSellingHistoricalPriceProviderMixin:ReceiveEvent(eventName, itemInfo)
+  if eventName == AuctionHouseHelper.Selling.Events.BagItemClicked then
+    local dbKey = AuctionHouseHelper.Utilities.DBKeyFromBrowseResult({ itemKey = itemInfo.itemKey })[1]
     self.lastDBKey = dbKey
 
     self:SetItem(dbKey)
 
-  elseif eventName == Auctionator.Selling.Events.RefreshHistory and self.lastDBKey ~= nil then
+  elseif eventName == AuctionHouseHelper.Selling.Events.RefreshHistory and self.lastDBKey ~= nil then
     self:SetItem(self.lastDBKey)
   end
 end
 
-function AuctionatorSellingHistoricalPriceProviderMixin:GetRowTemplate()
-  return "AuctionatorHistoricalPriceRowTemplate"
+function AuctionHouseHelperSellingHistoricalPriceProviderMixin:GetRowTemplate()
+  return "AuctionHouseHelperHistoricalPriceRowTemplate"
 end
 
-function AuctionatorSellingHistoricalPriceProviderMixin:GetColumnHideStates()
-  return Auctionator.Config.Get(Auctionator.Config.Options.COLUMNS_HISTORICAL_PRICES)
+function AuctionHouseHelperSellingHistoricalPriceProviderMixin:GetColumnHideStates()
+  return AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.COLUMNS_HISTORICAL_PRICES)
 end

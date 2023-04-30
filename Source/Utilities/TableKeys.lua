@@ -1,4 +1,4 @@
-function Auctionator.Utilities.TableKeys(original)
+function AuctionHouseHelper.Utilities.TableKeys(original)
   local keys = {}
   for key, _ in pairs(original) do
     table.insert(keys, key)

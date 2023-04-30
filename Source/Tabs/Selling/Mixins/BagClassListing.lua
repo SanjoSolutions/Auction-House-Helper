@@ -1,6 +1,6 @@
-AuctionatorBagClassListingMixin = {}
+AuctionHouseHelperBagClassListingMixin = {}
 
-function AuctionatorBagClassListingMixin:Init(classID)
+function AuctionHouseHelperBagClassListingMixin:Init(classID)
   if self.title == nil and classID ~= nil then
     self.title = GetItemClassInfo(classID)
   end
@@ -10,7 +10,7 @@ function AuctionatorBagClassListingMixin:Init(classID)
 
   self:SetWidth(self:GetRowWidth())
 
-  if Auctionator.Constants.IsClassic then
+  if AuctionHouseHelper.Constants.IsClassic then
     self.SectionTitle:GetNormalTexture():SetWidth(self:GetRowWidth() + 8)
     self.SectionTitle:GetFontString():SetPoint("LEFT", 12, 0)
     self.SectionTitle:GetHighlightTexture():SetSize(self:GetRowWidth() + 9, self.SectionTitle:GetHeight())
@@ -22,29 +22,29 @@ function AuctionatorBagClassListingMixin:Init(classID)
 
   self.collapsed = false
 
-  if Auctionator.Config.Get(Auctionator.Config.Options.SELLING_BAG_COLLAPSED) then
+  if AuctionHouseHelper.Config.Get(AuctionHouseHelper.Config.Options.SELLING_BAG_COLLAPSED) then
     self.collapsed = true
     self.ItemContainer:Hide()
   end
 end
 
-function AuctionatorBagClassListingMixin:GetRowWidth()
+function AuctionHouseHelperBagClassListingMixin:GetRowWidth()
   return self.ItemContainer:GetRowWidth()
 end
 
-function AuctionatorBagClassListingMixin:GetTitleHeight()
+function AuctionHouseHelperBagClassListingMixin:GetTitleHeight()
   return self.SectionTitle:GetHeight()
 end
 
-function AuctionatorBagClassListingMixin:Reset()
+function AuctionHouseHelperBagClassListingMixin:Reset()
   self.ItemContainer:Reset()
 end
 
-function AuctionatorBagClassListingMixin:UpdateTitle()
+function AuctionHouseHelperBagClassListingMixin:UpdateTitle()
   self.SectionTitle:SetText(self.title .. " (" .. self.ItemContainer:GetNumItems() .. ")")
 end
 
-function AuctionatorBagClassListingMixin:AddItems(itemList)
+function AuctionHouseHelperBagClassListingMixin:AddItems(itemList)
   self.ItemContainer:AddItems(itemList)
 
   self:UpdateTitle()
@@ -52,7 +52,7 @@ function AuctionatorBagClassListingMixin:AddItems(itemList)
   self:UpdateForEmpty()
 end
 
-function AuctionatorBagClassListingMixin:UpdateForCollapsing()
+function AuctionHouseHelperBagClassListingMixin:UpdateForCollapsing()
   if self.collapsed then
     self.ItemContainer:Hide()
     self:SetHeight(self.SectionTitle:GetHeight())
@@ -64,7 +64,7 @@ end
 
 -- Hide the frame if there are no buttons in it.
 -- Anchors are updated to ensure a blank space isn't left behind
-function AuctionatorBagClassListingMixin:UpdateForEmpty()
+function AuctionHouseHelperBagClassListingMixin:UpdateForEmpty()
   -- Get the TOPLEFT anchor and its relative frame
   local relativeTo, relativePoint
   for i = 1, self:GetNumPoints() do
@@ -86,7 +86,7 @@ function AuctionatorBagClassListingMixin:UpdateForEmpty()
   end
 end
 
-function AuctionatorBagClassListingMixin:OnClick()
+function AuctionHouseHelperBagClassListingMixin:OnClick()
   self.collapsed = not self.collapsed
 
   self:UpdateForCollapsing()

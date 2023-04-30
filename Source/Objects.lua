@@ -1,4 +1,4 @@
-Auctionator = {
+AuctionHouseHelper = {
   Debug = {},
   Constants = {},
   Utilities = {},

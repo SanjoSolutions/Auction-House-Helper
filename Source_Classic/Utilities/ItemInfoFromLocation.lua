@@ -1,6 +1,6 @@
 -- Returns just enough information that the BagItem mixin can display the item
 -- and the SaleItemMixin can post it.
-function Auctionator.Utilities.ItemInfoFromLocation(location)
+function AuctionHouseHelper.Utilities.ItemInfoFromLocation(location)
   local icon, itemCount, quality, itemLink, _
   local currentDurability, maxDurability
 
@@ -27,14 +27,14 @@ function Auctionator.Utilities.ItemInfoFromLocation(location)
   local _, _, _, _, _, classID, _ = GetItemInfoInstant(itemLink)
 
   if auctionable and classID == Enum.ItemClass.Consumable and location:IsBagAndSlot() then
-    auctionable = Auctionator.Utilities.IsAtMaxCharges(location)
+    auctionable = AuctionHouseHelper.Utilities.IsAtMaxCharges(location)
   end
 
   -- The first time the AH is loaded sometimes when a full scan is running the
   -- quality info may not be available. This just gives a sensible fail value.
   -- -1 is the classic era fail value and nil is the Wrath fail value
   if quality == -1 or quality == nil then
-    Auctionator.Debug.Message("Missing quality", itemLink)
+    AuctionHouseHelper.Debug.Message("Missing quality", itemLink)
     quality = 1
   end
 

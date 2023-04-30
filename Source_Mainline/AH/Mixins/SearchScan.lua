@@ -9,31 +9,31 @@
 -- results, and verifies that a valid set of returns was returned, as sometimes no
 -- results are returned when there are actually some results.
 -- 3. If 2. failed, attempt to search again.
-AuctionatorAHSearchScanFrameMixin = {}
+AuctionHouseHelperAHSearchScanFrameMixin = {}
 
 local SEARCH_EVENTS = {
   "ITEM_SEARCH_RESULTS_UPDATED",
   "COMMODITY_SEARCH_RESULTS_UPDATED",
 }
 
-function AuctionatorAHSearchScanFrameMixin:OnLoad()
-  Auctionator.EventBus:RegisterSource(self, "AHSearchScanFrameMixin")
+function AuctionHouseHelperAHSearchScanFrameMixin:OnLoad()
+  AuctionHouseHelper.EventBus:RegisterSource(self, "AHSearchScanFrameMixin")
 end
 
-function AuctionatorAHSearchScanFrameMixin:OnHide()
+function AuctionHouseHelperAHSearchScanFrameMixin:OnHide()
   if self.searchFunc ~= nil then
-    Auctionator.AH.Queue:Remove(self.searchFunc)
+    AuctionHouseHelper.AH.Queue:Remove(self.searchFunc)
     self.searchFunc = nil
   end
   self:SetScript("OnUpdate", nil)
   FrameUtil.UnregisterFrameForEvents(self, SEARCH_EVENTS)
 end
 
-function AuctionatorAHSearchScanFrameMixin:OnUpdate()
+function AuctionHouseHelperAHSearchScanFrameMixin:OnUpdate()
   self:AttemptSearch()
 end
 
-function AuctionatorAHSearchScanFrameMixin:OnEvent(eventName, ...)
+function AuctionHouseHelperAHSearchScanFrameMixin:OnEvent(eventName, ...)
   if eventName == "COMMODITY_SEARCH_RESULTS_UPDATED" and self:ValidateItemInfo(...) then
     local itemID = ...
     local has = C_AuctionHouse.HasSearchResults(C_AuctionHouse.MakeItemKey(itemID))
@@ -45,7 +45,7 @@ function AuctionatorAHSearchScanFrameMixin:OnEvent(eventName, ...)
     if (not has) or (has and not full and quantity == 0) then
       self:AttemptSearch()
     else
-      Auctionator.EventBus:Fire(self, Auctionator.AH.Events.CommoditySearchResultsReady, itemID)
+      AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.AH.Events.CommoditySearchResultsReady, itemID)
       FrameUtil.UnregisterFrameForEvents(self, SEARCH_EVENTS)
     end
   elseif eventName == "ITEM_SEARCH_RESULTS_UPDATED" and self:ValidateItemInfo(...) then
@@ -60,7 +60,7 @@ function AuctionatorAHSearchScanFrameMixin:OnEvent(eventName, ...)
       self:AttemptSearch()
     else
       FrameUtil.UnregisterFrameForEvents(self, SEARCH_EVENTS)
-      Auctionator.EventBus:Fire(self, Auctionator.AH.Events.ItemSearchResultsReady, itemKey)
+      AuctionHouseHelper.EventBus:Fire(self, AuctionHouseHelper.AH.Events.ItemSearchResultsReady, itemKey)
     end
   end
 end
@@ -70,9 +70,9 @@ end
 -- to retry getting the item key when the cache is ready.
 -- rawSearch: Function with an item key as its only parameter to run the
 -- Blizzard API search command
-function AuctionatorAHSearchScanFrameMixin:SetSearch(itemKeyGenerator, rawSearch)
+function AuctionHouseHelperAHSearchScanFrameMixin:SetSearch(itemKeyGenerator, rawSearch)
   if self.searchFunc ~= nil then
-    Auctionator.AH.Queue:Remove(self.searchFunc)
+    AuctionHouseHelper.AH.Queue:Remove(self.searchFunc)
     self.searchFunc = nil
   end
   self.itemKeyGenerator = itemKeyGenerator
@@ -80,14 +80,14 @@ function AuctionatorAHSearchScanFrameMixin:SetSearch(itemKeyGenerator, rawSearch
   self:AttemptSearch()
 end
 
-function AuctionatorAHSearchScanFrameMixin:ValidateItemInfo(itemInfo)
+function AuctionHouseHelperAHSearchScanFrameMixin:ValidateItemInfo(itemInfo)
   return (type(itemInfo) == "number" and self.itemKey.itemID == itemInfo) or
-    (type(itemInfo) == "table" and Auctionator.Utilities.ItemKeyString(itemInfo) == Auctionator.Utilities.ItemKeyString(self.itemKey))
+    (type(itemInfo) == "table" and AuctionHouseHelper.Utilities.ItemKeyString(itemInfo) == AuctionHouseHelper.Utilities.ItemKeyString(self.itemKey))
 end
 
-function AuctionatorAHSearchScanFrameMixin:AttemptSearch()
+function AuctionHouseHelperAHSearchScanFrameMixin:AttemptSearch()
   if self.searchFunc ~= nil then
-    Auctionator.AH.Queue:Remove(self.searchFunc)
+    AuctionHouseHelper.AH.Queue:Remove(self.searchFunc)
   end
   self.searchFunc = function()
     self.searchFunc = nil
@@ -100,5 +100,5 @@ function AuctionatorAHSearchScanFrameMixin:AttemptSearch()
       self:SetScript("OnUpdate", self.OnUpdate)
     end
   end
-  Auctionator.AH.Queue:Enqueue(self.searchFunc)
+  AuctionHouseHelper.AH.Queue:Enqueue(self.searchFunc)
 end

@@ -1,65 +1,65 @@
 local POSTING_HISTORY_PROVIDER_LAYOUT ={
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = AUCTIONATOR_L_UNIT_PRICE,
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
+    headerText = AUCTION_HOUSE_HELPER_L_UNIT_PRICE,
     headerParameters = { "price" },
-    cellTemplate = "AuctionatorPriceCellTemplate",
+    cellTemplate = "AuctionHouseHelperPriceCellTemplate",
     cellParameters = { "price" }
   },
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = AUCTIONATOR_L_QUANTITY,
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
+    headerText = AUCTION_HOUSE_HELPER_L_QUANTITY,
     headerParameters = { "quantity" },
-    cellTemplate = "AuctionatorStringCellTemplate",
+    cellTemplate = "AuctionHouseHelperStringCellTemplate",
     cellParameters = { "quantity" },
     width = 100
   },
   {
-    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
-    headerText = AUCTIONATOR_L_DATE,
+    headerTemplate = "AuctionHouseHelperStringColumnHeaderTemplate",
+    headerText = AUCTION_HOUSE_HELPER_L_DATE,
     headerParameters = { "rawDay" },
-    cellTemplate = "AuctionatorStringCellTemplate",
+    cellTemplate = "AuctionHouseHelperStringCellTemplate",
     cellParameters = { "date" }
   },
 }
 
-AuctionatorPostingHistoryProviderMixin = CreateFromMixins(AuctionatorDataProviderMixin)
+AuctionHouseHelperPostingHistoryProviderMixin = CreateFromMixins(AuctionHouseHelperDataProviderMixin)
 
-function AuctionatorPostingHistoryProviderMixin:OnLoad()
-  AuctionatorDataProviderMixin.OnLoad(self)
+function AuctionHouseHelperPostingHistoryProviderMixin:OnLoad()
+  AuctionHouseHelperDataProviderMixin.OnLoad(self)
 end
 
-function AuctionatorPostingHistoryProviderMixin:OnShow()
+function AuctionHouseHelperPostingHistoryProviderMixin:OnShow()
   self:Reset()
 end
 
-function AuctionatorPostingHistoryProviderMixin:SetItem(dbKey)
+function AuctionHouseHelperPostingHistoryProviderMixin:SetItem(dbKey)
   self:Reset()
 
   -- Reset columns
   self.onSearchStarted()
 
-  local entries = Auctionator.PostingHistory:GetPriceHistory(dbKey)
+  local entries = AuctionHouseHelper.PostingHistory:GetPriceHistory(dbKey)
   table.sort(entries, function(a, b) return b.rawDay < a.rawDay end)
 
   self:AppendEntries(entries, true)
 end
 
-function AuctionatorPostingHistoryProviderMixin:GetTableLayout()
+function AuctionHouseHelperPostingHistoryProviderMixin:GetTableLayout()
   return POSTING_HISTORY_PROVIDER_LAYOUT
 end
 
-function AuctionatorPostingHistoryProviderMixin:UniqueKey(entry)
+function AuctionHouseHelperPostingHistoryProviderMixin:UniqueKey(entry)
   return tostring(tostring(entry.price) .. tostring(entry.rawDay))
 end
 
 local COMPARATORS = {
-  price = Auctionator.Utilities.NumberComparator,
-  quantity = Auctionator.Utilities.NumberComparator,
-  rawDay = Auctionator.Utilities.StringComparator
+  price = AuctionHouseHelper.Utilities.NumberComparator,
+  quantity = AuctionHouseHelper.Utilities.NumberComparator,
+  rawDay = AuctionHouseHelper.Utilities.StringComparator
 }
 
-function AuctionatorPostingHistoryProviderMixin:Sort(fieldName, sortDirection)
+function AuctionHouseHelperPostingHistoryProviderMixin:Sort(fieldName, sortDirection)
   local comparator = COMPARATORS[fieldName](sortDirection, fieldName)
 
   table.sort(self.results, function(left, right)

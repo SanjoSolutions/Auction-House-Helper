@@ -10,7 +10,7 @@
 *******************************************************************************
 -->
 
-	<Button name="AuctionatorRetailImportColumnDisplayButtonShortTemplate" virtual="true">
+	<Button name="AuctionHouseHelperRetailImportColumnDisplayButtonShortTemplate" virtual="true">
 		<Size x="10" y="19"/>
 		<Layers>
 			<Layer level="BACKGROUND">
@@ -52,7 +52,7 @@
 		</HighlightTexture>
 	</Button>
 
-	<Button name="AuctionatorRetailImportUIStaticPopupSpecialCloseButton" inherits="UIPanelCloseButtonNoScripts" virtual="true">
+	<Button name="AuctionHouseHelperRetailImportUIStaticPopupSpecialCloseButton" inherits="UIPanelCloseButtonNoScripts" virtual="true">
 		<Scripts>
 			<OnClick>
         StaticPopupSpecial_Hide(self:GetParent());

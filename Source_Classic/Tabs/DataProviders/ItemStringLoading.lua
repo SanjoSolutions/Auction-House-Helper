@@ -1,6 +1,6 @@
-AuctionatorItemStringLoadingMixin = {}
+AuctionHouseHelperItemStringLoadingMixin = {}
 
-function AuctionatorItemStringLoadingMixin:OnLoad()
+function AuctionHouseHelperItemStringLoadingMixin:OnLoad()
   self:SetOnEntryProcessedCallback(function(entry)
     local item = Item:CreateFromItemID((GetItemInfoInstant(entry.itemString)))
     local complete = false
@@ -17,12 +17,12 @@ function AuctionatorItemStringLoadingMixin:OnLoad()
   end)
 end
 
-function AuctionatorItemStringLoadingMixin:ProcessItemString(rowEntry, itemInfo)
-  local name = itemInfo[Auctionator.Constants.ITEM_INFO.NAME]
-  local qualityColor = ITEM_QUALITY_COLORS[itemInfo[Auctionator.Constants.ITEM_INFO.RARITY]].color
-  local class = itemInfo[Auctionator.Constants.ITEM_INFO.CLASS]
+function AuctionHouseHelperItemStringLoadingMixin:ProcessItemString(rowEntry, itemInfo)
+  local name = itemInfo[AuctionHouseHelper.Constants.ITEM_INFO.NAME]
+  local qualityColor = ITEM_QUALITY_COLORS[itemInfo[AuctionHouseHelper.Constants.ITEM_INFO.RARITY]].color
+  local class = itemInfo[AuctionHouseHelper.Constants.ITEM_INFO.CLASS]
 
-  rowEntry.itemLink = itemInfo[Auctionator.Constants.ITEM_INFO.LINK]
+  rowEntry.itemLink = itemInfo[AuctionHouseHelper.Constants.ITEM_INFO.LINK]
 
   rowEntry.name = name
   if class == Enum.ItemClass.Weapon or class == Enum.ItemClass.Armor then
@@ -31,7 +31,7 @@ function AuctionatorItemStringLoadingMixin:ProcessItemString(rowEntry, itemInfo)
   end
   rowEntry.itemName = qualityColor:WrapTextInColorCode(rowEntry.name)
 
-  rowEntry.iconTexture = itemInfo[Auctionator.Constants.ITEM_INFO.TEXTURE]
+  rowEntry.iconTexture = itemInfo[AuctionHouseHelper.Constants.ITEM_INFO.TEXTURE]
 
   rowEntry.noneAvailable = rowEntry.totalQuantity == 0
 

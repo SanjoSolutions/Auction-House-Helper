@@ -1,11 +1,11 @@
-AuctionatorItemKeyCellTemplateMixin = CreateFromMixins(AuctionatorCellMixin, AuctionatorRetailImportTableBuilderCellMixin)
+AuctionHouseHelperItemKeyCellTemplateMixin = CreateFromMixins(AuctionHouseHelperCellMixin, AuctionHouseHelperRetailImportTableBuilderCellMixin)
 
-function AuctionatorItemKeyCellTemplateMixin:Init()
+function AuctionHouseHelperItemKeyCellTemplateMixin:Init()
   self.Text:SetJustifyH("LEFT")
 end
 
-function AuctionatorItemKeyCellTemplateMixin:Populate(rowData, index)
-  AuctionatorCellMixin.Populate(self, rowData, index)
+function AuctionHouseHelperItemKeyCellTemplateMixin:Populate(rowData, index)
+  AuctionHouseHelperCellMixin.Populate(self, rowData, index)
 
   self.Text:SetText(rowData.itemName or "")
 
@@ -17,18 +17,18 @@ function AuctionatorItemKeyCellTemplateMixin:Populate(rowData, index)
   self.Icon:SetAlpha(rowData.noneAvailable and 0.5 or 1.0)
 end
 
-function AuctionatorItemKeyCellTemplateMixin:OnEnter()
+function AuctionHouseHelperItemKeyCellTemplateMixin:OnEnter()
   if self.rowData.itemLink then
     GameTooltip:SetOwner(self:GetParent(), "ANCHOR_RIGHT")
     GameTooltip:SetHyperlink(self.rowData.itemLink)
     GameTooltip:Show()
   end
-  AuctionatorCellMixin.OnEnter(self)
+  AuctionHouseHelperCellMixin.OnEnter(self)
 end
 
-function AuctionatorItemKeyCellTemplateMixin:OnLeave()
+function AuctionHouseHelperItemKeyCellTemplateMixin:OnLeave()
   if self.rowData.itemLink then
     GameTooltip:Hide()
   end
-  AuctionatorCellMixin.OnLeave(self)
+  AuctionHouseHelperCellMixin.OnLeave(self)
 end

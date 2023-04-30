@@ -1,24 +1,24 @@
-AuctionatorConfigProfileFrameMixin = CreateFromMixins(AuctionatorPanelConfigMixin)
+AuctionHouseHelperConfigProfileFrameMixin = CreateFromMixins(AuctionHouseHelperPanelConfigMixin)
 
-function AuctionatorConfigProfileFrameMixin:OnLoad()
-  Auctionator.Debug.Message("AuctionatorConfigProfileFrameMixin:OnLoad()")
+function AuctionHouseHelperConfigProfileFrameMixin:OnLoad()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperConfigProfileFrameMixin:OnLoad()")
 
-  self.name = AUCTIONATOR_L_CONFIG_PROFILE_CATEGORY
-  self.parent = "Auctionator"
+  self.name = AUCTION_HOUSE_HELPER_L_CONFIG_PROFILE_CATEGORY
+  self.parent = "Auction House Helper"
 
   self:SetupPanel()
 end
 
-function AuctionatorConfigProfileFrameMixin:OnShow()
-  self.ProfileToggle:SetChecked(Auctionator.Config.IsCharacterConfig())
+function AuctionHouseHelperConfigProfileFrameMixin:OnShow()
+  self.ProfileToggle:SetChecked(AuctionHouseHelper.Config.IsCharacterConfig())
 end
 
-function AuctionatorConfigProfileFrameMixin:Save()
-  Auctionator.Debug.Message("AuctionatorConfigProfileFrameMixin:Save()")
+function AuctionHouseHelperConfigProfileFrameMixin:Save()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperConfigProfileFrameMixin:Save()")
 
-  Auctionator.Config.SetCharacterConfig(self.ProfileToggle:GetChecked())
+  AuctionHouseHelper.Config.SetCharacterConfig(self.ProfileToggle:GetChecked())
 end
 
-function AuctionatorConfigProfileFrameMixin:Cancel()
-  Auctionator.Debug.Message("AuctionatorConfigProfileFrameMixin:Cancel()")
+function AuctionHouseHelperConfigProfileFrameMixin:Cancel()
+  AuctionHouseHelper.Debug.Message("AuctionHouseHelperConfigProfileFrameMixin:Cancel()")
 end

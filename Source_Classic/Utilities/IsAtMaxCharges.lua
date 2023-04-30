@@ -25,7 +25,7 @@ local function GetChargesText(itemLink)
   -- Using the tooltip set by item ID gets it to show the max charges
   -- (unlike when using an item link)
   local itemID = GetItemInfoInstant(itemLink)
-  return Auctionator.Utilities.ScanTooltip(
+  return AuctionHouseHelper.Utilities.ScanTooltip(
     function(tip)
       tip:SetItemByID(itemID)
     end,
@@ -41,11 +41,11 @@ end
 
 -- Given a bag item determine if has the maximum possible charges. Intended for
 -- use on consumables.
-function Auctionator.Utilities.IsAtMaxCharges(bagLocation)
+function AuctionHouseHelper.Utilities.IsAtMaxCharges(bagLocation)
   local itemLink = C_Item.GetItemLink(bagLocation)
   local chargesText = GetChargesText(itemLink)
   if chargesText ~= nil then
-    return Auctionator.Utilities.ScanTooltip(
+    return AuctionHouseHelper.Utilities.ScanTooltip(
       function(tip) tip:SetBagItem(bagLocation:GetBagAndSlot()) end,
       function(str) return chargesText == str end
     ) ~= nil
