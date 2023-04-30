@@ -1,6 +1,7 @@
 # Auction House Helper
 
 Auction House Helper is designed for casual everyday auction house users, to make interactions easier and faster, and to provide quick access to auction prices.
+
 ## Key Features
 * Auction prices in item tooltips (with an AH full scan function to update the prices)
 * Straightforward UI

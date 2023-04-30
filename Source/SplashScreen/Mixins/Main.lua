@@ -323,10 +323,7 @@ local MESSAGES = {
       {
         Title = AUCTION_HOUSE_HELPER_L_SPLASH_830_BUGS_HEADER,
         Entries = {
-          AUCTION_HOUSE_HELPER_L_SPLASH_830_BUGS_1:format("https://tinyurl.com/AuctionHouseHelperDiscord"),
-          AUCTION_HOUSE_HELPER_L_SPLASH_830_BUGS_2:format("https://tinyurl.com/AuctionHouseHelperBug"),
-          AUCTION_HOUSE_HELPER_L_SPLASH_830_BUGS_3,
-          AUCTION_HOUSE_HELPER_L_SPLASH_830_BUGS_4:format("https://tinyurl.com/AuctionHouseHelper83Release")
+          AUCTION_HOUSE_HELPER_L_SPLASH_830_BUGS_2:format("https://github.com/SanjoSolutions/Auction-House-Helper/issues")
         }
       },
       {
